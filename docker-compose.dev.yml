@@ -1,0 +1,20 @@
+name: 'juzwystawiam-dev'
+
+services:
+  db:
+    image: 'postgres:16'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=dev
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=dev
+    ports:
+      - 5432:5432
+    
+
+
+volumes:
+  postgres:
+    driver: local
+  
