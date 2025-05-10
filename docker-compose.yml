@@ -3,8 +3,8 @@ services:
     build:
       dockerfile: Dockerfile
     restart: unless-stopped
-    ports:
-      - 9000:9000
+    # ports:
+    #   - 8000:8000
     depends_on:
       - db
     env_file:
@@ -27,15 +27,15 @@ services:
     volumes:
       - storage:/usr/share/nginx/html/storage:rw
       - public:/usr/share/nginx/html/public:rw
-  nginx:
-    image: nginx:1-alpine
-    # ports: coolify ports fix
-      # - 80:80
-      # - 443:443 
-    volumes:
-      - ./nginx.conf:/etc/nginx/templates/default.conf.template
-      - storage:/usr/share/nginx/html/storage:rw
-      - public:/usr/share/nginx/html/public:ro
+  # nginx:
+  #   image: nginx:1-alpine
+  #   # ports: coolify ports fix
+  #     # - 80:80
+  #     # - 443:443 
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/templates/default.conf.template
+  #     - storage:/usr/share/nginx/html/storage:rw
+  #     - public:/usr/share/nginx/html/public:ro
   db:
     image: bitnami/postgresql:16.3.0
     platform: linux/amd64
