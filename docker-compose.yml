@@ -27,14 +27,24 @@ services:
     volumes:
       - storage:/usr/share/nginx/html/storage:rw
       - public:/usr/share/nginx/html/public:rw
+  # nginx:
+  #   image: nginx:1-alpine
+  #   ports: # needs to remove ports when running on coolify
+  #     - 80:80
+  #     - 443:443 
+  #   volumes:
+  #     - ./docker/ngnix/nginx.conf:/etc/nginx/templates/default.conf.template
+  #     - storage:/usr/share/nginx/html/storage:rw
+  #     - public:/usr/share/nginx/html/public:ro
   nginx:
-    image: nginx:1-alpine
-    ports: # needs to remove ports when running on coolify
-      - 80:80
-      - 443:443 
+    build:
+      context: ./docker/ngnix
+      dockerfile: Dockerfile
+    # ports: # needs to remove ports when running on coolify
+    #   - 80:80
+    #   - 443:443 
     volumes:
-      - ./nginx.conf:/etc/nginx/templates/default.conf.template #fixme: this is not working in coolify https://github.com/coollabsio/coolify/issues/1996
-      - storage:/usr/share/nginx/html/storage:rw
+      - storage:/usr/share/nginx/html/storage:rw`
       - public:/usr/share/nginx/html/public:ro
   db:
     image: bitnami/postgresql:16.3.0
