@@ -6,6 +6,7 @@ main() {
     else
         prepare_file_permissions
         run_npm_build
+        start_interia_ssr
         prepare_storage
         wait_for_db
         run_migrations
@@ -25,10 +26,15 @@ run_npm_build() {
         npm ci
 
         echo "Running NPM build"
-        npm run build
+        npm run build:ssr
     else
         echo "No package.json found, skipping NPM build"
     fi
+}
+
+start_interia_ssr() {
+    echo "starting interia ssr"
+    php artisan inertia:start-ssr &
 }
 
 prepare_storage() {
