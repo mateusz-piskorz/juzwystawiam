@@ -43,7 +43,8 @@ export default function Dashboard() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
             <button onClick={handleClick}>Make a request to /api/user</button>
-            <button onClick={handleClick2}>Make a request to /api/todos/2</button>
+            <button onClick={handleClick2}>Make a request to /api/todos</button>
+
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                     <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">

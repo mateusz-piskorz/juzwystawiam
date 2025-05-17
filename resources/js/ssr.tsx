@@ -1,10 +1,13 @@
 import { createInertiaApp } from '@inertiajs/react';
 import createServer from '@inertiajs/react/server';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import ReactDOMServer from 'react-dom/server';
+import { Toaster } from 'sonner';
 import { type RouteName, route } from 'ziggy-js';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const queryClient = new QueryClient();
 
 createServer((page) =>
     createInertiaApp({
@@ -23,8 +26,12 @@ createServer((page) =>
                     location: new URL(page.props.ziggy.location),
                 });
             /* eslint-enable */
-
-            return <App {...props} />;
+            return (
+                <QueryClientProvider client={queryClient}>
+                    <App {...props} />
+                    <Toaster />
+                </QueryClientProvider>
+            );
         },
     }),
 );
