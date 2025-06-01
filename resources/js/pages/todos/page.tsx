@@ -6,12 +6,12 @@ import { Head } from '@inertiajs/react';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Products',
-        href: '/products',
+        href: 'dashboard/products',
     },
 ];
 
 const TodosPage = (props: SharedData & { todos: Pagination<Todo> }) => {
-    // console.log(props.todos);
+    console.log(props);
     // const {
     //         props: { todos, ziggy },
     //     } = {props : SharedData & { todos: Pagination<Todo> }}

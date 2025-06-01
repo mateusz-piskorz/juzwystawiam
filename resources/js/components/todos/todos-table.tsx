@@ -3,9 +3,10 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { apiFetch } from '@/lib/apiFetch';
-import { Pagination, SharedData, Todo } from '@/types';
-import { router, usePage } from '@inertiajs/react';
+import { usePage } from '@/lib/hooks/use-page';
+import { Pagination, Todo } from '@/lib/types';
+import { apiFetch } from '@/lib/utils/api-fetch';
+import { router } from '@inertiajs/react';
 import { useQuery } from '@tanstack/react-query';
 import {
     flexRender,
@@ -24,7 +25,7 @@ import { getColumns } from './columns';
 export const TodosTable = () => {
     const {
         props: { todos, ziggy },
-    } = usePage<SharedData & { todos: Pagination<Todo> }>();
+    } = usePage<{ todos: Pagination<Todo> }>();
 
     const { data, refetch } = useQuery<Pagination<Todo>>({
         queryKey: ['todo-list', ziggy],

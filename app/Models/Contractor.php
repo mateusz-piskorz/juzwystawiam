@@ -10,6 +10,7 @@ class Contractor extends Model
 {
     protected $fillable = [
         'user_id',
+        'is_own_company',
         'name',
         'nip',
         'address',
@@ -17,7 +18,7 @@ class Contractor extends Model
         'postal_code',
         'country',
         'email',
-        'phone',
+        'phone'
     ];
 
     public function user(): BelongsTo
@@ -25,9 +26,9 @@ class Contractor extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function invoices(): BelongsToMany
-    {
-        return $this->belongsToMany(Invoice::class, 'invoice_contractor')
-            ->withPivot('role');
-    }
+    // public function invoices(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Invoice::class, 'invoice_contractor')
+    //         ->withPivot('role');
+    // }
 }

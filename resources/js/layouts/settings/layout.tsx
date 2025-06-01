@@ -1,25 +1,25 @@
-import Heading from '@/components/heading';
+import Heading from '@/components/default/heading';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
-import { type NavItem } from '@/types';
+import { type NavItem } from '@/lib/types';
+import { cn } from '@/lib/utils/cn';
 import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Profile',
-        href: '/settings/profile',
+        href: '/dashboard/settings/profile',
         icon: null,
     },
     {
         title: 'Password',
-        href: '/settings/password',
+        href: '/dashboard/settings/password',
         icon: null,
     },
     {
         title: 'Appearance',
-        href: '/settings/appearance',
+        href: '/dashboard/settings/appearance',
         icon: null,
     },
 ];

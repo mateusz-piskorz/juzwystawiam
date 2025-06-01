@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 
-
 class TodoController extends Controller
 {
     /**

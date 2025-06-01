@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,13 +15,8 @@ return new class extends Migration
             $table->foreignId('invoice_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->decimal('quantity', 15, 2);
-            $table->string('unit')->nullable();
-            $table->decimal('net_price', 15, 2)->nullable();
-            $table->decimal('gross_price', 15, 2)->nullable();
+            $table->decimal('price', 15, 2)->nullable();
             $table->decimal('vat_rate', 5, 2)->nullable();
-            $table->string('pkwiu')->nullable();
-            $table->string('gtu')->nullable();
-            $table->decimal('discount', 15, 2)->nullable();
             $table->timestamps();
         });
     }
