@@ -20,7 +20,7 @@ import {
 import { ComponentProps, useState } from 'react';
 import { toast } from 'sonner';
 import { getColumns } from './columns';
-import { UpsertInvoiceDialog } from './upsert-contractor-dialog';
+import { UpsertInvoiceDialog } from './upsert-invoice-dialog';
 
 export const InvoicesTable = () => {
     const {

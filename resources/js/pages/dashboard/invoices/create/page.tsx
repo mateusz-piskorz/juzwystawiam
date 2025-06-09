@@ -40,7 +40,7 @@ const CreateInvoicePage = () => {
         <AppLayout breadcrumbs={breadcrumbs}>
             <div className="flex h-full flex-1 flex-col gap-8 rounded-xl p-4">
                 <h1 className="font-bold">Invoice Type: {invoice_type ?? InvoiceType.VAT}</h1>
-                <div className="container">{invoiceForm}</div>
+                <div>{invoiceForm}</div>
             </div>
         </AppLayout>
     );

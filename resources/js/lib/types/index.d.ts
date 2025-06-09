@@ -89,15 +89,19 @@ export type Invoice = {
 
 export type Contractor = {
     id: number;
-    name: string;
+    user_id: number;
     is_own_company: boolean;
+    name: string;
     nip: string;
-    email: string;
-    address: string | null;
-    city: string | null;
-    postal_code: string | null;
+    postal_code: string;
+    building_number: string;
+    city: string;
+    street_name: string | null;
+    email: string | null;
     country: string | null;
     phone: string | null;
+    updated_at: string; // Date
+    created_at: string; // Date
 };
 
 export type InvoiceItem = {

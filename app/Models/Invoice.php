@@ -35,9 +35,8 @@ class Invoice extends Model
         return $this->hasMany(InvoiceItem::class);
     }
 
-    public function contractors(): BelongsToMany
+    public function invoice_contractors(): HasMany
     {
-        return $this->belongsToMany(Contractor::class, 'invoice_contractor')
-            ->withPivot('role');
+        return $this->hasMany(InvoiceContractor::class);
     }
 }

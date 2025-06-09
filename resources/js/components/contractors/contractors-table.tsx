@@ -109,7 +109,7 @@ export const ContractorsTable = () => {
         <>
             <UpsertContractorDialog
                 open={open}
-                refetch={refetch}
+                onSuccess={() => refetch()}
                 setOpen={setOpen}
                 defaultValues={defaultValues}
                 contractorId={selectedContractorId}

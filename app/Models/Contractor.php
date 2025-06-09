@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Contractor extends Model
 {
@@ -13,9 +12,11 @@ class Contractor extends Model
         'is_own_company',
         'name',
         'nip',
-        'address',
-        'city',
         'postal_code',
+        'building_number',
+        'city',
+        'email',
+        'street_name',
         'country',
         'email',
         'phone'

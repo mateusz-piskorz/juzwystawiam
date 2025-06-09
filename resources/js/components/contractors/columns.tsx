@@ -8,7 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Contractor } from '@/types'; // Make sure you have an Invoice type defined
+import { Contractor } from '@/lib/types/index';
 import type { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 
@@ -37,9 +37,21 @@ export const getColumns = ({
         header: 'Nip',
     },
     {
+        accessorKey: 'city',
+        header: 'city',
+    },
+    {
+        accessorKey: 'postal_code',
+        header: 'postal_code',
+    },
+    {
+        accessorKey: 'address',
+        header: 'address',
+    },
+    {
         id: 'actions',
         cell: ({ row }) => {
-            const invoice = row.original;
+            const contractor = row.original;
 
             return (
                 <div className="text-right">
@@ -52,10 +64,12 @@ export const getColumns = ({
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(invoice.id)}>Copy contractor ID</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(String(contractor.id))}>
+                                Copy contractor ID
+                            </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => handleEditContractor(invoice.id)}>Edit Contractor</DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => handleDeleteContractor(invoice.id)}>Delete Contractor</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleEditContractor(String(contractor.id))}>Edit Contractor</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleDeleteContractor(String(contractor.id))}>Delete Contractor</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

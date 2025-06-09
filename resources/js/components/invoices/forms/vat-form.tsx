@@ -4,14 +4,14 @@ import { Input } from '@/components/ui/input';
 import { ContractorRole, InvoiceType } from '@/lib/constants/invoiceTypes';
 import { vatSchema, VatSchema } from '@/lib/zod/invoices/vat-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-// import { useState } from 'react';
-import { getContractorByNip } from '@/lib/data/contractors';
-import { usePage } from '@/lib/hooks/use-page';
-import { useForm } from 'react-hook-form';
-import { ContractorsSelectInput } from '../common/contractors-select-input';
-import { TooltipLabel } from '../common/tooltip-label';
 
-const invoiceContractorDefault = { role: ContractorRole.Seller, email: 'john@spoko.pl', id: 0, name: 'Contractor1', nip: '1223', phone: '' };
+import { usePage } from '@/lib/hooks/use-page';
+import { apiFetch } from '@/lib/utils/api-fetch';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { ContractorsSelectInput } from '../common/contractors-select-input';
+import { InvoiceSaleAndDueDates } from '../common/invoice-sale-and-due-dates';
+import { PaymentTripleBox } from '../common/payment-triple-box';
 
 export const VatForm = () => {
     const { auth } = usePage().props;
@@ -22,13 +22,10 @@ export const VatForm = () => {
             number: 'FR1/ 18 may 2025',
             type: InvoiceType.VAT,
             issue_date: '0001-11-11',
-            // invoice_items: [{ name: '', net_price: 0, quantity: 1, vat: 23 }],
-            invoice_contractors: [
-                { ...invoiceContractorDefault, role: ContractorRole.Seller },
-                { ...invoiceContractorDefault, role: ContractorRole.Buyer },
-            ],
+            // is_already_paid: false,
         },
     });
+
     // const { watch, getValues } = form;
 
     // const { fields, append, remove } = useFieldArray({
@@ -37,24 +34,33 @@ export const VatForm = () => {
     // });
 
     async function onSubmit(values: VatSchema) {
-        console.log('values', values);
-        for (const invoiceContractor of values.invoice_contractors) {
-            if (!invoiceContractor.id) {
-                console.log(`logic for creating contractor for ${invoiceContractor.role}`);
-                const { nip } = invoiceContractor;
-                try {
-                    const contractor = await getContractorByNip({ nip: ['123', '4454'] });
-                    if (contractor) {
-                        console.log('here for role', invoiceContractor.role);
-                        console.log('contractor', contractor);
-                    }
-                } catch (e: any) {
-                    console.log('e.message:', e.message);
-                }
-            }
+        // everything is ok, submit invoice creation
+        try {
+            const res = await apiFetch('/api/invoices', { method: 'POST', body: JSON.stringify(values) });
+            console.log(res);
+            toast.error('created successfully!');
+        } catch (error: unknown) {
+            toast.error('something went wrong');
+            console.error(error);
         }
-        // const url = invoiceId ? `/api/invoices/${invoiceId}` : '/api/invoices';
 
+        // @@old things:
+        // for (const invoiceContractor of values.invoice_contractors) {
+        //     if (!invoiceContractor.id) {
+        //         console.log(`logic for creating contractor for ${invoiceContractor.role}`);
+        //         const { nip } = invoiceContractor;
+        //         try {
+        //             const contractor = await getContractors({ nip: ['123', '4454'] });
+        //             if (contractor) {
+        //                 console.log('here for role', invoiceContractor.role);
+        //                 console.log('contractor', contractor);
+        //             }
+        //         } catch (e: any) {
+        //             console.log('e.message:', e.message);
+        //         }
+        //     }
+        // }
+        // const url = invoiceId ? `/api/invoices/${invoiceId}` : '/api/invoices';
         // const res = await apiFetch('/api/invoices', { method: 'POST', body: JSON.stringify(values) });
         // if (res.ok) {
         //     toast.success(`Invoice created successfully`);
@@ -83,11 +89,82 @@ export const VatForm = () => {
     //     return () => unsubscribe();
     // }, [watch]);
 
-    // console.log(form.watch('invoice_contractors'));
     return (
         <Form {...form}>
-            <div className="container m-auto">
+            <div>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                    <InvoiceSaleAndDueDates form={form} />
+                    <PaymentTripleBox form={form} />
+                    {/* <div>
+                        <FormField
+                            control={form.control}
+                            name="issue_date"
+                            render={({ field }) => {
+                                return (
+                                    <FormItem className="flex-1">
+                                        <FormLabel>Seller</FormLabel>
+                                        <FormControl>
+                                            <ContractorsSelectInput
+                                                onChange={({ contractorId }) => {
+                                                    field.onChange(contractorId);
+                                                    form.trigger('seller_id');
+                                                }}
+                                                selectedContractorId={field.value}
+                                                role={ContractorRole.SELLER}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                );
+                            }}
+                        />
+                    </div> */}
+                    <div className="flex flex-col gap-4 md:min-h-[126px] md:flex-row md:items-start">
+                        <FormField
+                            control={form.control}
+                            name="seller_id"
+                            render={({ field }) => {
+                                return (
+                                    <FormItem className="flex-1">
+                                        <FormLabel>Seller</FormLabel>
+                                        <FormControl>
+                                            <ContractorsSelectInput
+                                                onChange={({ contractorId }) => {
+                                                    field.onChange(contractorId);
+                                                    form.trigger('seller_id');
+                                                }}
+                                                selectedContractorId={field.value}
+                                                role={ContractorRole.SELLER}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                );
+                            }}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="buyer_id"
+                            render={({ field }) => {
+                                return (
+                                    <FormItem className="flex-1">
+                                        <FormLabel>Buyer</FormLabel>
+                                        <FormControl>
+                                            <ContractorsSelectInput
+                                                onChange={({ contractorId }) => {
+                                                    field.onChange(contractorId);
+                                                    form.trigger('buyer_id');
+                                                }}
+                                                selectedContractorId={field.value}
+                                                role={ContractorRole.BUYER}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                );
+                            }}
+                        />
+                    </div>
                     <div className="flex gap-4">
                         <FormField
                             control={form.control}
@@ -109,7 +186,7 @@ export const VatForm = () => {
                                 <FormItem>
                                     <FormLabel>Issue Date</FormLabel>
                                     <FormControl>
-                                        <Input type="date" {...field} />
+                                        <Input type="date" {...field} value={field.value ?? ''} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -117,44 +194,11 @@ export const VatForm = () => {
                         />
                     </div>
                     {/* Invoice Contractors */}
-                    <div className="flex gap-6">
+                    {/* <div className="bg-red flex">
                         {form.watch('invoice_contractors').map((contractor, idx) => (
                             <div key={idx} className="flex-1 space-y-2 rounded border p-4">
                                 <h2 className="mb-4 font-semibold">{contractor.role.toUpperCase()}</h2>
 
-                                <FormField
-                                    control={form.control}
-                                    name={`invoice_contractors.${idx}.name`}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <TooltipLabel
-                                                text="Name"
-                                                tooltipText="The invoice will be linked to the selected contractor"
-                                                isTooltipVisible={Boolean(contractor.id)}
-                                            />
-                                            <FormControl>
-                                                <ContractorsSelectInput
-                                                    highlighted={Boolean(contractor.id)}
-                                                    onChange={(contractor) => {
-                                                        if (contractor.__isNew__) {
-                                                            field.onChange(contractor.value);
-                                                            form.setValue(`invoice_contractors.${idx}.id`, undefined);
-                                                        } else {
-                                                            field.onChange(contractor.name);
-                                                            form.setValue(`invoice_contractors.${idx}.nip`, contractor.nip);
-                                                            form.setValue(`invoice_contractors.${idx}.email`, contractor.email);
-                                                            form.setValue(`invoice_contractors.${idx}.phone`, contractor.phone);
-                                                            form.setValue(`invoice_contractors.${idx}.id`, contractor.id);
-                                                            form.trigger(`invoice_contractors.${idx}`);
-                                                        }
-                                                    }}
-                                                    value={field.value}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
                                 <FormField
                                     control={form.control}
                                     name={`invoice_contractors.${idx}.nip`}
@@ -194,10 +238,36 @@ export const VatForm = () => {
                                         </FormItem>
                                     )}
                                 />
+                                <FormField
+                                    control={form.control}
+                                    name={`invoice_contractors.${idx}.phone`}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Phone</FormLabel>
+                                            <FormControl>
+                                                <Select>
+                                                    <SelectTrigger className="w-[180px]">
+                                                        <SelectValue placeholder="Select a fruit" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            <SelectLabel>Fruits</SelectLabel>
+                                                            <SelectItem value="apple">Apple</SelectItem>
+                                                            <SelectItem value="banana">Banana</SelectItem>
+                                                            <SelectItem value="blueberry">Blueberry</SelectItem>
+                                                            <SelectItem value="grapes">Grapes</SelectItem>
+                                                            <SelectItem value="pineapple">Pineapple</SelectItem>
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
                             </div>
                         ))}
-                    </div>
-
+                    </div> */}
                     {/* Invoice Items */}
                     {/* {fields.map((invoiceItem, idx) => (
                         <div key={idx} className="relative rounded border p-4">
@@ -284,13 +354,11 @@ export const VatForm = () => {
                     {/* <Button type="button" onClick={() => append({ name: '', net_price: 0, quantity: 1, vat: 0 })}>
                         Add new InvoiceItem
                     </Button> */}
-
                     {/* <div>
                         <span>Total: {total}</span>
                     </div> */}
-
                     {form.formState.errors.root?.message}
-                    <Button type="submit" className="cursor-pointer">
+                    <Button type="submit" className="cursor-pointer" disabled={form.formState.isSubmitting}>
                         Submit
                     </Button>
                 </form>

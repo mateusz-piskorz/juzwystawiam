@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\HTTP\Services\InvoiceValidationRulesFactory;
 use App\Models\Invoice;
 use App\Models\InvoiceContractor;
 use App\Rules\ContractorBelongsToUser;
-use App\Services\InvoiceValidationRulesFactory;
 use Illuminate\Http\Request;
-use App\Models\Contractor;
 
 class InvoiceController extends Controller
 {
@@ -33,20 +32,18 @@ class InvoiceController extends Controller
     {
         $type = $request->input('type');
         $rules = InvoiceValidationRulesFactory::getRules($type);
-        $rules['contractors.*.contractor_id'] = ['nullable', new ContractorBelongsToUser($request->input('user_id'))];
+        $rules['invoice_contractors.*.contractor_id'] = [new ContractorBelongsToUser($request->user()->id)];
         $validated = $request->validate($rules);
 
-
-        $invoice = Invoice::create($validated);
+        $invoice = Invoice::create([ ...$validated, 'user_id' => $request->user()->id]);
 
         // handle items
         // foreach ($validated['items'] as $itemData) {
         //     $invoice->items()->create($itemData);
         // }
 
-        // create contractors
-        foreach ($validated['contractors'] as $contractorData) {
-            $invoice = InvoiceContractor::create($contractorData);
+        foreach ($validated['invoice_contractors'] as $contractorData) {
+            $invoiceContractor = InvoiceContractor::create([ ...$contractorData, 'invoice_id' => $invoice->id]);
         }
 
         return response()->json($invoice->load(['invoice_contractors']), 201);

@@ -7,6 +7,7 @@ import { baseInvoiceSchema } from './base-invoice-schema';
 export const vatSchema = baseInvoiceSchema.merge(
     z.object({
         type: z.literal(InvoiceType.VAT),
+
         // invoice_items: z.array(invoiceItemWithVat).min(1, 'At least one item is required'),
     }),
 );

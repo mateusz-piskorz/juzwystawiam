@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Contractor } from '@/lib/types';
 import { apiFetch } from '@/lib/utils/api-fetch';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
@@ -11,15 +12,16 @@ import { z } from 'zod';
 import { Checkbox } from '../ui/checkbox';
 
 const formSchema = z.object({
-    name: z.string().min(1),
     is_own_company: z.boolean(),
-    nip: z.string().min(1),
-    address: z.string().nullable(),
-    city: z.string().nullable(),
-    postal_code: z.string().nullable(),
-    country: z.string().nullable(),
-    email: z.string().email().nullable(),
-    phone: z.string().nullable(),
+    name: z.string().nonempty(),
+    nip: z.string().nonempty(),
+    postal_code: z.string().nonempty(),
+    building_number: z.string().nonempty(),
+    city: z.string().nonempty(),
+    street_name: z.string().nonempty().nullish(),
+    email: z.string().email().nullish(),
+    country: z.string().nonempty().nullish(),
+    phone: z.string().nonempty().nullish(),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
@@ -27,25 +29,15 @@ type FormSchema = z.infer<typeof formSchema>;
 type Props = {
     open: boolean;
     setOpen: (val: boolean) => void;
-    defaultValues?: FormSchema;
+    defaultValues?: Partial<FormSchema>;
     contractorId?: string;
-    refetch: () => void;
+    onSuccess?: (contractor: Contractor) => void;
 };
 
-export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contractorId, refetch }: Props) => {
+export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contractorId, onSuccess }: Props) => {
     const form = useForm<FormSchema>({
         resolver: zodResolver(formSchema),
-        defaultValues: defaultValues || {
-            name: '',
-            is_own_company: false,
-            nip: '',
-            address: '',
-            city: '',
-            postal_code: '',
-            country: '',
-            email: '',
-            phone: '',
-        },
+        defaultValues,
     });
 
     useEffect(() => {
@@ -55,13 +47,13 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         const url = contractorId ? `/api/contractors/${contractorId}` : '/api/contractors';
-        const res = await apiFetch(url, { method: contractorId ? 'PUT' : 'POST', body: JSON.stringify(values) });
-
-        if (res.ok) {
+        try {
+            const contractor = await apiFetch<Contractor>(url, { method: contractorId ? 'PUT' : 'POST', body: JSON.stringify(values) });
             toast.success(`Contractor ${contractorId ? 'updated' : 'created'} successfully`);
-            refetch();
+            onSuccess?.(contractor);
             setOpen(false);
-        } else {
+        } catch (error: unknown) {
+            console.error(error);
             toast.error('Something went wrong');
         }
     }
@@ -74,19 +66,27 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                     <DialogDescription>Fill in the details below to {contractorId ? 'update' : 'create'} an contractor.</DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                    <form
+                        onSubmit={(event) => {
+                            event.stopPropagation();
+                            form.handleSubmit(onSubmit)(event);
+                        }}
+                        className="space-y-8"
+                    >
                         <FormField
                             control={form.control}
                             name="name"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Name</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
+                            render={({ field }) => {
+                                return (
+                                    <FormItem>
+                                        <FormLabel>Name</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} value={field.value || ''} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                );
+                            }}
                         />
                         <FormField
                             control={form.control}
@@ -108,25 +108,72 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                                 <FormItem>
                                     <FormLabel>NIP</FormLabel>
                                     <FormControl>
-                                        <Input {...field} />
+                                        <Input {...field} value={field.value || ''} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Email</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} value={String(field.value)} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+
+                        <div>
+                            <h3>Dane Adresowe</h3>
+                            <div className="flex gap-4">
+                                <FormField
+                                    control={form.control}
+                                    name="street_name"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Nazwa ulicy</FormLabel>
+                                            <FormControl>
+                                                <Input {...field} value={field.value || ''} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="building_number"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Numer budynku</FormLabel>
+                                            <FormControl>
+                                                <Input {...field} value={field.value || ''} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                            <div className="flex gap-4">
+                                <FormField
+                                    control={form.control}
+                                    name="postal_code"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Kod pocztowy</FormLabel>
+                                            <FormControl>
+                                                <Input {...field} value={field.value || ''} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="city"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Nazwa Miejscowości</FormLabel>
+                                            <FormControl>
+                                                <Input {...field} value={field.value || ''} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        </div>
 
                         <Button type="submit">Submit</Button>
                     </form>

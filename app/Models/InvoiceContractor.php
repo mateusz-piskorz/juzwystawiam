@@ -13,6 +13,7 @@ class InvoiceContractor extends Model
         'invoice_id',
         'contractor_id',
         'is_own_company',
+        'role',
         'name',
         'nip',
         'address',

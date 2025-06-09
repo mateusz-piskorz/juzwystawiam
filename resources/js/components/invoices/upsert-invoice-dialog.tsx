@@ -14,7 +14,7 @@ const formSchema = z.object({
     name: z.string().min(1, 'Name is required'),
     is_own_company: z.boolean(),
     nip: z.string().min(1, 'Nip date is required'),
-    address: z.string().optional(),
+    building_number: z.string().optional(),
     city: z.string().optional(),
     postal_code: z.string().optional(),
     country: z.string().optional(),
@@ -95,6 +95,45 @@ export const UpsertInvoiceDialog = ({ open, setOpen, defaultValues, invoiceId, r
                         <FormField
                             control={form.control}
                             name="is_own_company"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Issue Date</FormLabel>
+                                    <FormControl>
+                                        <Checkbox onCheckedChange={(val) => field.onChange(val)} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="building_number"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Issue Date</FormLabel>
+                                    <FormControl>
+                                        <Checkbox onCheckedChange={(val) => field.onChange(val)} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="city"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Issue Date</FormLabel>
+                                    <FormControl>
+                                        <Checkbox onCheckedChange={(val) => field.onChange(val)} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="postal_code"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Issue Date</FormLabel>
