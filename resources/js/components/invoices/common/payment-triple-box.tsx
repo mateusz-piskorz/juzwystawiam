@@ -19,10 +19,10 @@ export const PaymentTripleBox = <T extends PaymentSchema>({ form }: Props<T>) =>
                     control={control}
                     name="payment_method"
                     render={({ field }) => (
-                        <FormItem className="z-10 inline-flex w-full min-w-[70px] overflow-x-hidden rounded-ss focus-within:outline focus-within:outline-solid">
+                        <FormItem className="z-10 inline-flex w-full min-w-[70px] overflow-x-hidden rounded-ss outline-[var(--webkit-focus-ring-color)] focus-within:outline focus-within:outline-solid">
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
-                                    <SelectTrigger className="h-full border-0 focus-visible:ring-0">
+                                    <SelectTrigger className="h-full rounded-none border-0 focus-visible:ring-0">
                                         <div className="flex flex-col items-start gap-1 truncate">
                                             {field.value && <FormLabel className="text-muted-foreground text-xs">Sposób płatności</FormLabel>}
                                             <SelectValue placeholder="Sposób płatności" />
@@ -47,10 +47,10 @@ export const PaymentTripleBox = <T extends PaymentSchema>({ form }: Props<T>) =>
                     control={control}
                     name="currency"
                     render={({ field }) => (
-                        <FormItem className="z-10 inline-flex w-2/4 min-w-[70px] overflow-x-hidden rounded-se focus-within:outline focus-within:outline-solid">
+                        <FormItem className="z-10 inline-flex w-2/4 min-w-[70px] overflow-x-hidden rounded-se outline-[var(--webkit-focus-ring-color)] focus-within:outline focus-within:outline-solid">
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
-                                    <SelectTrigger className="h-full border-0 focus-visible:ring-0">
+                                    <SelectTrigger className="h-full rounded-none border-0 focus-visible:ring-0">
                                         <div className="flex flex-col items-start gap-1 truncate">
                                             {field.value && <FormLabel className="text-muted-foreground text-xs">Waluta</FormLabel>}
                                             <SelectValue placeholder="Waluta" />
@@ -74,7 +74,7 @@ export const PaymentTripleBox = <T extends PaymentSchema>({ form }: Props<T>) =>
                 control={control}
                 name="is_already_paid"
                 render={({ field }) => (
-                    <FormItem className="flex h-[60px] flex-row items-center justify-between p-3">
+                    <FormItem className="flex h-[60px] flex-row items-center justify-between rounded-ee rounded-es p-3 outline-[var(--webkit-focus-ring-color)] focus-within:outline focus-within:outline-solid">
                         <div className="w-[calc(100%-32px)] space-y-0.5 truncate">
                             <FormLabel className="truncate">Faktura opłacona</FormLabel>
                             <FormDescription className="truncate">Oznacz fakturę jako opłaconą</FormDescription>
