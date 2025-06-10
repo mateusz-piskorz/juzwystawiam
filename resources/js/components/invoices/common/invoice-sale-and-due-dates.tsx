@@ -37,7 +37,7 @@ export const InvoiceSaleAndDueDates = <T extends RequiredFields = RequiredFields
                                     <Button
                                         variant={'outline'}
                                         className={cn(
-                                            'h-[60px] justify-start truncate rounded-none rounded-ss rounded-se border-0 bg-transparent pl-3 text-left font-normal outline-[var(--webkit-focus-ring-color)] focus-visible:ring-0 focus-visible:outline focus-visible:outline-solid',
+                                            'h-[60px] justify-start truncate rounded-none rounded-ss rounded-se border-0 bg-transparent pl-3 text-left font-normal outline-[var(--accent-foreground)] focus-visible:ring-0 focus-visible:outline focus-visible:outline-solid',
                                         )}
                                     >
                                         {field.value ? (
@@ -85,7 +85,7 @@ export const InvoiceSaleAndDueDates = <T extends RequiredFields = RequiredFields
                                     <Button
                                         variant={'outline'}
                                         className={cn(
-                                            'h-[60px] justify-start truncate rounded-none rounded-ee rounded-es border-0 bg-transparent pl-3 text-left font-normal outline-[var(--webkit-focus-ring-color)] focus-visible:ring-0 focus-visible:outline focus-visible:outline-solid',
+                                            'h-[60px] justify-start truncate rounded-none rounded-ee rounded-es border-0 bg-transparent pl-3 text-left font-normal outline-[var(--accent-foreground)] focus-visible:ring-0 focus-visible:outline focus-visible:outline-solid',
                                         )}
                                     >
                                         {field.value ? (

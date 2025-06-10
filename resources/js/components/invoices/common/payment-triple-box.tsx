@@ -3,6 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Currency, PaymentMethod } from '@/lib/constants/invoiceTypes';
+import { cn } from '@/lib/utils/cn';
 import { PaymentSchema } from '@/lib/zod/invoices/base-invoice-schema';
 import { UseFormReturn } from 'react-hook-form';
 
@@ -19,10 +20,16 @@ export const PaymentTripleBox = <T extends PaymentSchema>({ form }: Props<T>) =>
                     control={control}
                     name="payment_method"
                     render={({ field }) => (
-                        <FormItem className="z-10 inline-flex w-full min-w-[70px] overflow-x-hidden rounded-ss outline-[var(--webkit-focus-ring-color)] focus-within:outline focus-within:outline-solid">
+                        <FormItem className="hover:bg-accent z-10 block w-full min-w-[70px]">
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
-                                    <SelectTrigger className="h-full rounded-none border-0 focus-visible:ring-0">
+                                    <SelectTrigger
+                                        className={cn(
+                                            'focus-visible:ring-0',
+                                            'text-for h-full cursor-pointer rounded-none rounded-ss border-0',
+                                            'outline-[var(--accent-foreground)] focus-visible:outline focus-visible:outline-solid',
+                                        )}
+                                    >
                                         <div className="flex flex-col items-start gap-1 truncate">
                                             {field.value && <FormLabel className="text-muted-foreground text-xs">Sposób płatności</FormLabel>}
                                             <SelectValue placeholder="Sposób płatności" />
@@ -30,9 +37,9 @@ export const PaymentTripleBox = <T extends PaymentSchema>({ form }: Props<T>) =>
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    {Object.values(PaymentMethod).map((currency) => (
-                                        <SelectItem key={currency} value={currency}>
-                                            {currency}
+                                    {Object.values(PaymentMethod).map((paymentMethod) => (
+                                        <SelectItem key={paymentMethod} value={paymentMethod}>
+                                            {paymentMethod}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
@@ -45,12 +52,18 @@ export const PaymentTripleBox = <T extends PaymentSchema>({ form }: Props<T>) =>
 
                 <FormField
                     control={control}
-                    name="currency"
+                    name="payment_method"
                     render={({ field }) => (
-                        <FormItem className="z-10 inline-flex w-2/4 min-w-[70px] overflow-x-hidden rounded-se outline-[var(--webkit-focus-ring-color)] focus-within:outline focus-within:outline-solid">
+                        <FormItem className="hover:bg-accent z-10 block w-full min-w-[70px]">
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
-                                    <SelectTrigger className="h-full rounded-none border-0 focus-visible:ring-0">
+                                    <SelectTrigger
+                                        className={cn(
+                                            'focus-visible:ring-0',
+                                            'text-for h-full cursor-pointer rounded-none rounded-se border-0',
+                                            'outline-[var(--accent-foreground)] focus-visible:outline focus-visible:outline-solid',
+                                        )}
+                                    >
                                         <div className="flex flex-col items-start gap-1 truncate">
                                             {field.value && <FormLabel className="text-muted-foreground text-xs">Waluta</FormLabel>}
                                             <SelectValue placeholder="Waluta" />
@@ -74,14 +87,25 @@ export const PaymentTripleBox = <T extends PaymentSchema>({ form }: Props<T>) =>
                 control={control}
                 name="is_already_paid"
                 render={({ field }) => (
-                    <FormItem className="flex h-[60px] flex-row items-center justify-between rounded-ee rounded-es p-3 outline-[var(--webkit-focus-ring-color)] focus-within:outline focus-within:outline-solid">
-                        <div className="w-[calc(100%-32px)] space-y-0.5 truncate">
-                            <FormLabel className="truncate">Faktura opłacona</FormLabel>
-                            <FormDescription className="truncate">Oznacz fakturę jako opłaconą</FormDescription>
+                    <FormItem className="group hover:bg-accent">
+                        <div
+                            className={cn(
+                                'flex h-[60px] cursor-pointer flex-row items-center justify-between rounded-ee rounded-es p-3',
+                                'outline-[var(--accent-foreground)] focus-within:outline focus-within:outline-solid',
+                            )}
+                        >
+                            <div className="w-[calc(100%-32px)] space-y-0.5 truncate">
+                                <FormLabel className="truncate">Faktura opłacona</FormLabel>
+                                <FormDescription className="truncate">Oznacz fakturę jako opłaconą</FormDescription>
+                            </div>
+                            <FormControl>
+                                <Switch
+                                    className="dark:group-hover:data-[state=unchecked]:bg-background w-[32px]"
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                />
+                            </FormControl>
                         </div>
-                        <FormControl>
-                            <Switch className="w-[32px]" checked={field.value} onCheckedChange={field.onChange} />
-                        </FormControl>
                     </FormItem>
                 )}
             />
