@@ -1,8 +1,8 @@
 import { Contractor } from '@/lib/types';
 import { cn } from '@/lib/utils/cn';
-import { PencilLine, UserRound, UserRoundPlus } from 'lucide-react';
+import { UserRoundPlus } from 'lucide-react';
 import { OptionProps } from 'react-select';
-import { ContractorAddress } from './contractor-address';
+import { ContractorInfo } from './contractor-info';
 import { Option } from './types';
 
 type Props = {
@@ -26,19 +26,7 @@ export const CustomOption = ({ onEdit, props }: Props) => {
                     </div>
                 </>
             ) : (
-                <>
-                    <div className="flex items-start gap-2">
-                        <UserRound aria-label="user-icon" size={20} />
-                        <div>
-                            <h4 className="font-bold">{data.name}</h4>
-                            <ContractorAddress {...data} />
-                        </div>
-                    </div>
-                    <div className="flex flex-col items-end justify-between">
-                        <PencilLine size={20} className="cursor-pointer" onClick={() => onEdit(data)} />
-                        <p className="text-sm">NIP: {data.nip}</p>
-                    </div>
-                </>
+                <ContractorInfo {...data} onEdit={() => onEdit(data)} />
             )}
         </div>
     );

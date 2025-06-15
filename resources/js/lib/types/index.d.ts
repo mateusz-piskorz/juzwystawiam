@@ -1,5 +1,7 @@
 import type { LucideIcon } from 'lucide-react';
 import type { Config } from 'ziggy-js';
+import { MEASURE_UNIT } from '../constants/enums/measure-unit';
+import { VAT_RATE } from '../constants/enums/vat-rate';
 
 export interface Auth {
     user: User;
@@ -22,14 +24,14 @@ export interface NavItem {
     isActive?: boolean;
 }
 
-export interface SharedData {
+export type SharedData = {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
-    ziggy: Config & { location: string; query: { [key: string]: string | undefined } };
+    ziggy: Config & { location: string; query: { [key: string]: string } };
     sidebarOpen: boolean;
     [key: string]: unknown;
-}
+};
 
 export interface User {
     id: number;
@@ -104,6 +106,17 @@ export type Contractor = {
     created_at: string; // Date
 };
 
+export type Product = {
+    id: number;
+    user_id: number;
+    price: number;
+    measure_unit: MEASURE_UNIT;
+    vat_rate: VAT_RATE;
+    discount: number;
+    updated_at: string; // Date
+    created_at: string; // Date
+};
+
 export type InvoiceItem = {
     id: string;
     name: string;
@@ -118,4 +131,34 @@ export type InvoiceItem = {
     [key: string]: unknown;
 };
 
-type QueryValue = string | number | string[] | number[];
+export type QueryValue = string | number | string[] | number[];
+
+export type KeysInType<T, Type> = {
+    [K in keyof T]: T[K] extends ReadonlyArray ? never : T[K] extends Type ? K : never;
+}[keyof T];
+
+type Example = {
+    foo: string;
+    bar: {
+        baz: number;
+        arr: { deep: number; skip: string }[];
+    };
+    items: { price: number; label: number }[];
+};
+
+// works similar to FieldPath<FieldValues> but You can restrain a field to specific type e.g. Boolean|String|Date
+export type TypedFieldPath<T, Type, Prefix extends string = ''> = {
+    [K in keyof T]: T[K] extends ReadonlyArray<infer U> // If T[K] is an array of objects, add ${number} to the path and recurse
+        ? U extends object
+            ? TypedFieldPath<U, Type, `${Prefix}${K & string}.${number}.`>
+            : never
+        : // If T[K] matches Type, include the key (with prefix)
+          T[K] extends Type
+          ? `${Prefix}${K & string}`
+          : // If T[K] is an object, recurse (add prefix)
+            T[K] extends object
+            ? TypedFieldPath<T[K], Type, `${Prefix}${K & string}.`>
+            : never;
+}[keyof T];
+
+export type Nullable<T> = T | null | undefined;

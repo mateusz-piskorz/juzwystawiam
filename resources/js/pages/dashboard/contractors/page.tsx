@@ -1,27 +1,27 @@
-// import { ContractorsTable } from '@/components/contractors/contractors-table';
-// import AppLayout from '@/layouts/app-layout';
-// import { BreadcrumbItem } from '@/lib/types';
-// import { Head } from '@inertiajs/react';
-
 import { ContractorsTable } from '@/components/contractors/contractors-table';
 import AppLayout from '@/layouts/app-layout';
+import { MainContentLayout } from '@/layouts/main-content-layout';
 import { BreadcrumbItem } from '@/lib/types';
 import { Head } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
+        title: 'Dashboard',
+        href: '/dashboard',
+    },
+    {
         title: 'Contractors',
-        href: 'dashboard/contracotrs',
+        href: '/dashboard/contractors',
     },
 ];
 
-const ContractorsPage = (props: any) => {
-    console.log(props);
-
+const ContractorsPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Contractors" />
-            <ContractorsTable />
+            <MainContentLayout headerText="Contractors">
+                <ContractorsTable />
+            </MainContentLayout>
         </AppLayout>
     );
 };

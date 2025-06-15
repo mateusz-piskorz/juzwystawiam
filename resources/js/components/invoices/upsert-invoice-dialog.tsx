@@ -65,7 +65,13 @@ export const UpsertInvoiceDialog = ({ open, setOpen, defaultValues, invoiceId, r
                     <DialogDescription>Fill in the details below to {invoiceId ? 'update' : 'create'} an invoice.</DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                    <form
+                        onSubmit={(event) => {
+                            event.stopPropagation();
+                            form.handleSubmit(onSubmit)(event);
+                        }}
+                        className="space-y-8"
+                    >
                         <FormField
                             control={form.control}
                             name="name"

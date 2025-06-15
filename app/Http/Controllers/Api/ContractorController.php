@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\TypeOfBusiness;
 use App\Http\Controllers\Controller;
 use App\Models\Contractor;
-use function Pest\Laravel\json;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class ContractorController extends Controller
 {
@@ -28,7 +29,7 @@ class ContractorController extends Controller
             'page'           => 'string|nullable',
             'id'             => $stringOrArray,
             'nip'            => $stringOrArray,
-            'name'           => $stringOrArray,
+            'company_name'   => $stringOrArray,
             'is_own_company' => $stringOrArray
         ]);
 
@@ -44,21 +45,24 @@ class ContractorController extends Controller
 
     }
 
-    // Store a new Contractor
+    // Store new Contractor
     public function store(Request $request)
     {
+
         // todo: check if nip is uniq in users scope
         $validated = $request->validate([
-            'is_own_company'  => 'boolean',
-            'name'            => 'required|string',
-            'nip'             => 'required|string', // todo: validate for 10 digits
-            'postal_code'     => 'string',
-            'building_number' => 'string',
-            'city'            => 'string',
-            'street_name'     => 'string|nullable',
-            'email'           => 'email|nullable',
-            'country'         => 'string|nullable',
-            'phone'           => 'string|nullable'
+            'type_of_business' => ['required', Rule::enum(TypeOfBusiness::class)],
+            'is_own_company'   => 'boolean',
+            'nip'              => 'required|string', // todo: validate for 10 digits
+            'postal_code'      => 'string|max:255',
+            'building_number'  => 'string|max:255',
+            'city'             => 'string|max:255',
+            'company_name'     => 'string|max:255|nullable',
+            'email'            => 'email|nullable',
+            'street_name'      => 'string|max:255|nullable',
+            'country'          => 'string|max:255|nullable',
+            'first_name'       => 'string|max:255|nullable',
+            'surname'          => 'string|max:255|nullable'
         ]);
 
         $contractor = Contractor::create([ ...$validated, 'user_id' => $request->user()->id]);
@@ -71,16 +75,20 @@ class ContractorController extends Controller
     {
         Gate::authorize('update', $contractor);
 
+        // todo: check if nip is uniq in users scope
         $validated = $request->validate([
-            'name'           => 'required|string',
-            'is_own_company' => 'boolean',
-            'nip'            => 'required|string', // todo: validate for 10 digits
-            'address'        => 'string|nullable',
-            'city'           => 'string|nullable',
-            'postal_code'    => 'string|nullable',
-            'country'        => 'string|nullable',
-            'email'          => 'string|nullable',
-            'phone'          => 'string|nullable'
+            'type_of_business' => ['required', Rule::enum(TypeOfBusiness::class)],
+            'is_own_company'   => 'boolean',
+            'nip'              => 'required|string', // todo: validate for 10 digits
+            'postal_code'      => 'string|max:255',
+            'building_number'  => 'string|max:255',
+            'city'             => 'string|max:255',
+            'company_name'     => 'string|max:255|nullable',
+            'email'            => 'email|nullable',
+            'street_name'      => 'string|max:255|nullable',
+            'country'          => 'string|max:255|nullable',
+            'first_name'       => 'string|max:255|nullable',
+            'surname'          => 'string|max:255|nullable'
         ]);
 
         $contractor->update([ ...$validated, 'user_id' => $request->user()->id]);

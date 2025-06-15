@@ -1,5 +1,7 @@
-import { Currency, InvoiceType, PaymentMethod } from '@/lib/constants/invoiceTypes';
 import { z } from 'zod';
+import { Currency } from '../../enums/currency';
+import { InvoiceType } from '../../enums/invoice-type';
+import { PaymentMethod } from '../../enums/payment-method';
 
 // when submitting a form we should show that user selected a product or a contractor from his saved list,
 // if user gonna change some fields, this should update these fields in a saved product or contractor
@@ -39,18 +41,35 @@ export const paymentSchema = z.object({
 
 export type PaymentSchema = z.infer<typeof paymentSchema>;
 
+export const secretNoteSchema = z.object({
+    secret_note: z
+        .string()
+        .min(1, {
+            message: 'Secret note must be at least 1 character.',
+        })
+        .max(450, {
+            message: 'Secret note must not be longer than 450 characters.',
+        })
+        .optional(),
+});
+
+export type SecretNoteSchema = z.infer<typeof secretNoteSchema>;
+
+export const numberAndDateSchema = z.object({
+    number: z.string().min(1, 'Invoice number is required'),
+    issue_date: z.date({ required_error: 'Issue date is required' }),
+});
+export type NumberAndDateSchema = z.infer<typeof numberAndDateSchema>;
+
 export const baseInvoiceSchema = z.object({
     type: z.nativeEnum(InvoiceType, { required_error: 'Invoice type is required' }),
-    number: z.string().min(1, 'Invoice number is required'),
-    issue_date: z.string().min(1, 'Issue date is required'),
     seller_id: z.number().min(1),
     buyer_id: z.number().min(1),
+    ...numberAndDateSchema.shape,
     ...paymentSchema.shape,
     ...saleAndDueSchema.shape,
-    // payment_method: z.nativeEnum(PaymentMethod, { required_error: 'Payment method is required' }),
-    // currency: z.nativeEnum(Currency, { required_error: 'Currency method is required' }),
-    // is_already_paid: z.boolean(),
-    // invoice_items: z.array(invoiceItem).min(1, 'At least one item is required'),
+    ...secretNoteSchema.shape,
+    invoice_items: z.array(invoiceItem).min(1, 'At least one item is required'),
 });
 
 export type BaseInvoiceSchema = z.infer<typeof baseInvoiceSchema>;

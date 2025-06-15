@@ -1,54 +1,39 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Form } from '@/components/ui/form';
+import { CreateContractorDTO, createContractorDTO } from '@/lib/constants/zod/contractors';
+import { upsertContractor } from '@/lib/data/contractors';
 import { Contractor } from '@/lib/types';
-import { apiFetch } from '@/lib/utils/api-fetch';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { Checkbox } from '../ui/checkbox';
-
-const formSchema = z.object({
-    is_own_company: z.boolean(),
-    name: z.string().nonempty(),
-    nip: z.string().nonempty(),
-    postal_code: z.string().nonempty(),
-    building_number: z.string().nonempty(),
-    city: z.string().nonempty(),
-    street_name: z.string().nonempty().nullish(),
-    email: z.string().email().nullish(),
-    country: z.string().nonempty().nullish(),
-    phone: z.string().nonempty().nullish(),
-});
-
-type FormSchema = z.infer<typeof formSchema>;
+import { InputField } from '../common/input-field';
+import { SwitchField } from '../common/switch-field';
 
 type Props = {
     open: boolean;
     setOpen: (val: boolean) => void;
-    defaultValues?: Partial<FormSchema>;
-    contractorId?: string;
+    defaultValues?: Partial<CreateContractorDTO>;
+    contractorId?: number;
     onSuccess?: (contractor: Contractor) => void;
 };
 
 export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contractorId, onSuccess }: Props) => {
-    const form = useForm<FormSchema>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<CreateContractorDTO>({
+        resolver: zodResolver(createContractorDTO),
         defaultValues,
     });
 
     useEffect(() => {
-        form.reset(defaultValues);
+        form.reset(defaultValues ?? { is_own_company: false });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [defaultValues, form.formState.isSubmitSuccessful]);
 
-    async function onSubmit(values: z.infer<typeof formSchema>) {
-        const url = contractorId ? `/api/contractors/${contractorId}` : '/api/contractors';
+    async function onSubmit(body: z.infer<typeof createContractorDTO>) {
         try {
-            const contractor = await apiFetch<Contractor>(url, { method: contractorId ? 'PUT' : 'POST', body: JSON.stringify(values) });
+            const contractor = await upsertContractor({ body, contractorId });
             toast.success(`Contractor ${contractorId ? 'updated' : 'created'} successfully`);
             onSuccess?.(contractor);
             setOpen(false);
@@ -63,7 +48,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
             <DialogContent className="max-h-full overflow-auto">
                 <DialogHeader>
                     <DialogTitle>{contractorId ? 'Update' : 'Create'} Contractor</DialogTitle>
-                    <DialogDescription>Fill in the details below to {contractorId ? 'update' : 'create'} an contractor.</DialogDescription>
+                    <DialogDescription>Fill in the details below to {contractorId ? 'update' : 'create'} contractor.</DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
                     <form
@@ -73,107 +58,22 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                         }}
                         className="space-y-8"
                     >
-                        <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => {
-                                return (
-                                    <FormItem>
-                                        <FormLabel>Name</FormLabel>
-                                        <FormControl>
-                                            <Input {...field} value={field.value || ''} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                );
-                            }}
-                        />
-                        <FormField
-                            control={form.control}
+                        <SwitchField
+                            form={form}
                             name="is_own_company"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Is Own Company</FormLabel>
-                                    <FormControl>
-                                        <Checkbox onCheckedChange={(val) => field.onChange(val)} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="nip"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>NIP</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} value={field.value || ''} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
+                            label="Is Own Company"
+                            description="Indicates whether the company is owned by the user"
                         />
 
-                        <div>
-                            <h3>Dane Adresowe</h3>
-                            <div className="flex gap-4">
-                                <FormField
-                                    control={form.control}
-                                    name="street_name"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Nazwa ulicy</FormLabel>
-                                            <FormControl>
-                                                <Input {...field} value={field.value || ''} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="building_number"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Numer budynku</FormLabel>
-                                            <FormControl>
-                                                <Input {...field} value={field.value || ''} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                            <div className="flex gap-4">
-                                <FormField
-                                    control={form.control}
-                                    name="postal_code"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Kod pocztowy</FormLabel>
-                                            <FormControl>
-                                                <Input {...field} value={field.value || ''} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="city"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Nazwa Miejscowości</FormLabel>
-                                            <FormControl>
-                                                <Input {...field} value={field.value || ''} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                        </div>
+                        <InputField form={form} name="name" label="Contractor name" />
+
+                        <InputField form={form} name="nip" label="NIP" />
+                        <InputField form={form} name="postal_code" label="Postal code" />
+                        <InputField form={form} name="city" label="City" />
+                        <InputField form={form} name="email" label="Email" />
+                        <InputField form={form} name="street_name" label="Street name" />
+                        <InputField form={form} name="country" label="Country" />
+                        <InputField form={form} name="phone" label="Phone" />
 
                         <Button type="submit">Submit</Button>
                     </form>

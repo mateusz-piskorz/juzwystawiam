@@ -2,10 +2,8 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { getContractors } from '@/lib/data/contractors';
+import { deleteContractor, getContractors } from '@/lib/data/contractors';
 import { usePage } from '@/lib/hooks/use-page';
-import { apiFetch } from '@/lib/utils/api-fetch';
-import { Contractor, Pagination, SharedData } from '@/types';
 import { router } from '@inertiajs/react';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -18,54 +16,43 @@ import {
     type SortingState,
     type VisibilityState,
 } from '@tanstack/react-table';
-import { ComponentProps, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'sonner';
 import { getColumns } from './columns';
 import { UpsertContractorDialog } from './upsert-contractor-dialog';
 
 export const ContractorsTable = () => {
     const {
-        props: { invoices, ziggy },
-    } = usePage<{ invoices: Pagination<Contractor> }>();
+        props: { ziggy },
+    } = usePage();
 
-    const { data, refetch } = useQuery<Pagination<Contractor>>({
+    const { data, refetch } = useQuery({
         queryKey: ['contractor-list', ziggy],
         queryFn: () => getContractors({ page: ziggy.query.page, limit: 10 }),
-        initialData: invoices,
     });
 
     const [open, setOpen] = useState(false);
-    const [defaultValues, setDefaultValues] = useState<ComponentProps<typeof UpsertContractorDialog>['defaultValues'] | undefined>(undefined);
-    const [selectedContractorId, setSelectedContractorId] = useState<string | undefined>(undefined);
+
+    const [selectedContractorId, setSelectedContractorId] = useState<number | undefined>(undefined);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = useState({});
 
-    const handleDeleteContractor = async (contractorId: string) => {
-        const res = await apiFetch(`/api/contractors/${contractorId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (res.ok) {
+    const handleDeleteContractor = async (contractorId: number) => {
+        try {
+            await deleteContractor({ contractorId });
             toast.success(`Contractor deleted successfully`);
             refetch();
             setOpen(false);
-        } else {
-            toast.error('Something went wrong');
+        } catch (err) {
+            toast.error(typeof err === 'string' ? err : 'Something went wrong');
         }
     };
 
-    const handleEditContractor = (contractorId: string) => {
+    const handleEditContractor = (contractorId: number) => {
         const contractor = data?.data.find((p) => p.id === contractorId);
         if (!contractor) return;
-
-        setDefaultValues({
-            ...contractor,
-        });
 
         setSelectedContractorId(contractorId);
         setOpen(true);
@@ -95,13 +82,12 @@ export const ContractorsTable = () => {
     });
 
     const handlePageChange = (action: 'prev' | 'next') => {
+        if (!data) return;
         const params = new URLSearchParams(ziggy.query);
         params.set('page', String(data.current_page + (action === 'next' ? 1 : -1)));
         router.replace({
             url: `${ziggy.location}?${params.toString()}`,
-            props: (currentProps: SharedData): SharedData => {
-                return { ...currentProps, ziggy: { ...ziggy, query: Object.fromEntries(params.entries()) } };
-            },
+            props: (currentProps) => ({ ...currentProps, ziggy: { ...ziggy, query: Object.fromEntries(params.entries()) } }),
         });
     };
 
@@ -111,19 +97,18 @@ export const ContractorsTable = () => {
                 open={open}
                 onSuccess={() => refetch()}
                 setOpen={setOpen}
-                defaultValues={defaultValues}
+                defaultValues={data?.data.find((e) => e.id === selectedContractorId)}
                 contractorId={selectedContractorId}
             />
 
-            <div className="rounded-md border">
-                <div className="flex items-center gap-4 p-4">
-                    <Input
-                        placeholder="Filter name..."
-                        value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-                        onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
-                        className="max-w-sm"
-                    />
-
+            <div className="flex items-center justify-between gap-4 pt-4 pb-6">
+                <Input
+                    placeholder="Filter name..."
+                    value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+                    onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
+                    className="max-w-sm"
+                />
+                <div className="flex items-center gap-2">
                     <DropdownMenu>
                         <div>
                             <DropdownMenuTrigger asChild>
@@ -151,7 +136,14 @@ export const ContractorsTable = () => {
                         </DropdownMenuContent>
                     </DropdownMenu>
 
-                    <Button className="cursor-pointer" onClick={() => setOpen(true)} variant="secondary">
+                    <Button
+                        className="cursor-pointer"
+                        onClick={() => {
+                            setSelectedContractorId(undefined);
+                            setOpen(true);
+                        }}
+                        variant="secondary"
+                    >
                         Create
                     </Button>
                     {table.getFilteredSelectedRowModel().rows.length > 0 && (
@@ -160,46 +152,46 @@ export const ContractorsTable = () => {
                         </div>
                     )}
                 </div>
-                <Table>
-                    <TableHeader>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <TableHead key={header.id}>
-                                            {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                                        </TableHead>
-                                    );
-                                })}
+            </div>
+            <Table>
+                <TableHeader>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                        <TableRow key={headerGroup.id}>
+                            {headerGroup.headers.map((header) => {
+                                return (
+                                    <TableHead key={header.id}>
+                                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                                    </TableHead>
+                                );
+                            })}
+                        </TableRow>
+                    ))}
+                </TableHeader>
+                <TableBody>
+                    {table.getRowModel().rows?.length ? (
+                        table.getRowModel().rows.map((row) => (
+                            <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+                                {row.getVisibleCells().map((cell) => (
+                                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                                ))}
                             </TableRow>
-                        ))}
-                    </TableHeader>
-                    <TableBody>
-                        {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
-                                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                                    ))}
-                                </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-                <div className="flex items-center justify-end space-x-2 py-4">
-                    <Button variant="outline" size="sm" onClick={() => handlePageChange('prev')} disabled={!data?.prev_page_url}>
-                        Previous
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={() => handlePageChange('next')} disabled={!data?.next_page_url}>
-                        Next
-                    </Button>
-                </div>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={columns.length} className="h-24 text-center">
+                                No results.
+                            </TableCell>
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+            <div className="flex items-center justify-end space-x-2 py-4">
+                <Button variant="outline" size="sm" onClick={() => handlePageChange('prev')} disabled={!data?.prev_page_url}>
+                    Previous
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => handlePageChange('next')} disabled={!data?.next_page_url}>
+                    Next
+                </Button>
             </div>
         </>
     );

@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Contractor;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ContractorPolicy
 {
@@ -61,6 +60,6 @@ class ContractorPolicy
      */
     public function forceDelete(User $user, Contractor $contractor): bool
     {
-        return false;
+        return $user->id === $contractor->user_id;
     }
 }

@@ -16,8 +16,8 @@ export const getColumns = ({
     handleEditContractor,
     handleDeleteContractor,
 }: {
-    handleEditContractor: (contractorId: string) => void;
-    handleDeleteContractor: (contractorId: string) => void;
+    handleEditContractor: (contractorId: number) => void;
+    handleDeleteContractor: (contractorId: number) => void;
 }): ColumnDef<Contractor>[] => [
     {
         accessorKey: 'id',
@@ -45,8 +45,8 @@ export const getColumns = ({
         header: 'postal_code',
     },
     {
-        accessorKey: 'address',
-        header: 'address',
+        accessorKey: 'street_name',
+        header: 'street_name',
     },
     {
         id: 'actions',
@@ -68,8 +68,8 @@ export const getColumns = ({
                                 Copy contractor ID
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => handleEditContractor(String(contractor.id))}>Edit Contractor</DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => handleDeleteContractor(String(contractor.id))}>Delete Contractor</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleEditContractor(contractor.id)}>Edit Contractor</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleDeleteContractor(contractor.id)}>Delete Contractor</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

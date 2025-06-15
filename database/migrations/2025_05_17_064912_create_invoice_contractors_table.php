@@ -15,7 +15,7 @@ return new class() extends Migration
             $table->id();
             $table->foreignId('invoice_id')->constrained()->onDelete('cascade');
             $table->foreignId('contractor_id')->constrained()->nullOnDelete();
-            $table->string('role'); // e.g. buyer, seller, recipient
+            $table->enum('role', ['seller', 'buyer']);
             $table->boolean('is_own_company')->default(false);
             $table->string('name');
             $table->string('nip');

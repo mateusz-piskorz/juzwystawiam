@@ -1,13 +1,20 @@
 import { VatForm } from '@/components/invoices/forms/vat-form';
 import AppLayout from '@/layouts/app-layout';
-import { InvoiceType } from '@/lib/constants/invoiceTypes';
+import { MainContentLayout } from '@/layouts/main-content-layout';
+import { InvoiceType } from '@/lib/constants/enums/invoice-type';
+
 import { usePage } from '@/lib/hooks/use-page';
 import { BreadcrumbItem } from '@/lib/types';
+import { Head } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
+        title: 'invoices',
+        href: '/dashboard/invoices',
+    },
+    {
         title: 'create invoice',
-        href: 'dashboard/invoices/create',
+        href: '/dashboard/invoices/create',
     },
 ];
 
@@ -38,10 +45,8 @@ const CreateInvoicePage = () => {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <div className="flex h-full flex-1 flex-col gap-8 rounded-xl p-4">
-                <h1 className="font-bold">Invoice Type: {invoice_type ?? InvoiceType.VAT}</h1>
-                <div>{invoiceForm}</div>
-            </div>
+            <Head title="Create invoice" />
+            <MainContentLayout className="p-0">{invoiceForm}</MainContentLayout>
         </AppLayout>
     );
 };
