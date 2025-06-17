@@ -1,19 +1,42 @@
 import { z } from 'zod';
+import { TypeOfBusiness } from '../enums/type-of-business';
 
-export const createContractorDTO = z.object({
-    is_own_company: z.boolean(),
-    name: z.string().nonempty().max(255),
-    nip: z
-        .string()
-        .nonempty()
-        .refine((val) => val.length === 5),
-    postal_code: z.string().nonempty().max(255),
-    building_number: z.string().nonempty().max(255),
-    city: z.string().nonempty().max(255),
-    email: z.string().email().optional(),
-    street_name: z.string().max(255).optional(),
-    country: z.string().max(255).optional(),
-    phone: z.string().optional(),
-});
+const { OTHER_BUSINESS, PRIVATE_PERSON, SELF_EMPLOYED } = TypeOfBusiness;
+
+export const createContractorDTO = z
+    .object({
+        type_of_business: z.nativeEnum(TypeOfBusiness),
+        is_own_company: z.boolean(),
+        nip: z
+            .string()
+            .refine((val) => val.length === 10)
+            .nullish(),
+        postal_code: z.string().nonempty().max(255),
+        building_number: z.string().nonempty().max(255),
+        city: z.string().nonempty().max(255),
+        country: z.string().max(255),
+        company_name: z.string().nonempty().max(255).nullish(),
+        email: z.string().email().nullish(),
+        street_name: z.string().max(255).nullish(),
+        phone: z.string().nullish(),
+        first_name: z.string().max(255).nullish(),
+        surname: z.string().max(255).nullish(),
+    })
+    .refine((data) => !(!data.nip && (data.type_of_business === SELF_EMPLOYED || data.type_of_business === OTHER_BUSINESS)), {
+        message: 'required',
+        path: ['nip'],
+    })
+    .refine((data) => !(!data.company_name && (data.type_of_business === SELF_EMPLOYED || data.type_of_business === OTHER_BUSINESS)), {
+        message: 'required',
+        path: ['company_name'],
+    })
+    .refine((data) => !(!data.first_name && (data.type_of_business === PRIVATE_PERSON || data.type_of_business === SELF_EMPLOYED)), {
+        message: 'required',
+        path: ['first_name'],
+    })
+    .refine((data) => !(!data.surname && (data.type_of_business === PRIVATE_PERSON || data.type_of_business === SELF_EMPLOYED)), {
+        message: 'required',
+        path: ['surname'],
+    });
 
 export type CreateContractorDTO = z.infer<typeof createContractorDTO>;

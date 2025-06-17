@@ -104,8 +104,8 @@ export const ContractorsTable = () => {
             <div className="flex items-center justify-between gap-4 pt-4 pb-6">
                 <Input
                     placeholder="Filter name..."
-                    value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-                    onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
+                    value={(table.getColumn('company_name')?.getFilterValue() as string) ?? ''}
+                    onChange={(event) => table.getColumn('company_name')?.setFilterValue(event.target.value)}
                     className="max-w-sm"
                 />
                 <div className="flex items-center gap-2">

@@ -1,22 +1,21 @@
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
-import { TypedFieldPath } from '@/lib/types';
+import { Nullable, TypedFieldPath } from '@/lib/types';
 import { cn } from '@/lib/utils/cn';
 
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 
-type FieldType = string;
+type FieldType = Nullable<string>;
 
 type Props<T extends FieldValues> = {
     form: UseFormReturn<T>;
     name: TypedFieldPath<T, FieldType>;
     className?: React.HTMLAttributes<'div'>['className'];
-    buttonClassName?: React.HTMLAttributes<'button'>['className'];
     selectOptions: { label: string; value: string }[];
     label: string;
 };
 
-export const SelectField = <T extends FieldValues>({ form, className, selectOptions, label, name: propsName, buttonClassName }: Props<T>) => {
+export const SelectField = <T extends FieldValues>({ form, className, selectOptions, label, name: propsName }: Props<T>) => {
     const name = propsName as string;
     const { control } = form as unknown as UseFormReturn<{ [x: string]: FieldType }>;
 
@@ -25,10 +24,16 @@ export const SelectField = <T extends FieldValues>({ form, className, selectOpti
             control={control}
             name={name}
             render={({ field }) => (
-                <FormItem className={cn('hover:bg-accent z-10 h-[60px] w-full min-w-[100px] rounded', className)}>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormItem
+                    className={cn(
+                        'hover:bg-accent z-10 h-[60px] w-full min-w-[100px] rounded border',
+                        'outline-[var(--accent-foreground)] focus-within:outline focus-within:outline-solid',
+                        className,
+                    )}
+                >
+                    <Select onValueChange={field.onChange} defaultValue={field.value ?? ''}>
                         <FormControl>
-                            <SelectTrigger className={cn('relative h-full cursor-pointer rounded', buttonClassName)}>
+                            <SelectTrigger className={cn('border-sidebar-ring relative h-full cursor-pointer border-none')}>
                                 <span className="invisible" />
                                 <div className="absolute flex w-[calc(100%-40px)] flex-col gap-1">
                                     <FormLabel className={cn('text-muted-foreground w-full truncate text-left', field.value && 'text-xs')}>

@@ -47,7 +47,12 @@ export const CurrencyField = <T extends FieldValues>({ form, label, name: propsN
                 field.value = Number(value);
                 const _change = field.onChange;
                 return (
-                    <FormItem className="hover:bg-accent relative z-10 block h-[60px] min-w-[100px] rounded">
+                    <FormItem
+                        className={cn(
+                            'hover:bg-accent relative z-10 block h-[60px] min-w-[100px] rounded border',
+                            'outline-[var(--accent-foreground)] focus-within:outline focus-within:outline-solid',
+                        )}
+                    >
                         <FormLabel className={cn('text-muted-foreground', 'absolute top-1/2 left-3 -translate-y-1/2', value && 'top-[18px] text-xs')}>
                             {label}
                         </FormLabel>

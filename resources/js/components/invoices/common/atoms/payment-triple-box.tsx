@@ -1,7 +1,7 @@
 import { SelectField } from '@/components/common/select-field';
 import { SwitchField } from '@/components/common/switch-field';
 import { Separator } from '@/components/ui/separator';
-import { Currency } from '@/lib/constants/enums/currency';
+import { CURRENCIES } from '@/lib/constants/currencies';
 import { PaymentMethod } from '@/lib/constants/enums/payment-method';
 import { PaymentSchema } from '@/lib/constants/zod/invoices/base-invoice-schema';
 import { cn } from '@/lib/utils/cn';
@@ -23,7 +23,7 @@ export const PaymentTripleBox = <T extends PaymentSchema>({ form: propsForm, cla
                     label="Sposób płatności"
                     selectOptions={Object.values(PaymentMethod).map((val) => ({ label: val, value: val }))}
                     className="flex-2/3 rounded-none"
-                    buttonClassName="rounded-none rounded-ss border-none"
+                    // buttonClassName="rounded-none rounded-ss border-none"
                 />
 
                 <Separator orientation="vertical" />
@@ -32,11 +32,12 @@ export const PaymentTripleBox = <T extends PaymentSchema>({ form: propsForm, cla
                     form={form}
                     name="currency"
                     label="Waluta"
-                    selectOptions={Object.values(Currency).map((val) => ({ label: val, value: val }))}
+                    selectOptions={CURRENCIES.map((val) => ({ label: val, value: val }))}
                     className="flex-1/3 rounded-none"
-                    buttonClassName="rounded-none rounded-se border-none"
+                    // buttonClassName="rounded-none rounded-se border-none"
                 />
             </div>
+
             <Separator orientation="horizontal" />
 
             <SwitchField

@@ -2,6 +2,7 @@ import type { LucideIcon } from 'lucide-react';
 import type { Config } from 'ziggy-js';
 import { MEASURE_UNIT } from '../constants/enums/measure-unit';
 import { VAT_RATE } from '../constants/enums/vat-rate';
+import { CreateContractorDTO } from '../constants/zod/contractors';
 
 export interface Auth {
     user: User;
@@ -89,19 +90,8 @@ export type Invoice = {
     updated_at: string;
 };
 
-export type Contractor = {
+export type Contractor = CreateContractorDTO & {
     id: number;
-    user_id: number;
-    is_own_company: boolean;
-    name: string;
-    nip: string;
-    postal_code: string;
-    building_number: string;
-    city: string;
-    street_name: string | null;
-    email: string | null;
-    country: string | null;
-    phone: string | null;
     updated_at: string; // Date
     created_at: string; // Date
 };

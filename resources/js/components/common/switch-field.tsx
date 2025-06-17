@@ -12,9 +12,10 @@ type Props<T extends FieldValues> = {
     label: string;
     className?: React.HTMLAttributes<'div'>['className'];
     description: string;
+    resetBorder?: boolean;
 };
 
-export const SwitchField = <T extends FieldValues>({ form, label, name: propsName, description, className }: Props<T>) => {
+export const SwitchField = <T extends FieldValues>({ form, label, name: propsName, description, className, resetBorder }: Props<T>) => {
     const name = propsName as string;
     const { control } = form as unknown as UseFormReturn<{ [x: string]: FieldType }>;
 
@@ -23,11 +24,12 @@ export const SwitchField = <T extends FieldValues>({ form, label, name: propsNam
             control={control}
             name={name}
             render={({ field }) => (
-                <FormItem className="group hover:bg-accent">
+                <FormItem className={cn('group hover:bg-accent', resetBorder && 'rounded-none', className)}>
                     <div
                         className={cn(
                             'relative flex h-[60px] flex-row items-center justify-between rounded border p-3',
                             'outline-[var(--accent-foreground)] focus-within:outline focus-within:outline-solid',
+                            resetBorder && 'rounded-none border-none',
                             className,
                         )}
                     >

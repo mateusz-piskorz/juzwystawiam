@@ -7,19 +7,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Contractor extends Model
 {
+
     protected $fillable = [
         'user_id',
+        'type_of_business',
         'is_own_company',
-        'name',
         'nip',
         'postal_code',
         'building_number',
         'city',
+        'country',
+        'company_name',
         'email',
         'street_name',
-        'country',
-        'email',
-        'phone'
+        'phone',
+        'first_name',
+        'surname'
     ];
 
     public function user(): BelongsTo

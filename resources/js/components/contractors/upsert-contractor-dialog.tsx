@@ -1,16 +1,21 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
+import { COUNTRIES } from '@/lib/constants/countries';
+import { TypeOfBusiness, TypeOfBusinessTranslation } from '@/lib/constants/enums/type-of-business';
 import { CreateContractorDTO, createContractorDTO } from '@/lib/constants/zod/contractors';
 import { upsertContractor } from '@/lib/data/contractors';
 import { Contractor } from '@/lib/types';
+import { cn } from '@/lib/utils/cn';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { InputField } from '../common/input-field';
-import { SwitchField } from '../common/switch-field';
+import { SelectField } from '../common/select-field';
+import { Separator } from '../ui/separator';
+import { ContractorTripleBox } from './contractor-triple-box';
 
 type Props = {
     open: boolean;
@@ -25,6 +30,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
         resolver: zodResolver(createContractorDTO),
         defaultValues,
     });
+    const isSelfEmployed = form.watch('type_of_business') === TypeOfBusiness.SELF_EMPLOYED;
 
     useEffect(() => {
         form.reset(defaultValues ?? { is_own_company: false });
@@ -45,7 +51,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className="max-h-full overflow-auto">
+            <DialogContent className="md:min-w-[700px]">
                 <DialogHeader>
                     <DialogTitle>{contractorId ? 'Update' : 'Create'} Contractor</DialogTitle>
                     <DialogDescription>Fill in the details below to {contractorId ? 'update' : 'create'} contractor.</DialogDescription>
@@ -58,24 +64,82 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                         }}
                         className="space-y-8"
                     >
-                        <SwitchField
+                        <SelectField
                             form={form}
-                            name="is_own_company"
-                            label="Is Own Company"
-                            description="Indicates whether the company is owned by the user"
+                            name="type_of_business"
+                            label="Rodzaj działalności gospodarczej"
+                            selectOptions={Object.values(TypeOfBusiness).map((val) => ({ label: TypeOfBusinessTranslation[val], value: val }))}
+                            className="border-sidebar-ring"
                         />
 
-                        <InputField form={form} name="name" label="Contractor name" />
+                        <ContractorTripleBox form={form} />
 
-                        <InputField form={form} name="nip" label="NIP" />
-                        <InputField form={form} name="postal_code" label="Postal code" />
-                        <InputField form={form} name="city" label="City" />
-                        <InputField form={form} name="email" label="Email" />
-                        <InputField form={form} name="street_name" label="Street name" />
-                        <InputField form={form} name="country" label="Country" />
-                        <InputField form={form} name="phone" label="Phone" />
+                        <div className="border-sidebar-ring rounded border">
+                            {isSelfEmployed && (
+                                <>
+                                    <div className="flex h-[60px]">
+                                        <InputField
+                                            form={form}
+                                            name="first_name"
+                                            label="First name"
+                                            className="rounded-none rounded-ss rounded-se border-none"
+                                        />
+                                        <Separator orientation="vertical" />
+                                        <InputField form={form} name="surname" label="Surname" className="rounded-none rounded-se border-none" />
+                                    </div>
+                                    <Separator orientation="horizontal" />
+                                </>
+                            )}
 
-                        <Button type="submit">Submit</Button>
+                            <div className="flex h-[60px]">
+                                <InputField
+                                    form={form}
+                                    name="email"
+                                    label="Email"
+                                    type="email"
+                                    inputMode="email"
+                                    className={cn('rounded-none rounded-es border-none', !isSelfEmployed && 'rounded-ss')}
+                                />
+                                <Separator orientation="vertical" />
+                                <InputField
+                                    form={form}
+                                    name="phone"
+                                    label="Phone"
+                                    type="tel"
+                                    inputMode="numeric"
+                                    className={cn('rounded-none rounded-ee border-none', !isSelfEmployed && 'rounded-se')}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="border-sidebar-ring rounded border">
+                            <InputField form={form} name="city" label="City" className="rounded-none rounded-ss rounded-se border-none" />
+
+                            <Separator orientation="horizontal" />
+
+                            <InputField form={form} name="street_name" label="Street name" className="rounded-none border-none" />
+
+                            <Separator orientation="horizontal" />
+                            <div className="flex h-[60px]">
+                                <InputField form={form} name="postal_code" label="Postal code" className="rounded-none border-none" />
+                                <Separator orientation="vertical" />
+                                <InputField form={form} name="building_number" label="Building number" className="rounded-none border-none" />
+                            </div>
+                            <Separator orientation="horizontal" />
+                            <SelectField
+                                className="rounded-none rounded-ee rounded-es"
+                                form={form}
+                                name="country"
+                                label="Country"
+                                selectOptions={COUNTRIES.map((val) => ({
+                                    label: val,
+                                    value: val,
+                                }))}
+                            />
+                        </div>
+                        <div className="w-full text-right">
+                            <Button type="submit">{contractorId ? 'Update' : 'Create'} Contractor</Button>
+                        </div>
                     </form>
                 </Form>
             </DialogContent>

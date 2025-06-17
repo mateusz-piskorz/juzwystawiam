@@ -1,4 +1,5 @@
 import '../css/app.css';
+import '../css/main.css';
 
 import { initializeTheme } from '@/lib/hooks/use-appearance';
 import { createInertiaApp } from '@inertiajs/react';

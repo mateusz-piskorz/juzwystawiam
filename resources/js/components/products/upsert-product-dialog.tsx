@@ -35,8 +35,6 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
     }, [defaultValues, form.formState.isSubmitSuccessful]);
 
     async function onSubmit(body: CreateProductDTO) {
-        console.log('body', body);
-        return;
         try {
             const product = await upsertProduct({ body, productId });
             toast.success(`Product ${productId ? 'updated' : 'created'} successfully`);
@@ -50,7 +48,7 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className="max-h-full overflow-auto md:min-w-[700px]">
+            <DialogContent className="md:min-w-[700px]">
                 <DialogHeader>
                     <DialogTitle>{productId ? 'Update' : 'Create'} Product</DialogTitle>
                     <DialogDescription>Fill in the details below to {productId ? 'update' : 'create'} Product.</DialogDescription>
@@ -77,6 +75,7 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
                         />
 
                         <CurrencyField form={form} name="price" label="Product price" />
+
                         <div className="flex w-full flex-col gap-5 sm:flex-row">
                             <SelectField
                                 form={form}

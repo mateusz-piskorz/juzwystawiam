@@ -52,17 +52,38 @@ class ContractorController extends Controller
         // todo: check if nip is uniq in users scope
         $validated = $request->validate([
             'type_of_business' => ['required', Rule::enum(TypeOfBusiness::class)],
-            'is_own_company'   => 'boolean',
-            'nip'              => 'required|string', // todo: validate for 10 digits
-            'postal_code'      => 'string|max:255',
-            'building_number'  => 'string|max:255',
-            'city'             => 'string|max:255',
-            'company_name'     => 'string|max:255|nullable',
-            'email'            => 'email|nullable',
-            'street_name'      => 'string|max:255|nullable',
-            'country'          => 'string|max:255|nullable',
-            'first_name'       => 'string|max:255|nullable',
-            'surname'          => 'string|max:255|nullable'
+            'is_own_company'   => ['required', 'boolean'],
+            'nip'              => [
+                'nullable',
+                'string',
+                'size:10',
+                'required_if:type_of_business,SELF_EMPLOYED,OTHER_BUSINESS'
+            ],
+            'postal_code'      => ['required', 'string', 'max:255'],
+            'building_number'  => ['required', 'string', 'max:255'],
+            'city'             => ['required', 'string', 'max:255'],
+            'country'          => ['required', 'string', 'max:255'],
+            'company_name'     => [
+                'nullable',
+                'string',
+                'max:255',
+                'required_if:type_of_business,SELF_EMPLOYED,OTHER_BUSINESS'
+            ],
+            'email'            => ['nullable', 'email'],
+            'street_name'      => ['nullable', 'string', 'max:255'],
+            'phone'            => ['nullable', 'string'],
+            'first_name'       => [
+                'nullable',
+                'string',
+                'max:255',
+                'required_if:type_of_business,PRIVATE_PERSON,OTHER_BUSINESS'
+            ],
+            'surname'          => [
+                'nullable',
+                'string',
+                'max:255',
+                'required_if:type_of_business,PRIVATE_PERSON,OTHER_BUSINESS'
+            ]
         ]);
 
         $contractor = Contractor::create([ ...$validated, 'user_id' => $request->user()->id]);
@@ -78,17 +99,38 @@ class ContractorController extends Controller
         // todo: check if nip is uniq in users scope
         $validated = $request->validate([
             'type_of_business' => ['required', Rule::enum(TypeOfBusiness::class)],
-            'is_own_company'   => 'boolean',
-            'nip'              => 'required|string', // todo: validate for 10 digits
-            'postal_code'      => 'string|max:255',
-            'building_number'  => 'string|max:255',
-            'city'             => 'string|max:255',
-            'company_name'     => 'string|max:255|nullable',
-            'email'            => 'email|nullable',
-            'street_name'      => 'string|max:255|nullable',
-            'country'          => 'string|max:255|nullable',
-            'first_name'       => 'string|max:255|nullable',
-            'surname'          => 'string|max:255|nullable'
+            'is_own_company'   => ['required', 'boolean'],
+            'nip'              => [
+                'nullable',
+                'string',
+                'size:10',
+                'required_if:type_of_business,SELF_EMPLOYED,OTHER_BUSINESS'
+            ],
+            'postal_code'      => ['required', 'string', 'max:255'],
+            'building_number'  => ['required', 'string', 'max:255'],
+            'city'             => ['required', 'string', 'max:255'],
+            'country'          => ['required', 'string', 'max:255'],
+            'company_name'     => [
+                'nullable',
+                'string',
+                'max:255',
+                'required_if:type_of_business,SELF_EMPLOYED,OTHER_BUSINESS'
+            ],
+            'email'            => ['nullable', 'email'],
+            'street_name'      => ['nullable', 'string', 'max:255'],
+            'phone'            => ['nullable', 'string'],
+            'first_name'       => [
+                'nullable',
+                'string',
+                'max:255',
+                'required_if:type_of_business,PRIVATE_PERSON,OTHER_BUSINESS'
+            ],
+            'surname'          => [
+                'nullable',
+                'string',
+                'max:255',
+                'required_if:type_of_business,PRIVATE_PERSON,OTHER_BUSINESS'
+            ]
         ]);
 
         $contractor->update([ ...$validated, 'user_id' => $request->user()->id]);

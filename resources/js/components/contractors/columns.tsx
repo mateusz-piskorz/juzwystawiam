@@ -24,30 +24,20 @@ export const getColumns = ({
         header: 'ID',
     },
     {
-        accessorKey: 'name',
+        accessorKey: 'company_name',
         header: ({ column }) => (
             <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-                Name
+                company name
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
+        accessorFn: (p) => p.company_name ?? `${p.first_name} ${p.surname}`,
     },
     {
-        accessorKey: 'nip',
-        header: 'Nip',
+        accessorKey: 'country',
+        header: 'Country',
     },
-    {
-        accessorKey: 'city',
-        header: 'city',
-    },
-    {
-        accessorKey: 'postal_code',
-        header: 'postal_code',
-    },
-    {
-        accessorKey: 'street_name',
-        header: 'street_name',
-    },
+
     {
         id: 'actions',
         cell: ({ row }) => {

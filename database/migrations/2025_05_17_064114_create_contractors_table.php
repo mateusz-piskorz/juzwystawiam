@@ -17,14 +17,14 @@ return new class() extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('type_of_business', array_column(TypeOfBusiness::cases(), 'value'));
             $table->boolean('is_own_company')->default(false);
-            $table->string('nip');
             $table->string('postal_code');
             $table->string('building_number');
             $table->string('city');
+            $table->string('country');
+            $table->string('nip')->nullable();
             $table->string('company_name')->nullable();
             $table->string('email')->nullable();
             $table->string('street_name')->nullable();
-            $table->string('country')->nullable();
             $table->string('phone')->nullable();
             $table->string('first_name')->nullable();
             $table->string('surname')->nullable();
