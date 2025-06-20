@@ -1,5 +1,5 @@
 export enum MEASURE_UNIT {
-    PCS = 'pcs',
-    HOUR = 'hour',
-    SERVICE = 'service',
+    PCS = 'PCS',
+    HOUR = 'HOUR',
+    SERVICE = 'SERVICE',
 }

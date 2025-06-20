@@ -1,8 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
 import type { Config } from 'ziggy-js';
-import { MEASURE_UNIT } from '../constants/enums/measure-unit';
-import { VAT_RATE } from '../constants/enums/vat-rate';
-import { CreateContractorDTO } from '../constants/zod/contractors';
 
 export interface Auth {
     user: User;
@@ -60,66 +57,6 @@ export interface Pagination<T = Record<string, unknown>> {
     to: number | null;
     total: number;
 }
-
-export type Todo = {
-    id: string;
-    title: string;
-    description: string;
-    completed: boolean;
-    timestamp: string;
-};
-
-export type Invoice = {
-    id: string;
-    user_id: string;
-    number: string;
-    type: string;
-    issue_date: string;
-    sale_date: string | null;
-    due_date: string | null;
-    total_paid: string | null;
-    status: string | null;
-    payment_method: string | null;
-    currency: string | null;
-    language: string | null;
-    notes: string | null;
-    template: string | null;
-    contractors: Contractor[];
-    items: InvoiceItem[];
-    created_at: string;
-    updated_at: string;
-};
-
-export type Contractor = CreateContractorDTO & {
-    id: number;
-    updated_at: string; // Date
-    created_at: string; // Date
-};
-
-export type Product = {
-    id: number;
-    user_id: number;
-    price: number;
-    measure_unit: MEASURE_UNIT;
-    vat_rate: VAT_RATE;
-    discount: number;
-    updated_at: string; // Date
-    created_at: string; // Date
-};
-
-export type InvoiceItem = {
-    id: string;
-    name: string;
-    quantity: number;
-    unit?: string | null;
-    net_price: string;
-    gross_price: string;
-    vat_rate?: string | null;
-    pkwiu?: string | null;
-    gtu?: string | null;
-    discount?: string | null;
-    [key: string]: unknown;
-};
 
 export type QueryValue = string | number | string[] | number[];
 

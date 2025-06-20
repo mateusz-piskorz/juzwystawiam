@@ -1,28 +1,27 @@
 import { CreatableSelect } from '@/components/common/creatable-select';
 import { UpsertContractorDialog } from '@/components/contractors/upsert-contractor-dialog';
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
-
 import { ContractorRole } from '@/lib/constants/enums/contractor-role';
+import { ContractorsSchema } from '@/lib/constants/zod/invoices/base-invoice-schema';
 import { getContractors } from '@/lib/data/contractors';
 import { TypedFieldPath } from '@/lib/types';
 import { useQuery } from '@tanstack/react-query';
 import { ComponentProps, useState } from 'react';
-import { FieldValues, UseFormReturn } from 'react-hook-form';
-import { ContractorInfo } from './contractor-info';
+import { UseFormReturn } from 'react-hook-form';
 import { CustomOption } from './custom-option';
 import { Option } from './types';
 
-type FieldType = string;
+type FieldType = number;
 
-type Props<T extends FieldValues> = {
+type Props<T extends ContractorsSchema> = {
     form: UseFormReturn<T>;
     name: TypedFieldPath<T, FieldType>;
     role: ContractorRole;
     label: string;
 };
 
-export const ProductsSelectField = <T extends FieldValues>({ form, name: propName, role, label }: Props<T>) => {
-    const name = propName as string;
+export const ContractorsSelectField = <T extends ContractorsSchema>({ form, name: propsName, role, label }: Props<T>) => {
+    const name = propsName as string;
     const { control, watch, setValue } = form as unknown as UseFormReturn<{ [x: string]: FieldType }>;
     const selectedContractorId = watch(name);
 
@@ -34,19 +33,12 @@ export const ProductsSelectField = <T extends FieldValues>({ form, name: propNam
             getContractors({
                 limit: 1000,
                 is_own_company: role === ContractorRole.SELLER ? 'true' : 'false',
-            }).then((res) => res.data.map((c) => ({ ...c, label: c.name, value: c.id }))),
+            }).then((res) => res.data.map((c) => ({ ...c, label: c.company_name || `${c.first_name} ${c.surname}`, value: c.id }))),
     });
-
-    const selectedContractor = data?.find((e) => e.id === selectedContractorId);
 
     return (
         <>
-            <UpsertContractorDialog
-                defaultValues={defaultValues}
-                open={open}
-                setOpen={setOpen}
-                onSuccess={({ id }) => setValue(name, id as unknown as string)}
-            />
+            <UpsertContractorDialog defaultValues={defaultValues} open={open} setOpen={setOpen} onSuccess={({ id }) => setValue(name, id)} />
             <div className="w-full space-y-2">
                 <FormField
                     control={control}
@@ -73,7 +65,7 @@ export const ProductsSelectField = <T extends FieldValues>({ form, name: propNam
                                         onChange={(val) => {
                                             const data = val as Option;
                                             if (data.__isNew__) {
-                                                setDefaultValues({ name: data.value });
+                                                setDefaultValues({ company_name: data.value });
                                                 setOpen(true);
                                             } else {
                                                 field.onChange(data.id);
@@ -86,8 +78,6 @@ export const ProductsSelectField = <T extends FieldValues>({ form, name: propNam
                         );
                     }}
                 />
-
-                {selectedContractor && <ContractorInfo className="px-2 py-2" {...selectedContractor} />}
             </div>
         </>
     );

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\HTTP\Services\InvoiceValidationRulesFactory;
 use App\Models\Invoice;
 use App\Models\InvoiceContractor;
-use App\Rules\ContractorBelongsToUser;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -31,10 +30,8 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $type = $request->input('type');
-        $rules = InvoiceValidationRulesFactory::getRules($type);
-        $rules['invoice_contractors.*.contractor_id'] = [new ContractorBelongsToUser($request->user()->id)];
+        $rules = InvoiceValidationRulesFactory::getRules($type, $request->user()->id);
         $validated = $request->validate($rules);
-
         $invoice = Invoice::create([ ...$validated, 'user_id' => $request->user()->id]);
 
         // handle items
@@ -52,16 +49,16 @@ class InvoiceController extends Controller
     // Update an invoice
     public function update(Request $request, $id)
     {
-        $type = $request->input('type');
-        $rules = InvoiceValidationRulesFactory::getRules($type);
-        $invoice = Invoice::findOrFail($id);
+        // $type = $request->input('type');
+        // $rules = InvoiceValidationRulesFactory::getRules($type, );
+        // $invoice = Invoice::findOrFail($id);
 
-        $rules['contractors.*.contractor_id'] = ['nullable', new ContractorBelongsToUser($request->input('user_id'))];
-        $validated = $request->validate($rules);
+        // // $rules['contractors.*.contractor_id'] = ['nullable', new ContractorBelongsToUser($request->input('user_id'))];
+        // $validated = $request->validate($rules);
 
-        $invoice->update($validated);
+        // $invoice->update($validated);
 
-        return response()->json($invoice);
+        return response()->json(['message' => 'update test']);
     }
 
     // Delete an invoice

@@ -1,10 +1,11 @@
-import { InvoiceType } from '@/constants/invoiceTypes';
 import { z } from 'zod';
+import { InvoiceType } from '../../enums/invoice-type';
 import { baseInvoiceSchema } from './base-invoice-schema';
 
 export const noVatSchema = baseInvoiceSchema.merge(
     z.object({
         type: z.literal(InvoiceType.NO_VAT),
-        no_vat_reason: z.string().optional(),
     }),
 );
+
+export type NoVatSchema = z.infer<typeof noVatSchema>;

@@ -1,26 +1,16 @@
 import { z } from 'zod';
 import { Currency } from '../../enums/currency';
 import { InvoiceType } from '../../enums/invoice-type';
+import { MEASURE_UNIT } from '../../enums/measure-unit';
 import { PaymentMethod } from '../../enums/payment-method';
 
-// when submitting a form we should show that user selected a product or a contractor from his saved list,
-// if user gonna change some fields, this should update these fields in a saved product or contractor
-// (if many same products we should take last one i think)
-
-// if user not gonna select a contractor or a product, but some fields gonna match with ones in saved list (e.g. contractor.nip/product.name)
-// we should prompt user to take an action: 'connect contractor/product from saved | create new contractor/product'
-
-export const invoiceItem = z.object({
-    name: z.string().min(1, 'Item name is required'),
-    quantity: z.coerce.number().min(1, 'Quantity must be at least 1'),
-    net_price: z.coerce.number({ required_error: 'Net price is required' }),
-
-    // unit: z.string().optional().nullable(),
-    // vat: z.coerce.number().optional(), // Add VAT property as optional (required for VAT invoices)
-    // gross_price: z.number({ required_error: 'Gross price is required' }),
-    // pkwiu: z.string().optional().nullable(),
-    // gtu: z.string().optional().nullable(),
-    // discount: z.number().optional().nullable(),
+export const invoiceProduct = z.object({
+    product_id: z.number().min(1).optional(),
+    name: z.string().min(1),
+    quantity: z.coerce.number().min(1),
+    price: z.coerce.number().min(0).optional(),
+    measure_unit: z.nativeEnum(MEASURE_UNIT),
+    discount: z.coerce.number().min(0).optional(),
 });
 
 export const saleAndDueSchema = z.object({
@@ -61,15 +51,20 @@ export const numberAndDateSchema = z.object({
 });
 export type NumberAndDateSchema = z.infer<typeof numberAndDateSchema>;
 
-export const baseInvoiceSchema = z.object({
-    type: z.nativeEnum(InvoiceType, { required_error: 'Invoice type is required' }),
+export const contractorsSchema = z.object({
     seller_id: z.number().min(1),
     buyer_id: z.number().min(1),
+});
+export type ContractorsSchema = z.infer<typeof contractorsSchema>;
+
+export const baseInvoiceSchema = z.object({
+    type: z.nativeEnum(InvoiceType, { required_error: 'Invoice type is required' }),
+    ...contractorsSchema.shape,
     ...numberAndDateSchema.shape,
     ...paymentSchema.shape,
     ...saleAndDueSchema.shape,
     ...secretNoteSchema.shape,
-    invoice_items: z.array(invoiceItem).min(1, 'At least one item is required'),
+    invoice_products: z.array(invoiceProduct).min(1, 'At least one item is required'),
 });
 
 export type BaseInvoiceSchema = z.infer<typeof baseInvoiceSchema>;

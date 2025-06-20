@@ -72,6 +72,7 @@ class ContractorController extends Controller
             'email'            => ['nullable', 'email'],
             'street_name'      => ['nullable', 'string', 'max:255'],
             'phone'            => ['nullable', 'string'],
+            'bank_account'     => ['nullable', 'string'],
             'first_name'       => [
                 'nullable',
                 'string',
@@ -119,6 +120,7 @@ class ContractorController extends Controller
             'email'            => ['nullable', 'email'],
             'street_name'      => ['nullable', 'string', 'max:255'],
             'phone'            => ['nullable', 'string'],
+            'bank_account'     => ['nullable', 'string'],
             'first_name'       => [
                 'nullable',
                 'string',

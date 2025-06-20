@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ContractorRole;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ return new class() extends Migration
             $table->id();
             $table->foreignId('invoice_id')->constrained()->onDelete('cascade');
             $table->foreignId('contractor_id')->constrained()->nullOnDelete();
-            $table->enum('role', ['seller', 'buyer']);
+            $table->enum('role', array_column(ContractorRole::cases(), 'value'));
             $table->boolean('is_own_company')->default(false);
             $table->string('name');
             $table->string('nip');

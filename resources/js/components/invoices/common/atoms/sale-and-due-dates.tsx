@@ -17,19 +17,12 @@ export const SaleAndDueDates = <T extends SaleAndDueSchema>({ form: propsForm, c
 
     return (
         <div className={cn('w-full rounded border', className)}>
-            <CalendarField
-                form={form}
-                name="sale_date"
-                label="Data sprzedaży"
-                buttonClassName="rounded-none rounded-ss rounded-se border-none"
-                className="rounded-none"
-            />
+            <CalendarField form={form} name="sale_date" label="Data sprzedaży" className="rounded-none rounded-ss rounded-se border-none" />
             <Separator />
             <CalendarField
                 form={form}
                 name="due_date"
-                className="rounded-none"
-                buttonClassName="rounded-none rounded-es rounded-ee border-none"
+                className="rounded-none rounded-ee rounded-es border-none"
                 saleDate={saleDate}
                 label="Termin zapłaty"
             />

@@ -14,13 +14,13 @@ type FieldType = Date;
 type Props<T extends FieldValues> = {
     form: UseFormReturn<T>;
     name: TypedFieldPath<T, FieldType>;
-    buttonClassName?: React.HTMLAttributes<'button'>['className'];
+
     className?: React.HTMLAttributes<'div'>['className'];
     saleDate?: Date | undefined;
     label: string;
 };
 
-export const CalendarField = <T extends FieldValues>({ form, name: propsName, saleDate, buttonClassName, label, className }: Props<T>) => {
+export const CalendarField = <T extends FieldValues>({ form, name: propsName, saleDate, label, className }: Props<T>) => {
     const name = propsName as string;
     const [open, setOpen] = useState(false);
     const { control } = form as unknown as UseFormReturn<{ [x: string]: FieldType }>;
@@ -30,7 +30,13 @@ export const CalendarField = <T extends FieldValues>({ form, name: propsName, sa
             control={control}
             name={name}
             render={({ field }) => (
-                <FormItem className={cn('hover:bg-accent flex flex-col rounded', className)}>
+                <FormItem
+                    className={cn(
+                        'hover:bg-accent flex flex-col rounded border',
+                        'outline-[var(--accent-foreground)] focus-within:outline focus-within:outline-solid',
+                        className,
+                    )}
+                >
                     <Popover open={open} onOpenChange={setOpen}>
                         <PopoverTrigger asChild>
                             <FormControl>
@@ -38,8 +44,7 @@ export const CalendarField = <T extends FieldValues>({ form, name: propsName, sa
                                     variant={'outline'}
                                     className={cn(
                                         'rounded hover:bg-transparent',
-                                        'h-[60px] justify-start truncate bg-transparent pl-3 text-left font-normal',
-                                        buttonClassName,
+                                        'h-[60px] justify-start truncate border-none bg-transparent pl-3 text-left font-normal',
                                     )}
                                 >
                                     {field.value ? (

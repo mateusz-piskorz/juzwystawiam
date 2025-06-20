@@ -3,7 +3,7 @@
 namespace App\Enums;
 
 enum TypeOfBusiness: string {
-    case PRIVATE_PERSON = 'private_person'; // osoba prywatna
-    case SELF_EMPLOYED = 'self_employed'; // jednosobowa działalność gospodarcza
-    case OTHER_BUSINESS = 'other_business'; // inna forma działalności
+    case PRIVATE_PERSON = 'PRIVATE_PERSON';
+    case SELF_EMPLOYED = 'SELF_EMPLOYED';
+    case OTHER_BUSINESS = 'OTHER_BUSINESS';
 }

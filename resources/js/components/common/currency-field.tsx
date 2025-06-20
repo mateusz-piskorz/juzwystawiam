@@ -1,7 +1,7 @@
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { TypedFieldPath } from '@/lib/types';
 import { cn } from '@/lib/utils/cn';
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { Input } from '../ui/input';
 
@@ -11,6 +11,7 @@ type Props<T extends FieldValues> = {
     form: UseFormReturn<T>;
     name: TypedFieldPath<T, FieldType>;
     label: string;
+    className?: React.HTMLAttributes<'div'>['className'];
 };
 
 const moneyFormatter = Intl.NumberFormat('pl-PL', {
@@ -22,9 +23,9 @@ const moneyFormatter = Intl.NumberFormat('pl-PL', {
     maximumFractionDigits: 2,
 });
 
-export const CurrencyField = <T extends FieldValues>({ form, label, name: propsName }: Props<T>) => {
+export const CurrencyField = <T extends FieldValues>({ form, label, name: propsName, className }: Props<T>) => {
     const name = propsName as string;
-    const { control, getValues } = form as unknown as UseFormReturn<{ [x: string]: FieldType }>;
+    const { control, getValues, watch } = form as unknown as UseFormReturn<{ [x: string]: FieldType }>;
 
     const initialValue = getValues(name) ? moneyFormatter.format(getValues(name)) : '';
 
@@ -39,6 +40,17 @@ export const CurrencyField = <T extends FieldValues>({ form, label, name: propsN
         realChangeFn(realValue);
     }
 
+    const valueW = watch(name);
+
+    useEffect(() => {
+        const watchedValue = valueW;
+        if (watchedValue !== undefined && watchedValue !== null) {
+            setValue(moneyFormatter.format(Number(watchedValue)));
+        } else {
+            setValue('');
+        }
+    }, [valueW]);
+
     return (
         <FormField
             control={control}
@@ -51,6 +63,7 @@ export const CurrencyField = <T extends FieldValues>({ form, label, name: propsN
                         className={cn(
                             'hover:bg-accent relative z-10 block h-[60px] min-w-[100px] rounded border',
                             'outline-[var(--accent-foreground)] focus-within:outline focus-within:outline-solid',
+                            className,
                         )}
                     >
                         <FormLabel className={cn('text-muted-foreground', 'absolute top-1/2 left-3 -translate-y-1/2', value && 'top-[18px] text-xs')}>
@@ -66,7 +79,7 @@ export const CurrencyField = <T extends FieldValues>({ form, label, name: propsN
                                     setValue(ev.target.value);
                                     handleChange(_change, ev.target.value);
                                 }}
-                                className={cn('h-full', value && 'pt-5')}
+                                className={cn('h-full border-none', value && 'pt-5')}
                             />
                         </FormControl>
                     </FormItem>

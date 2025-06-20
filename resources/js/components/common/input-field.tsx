@@ -15,9 +15,11 @@ type Props<T extends FieldValues, IT extends InputType> = {
     label: string;
     inputMode?: InputHTMLAttributes<''>['inputMode'];
     className?: React.HTMLAttributes<'div'>['className'];
+    onFocus?: () => void;
 };
 
 export const InputField = <T extends FieldValues, IT extends InputType>({
+    onFocus,
     form,
     label,
     name: propsName,
@@ -47,6 +49,7 @@ export const InputField = <T extends FieldValues, IT extends InputType>({
                     </FormLabel>
                     <FormControl>
                         <Input
+                            onFocus={onFocus}
                             {...field}
                             value={field.value || ''}
                             className={cn('h-full border-none', field.value && 'pt-5')}

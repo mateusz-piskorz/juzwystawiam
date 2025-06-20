@@ -1,7 +1,7 @@
 export enum TypeOfBusiness {
-    PRIVATE_PERSON = 'private_person',
-    SELF_EMPLOYED = 'self_employed',
-    OTHER_BUSINESS = 'other_business',
+    PRIVATE_PERSON = 'PRIVATE_PERSON',
+    SELF_EMPLOYED = 'SELF_EMPLOYED',
+    OTHER_BUSINESS = 'OTHER_BUSINESS',
 }
 
 export const TypeOfBusinessTranslation = {

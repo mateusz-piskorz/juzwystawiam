@@ -2,28 +2,21 @@
 
 namespace App\Http\Services;
 
+use App\Enums\ContractorRole;
+use App\Rules\ContractorBelongsToUser;
+use Illuminate\Validation\Rule;
+
 class InvoiceValidationRulesFactory
 {
-    public static function getRules(string $type): array
+    public static function getRules(string $type, string $userId): array
     {
         // Common rules for all invoices
         $common = [
-            'type'         => 'required|string|in:VAT,Proforma',
-            'number'       => 'required|string',
-            'issue_date'   => 'required|date',
-            // 'total_paid'   => 'required',
-
-            'invoice_contractors'  => 'required|array|min:2',
-            // 'invoice_contractors.*.contractor_id' => 'nullable|exists:contractors,id',
-            'invoice_contractors.*.role'          => 'required|in:buyer,seller',
-            'invoice_contractors.*.name'          => 'required|nullable',
-            'invoice_contractors.*.nip'           => 'required|nullable',
-            'invoice_contractors.*.email'         => 'required|email',
-            'invoice_contractors.*.phone'         => 'nullable|string',
-            // 'contractors.*.address'       => 'nullable|string',
-            // 'contractors.*.city'          => 'nullable|string',
-            // 'contractors.*.postal_code'   => 'nullable|string',
-            // 'contractors.*.country'       => 'nullable|string',
+            'type'                                => 'required|string|in:VAT,Proforma',
+            'number'                              => 'required|string',
+            'issue_date'                          => 'required|date',
+            'invoice_contractors.*.contractor_id' => ['required', new ContractorBelongsToUser($userId)],
+            'invoice_contractors.*.role'          => ['required', Rule::enum(ContractorRole::class)]
 
             // 'items'        => 'required|array|min:1',
             // 'items.*.name'      => 'required|string',
@@ -38,12 +31,12 @@ class InvoiceValidationRulesFactory
 
         // Type-specific rules
         $types = [
-            'VAT' => [
+            'VAT'      => [
                 // 'items.*.vat_rate'  => 'required|numeric',
                 // 'invoice_contractors.*.email'       => 'required|email', // this is an example, it's gonna override email rule from commons
             ],
             'Proforma' => [
-            ],
+            ]
         ];
 
         return array_merge($common, $types[$type] ?? []);

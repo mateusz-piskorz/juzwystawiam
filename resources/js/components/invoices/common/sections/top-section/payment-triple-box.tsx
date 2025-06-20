@@ -22,8 +22,7 @@ export const PaymentTripleBox = <T extends PaymentSchema>({ form: propsForm, cla
                     name="payment_method"
                     label="Sposób płatności"
                     selectOptions={Object.values(PaymentMethod).map((val) => ({ label: val, value: val }))}
-                    className="flex-2/3 rounded-none"
-                    // buttonClassName="rounded-none rounded-ss border-none"
+                    className="flex-2/3 rounded-none rounded-ss border-none"
                 />
 
                 <Separator orientation="vertical" />
@@ -33,8 +32,7 @@ export const PaymentTripleBox = <T extends PaymentSchema>({ form: propsForm, cla
                     name="currency"
                     label="Waluta"
                     selectOptions={CURRENCIES.map((val) => ({ label: val, value: val }))}
-                    className="flex-1/3 rounded-none"
-                    // buttonClassName="rounded-none rounded-se border-none"
+                    className="flex-1/3 rounded-none rounded-se border-none"
                 />
             </div>
 

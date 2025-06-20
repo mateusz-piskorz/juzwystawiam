@@ -21,6 +21,7 @@ return new class() extends Migration
             $table->string('building_number');
             $table->string('city');
             $table->string('country');
+            $table->string('bank_account')->nullable();
             $table->string('nip')->nullable();
             $table->string('company_name')->nullable();
             $table->string('email')->nullable();

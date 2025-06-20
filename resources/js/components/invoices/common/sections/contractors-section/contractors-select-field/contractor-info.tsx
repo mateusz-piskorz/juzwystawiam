@@ -2,18 +2,18 @@ import { Contractor } from '@/lib/types/index';
 import { cn } from '@/lib/utils/cn';
 import { PencilLine, User } from 'lucide-react';
 
-type Props = Pick<Contractor, 'building_number' | 'city' | 'postal_code' | 'street_name' | 'name' | 'nip'> & {
+type Props = Pick<Contractor, 'building_number' | 'city' | 'postal_code' | 'street_name' | 'company_name' | 'nip'> & {
     className?: string;
     onEdit?: () => void;
 };
 
-export const ContractorInfo = ({ building_number, city, postal_code, street_name, name, nip, className, onEdit }: Props) => {
+export const ContractorInfo = ({ building_number, city, postal_code, street_name, company_name, nip, className, onEdit }: Props) => {
     return (
         <>
             <div className={cn('flex w-full justify-between', className)}>
                 <div className="flex flex-col gap-1">
                     <h4>
-                        {name}
+                        {company_name}
                         <User className="ml-1 inline-block" aria-label="user-icon" size={20} />
                     </h4>
 

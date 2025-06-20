@@ -1,10 +1,14 @@
 <?php
 
+use App\Enums\Currency;
+use App\Enums\InvoiceType;
+use App\Enums\PaymentMethod;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
+return new class() extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -13,15 +17,15 @@ return new class () extends Migration {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('type');
+            $table->enum('type', array_column(InvoiceType::cases(), 'value'));
             $table->string('number');
             $table->date('issue_date');
-            $table->date('sale_date')->nullable();
-            $table->date('due_date')->nullable();
-            $table->string('currency')->nullable();
-            $table->string('status')->nullable();
-            $table->string('payment_method')->nullable();
-            $table->decimal('total_paid', 15, 2)->nullable();
+            $table->enum('payment_method', array_column(PaymentMethod::cases(), 'value'));
+            $table->enum('currency', array_column(Currency::cases(), 'value'));
+            $table->boolean('is_already_paid');
+            $table->date('sale_date');
+            $table->date('due_date');
+            $table->string('secret_note')->nullable();
             $table->timestamps();
         });
     }
