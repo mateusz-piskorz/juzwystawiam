@@ -1,13 +1,16 @@
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-
-import { zodResolver } from '@hookform/resolvers/zod';
-
+import { ContractorRole } from '@/lib/constants/enums/contractor-role';
+import { Currency } from '@/lib/constants/enums/currency';
 import { InvoiceType } from '@/lib/constants/enums/invoice-type';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
+import { PaymentMethod } from '@/lib/constants/enums/payment-method';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
 import { vatSchema, VatSchema } from '@/lib/constants/zod/invoices/vat-schema';
+import { upsertInvoice } from '@/lib/data/invoices';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { ContractorsSection } from '../common/sections/contractors-section';
 import { HeaderSection } from '../common/sections/header-section';
 import { ProductsSection } from '../common/sections/products-section';
@@ -21,19 +24,26 @@ export const VatForm = () => {
             is_already_paid: true,
             number: '2/07/2025',
             invoice_products: [{ name: '', vat_rate: VAT_RATE.CASE23, measure_unit: MEASURE_UNIT.PCS, quantity: 1, price: 0 }],
+            invoice_contractors: [{ role: ContractorRole.BUYER }, { role: ContractorRole.SELLER }],
+            currency: Currency.PLN,
+            sale_date: new Date('2025-06-20T22:00:00.000Z'),
+            due_date: new Date('2025-06-23T22:00:00.000Z'),
+            issue_date: new Date('2025-06-22T22:00:00.000Z'),
+            payment_method: PaymentMethod.CARD,
         },
     });
 
-    async function onSubmit(values: VatSchema) {
-        console.log(values);
-        // try {
-        //     const res = await apiFetch('/api/invoices', { method: 'POST', body: JSON.stringify(values) });
-        //     console.log(res);
-        //     toast.error('created successfully!');
-        // } catch (error: unknown) {
-        //     toast.error('something went wrong');
-        //     console.error(error);
-        // }
+    async function onSubmit(body: VatSchema) {
+        console.log(body);
+        // return '';
+        try {
+            const res = await upsertInvoice({ body });
+            console.log(res);
+            toast.error('invoice created successfully!');
+        } catch (error: unknown) {
+            toast.error('something went wrong');
+            console.error(error);
+        }
     }
 
     return (

@@ -17,6 +17,7 @@ type Props = {
 
 export const ProductsSection = ({ form }: Props) => {
     const [total, setTotal] = useState(0);
+
     const { fields, append, remove } = useFieldArray({
         control: form.control,
         name: 'invoice_products',
@@ -33,7 +34,7 @@ export const ProductsSection = ({ form }: Props) => {
             if (type === 'change' && name) {
                 // check if a subproperty has changed and not the array or some of its elements themself
                 if (name.endsWith('quantity') || name.endsWith('vat') || name.endsWith('net_price')) {
-                    const items = value.invoice_items || [];
+                    const items = value.invoice_products || [];
                     const total = items.reduce((sum, item) => (item ? sum + (Number(item.price) || 0) * (Number(item.quantity) || 0) : sum), 0);
 
                     setTotal(total);
@@ -56,11 +57,8 @@ export const ProductsSection = ({ form }: Props) => {
 
                         return (
                             <div className="flex items-center gap-4" key={invoiceItem.id}>
-                                {/* here we need to use onChange to also set other fields like price,vat itp */}
-                                {/* also is good to pass form here for name field, check why name typescript prop is not working */}
-                                {/* <ProductsSelectField form={form} name={`invoice_products.${idx}.name`} role={ContractorRole.SELLER} label="Seller" /> */}
                                 <ProductSelectField form={form} idx={idx} />
-                                {/* <InputField form={form} name={`invoice_products.${idx}.name`} label="Product name" /> */}
+
                                 <div className="flex h-[60px] rounded border">
                                     <CurrencyField
                                         form={form}
@@ -123,7 +121,7 @@ export const ProductsSection = ({ form }: Props) => {
 
             <Button
                 type="button"
-                onClick={() => append({ name: '', price: 0, quantity: 1, vat_rate: VAT_RATE.CASE23, discount: 0, measure_unit: MEASURE_UNIT.PCS })}
+                onClick={() => append({ name: '', price: 0, quantity: 1, vat_rate: VAT_RATE.CASE23, measure_unit: MEASURE_UNIT.PCS })}
             >
                 Add new Product
             </Button>

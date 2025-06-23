@@ -4,7 +4,7 @@ import { NavUser } from '@/components/default/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/lib/types';
 import { Link } from '@inertiajs/react';
-import { AirVentIcon, ApertureIcon, BookOpen, Folder, LayoutGrid, RadioReceiver, TestTube2, Users2 } from 'lucide-react';
+import { AirVentIcon, BookOpen, Folder, LayoutGrid, RadioReceiver, TestTube2, Users2 } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -12,11 +12,6 @@ const mainNavItems: NavItem[] = [
         title: 'Dashboard',
         href: '/dashboard',
         icon: LayoutGrid,
-    },
-    {
-        title: 'Todos',
-        href: '/dashboard/todos',
-        icon: ApertureIcon,
     },
     {
         title: 'Invoices',

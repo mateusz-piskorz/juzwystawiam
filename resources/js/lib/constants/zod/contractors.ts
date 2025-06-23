@@ -21,6 +21,10 @@ export const createContractorDTO = z
         phone: z.string().nullish(),
         first_name: z.string().max(255).nullish(),
         surname: z.string().max(255).nullish(),
+        bank_account: z.coerce
+            .number()
+            .refine((val) => String(val).length >= 5 && String(val).length <= 17)
+            .nullish(),
     })
     .refine((data) => !(!data.nip && (data.type_of_business === SELF_EMPLOYED || data.type_of_business === OTHER_BUSINESS)), {
         message: 'required',

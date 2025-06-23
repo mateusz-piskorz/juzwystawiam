@@ -5,7 +5,7 @@ import { COUNTRIES } from '@/lib/constants/countries';
 import { TypeOfBusiness, TypeOfBusinessTranslation } from '@/lib/constants/enums/type-of-business';
 import { CreateContractorDTO, createContractorDTO } from '@/lib/constants/zod/contractors';
 import { upsertContractor } from '@/lib/data/contractors';
-import { Contractor } from '@/lib/types';
+import { Contractor } from '@/lib/types/contractor';
 import { cn } from '@/lib/utils/cn';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
@@ -42,11 +42,11 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
             const contractor = await upsertContractor({ body, contractorId });
             toast.success(`Contractor ${contractorId ? 'updated' : 'created'} successfully`);
             onSuccess?.(contractor);
-            setOpen(false);
         } catch (error: unknown) {
             console.error(error);
             toast.error('Something went wrong');
         }
+        setOpen(false);
     }
 
     return (
@@ -69,12 +69,11 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                             name="type_of_business"
                             label="Rodzaj działalności gospodarczej"
                             selectOptions={Object.values(TypeOfBusiness).map((val) => ({ label: TypeOfBusinessTranslation[val], value: val }))}
-                            className="border-sidebar-ring"
                         />
 
                         <ContractorTripleBox form={form} />
 
-                        <div className="border-sidebar-ring rounded border">
+                        <div className="rounded border">
                             {isSelfEmployed && (
                                 <>
                                     <div className="flex h-[60px]">
@@ -95,29 +94,38 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                                 <InputField
                                     form={form}
                                     name="email"
-                                    label="Email"
+                                    label="Email (Optional)"
                                     type="email"
                                     inputMode="email"
-                                    className={cn('rounded-none rounded-es border-none', !isSelfEmployed && 'rounded-ss')}
+                                    className={cn('rounded-none border-none', !isSelfEmployed && 'rounded-ss')}
                                 />
                                 <Separator orientation="vertical" />
                                 <InputField
                                     form={form}
                                     name="phone"
-                                    label="Phone"
+                                    label="Phone (Optional)"
                                     type="tel"
                                     inputMode="numeric"
-                                    className={cn('rounded-none rounded-ee border-none', !isSelfEmployed && 'rounded-se')}
+                                    className={cn('rounded-none border-none', !isSelfEmployed && 'rounded-se')}
                                 />
                             </div>
+                            <Separator orientation="horizontal" />
+                            <InputField
+                                form={form}
+                                name="bank_account"
+                                label="Bank Account (Optional)"
+                                type="number"
+                                inputMode="numeric"
+                                className={cn('rounded-none rounded-ee rounded-es border-none', !isSelfEmployed && 'rounded-se')}
+                            />
                         </div>
 
-                        <div className="border-sidebar-ring rounded border">
+                        <div className="rounded border">
                             <InputField form={form} name="city" label="City" className="rounded-none rounded-ss rounded-se border-none" />
 
                             <Separator orientation="horizontal" />
 
-                            <InputField form={form} name="street_name" label="Street name" className="rounded-none border-none" />
+                            <InputField form={form} name="street_name" label="Street name (Optional)" className="rounded-none border-none" />
 
                             <Separator orientation="horizontal" />
                             <div className="flex h-[60px]">
@@ -127,7 +135,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                             </div>
                             <Separator orientation="horizontal" />
                             <SelectField
-                                className="rounded-none rounded-ee rounded-es"
+                                className="rounded-none rounded-ee rounded-es border-none"
                                 form={form}
                                 name="country"
                                 label="Country"

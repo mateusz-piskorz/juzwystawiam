@@ -1,14 +1,15 @@
 import { z } from 'zod';
+import { ContractorRole } from '../../enums/contractor-role';
 import { Currency } from '../../enums/currency';
 import { InvoiceType } from '../../enums/invoice-type';
 import { MEASURE_UNIT } from '../../enums/measure-unit';
 import { PaymentMethod } from '../../enums/payment-method';
 
 export const invoiceProduct = z.object({
-    product_id: z.number().min(1).optional(),
+    id: z.number().min(1).optional(),
     name: z.string().min(1),
     quantity: z.coerce.number().min(1),
-    price: z.coerce.number().min(0).optional(),
+    price: z.coerce.number().min(0),
     measure_unit: z.nativeEnum(MEASURE_UNIT),
     discount: z.coerce.number().min(0).optional(),
 });
@@ -52,18 +53,17 @@ export const numberAndDateSchema = z.object({
 export type NumberAndDateSchema = z.infer<typeof numberAndDateSchema>;
 
 export const contractorsSchema = z.object({
-    seller_id: z.number().min(1),
-    buyer_id: z.number().min(1),
+    invoice_contractors: z.array(z.object({ id: z.number().min(1), role: z.nativeEnum(ContractorRole) })),
 });
 export type ContractorsSchema = z.infer<typeof contractorsSchema>;
 
 export const baseInvoiceSchema = z.object({
     type: z.nativeEnum(InvoiceType, { required_error: 'Invoice type is required' }),
-    ...contractorsSchema.shape,
     ...numberAndDateSchema.shape,
     ...paymentSchema.shape,
     ...saleAndDueSchema.shape,
     ...secretNoteSchema.shape,
+    ...contractorsSchema.shape,
     invoice_products: z.array(invoiceProduct).min(1, 'At least one item is required'),
 });
 

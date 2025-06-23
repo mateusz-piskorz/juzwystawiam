@@ -1,18 +1,17 @@
 import { ContractorRole } from '@/lib/constants/enums/contractor-role';
-import { ContractorsSchema } from '@/lib/constants/zod/invoices/base-invoice-schema';
+import { VatSchema } from '@/lib/constants/zod/invoices/vat-schema';
 import { UseFormReturn } from 'react-hook-form';
 import { ContractorsSelectField } from './contractors-select-field';
 
-type Props<T extends ContractorsSchema> = {
-    form: UseFormReturn<T>;
+type Props = {
+    form: UseFormReturn<VatSchema>;
 };
 
-export const ContractorsSection = <T extends ContractorsSchema>({ form: formProps }: Props<T>) => {
-    const form = formProps as unknown as UseFormReturn<ContractorsSchema>;
+export const ContractorsSection = ({ form }: Props) => {
     return (
         <div className="z-10 flex flex-col gap-8 md:flex-row md:items-start">
-            <ContractorsSelectField form={form} name="seller_id" role={ContractorRole.SELLER} label="Seller" />
-            <ContractorsSelectField form={form} name="buyer_id" role={ContractorRole.BUYER} label="Nazwa klienta" />
+            <ContractorsSelectField idx={0} form={form} role={ContractorRole.SELLER} label="Seller" />
+            <ContractorsSelectField idx={1} form={form} role={ContractorRole.BUYER} label="Nazwa klienta" />
         </div>
     );
 };

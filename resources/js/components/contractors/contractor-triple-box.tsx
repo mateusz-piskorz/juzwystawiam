@@ -13,7 +13,7 @@ export const ContractorTripleBox = ({ form }: Props) => {
     const isPrivatePerson = form.watch('type_of_business') === TypeOfBusiness.PRIVATE_PERSON;
 
     return (
-        <div className="border-sidebar-ring w-full min-w-[200px] rounded border">
+        <div className="w-full min-w-[200px] rounded border">
             <div className="flex h-[60px]">
                 <InputField
                     form={form}

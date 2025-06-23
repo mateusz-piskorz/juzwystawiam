@@ -72,18 +72,18 @@ class ContractorController extends Controller
             'email'            => ['nullable', 'email'],
             'street_name'      => ['nullable', 'string', 'max:255'],
             'phone'            => ['nullable', 'string'],
-            'bank_account'     => ['nullable', 'string'],
+            'bank_account'     => ['nullable', 'integer', 'digits_between:5,17'],
             'first_name'       => [
                 'nullable',
                 'string',
                 'max:255',
-                'required_if:type_of_business,PRIVATE_PERSON,OTHER_BUSINESS'
+                'required_if:type_of_business,PRIVATE_PERSON,SELF_EMPLOYED'
             ],
             'surname'          => [
                 'nullable',
                 'string',
                 'max:255',
-                'required_if:type_of_business,PRIVATE_PERSON,OTHER_BUSINESS'
+                'required_if:type_of_business,PRIVATE_PERSON,SELF_EMPLOYED'
             ]
         ]);
 
@@ -120,7 +120,7 @@ class ContractorController extends Controller
             'email'            => ['nullable', 'email'],
             'street_name'      => ['nullable', 'string', 'max:255'],
             'phone'            => ['nullable', 'string'],
-            'bank_account'     => ['nullable', 'string'],
+            'bank_account'     => ['nullable', 'integer', 'digits_between:5,17'],
             'first_name'       => [
                 'nullable',
                 'string',

@@ -16,7 +16,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard/dev/page');
     })->name('dashboard.dev');
 
-    Route::get('/dashboard/todos', [\App\Http\Controllers\TodoController::class, 'index'])->name('todos.index');
     Route::resource('/dashboard/invoices', \App\Http\Controllers\InvoiceController::class);
     Route::resource('/dashboard/contractors', \App\Http\Controllers\ContractorController::class);
     Route::resource('/dashboard/products', \App\Http\Controllers\ProductController::class);

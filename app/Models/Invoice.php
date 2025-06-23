@@ -27,10 +27,10 @@ class Invoice extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function items(): HasMany
-    // {
-    //     return $this->hasMany(InvoiceItem::class);
-    // }
+    public function invoice_products(): HasMany
+    {
+        return $this->hasMany(InvoiceProducts::class);
+    }
 
     public function invoice_contractors(): HasMany
     {

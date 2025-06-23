@@ -2,7 +2,7 @@ import { InputField } from '@/components/common/input-field';
 import { Popover, PopoverAnchor, PopoverContent } from '@/components/ui/popover';
 import { VatSchema } from '@/lib/constants/zod/invoices/vat-schema';
 import { getProducts } from '@/lib/data/products';
-import { Product } from '@/lib/types';
+import { Product } from '@/lib/types/product';
 import { cn } from '@/lib/utils/cn';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -27,7 +27,7 @@ export const ProductSelectField = ({ form, className, idx }: Props) => {
     });
 
     const handleProductClick = (p: Product) => {
-        form.setValue(`invoice_products.${idx}.product_id`, p.id);
+        form.setValue(`invoice_products.${idx}.id`, p.id);
         form.setValue(`invoice_products.${idx}.name`, p.name);
         form.setValue(`invoice_products.${idx}.price`, p.price);
         form.setValue(`invoice_products.${idx}.quantity`, 1);
@@ -35,8 +35,6 @@ export const ProductSelectField = ({ form, className, idx }: Props) => {
         form.setValue(`invoice_products.${idx}.measure_unit`, p.measure_unit);
         setOpen(false);
     };
-
-    console.log(form.watch(`invoice_products.${idx}.price`));
 
     return (
         <>
