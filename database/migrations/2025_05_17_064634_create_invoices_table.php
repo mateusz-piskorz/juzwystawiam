@@ -19,12 +19,12 @@ return new class() extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('type', array_column(InvoiceType::cases(), 'value'));
             $table->string('number');
-            $table->date('issue_date');
+            $table->dateTimeTz('issue_date');
             $table->enum('payment_method', array_column(PaymentMethod::cases(), 'value'));
             $table->enum('currency', array_column(Currency::cases(), 'value'));
             $table->boolean('is_already_paid');
-            $table->date('sale_date');
-            $table->date('due_date');
+            $table->dateTimeTz('sale_date');
+            $table->dateTimeTz('due_date');
             $table->string('secret_note')->nullable();
             $table->timestamps();
         });

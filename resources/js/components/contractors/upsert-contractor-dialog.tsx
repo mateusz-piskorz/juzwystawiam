@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
 import { COUNTRIES } from '@/lib/constants/countries';
-import { TypeOfBusiness, TypeOfBusinessTranslation } from '@/lib/constants/enums/type-of-business';
+import { TYPE_OF_BUSINESS, TypeOfBusinessTranslation } from '@/lib/constants/enums/type-of-business';
 import { CreateContractorDTO, createContractorDTO } from '@/lib/constants/zod/contractors';
 import { upsertContractor } from '@/lib/data/contractors';
 import { Contractor } from '@/lib/types/contractor';
@@ -30,7 +30,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
         resolver: zodResolver(createContractorDTO),
         defaultValues,
     });
-    const isSelfEmployed = form.watch('type_of_business') === TypeOfBusiness.SELF_EMPLOYED;
+    const isSelfEmployed = form.watch('type_of_business') === TYPE_OF_BUSINESS.SELF_EMPLOYED;
 
     useEffect(() => {
         form.reset(defaultValues ?? { is_own_company: false });
@@ -68,7 +68,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                             form={form}
                             name="type_of_business"
                             label="Rodzaj działalności gospodarczej"
-                            selectOptions={Object.values(TypeOfBusiness).map((val) => ({ label: TypeOfBusinessTranslation[val], value: val }))}
+                            selectOptions={Object.values(TYPE_OF_BUSINESS).map((val) => ({ label: TypeOfBusinessTranslation[val], value: val }))}
                         />
 
                         <ContractorTripleBox form={form} />
@@ -114,7 +114,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                                 form={form}
                                 name="bank_account"
                                 label="Bank Account (Optional)"
-                                type="number"
+                                type="text"
                                 inputMode="numeric"
                                 className={cn('rounded-none rounded-ee rounded-es border-none', !isSelfEmployed && 'rounded-se')}
                             />

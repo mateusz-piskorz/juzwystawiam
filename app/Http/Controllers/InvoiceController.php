@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -9,15 +10,13 @@ use Inertia\Response;
 class InvoiceController extends Controller
 {
     /**
-     * Render the todos page.
+     * Render the invoices page.
      */
     public function index(Request $request): Response
     {
-        $invoices = $request->user()->invoices()->with(['items', 'contractors'])->latest()->paginate(7);
-        return Inertia::render('dashboard/invoices/page', [
-            'invoices' => $invoices,
-        ]);
+        return Inertia::render('dashboard/invoices/page');
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -29,20 +28,23 @@ class InvoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Invoice $invoice)
     {
-        return Inertia::render('dashboard/invoices/create/page');
+        $invoice->load(['invoice_products', 'invoice_contractors']);
+        return Inertia::render('dashboard/invoices/[id]/edit/page', [
+            'invoice' => $invoice
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Invoice $invoice)
     {
-        //
+        $invoice->load(['invoice_products', 'invoice_contractors']);
+        return Inertia::render('dashboard/invoices/[id]/page', [
+            'invoice' => $invoice
+        ]);
     }
-
-
-
 
 }

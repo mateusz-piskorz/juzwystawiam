@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { InvoiceType } from '../../enums/invoice-type';
+import { INVOICE_TYPE } from '../../enums/invoice-type';
 import { VAT_RATE } from '../../enums/vat-rate';
 import { baseInvoiceSchema, invoiceProduct } from './base-invoice-schema';
 
@@ -7,7 +7,7 @@ const invoiceProductWithVat = invoiceProduct.merge(z.object({ vat_rate: z.native
 
 export const vatSchema = baseInvoiceSchema.merge(
     z.object({
-        type: z.literal(InvoiceType.VAT),
+        type: z.literal(INVOICE_TYPE.VAT),
         invoice_products: z.array(invoiceProductWithVat).min(1, 'At least one item is required'),
     }),
 );

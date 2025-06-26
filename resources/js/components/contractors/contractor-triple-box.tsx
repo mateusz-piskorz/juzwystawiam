@@ -1,6 +1,6 @@
 import { SwitchField } from '@/components/common/switch-field';
 import { Separator } from '@/components/ui/separator';
-import { TypeOfBusiness } from '@/lib/constants/enums/type-of-business';
+import { TYPE_OF_BUSINESS } from '@/lib/constants/enums/type-of-business';
 import { CreateContractorDTO } from '@/lib/constants/zod/contractors';
 import { UseFormReturn } from 'react-hook-form';
 import { InputField } from '../common/input-field';
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const ContractorTripleBox = ({ form }: Props) => {
-    const isPrivatePerson = form.watch('type_of_business') === TypeOfBusiness.PRIVATE_PERSON;
+    const isPrivatePerson = form.watch('type_of_business') === TYPE_OF_BUSINESS.PRIVATE_PERSON;
 
     return (
         <div className="w-full min-w-[200px] rounded border">

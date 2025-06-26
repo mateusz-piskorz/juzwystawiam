@@ -1,19 +1,18 @@
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
-import { SecretNoteSchema } from '@/lib/constants/zod/invoices/base-invoice-schema';
+import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';
 import { cn } from '@/lib/utils/cn';
 import { UseFormReturn } from 'react-hook-form';
 
-type Props<T extends SecretNoteSchema> = {
-    form: UseFormReturn<T>;
+type Props = {
+    form: UseFormReturn<CreateInvoiceDTO>;
     className?: string;
 };
 
-export const SecretNote = <T extends SecretNoteSchema>({ form, className }: Props<T>) => {
-    const { control } = form as unknown as UseFormReturn<SecretNoteSchema>;
+export const SecretNote = ({ form, className }: Props) => {
     return (
         <FormField
-            control={control}
+            control={form.control}
             name="secret_note"
             render={({ field }) => (
                 <FormItem className={cn('w-full min-w-[200px]', className)}>

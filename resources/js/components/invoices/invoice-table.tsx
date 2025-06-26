@@ -1,11 +1,9 @@
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { getInvoices } from '@/lib/data/invoices';
 import { usePage } from '@/lib/hooks/use-page';
-import { apiFetch } from '@/lib/utils/api-fetch';
-import { Contractor, Pagination, SharedData } from '@/types';
-import { router } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { useQuery } from '@tanstack/react-query';
 import {
     flexRender,
@@ -17,64 +15,23 @@ import {
     type SortingState,
     type VisibilityState,
 } from '@tanstack/react-table';
-import { ComponentProps, useState } from 'react';
-import { toast } from 'sonner';
-import { getColumns } from './columns';
-import { UpsertInvoiceDialog } from './upsert-invoice-dialog';
+import { useState } from 'react';
+import { columns } from './columns';
 
 export const InvoicesTable = () => {
     const {
-        props: { invoices, ziggy },
-    } = usePage<{ invoices: Pagination<Contractor> }>();
+        props: { ziggy },
+    } = usePage();
 
-    const { data, refetch } = useQuery<Pagination<Contractor>>({
+    const { data } = useQuery({
         queryKey: ['invoice-list', ziggy],
-        queryFn: () => apiFetch(`/api/invoices?${new URLSearchParams(ziggy.query).toString()}`).then((res) => res.json()),
-        initialData: invoices,
+        queryFn: () => getInvoices({ page: ziggy.query.page, limit: 10 }),
     });
 
-    const [open, setOpen] = useState(false);
-    const [defaultValues, setDefaultValues] = useState<ComponentProps<typeof UpsertInvoiceDialog>['defaultValues'] | undefined>(undefined);
-    const [selectedInvoiceId, setSelectedInvoiceId] = useState<string | undefined>(undefined);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = useState({});
-
-    const handleDeleteContractor = async (invoiceId: string) => {
-        const res = await apiFetch(`/api/contractors/${invoiceId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (res.ok) {
-            toast.success(`Contractor deleted successfully`);
-            refetch();
-            setOpen(false);
-        } else {
-            toast.error('Something went wrong');
-        }
-    };
-
-    const handleEditContractor = (invoiceId: string) => {
-        const contractor = data?.data.find((p: Contractor) => p.id === invoiceId);
-        if (!contractor) return;
-        setDefaultValues({
-            name: contractor.name,
-            nip: contractor.nip,
-            is_own_company: contractor.is_own_company,
-        });
-
-        setSelectedInvoiceId(invoiceId);
-        setOpen(true);
-    };
-
-    const columns = getColumns({
-        handleDeleteContractor,
-        handleEditContractor,
-    });
 
     const table = useReactTable({
         data: data?.data ?? [],
@@ -95,105 +52,72 @@ export const InvoicesTable = () => {
     });
 
     const handlePageChange = (action: 'prev' | 'next') => {
+        if (!data) return;
         const params = new URLSearchParams(ziggy.query);
         params.set('page', String(data.current_page + (action === 'next' ? 1 : -1)));
         router.replace({
             url: `${ziggy.location}?${params.toString()}`,
-            props: (currentProps: SharedData): SharedData => {
-                return { ...currentProps, ziggy: { ...ziggy, query: Object.fromEntries(params.entries()) } };
-            },
+            props: (currentProps) => ({ ...currentProps, ziggy: { ...ziggy, query: Object.fromEntries(params.entries()) } }),
         });
     };
 
     return (
         <>
-            <UpsertInvoiceDialog open={open} refetch={refetch} setOpen={setOpen} defaultValues={defaultValues} invoiceId={selectedInvoiceId} />
-
-            <div className="rounded-md border">
-                <div className="flex items-center gap-4 p-4">
-                    <Input
-                        placeholder="Filter number..."
-                        value={(table.getColumn('number')?.getFilterValue() as string) ?? ''}
-                        onChange={(event) => table.getColumn('number')?.setFilterValue(event.target.value)}
-                        className="max-w-sm"
-                    />
-
-                    <DropdownMenu>
-                        <div>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="outline" className="ml-auto cursor-pointer">
-                                    Columns
-                                </Button>
-                            </DropdownMenuTrigger>
-                        </div>
-                        <DropdownMenuContent align="end">
-                            {table
-                                .getAllColumns()
-                                .filter((column) => column.getCanHide())
-                                .map((column) => {
-                                    return (
-                                        <DropdownMenuCheckboxItem
-                                            key={column.id}
-                                            className="capitalize"
-                                            checked={column.getIsVisible()}
-                                            onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                                        >
-                                            {column.id}
-                                        </DropdownMenuCheckboxItem>
-                                    );
-                                })}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-
-                    <Button className="cursor-pointer" onClick={() => setOpen(true)} variant="secondary">
-                        Create
-                    </Button>
+            <div className="flex items-center justify-between gap-4 pt-4 pb-6">
+                <Input
+                    placeholder="Filter name..."
+                    value={(table.getColumn('number')?.getFilterValue() as string) ?? ''}
+                    onChange={(event) => table.getColumn('number')?.setFilterValue(event.target.value)}
+                    className="max-w-sm"
+                />
+                <div className="flex items-center gap-2">
+                    <Link href="/dashboard/invoices/create">Create</Link>
                     {table.getFilteredSelectedRowModel().rows.length > 0 && (
                         <div className="text-muted-foreground flex-1 text-sm">
                             {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected.
                         </div>
                     )}
                 </div>
-                <Table>
-                    <TableHeader>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <TableHead key={header.id}>
-                                            {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                                        </TableHead>
-                                    );
-                                })}
+            </div>
+            <Table>
+                <TableHeader>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                        <TableRow key={headerGroup.id}>
+                            {headerGroup.headers.map((header) => {
+                                return (
+                                    <TableHead key={header.id}>
+                                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                                    </TableHead>
+                                );
+                            })}
+                        </TableRow>
+                    ))}
+                </TableHeader>
+                <TableBody>
+                    {table.getRowModel().rows?.length ? (
+                        table.getRowModel().rows.map((row) => (
+                            <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+                                {row.getVisibleCells().map((cell) => (
+                                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                                ))}
                             </TableRow>
-                        ))}
-                    </TableHeader>
-                    <TableBody>
-                        {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
-                                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                                    ))}
-                                </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-                <div className="flex items-center justify-end space-x-2 py-4">
-                    <Button variant="outline" size="sm" onClick={() => handlePageChange('prev')} disabled={!data.prev_page_url}>
-                        Previous
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={() => handlePageChange('next')} disabled={!data.next_page_url}>
-                        Next
-                    </Button>
-                </div>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={columns.length} className="h-24 text-center">
+                                No results.
+                            </TableCell>
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+            <div className="flex items-center justify-end space-x-2 py-4">
+                <Button variant="outline" size="sm" onClick={() => handlePageChange('prev')} disabled={!data?.prev_page_url}>
+                    Previous
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => handlePageChange('next')} disabled={!data?.next_page_url}>
+                    Next
+                </Button>
             </div>
         </>
     );

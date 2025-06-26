@@ -12,12 +12,6 @@ use Illuminate\Validation\Rule;
 
 class ContractorController extends Controller
 {
-    // Show a single contractor
-    public function show(Request $request, Contractor $contractor)
-    {
-        Gate::authorize('view', $contractor);
-        return $contractor->toJson();
-    }
 
     // List all Contractors
     public function index(Request $request)
@@ -43,6 +37,13 @@ class ContractorController extends Controller
             }
         })->latest()->paginate($limit)->toJson();
 
+    }
+
+    // Show a single contractor
+    public function show(Request $request, Contractor $contractor)
+    {
+        Gate::authorize('view', $contractor);
+        return $contractor->toJson();
     }
 
     // Store new Contractor

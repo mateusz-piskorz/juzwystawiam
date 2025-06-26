@@ -1,9 +1,8 @@
 import { apiFetch } from '@/lib/utils/api-fetch';
 import { CreateInvoiceDTO } from '../constants/zod/invoices';
 import { Pagination } from '../types';
+import { Invoice } from '../types/invoice';
 import { buildURLParams } from '../utils/build-url-params';
-
-type Invoice = { id: string; cos: any };
 
 const BASE_URL = '/api/invoices';
 
@@ -16,7 +15,7 @@ type GetInvoices = {
     page?: string;
 };
 
-export const getInvoices = async (args: GetInvoices) => {
+export const getInvoices = async (args?: GetInvoices) => {
     return await apiFetch<Pagination<Invoice>>(`${BASE_URL}?${args ? buildURLParams(args) : ''}`);
 };
 

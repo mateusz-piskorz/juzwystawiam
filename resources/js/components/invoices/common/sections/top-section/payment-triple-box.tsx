@@ -3,17 +3,16 @@ import { SwitchField } from '@/components/common/switch-field';
 import { Separator } from '@/components/ui/separator';
 import { CURRENCIES } from '@/lib/constants/currencies';
 import { PaymentMethod } from '@/lib/constants/enums/payment-method';
-import { PaymentSchema } from '@/lib/constants/zod/invoices/base-invoice-schema';
+import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';
 import { cn } from '@/lib/utils/cn';
 import { UseFormReturn } from 'react-hook-form';
 
-type Props<T extends PaymentSchema> = {
-    form: UseFormReturn<T>;
+type Props = {
+    form: UseFormReturn<CreateInvoiceDTO>;
     className?: string;
 };
 
-export const PaymentTripleBox = <T extends PaymentSchema>({ form: propsForm, className }: Props<T>) => {
-    const form = propsForm as unknown as UseFormReturn<PaymentSchema>;
+export const PaymentTripleBox = ({ form, className }: Props) => {
     return (
         <div className={cn('w-full min-w-[200px] rounded border', className)}>
             <div className="flex h-[60px]">

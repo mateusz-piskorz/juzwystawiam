@@ -1,16 +1,15 @@
-import { PaymentSchema, SaleAndDueSchema, SecretNoteSchema } from '@/lib/constants/zod/invoices/base-invoice-schema';
+import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';
 import { UseFormReturn } from 'react-hook-form';
 import { SaleAndDueDates } from '../../atoms/sale-and-due-dates';
 import { SecretNote } from '../../atoms/secret-note';
 import { PaymentTripleBox } from './payment-triple-box';
 
-type RequiredFields = SaleAndDueSchema & PaymentSchema & SecretNoteSchema;
-
-type Props<T extends RequiredFields> = {
+type Props<T extends CreateInvoiceDTO> = {
     form: UseFormReturn<T>;
 };
 
-export const TopSection = <T extends RequiredFields>({ form }: Props<T>) => {
+export const TopSection = <T extends CreateInvoiceDTO>({ form: formProps }: Props<T>) => {
+    const form = formProps as unknown as UseFormReturn<CreateInvoiceDTO>;
     return (
         <div className="flex flex-col gap-8 md:flex-row">
             <SecretNote form={form} className="flex-1/2" />

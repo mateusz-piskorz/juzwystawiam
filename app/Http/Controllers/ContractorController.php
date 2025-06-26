@@ -13,11 +13,9 @@ class ContractorController extends Controller
      */
     public function index(Request $request): Response
     {
-        $contractors = $request->user()->contractors()->latest()->paginate(7);
-        return Inertia::render('dashboard/contractors/page', [
-            'contractors' => $contractors,
-        ]);
+        return Inertia::render('dashboard/contractors/page');
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -41,8 +39,5 @@ class ContractorController extends Controller
     {
         //
     }
-
-
-
 
 }

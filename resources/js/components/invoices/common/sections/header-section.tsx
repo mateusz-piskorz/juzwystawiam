@@ -1,15 +1,14 @@
 import { CalendarField } from '@/components/common/calendar-field';
-import { NumberAndDateSchema } from '@/lib/constants/zod/invoices/base-invoice-schema';
+import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';
 import { UseFormReturn } from 'react-hook-form';
 import { IssueNumberField } from '../atoms/issue-number-field';
 
-type Props<T extends NumberAndDateSchema> = {
+type Props<T extends CreateInvoiceDTO> = {
     form: UseFormReturn<T>;
 };
 
-export const HeaderSection = <T extends NumberAndDateSchema>({ form: propsForm }: Props<T>) => {
-    const form = propsForm as unknown as UseFormReturn<NumberAndDateSchema>;
-
+export const HeaderSection = <T extends CreateInvoiceDTO>({ form: formProps }: Props<T>) => {
+    const form = formProps as unknown as UseFormReturn<CreateInvoiceDTO>;
     const invoiceNumber = form.watch('number');
 
     return (

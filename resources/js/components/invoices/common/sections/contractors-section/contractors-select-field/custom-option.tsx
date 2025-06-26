@@ -1,4 +1,4 @@
-import { Contractor } from '@/lib/types';
+import { Contractor } from '@/lib/types/contractor';
 import { cn } from '@/lib/utils/cn';
 import { UserRoundPlus } from 'lucide-react';
 import { OptionProps } from 'react-select';

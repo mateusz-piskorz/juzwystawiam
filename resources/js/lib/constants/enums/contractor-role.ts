@@ -1,4 +1,4 @@
-export enum ContractorRole {
+export enum CONTRACTOR_ROLE {
     BUYER = 'BUYER',
     SELLER = 'SELLER',
 }

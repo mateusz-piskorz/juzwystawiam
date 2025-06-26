@@ -1,30 +1,29 @@
 import { InvoicesTable } from '@/components/invoices/invoice-table';
 import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem, Pagination, SharedData, Todo } from '@/lib/types';
+import { MainContentLayout } from '@/layouts/main-content-layout';
+import type { BreadcrumbItem } from '@/lib/types';
 import { Head } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
+        title: 'Dashboard',
+        href: '/dashboard',
+    },
+    {
         title: 'Invoices',
-        href: 'dashboard/invoices',
+        href: '/dashboard/invoices',
     },
 ];
 
-const InvoicePage = (props: SharedData & { todos: Pagination<Todo> }) => {
-    console.log('props');
-    console.log(props);
-    // const {
-    //         props: { todos, ziggy },
-    //     } = {props : SharedData & { todos: Pagination<Todo> }}
+const InvoiceListPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Posts" />
-            <div className="h-full flex-1 rounded-xl p-4">
-                here 123
+            <Head title="Invoices" />
+            <MainContentLayout headerText="Invoices">
                 <InvoicesTable />
-            </div>
+            </MainContentLayout>
         </AppLayout>
     );
 };
 
-export default InvoicePage;
+export default InvoiceListPage;

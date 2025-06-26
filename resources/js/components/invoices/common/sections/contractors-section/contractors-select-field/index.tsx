@@ -1,8 +1,8 @@
 import { CreatableSelect } from '@/components/common/creatable-select';
 import { UpsertContractorDialog } from '@/components/contractors/upsert-contractor-dialog';
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
-import { ContractorRole } from '@/lib/constants/enums/contractor-role';
-import { VatSchema } from '@/lib/constants/zod/invoices';
+import { CONTRACTOR_ROLE } from '@/lib/constants/enums/contractor-role';
+import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';
 import { getContractors } from '@/lib/data/contractors';
 import { useQuery } from '@tanstack/react-query';
 import { ComponentProps, useState } from 'react';
@@ -10,15 +10,16 @@ import { UseFormReturn } from 'react-hook-form';
 import { CustomOption } from './custom-option';
 import { Option } from './types';
 
-type Props = {
-    form: UseFormReturn<VatSchema>;
-    role: ContractorRole;
+type Props<T extends CreateInvoiceDTO> = {
+    form: UseFormReturn<T>;
+    role: CONTRACTOR_ROLE;
     label: string;
     idx: number;
 };
 
-export const ContractorsSelectField = ({ form, role, label, idx }: Props) => {
-    const name = `invoice_contractors.${idx}.id` as const;
+export const ContractorsSelectField = <T extends CreateInvoiceDTO>({ form: formProps, role, label, idx }: Props<T>) => {
+    const form = formProps as unknown as UseFormReturn<CreateInvoiceDTO>;
+    const name = `invoice_contractors.${idx}.contractor_id` as const;
     const { control, watch, setValue } = form;
     const selectedContractorId = watch(name);
 
@@ -29,7 +30,7 @@ export const ContractorsSelectField = ({ form, role, label, idx }: Props) => {
         queryFn: () =>
             getContractors({
                 limit: 1000,
-                is_own_company: role === ContractorRole.SELLER ? 'true' : 'false',
+                is_own_company: role === CONTRACTOR_ROLE.SELLER ? 'true' : 'false',
             }).then((res) => res.data.map((c) => ({ ...c, label: c.company_name || `${c.first_name} ${c.surname}`, value: c.id }))),
     });
 

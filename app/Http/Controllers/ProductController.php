@@ -13,10 +13,7 @@ class ProductController extends Controller
      */
     public function index(Request $request): Response
     {
-        $contractors = $request->user()->contractors()->latest()->paginate(7);
-        return Inertia::render('dashboard/products/page', [
-            'contractors' => $contractors
-        ]);
+        return Inertia::render('dashboard/products/page');
     }
 
     /**

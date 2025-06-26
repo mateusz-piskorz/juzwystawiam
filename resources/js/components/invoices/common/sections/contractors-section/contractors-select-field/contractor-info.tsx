@@ -1,4 +1,4 @@
-import { Contractor } from '@/lib/types/index';
+import { Contractor } from '@/lib/types/contractor';
 import { cn } from '@/lib/utils/cn';
 import { PencilLine, User } from 'lucide-react';
 

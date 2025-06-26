@@ -5,7 +5,7 @@ import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
 import { createProductDTO, CreateProductDTO } from '@/lib/constants/zod/products';
 import { upsertProduct } from '@/lib/data/products';
-import { Product } from '@/lib/types/index';
+import { Product } from '@/lib/types/product';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -26,7 +26,13 @@ type Props = {
 export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, onSuccess }: Props) => {
     const form = useForm<CreateProductDTO>({
         resolver: zodResolver(createProductDTO),
-        defaultValues,
+        defaultValues: defaultValues || {
+            description: 'opis',
+            name: 'product-test',
+            vat_rate: VAT_RATE.CASE23,
+            measure_unit: MEASURE_UNIT.HOUR,
+            price: 32.2,
+        },
     });
 
     useEffect(() => {

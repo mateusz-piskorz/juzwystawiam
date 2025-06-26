@@ -1,6 +1,6 @@
 import { InputField } from '@/components/common/input-field';
 import { Popover, PopoverAnchor, PopoverContent } from '@/components/ui/popover';
-import { VatSchema } from '@/lib/constants/zod/invoices/vat-schema';
+import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';
 import { getProducts } from '@/lib/data/products';
 import { Product } from '@/lib/types/product';
 import { cn } from '@/lib/utils/cn';
@@ -9,13 +9,14 @@ import { useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PopoverItem } from './popover-item';
 
-type Props = {
-    form: UseFormReturn<VatSchema>;
+type Props<T extends CreateInvoiceDTO> = {
+    form: UseFormReturn<T>;
     className?: React.HTMLAttributes<'div'>['className'];
     idx: number;
 };
 
-export const ProductSelectField = ({ form, className, idx }: Props) => {
+export const ProductSelectField = <T extends CreateInvoiceDTO>({ form: formProps, className, idx }: Props<T>) => {
+    const form = formProps as unknown as UseFormReturn<CreateInvoiceDTO>;
     const [open, setOpen] = useState(false);
 
     const { data } = useQuery({
@@ -27,7 +28,7 @@ export const ProductSelectField = ({ form, className, idx }: Props) => {
     });
 
     const handleProductClick = (p: Product) => {
-        form.setValue(`invoice_products.${idx}.id`, p.id);
+        form.setValue(`invoice_products.${idx}.product_id`, p.id);
         form.setValue(`invoice_products.${idx}.name`, p.name);
         form.setValue(`invoice_products.${idx}.price`, p.price);
         form.setValue(`invoice_products.${idx}.quantity`, 1);

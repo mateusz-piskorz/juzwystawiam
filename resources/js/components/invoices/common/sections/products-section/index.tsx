@@ -3,19 +3,21 @@ import { InputField } from '@/components/common/input-field';
 import { SelectField } from '@/components/common/select-field';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
-import { VatSchema } from '@/lib/constants/zod/invoices/vat-schema';
+import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';
 import { X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useFieldArray, UseFormReturn } from 'react-hook-form';
 import { ProductSelectField } from './product-select-field';
 
-type Props = {
-    form: UseFormReturn<VatSchema>;
+type Props<T extends CreateInvoiceDTO> = {
+    form: UseFormReturn<T>;
 };
-
-export const ProductsSection = ({ form }: Props) => {
+export const ProductsSection = <T extends CreateInvoiceDTO>({ form: formProps }: Props<T>) => {
+    const form = formProps as unknown as UseFormReturn<CreateInvoiceDTO>;
+    const formType = form.watch('type');
     const [total, setTotal] = useState(0);
 
     const { fields, append, remove } = useFieldArray({
@@ -75,13 +77,15 @@ export const ProductsSection = ({ form }: Props) => {
                                         label="Quantity"
                                     />
                                     <Separator orientation="vertical" />
-                                    <SelectField
-                                        className="rounded-none border-none"
-                                        form={form}
-                                        name={`invoice_products.${idx}.vat_rate`}
-                                        label="VAT"
-                                        selectOptions={Object.values(VAT_RATE).map((val) => ({ label: `${val}%`, value: val }))}
-                                    />
+                                    {formType === INVOICE_TYPE.VAT && (
+                                        <SelectField
+                                            className="rounded-none border-none"
+                                            form={form}
+                                            name={`invoice_products.${idx}.vat_rate`}
+                                            label="VAT"
+                                            selectOptions={Object.values(VAT_RATE).map((val) => ({ label: `${val}%`, value: val }))}
+                                        />
+                                    )}
                                     <Separator orientation="vertical" />
                                     <SelectField
                                         className="rounded-none border-none"
@@ -121,7 +125,15 @@ export const ProductsSection = ({ form }: Props) => {
 
             <Button
                 type="button"
-                onClick={() => append({ name: '', price: 0, quantity: 1, vat_rate: VAT_RATE.CASE23, measure_unit: MEASURE_UNIT.PCS })}
+                onClick={() =>
+                    append({
+                        name: '',
+                        price: 0,
+                        quantity: 1,
+                        measure_unit: MEASURE_UNIT.PCS,
+                        ...(formType === INVOICE_TYPE.VAT && { vat_rate: VAT_RATE.CASE23 }),
+                    })
+                }
             >
                 Add new Product
             </Button>

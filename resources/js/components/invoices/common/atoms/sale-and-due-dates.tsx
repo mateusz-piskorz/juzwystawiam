@@ -1,18 +1,16 @@
 import { CalendarField } from '@/components/common/calendar-field';
 import { Separator } from '@/components/ui/separator';
-import { SaleAndDueSchema } from '@/lib/constants/zod/invoices/base-invoice-schema';
+import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';
 import { cn } from '@/lib/utils/cn';
 
 import { UseFormReturn } from 'react-hook-form';
 
-type Props<T extends SaleAndDueSchema> = {
-    form: UseFormReturn<T>;
+type Props = {
+    form: UseFormReturn<CreateInvoiceDTO>;
     className?: string;
 };
 
-export const SaleAndDueDates = <T extends SaleAndDueSchema>({ form: propsForm, className }: Props<T>) => {
-    const form = propsForm as unknown as UseFormReturn<SaleAndDueSchema>;
-
+export const SaleAndDueDates = ({ form, className }: Props) => {
     const saleDate = form.watch('sale_date');
 
     return (

@@ -1,11 +1,11 @@
 import { z } from 'zod';
-import { TypeOfBusiness } from '../enums/type-of-business';
+import { TYPE_OF_BUSINESS } from '../enums/type-of-business';
 
-const { OTHER_BUSINESS, PRIVATE_PERSON, SELF_EMPLOYED } = TypeOfBusiness;
+const { OTHER_BUSINESS, PRIVATE_PERSON, SELF_EMPLOYED } = TYPE_OF_BUSINESS;
 
 export const createContractorDTO = z
     .object({
-        type_of_business: z.nativeEnum(TypeOfBusiness),
+        type_of_business: z.nativeEnum(TYPE_OF_BUSINESS),
         is_own_company: z.boolean(),
         nip: z
             .string()
@@ -21,8 +21,8 @@ export const createContractorDTO = z
         phone: z.string().nullish(),
         first_name: z.string().max(255).nullish(),
         surname: z.string().max(255).nullish(),
-        bank_account: z.coerce
-            .number()
+        bank_account: z
+            .string()
             .refine((val) => String(val).length >= 5 && String(val).length <= 17)
             .nullish(),
     })
