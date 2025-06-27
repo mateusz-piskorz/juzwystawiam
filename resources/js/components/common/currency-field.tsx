@@ -29,6 +29,7 @@ export const CurrencyField = <T extends FieldValues>({ form, label, name: propsN
 
     const initialValue = getValues(name) ? moneyFormatter.format(getValues(name)) : '';
 
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     const [value, setValue] = useReducer((_: any, next: string) => {
         const digits = next.replace(/\D/g, '');
         return moneyFormatter.format(Number(digits) / 100);
