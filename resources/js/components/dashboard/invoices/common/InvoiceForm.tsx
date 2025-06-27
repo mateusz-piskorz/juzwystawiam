@@ -1,6 +1,6 @@
-import { VatForm } from '@/components/invoices/forms/vat-form';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { CreateInvoiceDTO, NoVatSchema, VatSchema } from '@/lib/constants/zod/invoices';
+import { VatForm } from '../forms/vat-form';
 
 type InvoiceTypeToSchema = {
     [INVOICE_TYPE.VAT]: VatSchema;

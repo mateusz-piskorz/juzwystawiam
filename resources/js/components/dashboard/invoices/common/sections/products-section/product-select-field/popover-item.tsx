@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Product } from '@/lib/types';
+import { Product } from '@/lib/types/product';
 
 type Props = {
     product: Product;

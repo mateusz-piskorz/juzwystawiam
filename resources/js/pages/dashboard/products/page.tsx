@@ -1,4 +1,4 @@
-import { ProductsTable } from '@/components/products/products-table';
+import { ProductsTable } from '@/components/dashboard/products/products-table';
 import AppLayout from '@/layouts/app-layout';
 import { MainContentLayout } from '@/layouts/main-content-layout';
 import { BreadcrumbItem } from '@/lib/types';

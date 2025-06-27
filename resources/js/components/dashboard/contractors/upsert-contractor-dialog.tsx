@@ -1,6 +1,9 @@
+import { InputField } from '@/components/common/input-field';
+import { SelectField } from '@/components/common/select-field';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
+import { Separator } from '@/components/ui/separator';
 import { COUNTRIES } from '@/lib/constants/countries';
 import { TYPE_OF_BUSINESS, TypeOfBusinessTranslation } from '@/lib/constants/enums/type-of-business';
 import { CreateContractorDTO, createContractorDTO } from '@/lib/constants/zod/contractors';
@@ -12,9 +15,6 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { InputField } from '../common/input-field';
-import { SelectField } from '../common/select-field';
-import { Separator } from '../ui/separator';
 import { ContractorTripleBox } from './contractor-triple-box';
 
 type Props = {

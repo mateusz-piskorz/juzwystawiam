@@ -8,36 +8,46 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Contractor } from '@/lib/types/index';
+import { Product } from '@/lib/types/product';
 import type { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 
 export const getColumns = ({
-    handleEditContractor,
-    handleDeleteContractor,
+    handleEditProduct,
+    handleDeleteProduct,
 }: {
-    handleEditContractor: (contractorId: number) => void;
-    handleDeleteContractor: (contractorId: number) => void;
-}): ColumnDef<Contractor>[] => [
+    handleEditProduct: (contractorId: number) => void;
+    handleDeleteProduct: (contractorId: number) => void;
+}): ColumnDef<Product>[] => [
     {
         accessorKey: 'id',
         header: 'ID',
     },
     {
-        accessorKey: 'company_name',
+        accessorKey: 'name',
         header: ({ column }) => (
             <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-                company name
+                Name
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        accessorFn: (p) => p.company_name ?? `${p.first_name} ${p.surname}`,
     },
     {
-        accessorKey: 'country',
-        header: 'Country',
+        accessorKey: 'price',
+        header: 'Price',
     },
-
+    {
+        accessorKey: 'vat_rate',
+        header: 'Vat Rate',
+    },
+    {
+        accessorKey: 'measure_unit',
+        header: 'Jednostka Miary',
+    },
+    {
+        accessorKey: 'discount',
+        header: 'Rabat',
+    },
     {
         id: 'actions',
         cell: ({ row }) => {
@@ -58,8 +68,8 @@ export const getColumns = ({
                                 Copy contractor ID
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => handleEditContractor(contractor.id)}>Edit Contractor</DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => handleDeleteContractor(contractor.id)}>Delete Contractor</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleEditProduct(contractor.id)}>Edit Contractor</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleDeleteProduct(contractor.id)}>Delete Contractor</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

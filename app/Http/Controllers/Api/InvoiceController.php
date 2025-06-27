@@ -117,9 +117,9 @@ class InvoiceController extends Controller
     }
 
     // Delete an invoice
-    public function destroy($id)
+    public function destroy(Invoice $invoice)
     {
-        $invoice = Invoice::findOrFail($id);
+        Gate::authorize('update', $invoice);
         $invoice->delete();
 
         return response()->json(['message' => 'Invoice deleted']);

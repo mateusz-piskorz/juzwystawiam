@@ -1,4 +1,4 @@
-import { InvoicesTable } from '@/components/invoices/invoice-table';
+import { InvoicesTable } from '@/components/dashboard/invoices/invoice-table';
 import AppLayout from '@/layouts/app-layout';
 import { MainContentLayout } from '@/layouts/main-content-layout';
 import type { BreadcrumbItem } from '@/lib/types';

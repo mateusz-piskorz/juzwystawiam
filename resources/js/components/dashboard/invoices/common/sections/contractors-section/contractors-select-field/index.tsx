@@ -1,5 +1,6 @@
 import { CreatableSelect } from '@/components/common/creatable-select';
-import { UpsertContractorDialog } from '@/components/contractors/upsert-contractor-dialog';
+
+import { UpsertContractorDialog } from '@/components/dashboard/contractors/upsert-contractor-dialog';
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { CONTRACTOR_ROLE } from '@/lib/constants/enums/contractor-role';
 import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';

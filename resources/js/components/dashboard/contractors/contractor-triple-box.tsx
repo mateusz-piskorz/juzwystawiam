@@ -1,9 +1,9 @@
+import { InputField } from '@/components/common/input-field';
 import { SwitchField } from '@/components/common/switch-field';
 import { Separator } from '@/components/ui/separator';
 import { TYPE_OF_BUSINESS } from '@/lib/constants/enums/type-of-business';
 import { CreateContractorDTO } from '@/lib/constants/zod/contractors';
 import { UseFormReturn } from 'react-hook-form';
-import { InputField } from '../common/input-field';
 
 type Props = {
     form: UseFormReturn<CreateContractorDTO>;

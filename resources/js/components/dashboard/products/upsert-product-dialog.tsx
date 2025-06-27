@@ -1,6 +1,10 @@
+import { CurrencyField } from '@/components/common/currency-field';
+import { InputField } from '@/components/common/input-field';
+import { SelectField } from '@/components/common/select-field';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
 import { createProductDTO, CreateProductDTO } from '@/lib/constants/zod/products';
@@ -10,10 +14,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { CurrencyField } from '../common/currency-field';
-import { InputField } from '../common/input-field';
-import { SelectField } from '../common/select-field';
-import { Textarea } from '../ui/textarea';
 
 type Props = {
     open: boolean;

@@ -1,4 +1,4 @@
-import { ContractorsTable } from '@/components/contractors/contractors-table';
+import { ContractorsTable } from '@/components/dashboard/contractors/contractors-table';
 import AppLayout from '@/layouts/app-layout';
 import { MainContentLayout } from '@/layouts/main-content-layout';
 import { BreadcrumbItem } from '@/lib/types';

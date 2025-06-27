@@ -39,8 +39,6 @@ export const VatForm = ({ defaultValues, invoiceId }: Props) => {
         },
     });
 
-    console.log(form.watch('sale_date'));
-
     async function onSubmit(body: VatSchema) {
         try {
             const response = await upsertInvoice({ body, invoiceId });
