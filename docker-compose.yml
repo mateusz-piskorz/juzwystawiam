@@ -3,8 +3,8 @@ services:
     build:
       dockerfile: Dockerfile
     restart: unless-stopped
-    # ports:
-    #   - 9000:9000
+    ports:
+      - 9000:9000
     depends_on:
       - db
     env_file:
@@ -18,7 +18,7 @@ services:
     restart: unless-stopped
     command: php artisan queue:work
     environment:
-      IS_WORKER: "true"
+      IS_WORKER: 'true'
     env_file:
       - .env
     depends_on:
@@ -31,17 +31,17 @@ services:
     build:
       context: ./docker/ngnix
       dockerfile: Dockerfile
-    # ports: # needs to remove ports when running on coolify
-    #   - 80:80
-    #   - 443:443 
+    ports: # needs to remove ports when running on coolify
+      - 80:80
+      - 443:443
     volumes:
       - storage:/usr/share/nginx/html/storage:rw`
       - public:/usr/share/nginx/html/public:ro
   db:
     image: bitnami/postgresql:16.3.0
     platform: linux/amd64
-    # ports:
-    #   - 5432:5432
+    ports:
+      - 5432:5432
     restart: always
     volumes:
       - db-data:/bitnami/postgresql
@@ -52,8 +52,8 @@ services:
   redis:
     image: bitnami/redis:7.2
     platform: linux/amd64
-    # ports:
-    #   - 6379:6379
+    ports:
+      - 6379:6379
     restart: always
     volumes:
       - redis-data:/bitnami/redis/data
