@@ -54,7 +54,7 @@ export const VatForm = ({ defaultValues, invoiceId }: Props) => {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <HeaderSection form={form} />
-                <div className="space-y-8 px-6 py-8">
+                <div className="space-y-4 px-6 py-4 sm:space-y-8 sm:py-8">
                     <TopSection form={form} />
                     <ContractorsSection form={form} />
                     <ProductsSection form={form} />
