@@ -15,16 +15,12 @@ export const CustomOption = ({ onEdit, props }: Props) => {
     const isNew = data.__isNew__;
 
     return (
-        <div {...props.innerProps} className={cn('flex cursor-default justify-between rounded p-4', props.isFocused && 'bg-accent')}>
+        <div {...props.innerProps} className={cn('rounded p-4', props.isFocused && 'bg-accent')}>
             {isNew ? (
-                <>
-                    <div className="flex items-start gap-2">
-                        <UserRoundPlus aria-label="user-icon-plus" size={20} />
-                        <div>
-                            <h4 className="font-bold">{data.label}</h4>
-                        </div>
-                    </div>
-                </>
+                <div className="flex items-start gap-2">
+                    <UserRoundPlus aria-label="user-icon-plus" size={20} />
+                    <h4>{data.label}</h4>
+                </div>
             ) : (
                 <ContractorInfo {...data} onEdit={() => onEdit(data)} />
             )}

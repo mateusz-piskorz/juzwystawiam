@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
+import { Separator } from '@/components/ui/separator';
 import { CONTRACTOR_ROLE } from '@/lib/constants/enums/contractor-role';
 import { Currency } from '@/lib/constants/enums/currency';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
@@ -10,6 +11,7 @@ import { vatSchema, VatSchema } from '@/lib/constants/zod/invoices';
 import { upsertInvoice } from '@/lib/data/invoices';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { ContractorsSection } from '../common/sections/contractors-section';
@@ -50,21 +52,49 @@ export const VatForm = ({ defaultValues, invoiceId }: Props) => {
         }
     }
 
+    const [total, setTotal] = useState(0);
+    const { watch, getValues } = form;
+
+    useEffect(() => {
+        const { unsubscribe } = watch((_, { name, type }) => {
+            const value = getValues();
+
+            if (type === 'change' && name) {
+                if (name.endsWith('quantity') || name.endsWith('vat') || name.endsWith('price') || name.endsWith('discount')) {
+                    const items = value.invoice_products || [];
+
+                    const total = items.reduce(
+                        (sum, item) =>
+                            item ? sum + (Number(item.price) || 0) * (Number(item.quantity) || 0) * (1 - (item.discount || 0) / 100) : sum,
+                        0,
+                    );
+
+                    setTotal(Number(total.toFixed(2)));
+                }
+            }
+        });
+        return () => unsubscribe();
+    }, [watch, getValues]);
+
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <HeaderSection form={form} />
-                <div className="space-y-4 px-6 py-4 sm:space-y-8 sm:py-8">
+                <div className="space-y-4 py-4 sm:space-y-8 sm:py-8">
                     <TopSection form={form} />
+
                     <ContractorsSection form={form} />
                     <ProductsSection form={form} />
-                    {form.formState.errors.root?.message}
-                    <Button type="submit" className="cursor-pointer" disabled={form.formState.isSubmitting}>
-                        Submit
-                    </Button>
+                    <Separator />
+                    <div className="flex items-center justify-between px-4">
+                        <span>Grand Total: {total} PLN</span>
+                        <Button type="submit" className="cursor-pointer" disabled={form.formState.isSubmitting}>
+                            Submit
+                        </Button>
+                    </div>
                 </div>
             </form>
-            <pre>{JSON.stringify(form.formState.errors, null, 2)}</pre>
+            {/* <pre>{JSON.stringify(form.formState.errors, null, 2)}</pre> */}
         </Form>
     );
 };
