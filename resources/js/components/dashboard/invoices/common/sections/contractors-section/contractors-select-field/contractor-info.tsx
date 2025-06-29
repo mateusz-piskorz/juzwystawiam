@@ -8,44 +8,24 @@ type Props = Contractor & {
     onEdit?: () => void;
 };
 
-export const ContractorInfo = ({
-    building_number,
-    city,
-    postal_code,
-    street_name,
-    company_name,
-    nip,
-    first_name,
-    surname,
-    type_of_business,
-    className,
-    onEdit,
-}: Props) => {
+export const ContractorInfo = (p: Props) => {
+    const addressFirstLine = `${p.street_name} ${p.building_number}`;
+    const addressSecondLine = `${p.postal_code} ${p.city}`;
     return (
         <>
-            <div className={cn('flex w-full justify-between', className)}>
-                <div className="flex flex-col gap-1">
-                    <h4>
-                        {company_name || `${first_name} ${surname}`}
+            <div className={cn('text-muted-foreground flex w-full justify-between text-sm', p.className)}>
+                <div>
+                    <h4 className="text-accent-foreground text-base">
+                        {p.company_name || `${p.first_name} ${p.surname}`}
                         <User className="ml-1 inline-block" aria-label="user-icon" size={20} />
                     </h4>
 
-                    <div className="text-muted-foreground text-sm">
-                        <p>
-                            {street_name} {building_number}
-                        </p>
-                        <p>
-                            {postal_code} {city}
-                        </p>
-                    </div>
+                    <p>{addressFirstLine}</p>
+                    <p>{addressSecondLine}</p>
                 </div>
-                <div className={cn('flex flex-col items-end', onEdit ? 'justify-between' : 'justify-end')}>
-                    {onEdit && <PencilLine size={20} className="cursor-pointer" onClick={onEdit} />}
-                    {nip ? (
-                        <p className="text-muted-foreground text-sm">NIP: {nip}</p>
-                    ) : (
-                        <p className="text-muted-foreground text-sm">{TypeOfBusinessTranslation[type_of_business]}</p>
-                    )}
+                <div className={cn('flex flex-col items-end justify-end', p.onEdit && 'justify-between')}>
+                    {p.onEdit && <PencilLine size={20} className="text-accent-foreground cursor-pointer" onClick={p.onEdit} />}
+                    <p>{p.nip ? `NIP: ${p.nip}` : TypeOfBusinessTranslation[p.type_of_business]}</p>
                 </div>
             </div>
         </>

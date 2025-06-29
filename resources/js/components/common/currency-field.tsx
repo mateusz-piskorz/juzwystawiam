@@ -62,7 +62,7 @@ export const CurrencyField = <T extends FieldValues>({ form, label, name: propsN
                 return (
                     <FormItem
                         className={cn(
-                            'hover:bg-accent relative z-10 block h-[60px] min-w-[100px] rounded border',
+                            'hover:bg-accent relative z-10 block h-[60px] w-full min-w-[100px] rounded border',
                             'outline-[var(--accent-foreground)] focus-within:outline focus-within:outline-solid',
                             className,
                         )}

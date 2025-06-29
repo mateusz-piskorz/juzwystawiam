@@ -21,6 +21,7 @@ const CreateInvoicePage = () => {
     const {
         props: { ziggy },
     } = usePage();
+
     const { invoice_type } = ziggy.query;
 
     return (

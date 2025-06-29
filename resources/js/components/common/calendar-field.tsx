@@ -32,7 +32,7 @@ export const CalendarField = <T extends FieldValues>({ form, name: propsName, sa
             render={({ field }) => (
                 <FormItem
                     className={cn(
-                        'hover:bg-accent flex flex-col rounded border',
+                        'hover:bg-accent flex min-w-[100px] flex-col rounded border',
                         'outline-[var(--accent-foreground)] focus-within:outline focus-within:outline-solid',
                         className,
                     )}
