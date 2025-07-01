@@ -9,6 +9,7 @@ const BASE_URL = '/api/contractors';
 type GetContractors = {
     limit?: number;
     page?: string;
+    q?: string;
     nip?: QueryValue;
     name?: QueryValue;
     is_own_company?: QueryValue;
@@ -17,6 +18,10 @@ type GetContractors = {
 
 type DeleteContractor = {
     contractorId: number;
+};
+
+export const getContractor = async (id: string) => {
+    return await apiFetch<Contractor>(`${BASE_URL}/${id}`);
 };
 
 export const getContractors = async (args?: GetContractors) => {

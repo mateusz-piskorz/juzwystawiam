@@ -6,16 +6,8 @@ import { deleteContractor, getContractors } from '@/lib/data/contractors';
 import { usePage } from '@/lib/hooks/use-page';
 import { router } from '@inertiajs/react';
 import { useQuery } from '@tanstack/react-query';
-import {
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getSortedRowModel,
-    useReactTable,
-    type ColumnFiltersState,
-    type SortingState,
-    type VisibilityState,
-} from '@tanstack/react-table';
+import { flexRender, getCoreRowModel, getSortedRowModel, useReactTable, type SortingState, type VisibilityState } from '@tanstack/react-table';
+import { debounce } from 'lodash';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { getColumns } from './columns';
@@ -26,15 +18,19 @@ export const ContractorsTable = () => {
         props: { ziggy },
     } = usePage();
 
+    const [q, setQ] = useState('');
     const { data, refetch } = useQuery({
-        queryKey: ['contractor-list', ziggy],
-        queryFn: () => getContractors({ page: ziggy.query.page, limit: 10 }),
+        queryKey: ['contractor-list', ziggy, q],
+        queryFn: () => getContractors({ page: ziggy.query.page, limit: 10, q }),
     });
+
+    const handleSearchChange = debounce((input: string) => {
+        setQ(input);
+    }, 300);
 
     const [open, setOpen] = useState(false);
 
     const [selectedContractorId, setSelectedContractorId] = useState<number | undefined>(undefined);
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = useState({});
@@ -69,13 +65,10 @@ export const ContractorsTable = () => {
         getCoreRowModel: getCoreRowModel(),
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
-        onColumnFiltersChange: setColumnFilters,
-        getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
         state: {
             sorting,
-            columnFilters,
             columnVisibility,
             rowSelection,
         },
@@ -102,12 +95,7 @@ export const ContractorsTable = () => {
             />
 
             <div className="flex items-center justify-between gap-4 pt-4 pb-6">
-                <Input
-                    placeholder="Filter name..."
-                    value={(table.getColumn('company_name')?.getFilterValue() as string) ?? ''}
-                    onChange={(event) => table.getColumn('company_name')?.setFilterValue(event.target.value)}
-                    className="max-w-sm"
-                />
+                <Input placeholder="Search ..." defaultValue={q} onChange={(event) => handleSearchChange(event.target.value)} className="max-w-sm" />
                 <div className="flex items-center gap-2">
                     <DropdownMenu>
                         <div>

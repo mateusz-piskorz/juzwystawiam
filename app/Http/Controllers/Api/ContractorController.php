@@ -21,13 +21,16 @@ class ContractorController extends Controller
         $validated = $request->validate([
             'limit'          => 'string|nullable',
             'page'           => 'string|nullable',
+            'q'              => 'string|nullable',
             'id'             => $stringOrArray,
             'nip'            => $stringOrArray,
             'company_name'   => $stringOrArray,
             'is_own_company' => $stringOrArray
         ]);
 
-        [$itemsArray, $itemsString] = Arr::partition(Arr::except($validated, ['limit', 'page']), fn(string | array $i) => is_array($i));
+        $q = $validated['q'] ?? null;
+
+        [$itemsArray, $itemsString] = Arr::partition(Arr::except($validated, ['limit', 'page', 'q']), fn(string | array $i) => is_array($i));
 
         $limit = $request->limit ? $request->limit : 7;
 
@@ -35,6 +38,9 @@ class ContractorController extends Controller
             foreach ($itemsArray as $key => $value) {
                 $query->orWhereIn($key, $value);
             }
+        })->when($q, function ($query) use ($q) {
+            $query->whereLike('company_name', "%{$q}%")
+                ->orWhereRaw("concat_ws(' ',first_name,surname) ilike ?", "%{$q}%");
         })->latest()->paginate($limit)->toJson();
 
     }
@@ -43,6 +49,7 @@ class ContractorController extends Controller
     public function show(Request $request, Contractor $contractor)
     {
         Gate::authorize('view', $contractor);
+
         return $contractor->toJson();
     }
 

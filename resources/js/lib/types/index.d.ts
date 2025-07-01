@@ -26,7 +26,7 @@ export type SharedData = {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
-    ziggy: Config & { location: string; query: { [key: string]: string } };
+    ziggy: Config & { location: string; query: { [key: string]: string | string[] } };
     sidebarOpen: boolean;
     [key: string]: unknown;
 };

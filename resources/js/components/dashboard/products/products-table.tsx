@@ -3,8 +3,7 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { deleteProduct, getProducts } from '@/lib/data/products';
-import { usePage } from '@/lib/hooks/use-page';
-import { router } from '@inertiajs/react';
+import { useSearchParams } from '@/lib/hooks/use-search-params';
 import { useQuery } from '@tanstack/react-query';
 import {
     flexRender,
@@ -22,13 +21,12 @@ import { getColumns } from './columns';
 import { UpsertProductDialog } from './upsert-product-dialog';
 
 export const ProductsTable = () => {
-    const {
-        props: { ziggy },
-    } = usePage();
+    const searchParams = useSearchParams();
+    const page = searchParams.get('page');
 
     const { data, refetch } = useQuery({
-        queryKey: ['products-list', ziggy],
-        queryFn: () => getProducts({ page: ziggy.query.page, limit: 10 }),
+        queryKey: ['products-list', page],
+        queryFn: () => getProducts({ page, limit: 10 }),
     });
 
     const [open, setOpen] = useState(false);
@@ -83,12 +81,7 @@ export const ProductsTable = () => {
 
     const handlePageChange = (action: 'prev' | 'next') => {
         if (!data) return;
-        const params = new URLSearchParams(ziggy.query);
-        params.set('page', String(data.current_page + (action === 'next' ? 1 : -1)));
-        router.replace({
-            url: `${ziggy.location}?${params.toString()}`,
-            props: (currentProps) => ({ ...currentProps, ziggy: { ...ziggy, query: Object.fromEntries(params.entries()) } }),
-        });
+        searchParams.set('page', String(data.current_page + (action === 'next' ? 1 : -1)));
     };
 
     return (

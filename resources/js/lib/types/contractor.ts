@@ -16,6 +16,7 @@ export type Contractor = {
     phone: string | null;
     first_name: string | null;
     surname: string | null;
+    full_name: string | null;
     bank_account: string | null;
     updated_at: string; // Date
     created_at: string; // Date
