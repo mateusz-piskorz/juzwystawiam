@@ -19,29 +19,40 @@ class ContractorController extends Controller
         $stringOrArray = ['nullable', fn($attribute, $value, $fail) => (!is_string($value) && !is_array($value)) && $fail("The $attribute field must be a string or an array.")];
 
         $validated = $request->validate([
-            'limit'          => 'string|nullable',
-            'page'           => 'string|nullable',
-            'q'              => 'string|nullable',
-            'id'             => $stringOrArray,
-            'nip'            => $stringOrArray,
-            'company_name'   => $stringOrArray,
-            'is_own_company' => $stringOrArray
+            'limit'            => 'nullable|string',
+            'page'             => 'nullable|string',
+            'q'                => 'nullable|string',
+            'order_column'     => 'nullable|string',
+            'order_direction'  => 'nullable|string|in:desc,asc',
+            'id'               => $stringOrArray,
+            'nip'              => $stringOrArray,
+            'type_of_business' => $stringOrArray,
+            'company_name'     => $stringOrArray,
+            'is_own_company'   => $stringOrArray
         ]);
 
         $q = $validated['q'] ?? null;
+        $orderColumn = $validated['order_column'] ?? null;
+        $orderDirection = $validated['order_direction'] ?? null;
 
-        [$itemsArray, $itemsString] = Arr::partition(Arr::except($validated, ['limit', 'page', 'q']), fn(string | array $i) => is_array($i));
+        [$itemsArray, $itemsString] = Arr::partition(Arr::except($validated, ['limit', 'page', 'q', 'order_column', 'order_direction']), fn(string | array $i) => is_array($i));
 
         $limit = $request->limit ? $request->limit : 7;
 
-        return $request->user()->contractors()->where($itemsString)->where(function ($query) use ($itemsArray) {
-            foreach ($itemsArray as $key => $value) {
-                $query->orWhereIn($key, $value);
-            }
-        })->when($q, function ($query) use ($q) {
-            $query->whereLike('company_name', "%{$q}%")
-                ->orWhereRaw("concat_ws(' ',first_name,surname) ilike ?", "%{$q}%");
-        })->latest()->paginate($limit)->toJson();
+        return $request->user()->contractors()->where($itemsString)
+            ->where(
+                function ($query) use ($itemsArray) {
+                    foreach ($itemsArray as $key => $value) {
+                        $query->orWhereIn($key, $value);
+                    }
+                })
+            ->when($q,
+                fn($query) => $query->whereLike('company_name', "%{$q}%")->orWhereRaw("concat_ws(' ',first_name,surname) ilike ?", "%{$q}%")
+            )
+            ->when($orderColumn && $orderDirection,
+                fn($query) => $query->orderBy($orderColumn, $orderDirection),
+                fn($query) => $query->latest())
+            ->paginate($limit)->toJson();
 
     }
 
@@ -95,7 +106,9 @@ class ContractorController extends Controller
             ]
         ]);
 
-        $contractor = Contractor::create([ ...$validated, 'user_id' => $request->user()->id]);
+        $companyName = $validated['company_name'] ?? $validated['first_name'] . ' ' . $validated['surname'];
+
+        $contractor = Contractor::create([ ...$validated, 'company_name' => $companyName, 'user_id' => $request->user()->id]);
 
         return response()->json($contractor);
     }
@@ -143,7 +156,9 @@ class ContractorController extends Controller
             ]
         ]);
 
-        $contractor->update([ ...$validated, 'user_id' => $request->user()->id]);
+        $companyName = $validated['company_name'] ?? $validated['first_name'] . ' ' . $validated['surname'];
+
+        $contractor->update([ ...$validated, 'company_name' => $companyName, 'user_id' => $request->user()->id]);
 
         return response()->json($contractor);
     }

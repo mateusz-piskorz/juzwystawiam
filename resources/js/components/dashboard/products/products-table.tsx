@@ -81,7 +81,7 @@ export const ProductsTable = () => {
 
     const handlePageChange = (action: 'prev' | 'next') => {
         if (!data) return;
-        searchParams.set('page', String(data.current_page + (action === 'next' ? 1 : -1)));
+        searchParams.set({ page: String(data.current_page + (action === 'next' ? 1 : -1)) });
     };
 
     return (

@@ -9,8 +9,8 @@ export type Contractor = {
     building_number: string;
     city: string;
     country: string;
+    company_name: string;
     nip: string | null;
-    company_name: string | null;
     email: string | null;
     street_name: string | null;
     phone: string | null;

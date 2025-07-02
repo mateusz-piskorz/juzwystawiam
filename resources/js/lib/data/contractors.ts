@@ -10,9 +10,12 @@ type GetContractors = {
     limit?: number;
     page?: string;
     q?: string;
+    order_column?: string;
+    order_direction?: 'desc' | 'asc';
     nip?: QueryValue;
     name?: QueryValue;
     is_own_company?: QueryValue;
+    type_of_business?: QueryValue;
     id?: QueryValue;
 };
 

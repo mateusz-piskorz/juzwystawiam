@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { router } from '@inertiajs/react';
-import { castArray, has, omit } from 'lodash';
+import { castArray, omit } from 'lodash';
 import { buildURLParams } from '../utils/build-url-params';
 import { usePage } from './use-page';
 
@@ -9,17 +11,32 @@ export const useSearchParams = () => {
     } = usePage();
 
     return {
-        get: (paramName: string): string[] => {
+        get: (paramName: string): string | undefined => {
             const param = ziggy.query[paramName];
-            return param === undefined ? [] : castArray(paramName);
+            return param === undefined ? undefined : typeof param === 'string' ? param : param[0];
         },
-
-        has: (paramName: string | string[]) => has(ziggy.query, castArray(paramName)),
-
-        set: (paramName: string | string[], paramValue: string | string[] | null) => {
+        getAll: (paramName: string): string[] => castArray(ziggy.query[paramName]).filter((e) => e),
+        has: (paramName: string | string[]) => {
             const paramKeys = castArray(paramName);
+            console.log(ziggy.query);
+            return Object.keys(ziggy.query).some((e) => paramKeys.includes(e));
+        },
+        clear: (keys: string | string[]) => {
+            const paramKeys = castArray(keys);
+            const params = {
+                ...omit(ziggy.query, paramKeys),
+            };
 
-            const params = { ...omit(ziggy.query, paramKeys), ...(paramValue && { ...Object.fromEntries(paramKeys.map((e) => [e, paramValue])) }) };
+            router.replace({
+                url: `${ziggy.location}?${buildURLParams(params)}`,
+                props: (currentProps) => ({ ...currentProps, ziggy: { ...ziggy, query: params } }),
+            });
+        },
+        set: (args: { [key: string]: string | string[] | null }) => {
+            const params = {
+                ...omit(ziggy.query, Object.keys(args)),
+                ...Object.fromEntries(Object.entries(args).filter(([_, val]) => val)),
+            };
 
             router.replace({
                 url: `${ziggy.location}?${buildURLParams(params)}`,

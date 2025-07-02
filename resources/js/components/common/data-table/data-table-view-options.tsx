@@ -11,7 +11,7 @@ export function DataTableViewOptions<TData>({ table }: { table: Table<TData> }) 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="ml-auto hidden h-8 lg:flex">
+                <Button variant="outline" className="flex">
                     <Settings2 />
                     View
                 </Button>

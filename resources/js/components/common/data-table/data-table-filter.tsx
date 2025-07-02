@@ -21,16 +21,16 @@ type Props = {
 
 export function DataTableFilter({ filterKey, title, options }: Props) {
     const searchParams = useSearchParams();
-    const values = searchParams.get(filterKey);
+    const values = searchParams.getAll(filterKey);
 
     const setValues = (val: string[] | null) => {
-        searchParams.set(filterKey, val);
+        searchParams.set({ filterKey: val });
     };
 
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button variant="outline" size="sm" className="h-8 border-dashed">
+                <Button variant="outline" size="sm" className="h-9 border-dashed">
                     <PlusCircle />
                     {title}
                     {values.length > 0 && (

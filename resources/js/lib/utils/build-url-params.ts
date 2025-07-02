@@ -1,5 +1,5 @@
 type Args = {
-    [key: string]: string | number | string[] | number[];
+    [key: string]: string | number | string[] | number[] | undefined | undefined[];
 };
 
 export const buildURLParams = (args: Args) => {
@@ -16,5 +16,6 @@ export const buildURLParams = (args: Args) => {
                 return `${key}=${value}`;
             }
         })
+        .filter((e) => e)
         .join('&');
 };

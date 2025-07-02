@@ -14,24 +14,27 @@ import {
     useReactTable,
     VisibilityState,
 } from '@tanstack/react-table';
-import * as React from 'react';
+import { ComponentProps, useState } from 'react';
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-import { statuses } from './data';
 import { DataTablePagination } from './data-table-pagination';
 import { DataTableToolbar } from './data-table-toolbar';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
+    filters: ComponentProps<typeof DataTableToolbar>['filters'];
+    addNewRecord: ComponentProps<typeof DataTableToolbar>['addNewRecord'];
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
-    const [rowSelection, setRowSelection] = React.useState({});
-    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-    const [sorting, setSorting] = React.useState<SortingState>([]);
+// todo: add sorting from db
+
+export function DataTable<TData, TValue>({ columns, data, filters, addNewRecord }: DataTableProps<TData, TValue>) {
+    const [rowSelection, setRowSelection] = useState({});
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+    const [sorting, setSorting] = useState<SortingState>([]);
 
     const table = useReactTable({
         data,
@@ -62,8 +65,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
     return (
         <div className="flex flex-col gap-4">
-            <DataTableToolbar table={table} filters={[{ filterKey: 'status', options: statuses, title: 'Status' }]} />
-            <div className="rounded-md border">
+            <DataTableToolbar table={table} filters={filters} addNewRecord={addNewRecord} />
+            <div className="rounded border">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (

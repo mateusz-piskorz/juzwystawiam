@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
 import { Table } from '@tanstack/react-table';
+import { debounce } from 'lodash';
 import { X } from 'lucide-react';
 import { ComponentProps } from 'react';
 import { DataTableFilter } from './data-table-filter';
@@ -20,16 +21,21 @@ interface DataTableToolbarProps<TData> {
 
 export function DataTableToolbar<TData>({ table, addNewRecord, filters }: DataTableToolbarProps<TData>) {
     const searchParams = useSearchParams();
+    const q = searchParams.get('q');
+
+    const handleSearchChange = debounce((input: string) => {
+        searchParams.set({ q: input });
+    }, 300);
 
     return (
-        <div className="flex items-center justify-between">
-            <div className="flex flex-1 items-center gap-2">
-                <Input
-                    placeholder="Filter tasks..."
-                    value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
-                    onChange={(event) => table.getColumn('title')?.setFilterValue(event.target.value)}
-                    className="h-8 w-[150px] lg:w-[250px]"
-                />
+        <div className="flex flex-col items-center justify-between gap-4 overflow-x-auto pb-4 md:flex-row">
+            <Input
+                placeholder="Search..."
+                defaultValue={q}
+                onChange={(event) => handleSearchChange(event.target.value)}
+                className="min-w-[150px] rounded md:max-w-xs"
+            />
+            <div className="mr-auto flex items-center">
                 {filters.map((e) => (
                     <DataTableFilter title={e.title} options={e.options} filterKey={e.filterKey} />
                 ))}
@@ -39,10 +45,7 @@ export function DataTableToolbar<TData>({ table, addNewRecord, filters }: DataTa
                         variant="ghost"
                         size="sm"
                         onClick={() => {
-                            searchParams.set(
-                                filters.map((e) => e.filterKey),
-                                null,
-                            );
+                            searchParams.clear(filters.map((e) => e.filterKey));
                         }}
                     >
                         Reset
@@ -50,10 +53,11 @@ export function DataTableToolbar<TData>({ table, addNewRecord, filters }: DataTa
                     </Button>
                 )}
             </div>
-            <div className="flex items-center gap-2">
+
+            <div className="flex w-full items-center gap-2 md:w-auto">
                 <DataTableViewOptions table={table} />
                 {addNewRecord && (
-                    <Button size="sm" onClick={addNewRecord.action}>
+                    <Button variant="secondary" className="rounded" onClick={addNewRecord.action}>
                         {addNewRecord.label}
                     </Button>
                 )}
