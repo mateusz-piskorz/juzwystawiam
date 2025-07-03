@@ -24,7 +24,7 @@ export function DataTableFilter({ filterKey, title, options }: Props) {
     const values = searchParams.getAll(filterKey);
 
     const setValues = (val: string[] | null) => {
-        searchParams.set({ filterKey: val });
+        searchParams.set({ [filterKey]: val });
     };
 
     return (

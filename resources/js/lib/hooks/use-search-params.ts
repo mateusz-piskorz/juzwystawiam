@@ -18,8 +18,19 @@ export const useSearchParams = () => {
         getAll: (paramName: string): string[] => castArray(ziggy.query[paramName]).filter((e) => e),
         has: (paramName: string | string[]) => {
             const paramKeys = castArray(paramName);
-            console.log(ziggy.query);
             return Object.keys(ziggy.query).some((e) => paramKeys.includes(e));
+        },
+        set: (args: { [key: string]: string | string[] | null }) => {
+            const params = {
+                ...omit(ziggy.query, Object.keys(args)),
+                ...Object.fromEntries(Object.entries(args).filter(([_, val]) => val && val.length > 0)),
+            };
+
+            router.replace({
+                url: `${ziggy.location}?${buildURLParams(params)}`,
+                props: (currentProps) => ({ ...currentProps, ziggy: { ...ziggy, query: params } }),
+                preserveState: true,
+            });
         },
         clear: (keys: string | string[]) => {
             const paramKeys = castArray(keys);
@@ -30,17 +41,7 @@ export const useSearchParams = () => {
             router.replace({
                 url: `${ziggy.location}?${buildURLParams(params)}`,
                 props: (currentProps) => ({ ...currentProps, ziggy: { ...ziggy, query: params } }),
-            });
-        },
-        set: (args: { [key: string]: string | string[] | null }) => {
-            const params = {
-                ...omit(ziggy.query, Object.keys(args)),
-                ...Object.fromEntries(Object.entries(args).filter(([_, val]) => val)),
-            };
-
-            router.replace({
-                url: `${ziggy.location}?${buildURLParams(params)}`,
-                props: (currentProps) => ({ ...currentProps, ziggy: { ...ziggy, query: params } }),
+                preserveState: true,
             });
         },
     };

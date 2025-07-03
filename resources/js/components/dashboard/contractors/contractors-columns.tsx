@@ -1,16 +1,12 @@
 'use client';
 
+import { DataTableColumnHeader } from '@/components/common/data-table/data-table-column-header';
+import { DataTableRowActions } from '@/components/common/data-table/data-table-row-actions';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Contractor } from '@/lib/types/contractor';
 import { ColumnDef } from '@tanstack/react-table';
 
-import { Checkbox } from '@/components/ui/checkbox';
-
-import { Contractor } from '@/lib/types/contractor';
-import { DataTableColumnHeader } from '../data-table-column-header';
-import { DataTableRowActions } from '../data-table-row-actions';
-
-// todo: fix sorting
-
-export const getColumns = ({
+export const getContractorsColumns = ({
     handleDeleteContractor,
     handleEditContractor,
 }: {
@@ -39,13 +35,6 @@ export const getColumns = ({
         enableHiding: false,
     },
     {
-        accessorKey: 'id',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Contractor id" />,
-        cell: ({ row }) => <div className="w-[80px]">{row.getValue('id')}</div>,
-        enableSorting: false,
-        enableHiding: false,
-    },
-    {
         accessorKey: 'company_name',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
         cell: ({ row }) => {
@@ -55,10 +44,11 @@ export const getColumns = ({
                 </div>
             );
         },
+        enableSorting: false,
     },
     {
         accessorKey: 'is_own_company',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="is own company" />,
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Is own company" />,
         cell: ({ row }) => {
             return (
                 <div className="flex w-[100px] items-center">
@@ -66,6 +56,43 @@ export const getColumns = ({
                 </div>
             );
         },
+    },
+    {
+        accessorKey: 'type_of_business',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Type of business" />,
+        cell: ({ row }) => {
+            return (
+                <div className="flex w-[100px] items-center">
+                    <span>{row.original.type_of_business}</span>
+                </div>
+            );
+        },
+    },
+    {
+        accessorKey: 'country',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Country" />,
+        cell: ({ row }) => {
+            return (
+                <div className="flex w-[100px] items-center">
+                    <span>{row.original.country}</span>
+                </div>
+            );
+        },
+        enableSorting: false,
+    },
+    {
+        accessorKey: 'address',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Address" />,
+        cell: ({ row }) => {
+            return (
+                <div className="flex w-[100px] items-center">
+                    <span>
+                        {row.original.postal_code} {row.original.city}
+                    </span>
+                </div>
+            );
+        },
+        enableSorting: false,
     },
     {
         id: 'actions',

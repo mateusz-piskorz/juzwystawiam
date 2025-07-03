@@ -58,20 +58,7 @@ export interface Pagination<T = Record<string, unknown>> {
     total: number;
 }
 
-export type QueryValue = string | number | string[] | number[];
-
-export type KeysInType<T, Type> = {
-    [K in keyof T]: T[K] extends ReadonlyArray ? never : T[K] extends Type ? K : never;
-}[keyof T];
-
-type Example = {
-    foo: string;
-    bar: {
-        baz: number;
-        arr: { deep: number; skip: string }[];
-    };
-    items: { price: number; label: number }[];
-};
+export type QueryValue = string | number | string[] | number[] | undefined | undefined[];
 
 // works similar to FieldPath<FieldValues> but You can restrain a field to specific type e.g. Boolean|String|Date
 export type TypedFieldPath<T, Type, Prefix extends string = ''> = {

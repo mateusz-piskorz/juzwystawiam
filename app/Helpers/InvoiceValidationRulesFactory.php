@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Helpers;
 
 use App\Enums\ContractorRole;
 use App\Enums\Currency;

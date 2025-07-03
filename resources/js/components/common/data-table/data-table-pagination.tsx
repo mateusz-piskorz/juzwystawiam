@@ -8,11 +8,17 @@ import { cn } from '@/lib/utils/cn';
 
 interface DataTablePaginationProps<TData> {
     table: Table<TData>;
+    totalPages: string;
 }
 
-export function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) {
+export function DataTablePagination<TData>({ table, totalPages }: DataTablePaginationProps<TData>) {
     const searchParams = useSearchParams();
     const limit = searchParams.get('limit');
+    const page = searchParams.get('page') ?? '1';
+
+    const handlePageChange = (action: 'prev' | 'next') => {
+        searchParams.set({ page: String(Number(page) + (action === 'next' ? 1 : -1)) });
+    };
 
     return (
         <div className="mt-2 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
@@ -32,7 +38,7 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
                         }}
                     >
                         <SelectTrigger className="h-8 w-[70px] rounded">
-                            <SelectValue placeholder={table.getState().pagination.pageSize} />
+                            <SelectValue />
                         </SelectTrigger>
                         <SelectContent side="top">
                             {[10, 20, 25, 30, 40, 50].map((pageSize) => (
@@ -45,33 +51,33 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
                 </div>
                 <div className="flex">
                     <div className="hidden w-[100px] items-center justify-center text-sm font-medium sm:flex">
-                        Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+                        Page {page} of {totalPages}
                     </div>
                     <div className="flex items-center gap-2">
                         <Button
                             variant="outline"
                             size="icon"
                             className="hidden size-8 md:flex"
-                            onClick={() => table.setPageIndex(0)}
-                            disabled={!table.getCanPreviousPage()}
+                            onClick={() => searchParams.set({ page: '1' })}
+                            disabled={page === '1'}
                         >
                             <span className="sr-only">Go to first page</span>
                             <ChevronsLeft />
                         </Button>
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            className="size-8"
-                            onClick={() => table.previousPage()}
-                            disabled={!table.getCanPreviousPage()}
-                        >
+                        <Button variant="outline" size="icon" className="size-8" onClick={() => handlePageChange('prev')} disabled={page === '1'}>
                             <span className="sr-only">Go to previous page</span>
                             <ChevronLeft />
                         </Button>
                         <span className="sm:hidden">
-                            {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+                            {page} of {table.getPageCount()}
                         </span>
-                        <Button variant="outline" size="icon" className="size-8" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            className="size-8"
+                            onClick={() => handlePageChange('next')}
+                            disabled={page === totalPages}
+                        >
                             <span className="sr-only">Go to next page</span>
                             <ChevronRight />
                         </Button>
@@ -79,8 +85,8 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
                             variant="outline"
                             size="icon"
                             className="hidden size-8 md:flex"
-                            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                            disabled={!table.getCanNextPage()}
+                            onClick={() => searchParams.set({ page: totalPages })}
+                            disabled={page === totalPages}
                         >
                             <span className="sr-only">Go to last page</span>
                             <ChevronsRight />

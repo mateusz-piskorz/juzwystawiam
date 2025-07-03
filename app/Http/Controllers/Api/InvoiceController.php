@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\InvoiceValidationRulesFactory;
 use App\Http\Controllers\Controller;
-use App\HTTP\Services\InvoiceValidationRulesFactory;
 use App\Models\Contractor;
 use App\Models\Invoice;
 use Illuminate\Http\Request;

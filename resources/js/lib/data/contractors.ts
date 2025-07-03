@@ -2,29 +2,18 @@ import { apiFetch } from '@/lib/utils/api-fetch';
 import { CreateContractorDTO } from '../constants/zod/contractors';
 import { Pagination, QueryValue } from '../types';
 import { Contractor } from '../types/contractor';
+import { SharedQueryArgs } from '../types/shared-query-args';
 import { buildURLParams } from '../utils/build-url-params';
 
 const BASE_URL = '/api/contractors';
 
-type GetContractors = {
-    limit?: number;
-    page?: string;
-    q?: string;
-    order_column?: string;
-    order_direction?: 'desc' | 'asc';
-    nip?: QueryValue;
-    name?: QueryValue;
+type GetContractors = SharedQueryArgs & {
     is_own_company?: QueryValue;
     type_of_business?: QueryValue;
-    id?: QueryValue;
 };
 
 type DeleteContractor = {
     contractorId: number;
-};
-
-export const getContractor = async (id: string) => {
-    return await apiFetch<Contractor>(`${BASE_URL}/${id}`);
 };
 
 export const getContractors = async (args?: GetContractors) => {

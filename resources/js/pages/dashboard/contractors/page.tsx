@@ -1,5 +1,4 @@
-// import { ContractorsTable } from '@/components/dashboard/contractors/contractors-table';
-import { NewTable } from '@/components/dashboard/contractors/new-table';
+import { ContractorsTable } from '@/components/dashboard/contractors/contractors-table';
 import AppLayout from '@/layouts/app-layout';
 import { MainContentLayout } from '@/layouts/main-content-layout';
 import { BreadcrumbItem } from '@/lib/types';
@@ -21,7 +20,7 @@ const ContractorsPage = () => {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Contractors" />
             <MainContentLayout headerText="Contractors">
-                <NewTable />
+                <ContractorsTable />
             </MainContentLayout>
         </AppLayout>
     );

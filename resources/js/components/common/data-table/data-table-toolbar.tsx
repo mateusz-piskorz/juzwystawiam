@@ -23,16 +23,12 @@ export function DataTableToolbar<TData>({ table, addNewRecord, filters }: DataTa
     const searchParams = useSearchParams();
     const q = searchParams.get('q');
 
-    const handleSearchChange = debounce((input: string) => {
-        searchParams.set({ q: input });
-    }, 300);
-
     return (
         <div className="flex flex-col items-center justify-between gap-4 overflow-x-auto pb-4 md:flex-row">
             <Input
                 placeholder="Search..."
+                onChange={debounce((event) => searchParams.set({ q: event.target.value || undefined }), 500)}
                 defaultValue={q}
-                onChange={(event) => handleSearchChange(event.target.value)}
                 className="min-w-[150px] rounded md:max-w-xs"
             />
             <div className="mr-auto flex items-center">

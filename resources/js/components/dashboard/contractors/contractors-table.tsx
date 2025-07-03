@@ -1,88 +1,51 @@
-import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { DataTable } from '@/components/common/data-table';
+import { TYPE_OF_BUSINESS } from '@/lib/constants/enums/type-of-business';
 import { deleteContractor, getContractors } from '@/lib/data/contractors';
-import { usePage } from '@/lib/hooks/use-page';
-import { router } from '@inertiajs/react';
+import { useSearchParams } from '@/lib/hooks/use-search-params';
+import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
-import { flexRender, getCoreRowModel, getSortedRowModel, useReactTable, type SortingState, type VisibilityState } from '@tanstack/react-table';
-import { debounce } from 'lodash';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { getColumns } from './columns';
+import { getContractorsColumns } from './contractors-columns';
 import { UpsertContractorDialog } from './upsert-contractor-dialog';
 
 export const ContractorsTable = () => {
-    const {
-        props: { ziggy },
-    } = usePage();
-
-    const [q, setQ] = useState('');
-    const { data, refetch } = useQuery({
-        queryKey: ['contractor-list', ziggy, q],
-        queryFn: () => getContractors({ page: ziggy.query.page, limit: 10, q }),
-    });
-
-    const handleSearchChange = debounce((input: string) => {
-        setQ(input);
-    }, 300);
-
+    const searchParams = useSearchParams();
     const [open, setOpen] = useState(false);
-
     const [selectedContractorId, setSelectedContractorId] = useState<number | undefined>(undefined);
-    const [sorting, setSorting] = useState<SortingState>([]);
-    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-    const [rowSelection, setRowSelection] = useState({});
 
-    const handleDeleteContractor = async (contractorId: number) => {
-        try {
-            await deleteContractor({ contractorId });
-            toast.success(`Contractor deleted successfully`);
-            refetch();
-            setOpen(false);
-        } catch (err) {
-            toast.error(typeof err === 'string' ? err : 'Something went wrong');
-        }
-    };
+    const page = searchParams.get('page');
+    const limit = searchParams.get('limit');
+    const q = searchParams.get('q');
+    const order_column = searchParams.get('order_column');
+    const order_direction = searchParams.get('order_direction') as OrderDirection;
+    const is_own_company = searchParams.getAll('is_own_company');
+    const type_of_business = searchParams.getAll('type_of_business');
 
-    const handleEditContractor = (contractorId: number) => {
-        const contractor = data?.data.find((p) => p.id === contractorId);
-        if (!contractor) return;
-
-        setSelectedContractorId(contractorId);
-        setOpen(true);
-    };
-
-    const columns = getColumns({
-        handleDeleteContractor,
-        handleEditContractor,
+    const { data, refetch } = useQuery({
+        queryKey: ['contractors-list', page, limit, is_own_company, type_of_business, order_column, order_direction, q],
+        queryFn: () => getContractors({ page, limit, is_own_company, type_of_business, order_column, order_direction, q }),
     });
 
-    const table = useReactTable({
-        data: data?.data ?? [],
-        columns,
-        getCoreRowModel: getCoreRowModel(),
-        onSortingChange: setSorting,
-        getSortedRowModel: getSortedRowModel(),
-        onColumnVisibilityChange: setColumnVisibility,
-        onRowSelectionChange: setRowSelection,
-        state: {
-            sorting,
-            columnVisibility,
-            rowSelection,
+    const columns = getContractorsColumns({
+        handleDeleteContractor: async (contractorId: number) => {
+            try {
+                await deleteContractor({ contractorId });
+                toast.success('Contractor deleted successfully');
+                refetch();
+                setOpen(false);
+            } catch (err) {
+                toast.error(typeof err === 'string' ? err : 'Something went wrong');
+            }
+        },
+        handleEditContractor: (contractorId: number) => {
+            const contractor = data?.data.find((p) => p.id === contractorId);
+            if (!contractor) return;
+
+            setSelectedContractorId(contractorId);
+            setOpen(true);
         },
     });
-
-    const handlePageChange = (action: 'prev' | 'next') => {
-        if (!data) return;
-        const params = new URLSearchParams(ziggy.query);
-        params.set('page', String(data.current_page + (action === 'next' ? 1 : -1)));
-        router.replace({
-            url: `${ziggy.location}?${params.toString()}`,
-            props: (currentProps) => ({ ...currentProps, ziggy: { ...ziggy, query: Object.fromEntries(params.entries()) } }),
-        });
-    };
 
     return (
         <>
@@ -94,93 +57,33 @@ export const ContractorsTable = () => {
                 contractorId={selectedContractorId}
             />
 
-            <div className="flex items-center justify-between gap-4 pt-4 pb-6">
-                <Input placeholder="Search ..." defaultValue={q} onChange={(event) => handleSearchChange(event.target.value)} className="max-w-sm" />
-                <div className="flex items-center gap-2">
-                    <DropdownMenu>
-                        <div>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="outline" className="ml-auto cursor-pointer">
-                                    Columns
-                                </Button>
-                            </DropdownMenuTrigger>
-                        </div>
-                        <DropdownMenuContent align="end">
-                            {table
-                                .getAllColumns()
-                                .filter((column) => column.getCanHide())
-                                .map((column) => {
-                                    return (
-                                        <DropdownMenuCheckboxItem
-                                            key={column.id}
-                                            className="capitalize"
-                                            checked={column.getIsVisible()}
-                                            onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                                        >
-                                            {column.id}
-                                        </DropdownMenuCheckboxItem>
-                                    );
-                                })}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-
-                    <Button
-                        className="cursor-pointer"
-                        onClick={() => {
-                            setSelectedContractorId(undefined);
-                            setOpen(true);
-                        }}
-                        variant="secondary"
-                    >
-                        Create
-                    </Button>
-                    {table.getFilteredSelectedRowModel().rows.length > 0 && (
-                        <div className="text-muted-foreground flex-1 text-sm">
-                            {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected.
-                        </div>
-                    )}
-                </div>
-            </div>
-            <Table>
-                <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
-                                return (
-                                    <TableHead key={header.id}>
-                                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                                    </TableHead>
-                                );
-                            })}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-                <TableBody>
-                    {table.getRowModel().rows?.length ? (
-                        table.getRowModel().rows.map((row) => (
-                            <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                                {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                                ))}
-                            </TableRow>
-                        ))
-                    ) : (
-                        <TableRow>
-                            <TableCell colSpan={columns.length} className="h-24 text-center">
-                                No results.
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
-            <div className="flex items-center justify-end space-x-2 py-4">
-                <Button variant="outline" size="sm" onClick={() => handlePageChange('prev')} disabled={!data?.prev_page_url}>
-                    Previous
-                </Button>
-                <Button variant="outline" size="sm" onClick={() => handlePageChange('next')} disabled={!data?.next_page_url}>
-                    Next
-                </Button>
-            </div>
+            <DataTable
+                totalPages={String(data?.last_page)}
+                data={data?.data ?? []}
+                columns={columns}
+                addNewRecord={{
+                    label: 'Add new contractor',
+                    action: () => {
+                        setSelectedContractorId(undefined);
+                        setOpen(true);
+                    },
+                }}
+                filters={[
+                    {
+                        filterKey: 'is_own_company',
+                        title: 'Is own company',
+                        options: [
+                            { label: 'true', value: 'true' },
+                            { label: 'false', value: 'false' },
+                        ],
+                    },
+                    {
+                        filterKey: 'type_of_business',
+                        title: 'Type of business',
+                        options: Object.values(TYPE_OF_BUSINESS).map((e) => ({ label: e, value: e })),
+                    },
+                ]}
+            />
         </>
     );
 };

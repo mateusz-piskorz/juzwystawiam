@@ -44,7 +44,12 @@ export function DataTableColumnHeader<TData, TValue>({ column, title, className 
                         Desc
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
+                    <DropdownMenuItem
+                        onClick={() => {
+                            searchParams.clear(['order_column', 'order_direction']);
+                            column.toggleVisibility(false);
+                        }}
+                    >
                         <EyeOff className="text-muted-foreground/70 h-3.5 w-3.5" />
                         Hide
                     </DropdownMenuItem>

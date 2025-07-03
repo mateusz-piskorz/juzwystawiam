@@ -2,15 +2,12 @@
 
 import {
     ColumnDef,
-    ColumnFiltersState,
     flexRender,
     getCoreRowModel,
     getFacetedRowModel,
     getFacetedUniqueValues,
     getFilteredRowModel,
-    getPaginationRowModel,
     getSortedRowModel,
-    SortingState,
     useReactTable,
     VisibilityState,
 } from '@tanstack/react-table';
@@ -26,38 +23,25 @@ interface DataTableProps<TData, TValue> {
     data: TData[];
     filters: ComponentProps<typeof DataTableToolbar>['filters'];
     addNewRecord: ComponentProps<typeof DataTableToolbar>['addNewRecord'];
+    totalPages: string;
 }
 
-// todo: add sorting from db
-
-export function DataTable<TData, TValue>({ columns, data, filters, addNewRecord }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, filters, addNewRecord, totalPages }: DataTableProps<TData, TValue>) {
     const [rowSelection, setRowSelection] = useState({});
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-    const [sorting, setSorting] = useState<SortingState>([]);
 
     const table = useReactTable({
         data,
         columns,
         state: {
-            sorting,
             columnVisibility,
             rowSelection,
-            columnFilters,
-        },
-        initialState: {
-            pagination: {
-                pageSize: 25,
-            },
         },
         enableRowSelection: true,
         onRowSelectionChange: setRowSelection,
-        onSortingChange: setSorting,
-        onColumnFiltersChange: setColumnFilters,
         onColumnVisibilityChange: setColumnVisibility,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getFacetedRowModel: getFacetedRowModel(),
         getFacetedUniqueValues: getFacetedUniqueValues(),
@@ -100,7 +84,7 @@ export function DataTable<TData, TValue>({ columns, data, filters, addNewRecord 
                     </TableBody>
                 </Table>
             </div>
-            <DataTablePagination table={table} />
+            <DataTablePagination table={table} totalPages={totalPages} />
         </div>
     );
 }

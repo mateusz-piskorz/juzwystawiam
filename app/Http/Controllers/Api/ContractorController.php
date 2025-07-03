@@ -5,55 +5,30 @@ namespace App\Http\Controllers\Api;
 use App\Enums\TypeOfBusiness;
 use App\Http\Controllers\Controller;
 use App\Models\Contractor;
+use App\Traits\AppliesQueryFilters;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class ContractorController extends Controller
 {
+    use AppliesQueryFilters;
 
     // List all Contractors
     public function index(Request $request)
     {
-        $stringOrArray = ['nullable', fn($attribute, $value, $fail) => (!is_string($value) && !is_array($value)) && $fail("The $attribute field must be a string or an array.")];
+        // $query = $request->user()->contractors()->with(['contractors', 'products']);
+        $query = $request->user()->contractors();
 
-        $validated = $request->validate([
-            'limit'            => 'nullable|string',
-            'page'             => 'nullable|string',
-            'q'                => 'nullable|string',
-            'order_column'     => 'nullable|string',
-            'order_direction'  => 'nullable|string|in:desc,asc',
-            'id'               => $stringOrArray,
-            'nip'              => $stringOrArray,
-            'type_of_business' => $stringOrArray,
-            'company_name'     => $stringOrArray,
-            'is_own_company'   => $stringOrArray
-        ]);
+        $query = $this->applyQueryFilters(
+            $request,
+            $query,
+            'company_name',
+            sortable: ['company_name', 'is_own_company'],
+            filterable: ['type_of_business', 'is_own_company']
+        );
 
-        $q = $validated['q'] ?? null;
-        $orderColumn = $validated['order_column'] ?? null;
-        $orderDirection = $validated['order_direction'] ?? null;
-
-        [$itemsArray, $itemsString] = Arr::partition(Arr::except($validated, ['limit', 'page', 'q', 'order_column', 'order_direction']), fn(string | array $i) => is_array($i));
-
-        $limit = $request->limit ? $request->limit : 7;
-
-        return $request->user()->contractors()->where($itemsString)
-            ->where(
-                function ($query) use ($itemsArray) {
-                    foreach ($itemsArray as $key => $value) {
-                        $query->orWhereIn($key, $value);
-                    }
-                })
-            ->when($q,
-                fn($query) => $query->whereLike('company_name', "%{$q}%")->orWhereRaw("concat_ws(' ',first_name,surname) ilike ?", "%{$q}%")
-            )
-            ->when($orderColumn && $orderDirection,
-                fn($query) => $query->orderBy($orderColumn, $orderDirection),
-                fn($query) => $query->latest())
-            ->paginate($limit)->toJson();
-
+        return response()->json($query);
     }
 
     // Show a single contractor
