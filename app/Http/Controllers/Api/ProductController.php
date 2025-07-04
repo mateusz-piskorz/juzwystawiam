@@ -6,38 +6,36 @@ use App\Enums\MeasureUnit;
 use App\Enums\VatRate;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Traits\AppliesQueryFilters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
+    use AppliesQueryFilters;
+
+    // List all Products
+    public function index(Request $request)
+    {
+        $query = $request->user()->products();
+
+        $query = $this->applyQueryFilters(
+            $request,
+            $query,
+            'name',
+            sortable: ['price', 'measure_unit', 'vat_rate'],
+            filterable: ['measure_unit', 'vat_rate']
+        );
+
+        return response()->json($query);
+    }
+
     // Show a single Product
     public function show(Request $request, Product $product)
     {
         Gate::authorize('view', $product);
         return $product->toJson();
-    }
-
-    // List all Products
-    public function index(Request $request)
-    {
-        // todo: support orWhereIn($key,$operator, $value); $operator: =,/,<,> etc
-        // $stringOrArray = ['nullable', fn($attribute, $value, $fail) => (!is_string($value) && !is_array($value)) && $fail("The $attribute field must be a string or an array.")];
-
-        // $validated = $request->validate([
-        //     'limit'          => 'string|nullable',
-        //     'page'           => 'string|nullable',
-        //     'id'             => $stringOrArray,
-        //     'nip'            => $stringOrArray,
-        //     'name'           => $stringOrArray,
-        //     'is_own_company' => $stringOrArray
-        // ]);
-
-        // [$itemsArray, $itemsString] = Arr::partition(Arr::except($validated, ['limit', 'page']), fn(string | array $i) => is_array($i));
-
-        $limit = $request->limit ? $request->limit : 7;
-        return $request->user()->products()->latest()->paginate($limit)->toJson();
     }
 
     // Store new Product

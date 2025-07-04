@@ -11,7 +11,6 @@ type GetContractors = SharedQueryArgs & {
     is_own_company?: QueryValue;
     type_of_business?: QueryValue;
 };
-
 type DeleteContractor = {
     contractorId: number;
 };

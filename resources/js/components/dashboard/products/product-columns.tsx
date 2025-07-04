@@ -3,16 +3,16 @@
 import { DataTableColumnHeader } from '@/components/common/data-table/data-table-column-header';
 import { DataTableRowActions } from '@/components/common/data-table/data-table-row-actions';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Contractor } from '@/lib/types/contractor';
+import { Product } from '@/lib/types/product';
 import { ColumnDef } from '@tanstack/react-table';
 
-export const getContractorsColumns = ({
-    handleDeleteContractor,
-    handleEditContractor,
+export const getProductColumns = ({
+    handleEditProduct,
+    handleDeleteProduct,
 }: {
-    handleEditContractor: (contractorId: number) => void;
-    handleDeleteContractor: (contractorId: number) => void;
-}): ColumnDef<Contractor>[] => [
+    handleEditProduct: (productId: number) => void;
+    handleDeleteProduct: (productId: number) => void;
+}): ColumnDef<Product>[] => [
     {
         id: 'select',
         header: ({ table }) => (
@@ -35,72 +35,57 @@ export const getContractorsColumns = ({
         enableHiding: false,
     },
     {
-        accessorKey: 'company_name',
+        accessorKey: 'name',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
         cell: ({ row }) => {
             return (
                 <div className="flex space-x-2">
-                    <span className="max-w-[500px] truncate font-medium">{row.original.company_name}</span>
+                    <span className="max-w-[500px] truncate font-medium">{row.original.name}</span>
                 </div>
             );
         },
         enableSorting: false,
     },
     {
-        accessorKey: 'is_own_company',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Is own company" />,
+        accessorKey: 'measure_unit',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Measure unit" />,
         cell: ({ row }) => {
             return (
                 <div className="flex w-[100px] items-center">
-                    <span>{String(row.original.is_own_company)}</span>
+                    <span>{String(row.original.measure_unit)}</span>
                 </div>
             );
         },
     },
     {
-        accessorKey: 'type_of_business',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Type of business" />,
+        accessorKey: 'vat_rate',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Vat rate" />,
         cell: ({ row }) => {
             return (
                 <div className="flex w-[100px] items-center">
-                    <span>{row.original.type_of_business}</span>
+                    <span>{row.original.vat_rate}</span>
                 </div>
             );
         },
     },
     {
-        accessorKey: 'country',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Country" />,
+        accessorKey: 'price',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Price" />,
         cell: ({ row }) => {
             return (
                 <div className="flex w-[100px] items-center">
-                    <span>{row.original.country}</span>
+                    <span>{row.original.price}</span>
                 </div>
             );
         },
-        enableSorting: false,
-    },
-    {
-        accessorKey: 'address',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Address" />,
-        cell: ({ row }) => {
-            return (
-                <div className="flex w-[100px] items-center">
-                    <span>
-                        {row.original.postal_code} {row.original.city}
-                    </span>
-                </div>
-            );
-        },
-        enableSorting: false,
     },
     {
         id: 'actions',
         cell: ({ row }) => (
             <DataTableRowActions
                 actions={[
-                    { label: 'delete', action: () => handleDeleteContractor(row.original.id) },
-                    { label: 'edit', action: () => handleEditContractor(row.original.id) },
+                    { label: 'delete', action: () => handleDeleteProduct(row.original.id) },
+                    { label: 'edit', action: () => handleEditProduct(row.original.id) },
                 ]}
             />
         ),

@@ -17,7 +17,6 @@ class ContractorController extends Controller
     // List all Contractors
     public function index(Request $request)
     {
-        // $query = $request->user()->contractors()->with(['contractors', 'products']);
         $query = $request->user()->contractors();
 
         $query = $this->applyQueryFilters(

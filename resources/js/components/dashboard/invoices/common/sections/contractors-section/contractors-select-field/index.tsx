@@ -27,11 +27,13 @@ export const ContractorsSelectField = <T extends CreateInvoiceDTO>({ form: formP
 
     const [defaultValues, setDefaultValues] = useState<Partial<Contractor> | undefined>(undefined);
     const [open, setOpen] = useState(false);
+
+    // todo: custom search from db
     const { data, isLoading, refetch } = useQuery({
         queryKey: ['contractor-list', role],
         queryFn: () =>
             getContractors({
-                limit: 1000,
+                limit: '100',
                 is_own_company: role === CONTRACTOR_ROLE.SELLER ? 'true' : 'false',
             }).then((res) => res.data.map((c) => ({ ...c, label: c.company_name || `${c.first_name} ${c.surname}`, value: c.id }))),
     });

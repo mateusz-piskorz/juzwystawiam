@@ -18,12 +18,12 @@ export const ProductSelectField = <T extends CreateInvoiceDTO>({ form: formProps
     const form = formProps as unknown as UseFormReturn<CreateInvoiceDTO>;
     const invoiceType = form.watch('type');
 
-    // todo: rerunQuery on input name change, search list
+    // todo: custom search from db
     const { data, isLoading } = useQuery({
         queryKey: ['product-list'],
         queryFn: () =>
             getProducts({
-                limit: 1000,
+                limit: '100',
             }).then((res) => res.data.map((p) => ({ ...p, label: p.name, value: p.id }))),
     });
 

@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
+import { Link } from '@inertiajs/react';
 import { Table } from '@tanstack/react-table';
 import { debounce } from 'lodash';
 import { X } from 'lucide-react';
@@ -12,10 +13,15 @@ import { DataTableViewOptions } from './data-table-view-options';
 
 interface DataTableToolbarProps<TData> {
     table: Table<TData>;
-    addNewRecord?: {
-        label: string;
-        action: () => void;
-    };
+    addNewRecord?:
+        | {
+              label: string;
+              action: () => void;
+          }
+        | {
+              label: string;
+              href: string;
+          };
     filters: ComponentProps<typeof DataTableFilter>[];
 }
 
@@ -50,12 +56,20 @@ export function DataTableToolbar<TData>({ table, addNewRecord, filters }: DataTa
                 )}
             </div>
 
-            <div className="flex w-full items-center gap-2 md:w-auto">
+            <div className="flex w-full items-center gap-4 md:w-auto">
                 <DataTableViewOptions table={table} />
                 {addNewRecord && (
-                    <Button variant="secondary" className="rounded" onClick={addNewRecord.action}>
-                        {addNewRecord.label}
-                    </Button>
+                    <>
+                        {'href' in addNewRecord ? (
+                            <Link prefetch className="ml-2 underline-offset-4 hover:underline" href={addNewRecord.href}>
+                                {addNewRecord.label}
+                            </Link>
+                        ) : (
+                            <Button className="rounded" onClick={addNewRecord.action} variant="secondary">
+                                {addNewRecord.label}
+                            </Button>
+                        )}
+                    </>
                 )}
             </div>
         </div>

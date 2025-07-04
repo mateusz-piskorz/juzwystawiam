@@ -10,10 +10,10 @@ class Product extends Model
     protected $fillable = [
         'user_id',
         'name',
+        'description',
         'price',
         'measure_unit',
-        'vat_rate',
-        'description'
+        'vat_rate'
     ];
 
     public function user(): BelongsTo

@@ -6,10 +6,10 @@ import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { getContractorsColumns } from './contractors-columns';
+import { getContractorColumns } from './contractor-columns';
 import { UpsertContractorDialog } from './upsert-contractor-dialog';
 
-export const ContractorsTable = () => {
+export const ContractorTable = () => {
     const searchParams = useSearchParams();
     const [open, setOpen] = useState(false);
     const [selectedContractorId, setSelectedContractorId] = useState<number | undefined>(undefined);
@@ -23,11 +23,11 @@ export const ContractorsTable = () => {
     const type_of_business = searchParams.getAll('type_of_business');
 
     const { data, refetch } = useQuery({
-        queryKey: ['contractors-list', page, limit, is_own_company, type_of_business, order_column, order_direction, q],
-        queryFn: () => getContractors({ page, limit, is_own_company, type_of_business, order_column, order_direction, q }),
+        queryKey: ['contractor-list', page, limit, q, order_column, order_direction, is_own_company, type_of_business],
+        queryFn: () => getContractors({ page, limit, q, order_column, order_direction, is_own_company, type_of_business }),
     });
 
-    const columns = getContractorsColumns({
+    const columns = getContractorColumns({
         handleDeleteContractor: async (contractorId: number) => {
             try {
                 await deleteContractor({ contractorId });

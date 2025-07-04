@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -26,15 +25,6 @@ class Contractor extends Model
         'first_name',
         'surname'
     ];
-
-    protected $appends = ['full_name'];
-
-    protected function fullName(): Attribute
-    {
-        return Attribute::make(
-            get: fn(mixed $value, array $attributes) => ($attributes['first_name'] || $attributes['surname']) ? $attributes['first_name'] . ' ' . $attributes['surname'] : null
-        );
-    }
 
     public function user(): BelongsTo
     {

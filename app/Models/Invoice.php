@@ -13,6 +13,7 @@ class Invoice extends Model
         'user_id',
         'type',
         'number',
+        'total',
         'issue_date',
         'payment_method',
         'currency',
