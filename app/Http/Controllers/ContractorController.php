@@ -2,42 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ContractorController extends Controller
 {
     /**
-     * Render the todos page.
+     * Render the contractor list page.
      */
-    public function index(Request $request): Response
+    public function index(): Response
     {
         return Inertia::render('dashboard/contractors/page');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return Inertia::render('invoices/create/page');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        return Inertia::render('invoices/create/page');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
 }
