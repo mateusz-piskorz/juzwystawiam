@@ -1,17 +1,18 @@
 import { apiFetch } from '@/lib/utils/api-fetch';
-import { CreateProductDTO, Product } from '../constants/zod/products';
-import { Pagination } from '../types';
+import { CreateProductDTO } from '../constants/zod/products';
+import { Pagination, QueryValue } from '../types';
+import { Product } from '../types/product';
+import { SharedQueryArgs } from '../types/shared-query-args';
 import { buildURLParams } from '../utils/build-url-params';
 
 const BASE_URL = '/api/products';
 
+type GetProducts = SharedQueryArgs & {
+    vat_rate?: QueryValue;
+    measure_unit?: QueryValue;
+};
 type DeleteProduct = {
     productId: number;
-};
-
-type GetProducts = {
-    limit?: number;
-    page?: string;
 };
 
 export const getProducts = async (args: GetProducts) => {

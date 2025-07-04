@@ -5,44 +5,36 @@ namespace App\Http\Controllers\Api;
 use App\Enums\TypeOfBusiness;
 use App\Http\Controllers\Controller;
 use App\Models\Contractor;
+use App\Traits\AppliesQueryFilters;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class ContractorController extends Controller
 {
+    use AppliesQueryFilters;
 
     // List all Contractors
     public function index(Request $request)
     {
-        $stringOrArray = ['nullable', fn($attribute, $value, $fail) => (!is_string($value) && !is_array($value)) && $fail("The $attribute field must be a string or an array.")];
+        $query = $request->user()->contractors();
 
-        $validated = $request->validate([
-            'limit'          => 'string|nullable',
-            'page'           => 'string|nullable',
-            'id'             => $stringOrArray,
-            'nip'            => $stringOrArray,
-            'company_name'   => $stringOrArray,
-            'is_own_company' => $stringOrArray
-        ]);
+        $query = $this->applyQueryFilters(
+            $request,
+            $query,
+            'company_name',
+            sortable: ['company_name', 'is_own_company'],
+            filterable: ['type_of_business', 'is_own_company']
+        );
 
-        [$itemsArray, $itemsString] = Arr::partition(Arr::except($validated, ['limit', 'page']), fn(string | array $i) => is_array($i));
-
-        $limit = $request->limit ? $request->limit : 7;
-
-        return $request->user()->contractors()->where($itemsString)->where(function ($query) use ($itemsArray) {
-            foreach ($itemsArray as $key => $value) {
-                $query->orWhereIn($key, $value);
-            }
-        })->latest()->paginate($limit)->toJson();
-
+        return response()->json($query);
     }
 
     // Show a single contractor
     public function show(Request $request, Contractor $contractor)
     {
         Gate::authorize('view', $contractor);
+
         return $contractor->toJson();
     }
 
@@ -88,7 +80,9 @@ class ContractorController extends Controller
             ]
         ]);
 
-        $contractor = Contractor::create([ ...$validated, 'user_id' => $request->user()->id]);
+        $companyName = $validated['company_name'] ?? $validated['first_name'] . ' ' . $validated['surname'];
+
+        $contractor = Contractor::create([ ...$validated, 'company_name' => $companyName, 'user_id' => $request->user()->id]);
 
         return response()->json($contractor);
     }
@@ -136,7 +130,9 @@ class ContractorController extends Controller
             ]
         ]);
 
-        $contractor->update([ ...$validated, 'user_id' => $request->user()->id]);
+        $companyName = $validated['company_name'] ?? $validated['first_name'] . ' ' . $validated['surname'];
+
+        $contractor->update([ ...$validated, 'company_name' => $companyName, 'user_id' => $request->user()->id]);
 
         return response()->json($contractor);
     }

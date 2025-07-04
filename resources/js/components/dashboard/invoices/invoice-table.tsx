@@ -1,124 +1,51 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { DataTable } from '@/components/common/data-table';
+import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { getInvoices } from '@/lib/data/invoices';
-import { usePage } from '@/lib/hooks/use-page';
-import { Link, router } from '@inertiajs/react';
+import { useSearchParams } from '@/lib/hooks/use-search-params';
+import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
-import {
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getSortedRowModel,
-    useReactTable,
-    type ColumnFiltersState,
-    type SortingState,
-    type VisibilityState,
-} from '@tanstack/react-table';
-import { useState } from 'react';
-import { columns } from './columns';
+import { invoiceColumns } from './invoice-columns';
 
 export const InvoicesTable = () => {
-    const {
-        props: { ziggy },
-    } = usePage();
+    const searchParams = useSearchParams();
+
+    const page = searchParams.get('page');
+    const limit = searchParams.get('limit');
+    const q = searchParams.get('q');
+    const order_column = searchParams.get('order_column');
+    const order_direction = searchParams.get('order_direction') as OrderDirection;
+    const type = searchParams.getAll('type');
+    const is_already_paid = searchParams.getAll('is_already_paid');
 
     const { data } = useQuery({
-        queryKey: ['invoice-list', ziggy],
-        queryFn: () => getInvoices({ page: ziggy.query.page, limit: 10 }),
+        queryKey: ['invoice-list', page, limit, q, order_column, order_direction, type, is_already_paid],
+        queryFn: () => getInvoices({ page, limit, q, order_column, order_direction, type, is_already_paid }),
     });
-
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-    const [sorting, setSorting] = useState<SortingState>([]);
-    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-    const [rowSelection, setRowSelection] = useState({});
-
-    const table = useReactTable({
-        data: data?.data ?? [],
-        columns,
-        getCoreRowModel: getCoreRowModel(),
-        onSortingChange: setSorting,
-        getSortedRowModel: getSortedRowModel(),
-        onColumnFiltersChange: setColumnFilters,
-        getFilteredRowModel: getFilteredRowModel(),
-        onColumnVisibilityChange: setColumnVisibility,
-        onRowSelectionChange: setRowSelection,
-        state: {
-            sorting,
-            columnFilters,
-            columnVisibility,
-            rowSelection,
-        },
-    });
-
-    const handlePageChange = (action: 'prev' | 'next') => {
-        if (!data) return;
-        const params = new URLSearchParams(ziggy.query);
-        params.set('page', String(data.current_page + (action === 'next' ? 1 : -1)));
-        router.replace({
-            url: `${ziggy.location}?${params.toString()}`,
-            props: (currentProps) => ({ ...currentProps, ziggy: { ...ziggy, query: Object.fromEntries(params.entries()) } }),
-        });
-    };
-
+    // const d = <Link href={''} />;
     return (
-        <>
-            <div className="flex items-center justify-between gap-4 pt-4 pb-6">
-                <Input
-                    placeholder="Filter name..."
-                    value={(table.getColumn('number')?.getFilterValue() as string) ?? ''}
-                    onChange={(event) => table.getColumn('number')?.setFilterValue(event.target.value)}
-                    className="max-w-sm"
-                />
-                <div className="flex items-center gap-2">
-                    <Link href="/dashboard/invoices/create">Create</Link>
-                    {table.getFilteredSelectedRowModel().rows.length > 0 && (
-                        <div className="text-muted-foreground flex-1 text-sm">
-                            {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected.
-                        </div>
-                    )}
-                </div>
-            </div>
-            <Table>
-                <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
-                                return (
-                                    <TableHead key={header.id}>
-                                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                                    </TableHead>
-                                );
-                            })}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-                <TableBody>
-                    {table.getRowModel().rows?.length ? (
-                        table.getRowModel().rows.map((row) => (
-                            <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                                {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                                ))}
-                            </TableRow>
-                        ))
-                    ) : (
-                        <TableRow>
-                            <TableCell colSpan={columns.length} className="h-24 text-center">
-                                No results.
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
-            <div className="flex items-center justify-end space-x-2 py-4">
-                <Button variant="outline" size="sm" onClick={() => handlePageChange('prev')} disabled={!data?.prev_page_url}>
-                    Previous
-                </Button>
-                <Button variant="outline" size="sm" onClick={() => handlePageChange('next')} disabled={!data?.next_page_url}>
-                    Next
-                </Button>
-            </div>
-        </>
+        <DataTable
+            totalPages={String(data?.last_page)}
+            data={data?.data ?? []}
+            columns={invoiceColumns}
+            addNewRecord={{
+                label: 'Add new invoice',
+                href: '/dashboard/invoices/create',
+            }}
+            filters={[
+                {
+                    filterKey: 'is_already_paid',
+                    title: 'Is already paid',
+                    options: [
+                        { label: 'true', value: 'true' },
+                        { label: 'false', value: 'false' },
+                    ],
+                },
+                {
+                    filterKey: 'type',
+                    title: 'Type',
+                    options: Object.values(INVOICE_TYPE).map((e) => ({ label: e, value: e })),
+                },
+            ]}
+        />
     );
 };

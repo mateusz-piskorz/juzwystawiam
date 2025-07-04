@@ -1,20 +1,30 @@
+import { QueryValue } from '../types';
+
 type Args = {
-    [key: string]: string | number | string[] | number[];
+    [key: string]: QueryValue;
 };
 
 export const buildURLParams = (args: Args) => {
-    return Object.entries(args)
-        .map((arg) => {
-            const [key, value] = arg;
-            if (Array.isArray(value)) {
-                const myArr = [];
-                for (const singleValue of value) {
+    const step1 = Object.entries(args).map(([key, value]) => {
+        if (Array.isArray(value)) {
+            const myArr = [];
+            for (const singleValue of value) {
+                if (singleValue !== undefined) {
                     myArr.push(`${key}[]=${singleValue}`);
                 }
-                return myArr.join('&');
-            } else {
-                return `${key}=${value}`;
             }
-        })
-        .join('&');
+            return myArr.join('&');
+        } else {
+            return `${key}=${value}`;
+        }
+    });
+
+    const step2 = step1.filter((val) => {
+        const [key, value] = val.split('=');
+        return key && value !== 'undefined';
+    });
+
+    const step3 = step2.join('&');
+
+    return step3;
 };

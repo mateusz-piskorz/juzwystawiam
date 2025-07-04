@@ -2,20 +2,32 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\InvoiceValidationRulesFactory;
 use App\Http\Controllers\Controller;
-use App\HTTP\Services\InvoiceValidationRulesFactory;
 use App\Models\Contractor;
 use App\Models\Invoice;
+use App\Traits\AppliesQueryFilters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class InvoiceController extends Controller
 {
+    use AppliesQueryFilters;
+
     // List all invoices
     public function index(Request $request)
     {
-        $limit = $request->limit ? $request->limit : 7;
-        return $request->user()->invoices()->with(['invoice_products', 'invoice_contractors'])->latest()->paginate($limit)->toJson();
+        $query = $request->user()->invoices()->with(['invoice_products', 'invoice_contractors']);
+
+        $query = $this->applyQueryFilters(
+            $request,
+            $query,
+            'number',
+            sortable: ['number', 'type', 'sale_date', 'total', 'is_already_paid'],
+            filterable: ['type', 'is_already_paid']
+        );
+
+        return response()->json($query);
     }
 
     // Show a single invoice
@@ -36,8 +48,20 @@ class InvoiceController extends Controller
         $rules = InvoiceValidationRulesFactory::getRules($type, $request->user()->id);
         $validated = $request->validate($rules);
 
+        $total = 0;
+
+        foreach ($validated['invoice_products'] as $product) {
+            $quantity = $product['quantity'];
+            $price = $product['price'];
+            $discount = $product['discount'] ?? 0;
+
+            $subtotal = $quantity * $price;
+            $discountAmount = $subtotal * ($discount / 100);
+            $total += ($subtotal - $discountAmount);
+        }
+
         // use here a reversable query actions, PDO has it, just need to call save() at the end
-        $invoice = Invoice::create([ ...$validated, 'user_id' => $request->user()->id]);
+        $invoice = Invoice::create([ ...$validated, 'total' => number_format($total, 2), 'user_id' => $request->user()->id]);
 
         // handle products
         foreach ($validated['invoice_products'] as $productData) {

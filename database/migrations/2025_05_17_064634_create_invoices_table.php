@@ -25,6 +25,7 @@ return new class() extends Migration
             $table->boolean('is_already_paid');
             $table->dateTimeTz('sale_date');
             $table->dateTimeTz('due_date');
+            $table->decimal('total', 12, 2);
             $table->string('secret_note')->nullable();
             $table->timestamps();
         });

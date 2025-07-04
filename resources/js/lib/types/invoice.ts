@@ -72,6 +72,7 @@ export type Invoice =
           type: INVOICE_TYPE.VAT;
           updated_at: string;
           user_id: number;
+          total: number;
       }
     | {
           id: number;
@@ -89,4 +90,5 @@ export type Invoice =
           type: INVOICE_TYPE.NO_VAT;
           updated_at: string;
           user_id: number;
+          total: number;
       };

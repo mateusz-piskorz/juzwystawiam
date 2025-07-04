@@ -9,13 +9,14 @@ export type Contractor = {
     building_number: string;
     city: string;
     country: string;
+    company_name: string;
     nip: string | null;
-    company_name: string | null;
     email: string | null;
     street_name: string | null;
     phone: string | null;
     first_name: string | null;
     surname: string | null;
+    full_name: string | null;
     bank_account: string | null;
     updated_at: string; // Date
     created_at: string; // Date

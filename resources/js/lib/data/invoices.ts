@@ -1,7 +1,8 @@
 import { apiFetch } from '@/lib/utils/api-fetch';
 import { CreateInvoiceDTO } from '../constants/zod/invoices';
-import { Pagination } from '../types';
+import { Pagination, QueryValue } from '../types';
 import { Invoice } from '../types/invoice';
+import { SharedQueryArgs } from '../types/shared-query-args';
 import { buildURLParams } from '../utils/build-url-params';
 
 const BASE_URL = '/api/invoices';
@@ -10,9 +11,9 @@ type DeleteProduct = {
     invoiceId: number;
 };
 
-type GetInvoices = {
-    limit?: number;
-    page?: string;
+type GetInvoices = SharedQueryArgs & {
+    type?: QueryValue;
+    is_already_paid?: QueryValue;
 };
 
 export const getInvoices = async (args?: GetInvoices) => {
