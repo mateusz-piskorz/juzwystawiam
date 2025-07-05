@@ -48,7 +48,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
         }
         setOpen(false);
     }
-    console.log(form.formState.errors);
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent className="md:min-w-[700px]">

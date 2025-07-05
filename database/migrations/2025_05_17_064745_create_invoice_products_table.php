@@ -21,7 +21,7 @@ return new class() extends Migration
             $table->integer('quantity');
             $table->decimal('price', 12, 2);
             $table->enum('measure_unit', array_column(MeasureUnit::cases(), 'value'));
-            $table->enum('vat_rate', array_column(VatRate::cases(), 'value'));
+            $table->enum('vat_rate', array_column(VatRate::cases(), 'value'))->default(VatRate::CASE0->value);
             $table->integer('discount')->nullable();
             $table->decimal('total', 12, 2);
             $table->decimal('total_vat_amount', 12, 2);

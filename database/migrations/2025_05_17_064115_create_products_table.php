@@ -21,7 +21,7 @@ return new class() extends Migration
             $table->text('description')->nullable();
             $table->decimal('price', 12, 2);
             $table->enum('measure_unit', array_column(MeasureUnit::cases(), 'value'));
-            $table->enum('vat_rate', array_column(VatRate::cases(), 'value'));
+            $table->enum('vat_rate', array_column(VatRate::cases(), 'value'))->default(VatRate::CASE0);
             $table->timestamps();
         });
     }
