@@ -33,6 +33,8 @@ export const ProductsSection = <T extends CreateInvoiceDTO>({ form: formProps }:
                         const priceW = form.watch(`invoice_products.${idx}.price`);
                         const quantityW = form.watch(`invoice_products.${idx}.quantity`);
                         const discountW = form.watch(`invoice_products.${idx}.discount`) || 0;
+
+                        // total not reacting to discount change
                         const total = (quantityW * priceW * (1 - discountW / 100)).toFixed(2);
 
                         if (isMobile) {

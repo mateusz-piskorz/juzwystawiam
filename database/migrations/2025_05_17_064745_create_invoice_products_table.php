@@ -23,6 +23,10 @@ return new class() extends Migration
             $table->enum('measure_unit', array_column(MeasureUnit::cases(), 'value'));
             $table->enum('vat_rate', array_column(VatRate::cases(), 'value'));
             $table->integer('discount')->nullable();
+            $table->decimal('total', 12, 2);
+            $table->decimal('total_vat_amount', 12, 2);
+            $table->decimal('total_discount_amount', 12, 2);
+            $table->decimal('grand_total', 12, 2);
             $table->timestamps();
         });
     }

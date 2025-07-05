@@ -16,7 +16,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::resource('/dashboard/invoices', InvoiceController::class);
-    Route::get('/dashboard/invoices/{id}/pdf-preview', [InvoiceController::class, 'pdfPreview']);
+    Route::get('/dashboard/invoices/{invoice}/pdf-preview', [InvoiceController::class, 'pdfPreview']);
+    Route::get('/dashboard/invoices/{invoice}/pdf-download', [InvoiceController::class, 'pdfDownload']);
     Route::resource('/dashboard/contractors', ContractorController::class);
     Route::resource('/dashboard/products', ProductController::class);
 });

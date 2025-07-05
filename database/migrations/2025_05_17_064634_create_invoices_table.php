@@ -26,6 +26,9 @@ return new class() extends Migration
             $table->dateTimeTz('sale_date');
             $table->dateTimeTz('due_date');
             $table->decimal('total', 12, 2);
+            $table->decimal('total_vat_amount', 12, 2);
+            $table->decimal('total_discount_amount', 12, 2);
+            $table->decimal('grand_total', 12, 2);
             $table->string('secret_note')->nullable();
             $table->timestamps();
         });

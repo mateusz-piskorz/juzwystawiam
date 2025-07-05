@@ -38,13 +38,24 @@ const InvoicePage = () => {
             console.error(error);
         }
     };
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={`Invoice ${invoice.id}`} />
             <MainContentLayout headerText={`Invoice ${invoice.id}`}>
                 <div className="flex justify-end">
                     <Button variant="secondary">
-                        <Link href={`/dashboard/invoices/${invoice.id}/edit`}>Edit this invoice</Link>
+                        <a href={`/dashboard/invoices/${invoice.id}/pdf-preview`} target="_blank">
+                            Preview
+                        </a>
+                    </Button>
+                    <Button variant="secondary">
+                        <a href={`/dashboard/invoices/${invoice.id}/pdf-download`} target="_blank">
+                            Download
+                        </a>
+                    </Button>
+                    <Button variant="secondary">
+                        <Link href={`/dashboard/invoices/${invoice.id}/edit`}>Edit</Link>
                     </Button>
                     <Button variant="destructive" onClick={handleDelete}>
                         Delete this invoice
