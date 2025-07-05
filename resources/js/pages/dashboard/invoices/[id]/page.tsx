@@ -41,7 +41,7 @@ const InvoicePage = () => {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title={`Invoice ${invoice.id}`} />
+            <Head title={`Invoice ${invoice.number}`} />
             <MainContentLayout headerText={`Invoice ${invoice.id}`}>
                 <div className="flex justify-end">
                     <Button variant="secondary">

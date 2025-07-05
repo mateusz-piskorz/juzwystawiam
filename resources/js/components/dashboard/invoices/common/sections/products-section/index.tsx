@@ -6,6 +6,7 @@ import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
 import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';
 import { useIsMobile } from '@/lib/hooks/use-mobile';
 import { SquarePlus } from 'lucide-react';
+import React from 'react';
 import { useFieldArray, UseFormReturn } from 'react-hook-form';
 import { ProductItemDesktop } from './product-item/product-item-desktop';
 import { ProductItemMobile } from './product-item/product-item-mobile';
@@ -39,17 +40,10 @@ export const ProductsSection = <T extends CreateInvoiceDTO>({ form: formProps }:
 
                         if (isMobile) {
                             return (
-                                <>
-                                    <ProductItemMobile
-                                        total={total}
-                                        fieldsLength={fields.length}
-                                        form={form}
-                                        idx={idx}
-                                        remove={remove}
-                                        key={invoiceItem.id}
-                                    />
+                                <React.Fragment key={`${invoiceItem.id}-mobile`}>
+                                    <ProductItemMobile total={total} fieldsLength={fields.length} form={form} idx={idx} remove={remove} />
                                     {fields.length - 1 !== idx && <Separator />}
-                                </>
+                                </React.Fragment>
                             );
                         }
                         return (
@@ -59,7 +53,7 @@ export const ProductsSection = <T extends CreateInvoiceDTO>({ form: formProps }:
                                 form={form}
                                 idx={idx}
                                 remove={remove}
-                                key={invoiceItem.id}
+                                key={`${invoiceItem.id}-desktop`}
                             />
                         );
                     })}

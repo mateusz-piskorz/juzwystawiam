@@ -214,11 +214,13 @@
                             <tr>
                                 <td class="p-12 ta-left bb w-40">{{ $product['name'] }}</td>
                                 <td class="p-12 ta-center bb">{{ $product['quantity'] }}</td>
-                                <td class="p-12 ta-center bb">{{ $product['price'] }} PLN</td>
+                                <td class="p-12 ta-center bb">{{ $product['price'] }} {{ $invoice['currency'] }}</td>
                                 <td class="p-12 ta-center bb">{{ $product['vat_rate'] }}%</td>
-                                <td class="p-12 ta-center bb text-discount">{{ $product['total_discount_amount'] }} PLN
+                                <td class="p-12 ta-center bb text-discount">{{ $product['total_discount_amount'] }}
+                                    {{ $invoice['currency'] }}
                                 </td>
-                                <td class="p-12 ta-right bb">{{ $product['grand_total'] }} PLN</td>
+                                <td class="p-12 ta-right bb">{{ $product['grand_total'] }} {{ $invoice['currency'] }}
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -228,14 +230,16 @@
                             <td class="bg-primary p-12 ta-right bb">
                                 <strong class="nowrap">Wartość produktów:</strong>
                             </td>
-                            <td class="bg-primary p-12 ta-right bb">{{ $invoice['total'] }}</td>
+                            <td class="bg-primary p-12 ta-right bb">{{ $invoice['total'] }} {{ $invoice['currency'] }}
+                            </td>
                         </tr>
                         <tr>
                             <td colspan="4" class="bg-primary p-12 bb"></td>
                             <td class="bg-primary p-12 ta-right bb">
                                 <strong class="nowrap">Podatek:</strong>
                             </td>
-                            <td class="bg-primary p-12 ta-right bb">{{ $invoice['total_vat_amount'] }}</td>
+                            <td class="bg-primary p-12 ta-right bb">{{ $invoice['total_vat_amount'] }}
+                                {{ $invoice['currency'] }}</td>
                         </tr>
                         <tr>
                             <td colspan="4" class="bg-primary p-12 bb"></td>
@@ -243,14 +247,15 @@
                                 <strong class="nowrap text-discount">Rabat:</strong>
                             </td>
                             <td class="bg-primary p-12 ta-right bb text-discount">
-                                {{ $invoice['total_discount_amount'] }} PLN</td>
+                                {{ $invoice['total_discount_amount'] }} {{ $invoice['currency'] }}</td>
                         </tr>
                         <tr>
                             <td colspan="4" class="bg-primary p-12"></td>
                             <td class="bg-primary p-12 ta-right ">
                                 <strong class="nowrap">Suma całkowita:</strong>
                             </td>
-                            <td class="bg-primary p-12 ta-right">{{ $invoice['grand_total'] }}</td>
+                            <td class="bg-primary p-12 ta-right">{{ $invoice['grand_total'] }}
+                                {{ $invoice['currency'] }}</td>
                         </tr>
                     </tfoot>
                 </table>

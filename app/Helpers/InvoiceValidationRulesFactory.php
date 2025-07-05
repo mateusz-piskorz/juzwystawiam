@@ -42,12 +42,13 @@ class InvoiceValidationRulesFactory
 
         // Type-specific rules
         $types = [
-            'VAT' => [
+            'VAT'    => [
                 'type'                        => ['required', Rule::in(InvoiceType::VAT->value)],
                 'invoice_products.*.vat_rate' => ['required', Rule::enum(VatRate::class)]
+            ],
+            'NO_VAT' => [
+                'type' => ['required', Rule::in(InvoiceType::NO_VAT->value)]
             ]
-            // 'NO_VAT' => [
-            // ]
         ];
 
         return array_merge($common, $types[$type] ?? []);

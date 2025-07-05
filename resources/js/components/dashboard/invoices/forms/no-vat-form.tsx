@@ -6,8 +6,7 @@ import { Currency } from '@/lib/constants/enums/currency';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { PaymentMethod } from '@/lib/constants/enums/payment-method';
-import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
-import { vatSchema, VatSchema } from '@/lib/constants/zod/invoices';
+import { noVatSchema, NoVatSchema } from '@/lib/constants/zod/invoices';
 import { upsertInvoice } from '@/lib/data/invoices';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from '@inertiajs/react';
@@ -20,28 +19,30 @@ import { ProductsSection } from '../common/sections/products-section';
 import { TopSection } from '../common/sections/top-section';
 
 type Props = {
-    defaultValues?: VatSchema;
+    defaultValues?: NoVatSchema;
     invoiceId?: number;
 };
 
-export const VatForm = ({ defaultValues, invoiceId }: Props) => {
-    const form = useForm<VatSchema>({
-        resolver: zodResolver(vatSchema),
-        defaultValues: defaultValues || {
-            type: INVOICE_TYPE.VAT,
-            is_already_paid: true,
-            number: '2/07/2025',
-            invoice_products: [{ name: '', vat_rate: VAT_RATE.CASE23, measure_unit: MEASURE_UNIT.PCS, quantity: 1, price: 0 }],
-            invoice_contractors: [{ role: CONTRACTOR_ROLE.SELLER }, { role: CONTRACTOR_ROLE.BUYER }],
-            currency: Currency.PLN,
-            sale_date: new Date('2025-06-20T22:00:00.000Z'),
-            due_date: new Date('2025-06-23T22:00:00.000Z'),
-            issue_date: new Date('2025-06-22T22:00:00.000Z'),
-            payment_method: PaymentMethod.CARD,
-        },
+export const NoVatForm = ({ defaultValues, invoiceId }: Props) => {
+    const form = useForm<NoVatSchema>({
+        resolver: zodResolver(noVatSchema),
+        defaultValues: defaultValues
+            ? { ...defaultValues, type: INVOICE_TYPE.NO_VAT }
+            : {
+                  type: INVOICE_TYPE.NO_VAT,
+                  is_already_paid: true,
+                  number: '2/07/2025',
+                  invoice_products: [{ name: '', measure_unit: MEASURE_UNIT.PCS, quantity: 1, price: 0 }],
+                  invoice_contractors: [{ role: CONTRACTOR_ROLE.SELLER }, { role: CONTRACTOR_ROLE.BUYER }],
+                  currency: Currency.PLN,
+                  sale_date: new Date('2025-06-20T22:00:00.000Z'),
+                  due_date: new Date('2025-06-23T22:00:00.000Z'),
+                  issue_date: new Date('2025-06-22T22:00:00.000Z'),
+                  payment_method: PaymentMethod.CARD,
+              },
     });
 
-    async function onSubmit(body: VatSchema) {
+    async function onSubmit(body: NoVatSchema) {
         try {
             const response = await upsertInvoice({ body, invoiceId });
             toast.success(invoiceId ? 'invoice updated successfully!' : 'invoice created successfully!');

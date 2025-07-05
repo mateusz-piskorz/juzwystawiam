@@ -5,7 +5,9 @@ import { AppSidebarHeader } from '@/components/default/app-sidebar-header';
 import { type BreadcrumbItem } from '@/lib/types';
 import { type PropsWithChildren } from 'react';
 
-export default function AppSidebarLayout({ children, breadcrumbs = [] }: PropsWithChildren<{ breadcrumbs?: BreadcrumbItem[] }>) {
+type Props = PropsWithChildren<{ breadcrumbs?: BreadcrumbItem[] }>;
+
+export default function AppSidebarLayout({ children, breadcrumbs = [] }: Props) {
     return (
         <AppShell variant="sidebar">
             <AppSidebar />
