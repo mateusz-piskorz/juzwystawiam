@@ -7,12 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Contractor;
 use App\Models\Invoice;
 use App\Traits\AppliesQueryFilters;
+use App\Traits\CalculatesProductTotals;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class InvoiceController extends Controller
 {
     use AppliesQueryFilters;
+    use CalculatesProductTotals;
 
     // List all invoices
     public function index(Request $request)
@@ -48,24 +50,16 @@ class InvoiceController extends Controller
         $rules = InvoiceValidationRulesFactory::getRules($type, $request->user()->id);
         $validated = $request->validate($rules);
 
-        $total = 0;
-
-        foreach ($validated['invoice_products'] as $product) {
-            $quantity = $product['quantity'];
-            $price = $product['price'];
-            $discount = $product['discount'] ?? 0;
-
-            $subtotal = $quantity * $price;
-            $discountAmount = $subtotal * ($discount / 100);
-            $total += ($subtotal - $discountAmount);
-        }
+        $totals = $this->CalculateProductTotals($validated['invoice_products']);
 
         // use here a reversable query actions, PDO has it, just need to call save() at the end
-        $invoice = Invoice::create([ ...$validated, 'total' => number_format($total, 2), 'user_id' => $request->user()->id]);
+        $invoice = Invoice::create([ ...$validated, ...$totals, 'user_id' => $request->user()->id]);
 
         // handle products
         foreach ($validated['invoice_products'] as $productData) {
-            $invoice->invoice_products()->create($productData);
+            $productTotals = $this->CalculateSingleProductTotals($productData);
+
+            $invoice->invoice_products()->create([ ...$productData, ...$productTotals]);
         }
 
         // handle contractors
@@ -103,14 +97,16 @@ class InvoiceController extends Controller
         $rules = InvoiceValidationRulesFactory::getRules($type, $request->user()->id);
         $validated = $request->validate($rules);
 
+        $totals = $this->CalculateProductTotals($validated['invoice_products']);
+
         // use here a reversable query actions, PDO has it, just need to call save() at the end
-        $invoice->update([ ...$validated, 'user_id' => $request->user()->id]);
-        // $invoice = Invoice::create();
+        $invoice->update([ ...$validated, ...$totals, 'user_id' => $request->user()->id]);
 
         // handle products
         $invoice->invoice_products()->delete();
         foreach ($validated['invoice_products'] as $productData) {
-            $invoice->invoice_products()->create($productData);
+            $productTotals = $this->CalculateSingleProductTotals($productData);
+            $invoice->invoice_products()->create([ ...$productData, ...$productTotals]);
         }
 
         // handle contractors

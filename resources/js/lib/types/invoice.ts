@@ -41,6 +41,9 @@ type InvoiceProductVat = {
     quantity: number;
     updated_at: string;
     vat_rate: VAT_RATE;
+    total_before_vat: number;
+    total_vat_amount: number;
+    total_with_vat: number;
 };
 type InvoiceProduct = {
     created_at: string;
@@ -53,6 +56,10 @@ type InvoiceProduct = {
     product_id: number | null;
     quantity: number;
     updated_at: string;
+    total: number;
+    total_discount_amount: number;
+    total_vat_amount: number;
+    grand_total: number;
 };
 
 export type Invoice =
@@ -73,6 +80,9 @@ export type Invoice =
           updated_at: string;
           user_id: number;
           total: number;
+          total_discount_amount: number;
+          total_vat_amount: number;
+          total_with_vat: number;
       }
     | {
           id: number;
@@ -91,4 +101,7 @@ export type Invoice =
           updated_at: string;
           user_id: number;
           total: number;
+          total_before_vat: number;
+          total_vat_amount: number;
+          total_with_vat: number;
       };

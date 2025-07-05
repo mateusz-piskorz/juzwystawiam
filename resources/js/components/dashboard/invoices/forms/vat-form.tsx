@@ -32,7 +32,7 @@ export const VatForm = ({ defaultValues, invoiceId }: Props) => {
             is_already_paid: true,
             number: '2/07/2025',
             invoice_products: [{ name: '', vat_rate: VAT_RATE.CASE23, measure_unit: MEASURE_UNIT.PCS, quantity: 1, price: 0 }],
-            invoice_contractors: [{ role: CONTRACTOR_ROLE.BUYER }, { role: CONTRACTOR_ROLE.SELLER }],
+            invoice_contractors: [{ role: CONTRACTOR_ROLE.SELLER }, { role: CONTRACTOR_ROLE.BUYER }],
             currency: Currency.PLN,
             sale_date: new Date('2025-06-20T22:00:00.000Z'),
             due_date: new Date('2025-06-23T22:00:00.000Z'),
@@ -55,6 +55,7 @@ export const VatForm = ({ defaultValues, invoiceId }: Props) => {
     const [total, setTotal] = useState(0);
     const { watch, getValues } = form;
 
+    // todo check if this reacting to discount changes
     useEffect(() => {
         const { unsubscribe } = watch((_, { name, type }) => {
             const value = getValues();
