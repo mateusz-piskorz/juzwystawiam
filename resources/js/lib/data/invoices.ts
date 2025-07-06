@@ -32,3 +32,14 @@ export const upsertInvoice = async ({ body, invoiceId }: { body: CreateInvoiceDT
 
     return await apiFetch<Invoice>(url, { method, body: JSON.stringify(body) });
 };
+
+type SendEmailIssuingInvoiceDTO = {
+    recipient: string;
+};
+
+export const sendEmailIssuingInvoice = async ({ body, invoiceId }: { body: SendEmailIssuingInvoiceDTO; invoiceId?: number }) => {
+    return await apiFetch<{ message: 'Invoice sent' }>(`${BASE_URL}/${invoiceId}/send-email-issuing-invoice`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+    });
+};

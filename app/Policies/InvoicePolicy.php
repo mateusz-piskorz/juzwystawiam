@@ -62,4 +62,13 @@ class InvoicePolicy
     {
         return $user->id === $invoice->user_id;
     }
+
+    /**
+     * Determine whether the user send email issuing invoice
+     */
+    public function sendEmailIssuingInvoice(User $user, Invoice $invoice): bool
+    {
+        // todo: here will be logic for checking if user exceeds mail sending limit
+        return $user->id === $invoice->user_id;
+    }
 }
