@@ -23,7 +23,7 @@ class ContractorController extends Controller
             $request,
             $query,
             'company_name',
-            sortable: ['company_name', 'is_own_company'],
+            sortable: ['company_name', 'is_own_company', 'type_of_business'],
             filterable: ['type_of_business', 'is_own_company']
         );
 

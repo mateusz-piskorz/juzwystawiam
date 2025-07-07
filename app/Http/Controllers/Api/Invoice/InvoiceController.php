@@ -1,22 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Invoice;
 
-use App\Enums\EmailStatus;
 use App\Helpers\InvoiceValidationRulesFactory;
 use App\Http\Controllers\Controller;
-use App\Mail\IssueAnInvoice;
 use App\Models\Contractor;
 use App\Models\Invoice;
-use App\Models\InvoiceEmail;
 use App\Traits\AppliesQueryFilters;
 use App\Traits\CalculatesProductTotals;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Mail;
 
-//todo: part of refactor is to split this class into smaller classes like generatePDF, sendEmail, etc.
-// actually generate pdf is not inside api
 class InvoiceController extends Controller
 {
     use AppliesQueryFilters;
@@ -25,14 +19,14 @@ class InvoiceController extends Controller
     // List all invoices
     public function index(Request $request)
     {
-        $query = $request->user()->invoices()->with(['invoice_products', 'invoice_contractors']);
+        $query = $request->user()->invoices()->with(['invoice_products', 'invoice_contractors', 'latest_invoice_email']);
 
         $query = $this->applyQueryFilters(
             $request,
             $query,
             'number',
             sortable: ['number', 'type', 'sale_date', 'total', 'is_already_paid'],
-            filterable: ['type', 'is_already_paid']
+            filterable: ['type', 'is_already_paid', 'latest_invoice_email.status']
         );
 
         return response()->json($query);
@@ -149,25 +143,5 @@ class InvoiceController extends Controller
         $invoice->delete();
 
         return response()->json(['message' => 'Invoice deleted']);
-    }
-
-    // send Email Issuing Invoice
-    public function sendEmailIssuingInvoice(Request $request, Invoice $invoice)
-    {
-        Gate::authorize('sendEmailIssuingInvoice', $invoice);
-        $recipient = $request->validate(['recipient' => 'email'])['recipient'];
-
-        // we need to pass it to IssueAnInvoice or some how access it in subscribers
-
-        // we should create a method on invoiceModel->sendEmailIssuingInvoice($recipient) use this for $invoice in model class
-        $invoice_email = InvoiceEmail::create([
-            'invoice_id' => $invoice->id,
-            'status'     => EmailStatus::PENDING->value
-        ]);
-
-        // Mail::to($recipient)->send(new IssueAnInvoice($invoice, $invoiceEmail));
-        dispatch(fn() => Mail::to($recipient)->send(new IssueAnInvoice($invoice, $invoice_email)))->afterResponse();
-
-        return response()->json(['message' => 'Invoice sent']);
     }
 }

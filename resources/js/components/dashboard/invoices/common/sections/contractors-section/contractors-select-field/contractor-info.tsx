@@ -8,6 +8,7 @@ type Props = Contractor & {
     onEdit?: () => void;
 };
 
+// todo: we no longer keeps building_number in db, just street name is good
 export const ContractorInfo = (p: Props) => {
     const addressFirstLine = `${p.street_name} ${p.building_number}`;
     const addressSecondLine = `${p.postal_code} ${p.city}`;

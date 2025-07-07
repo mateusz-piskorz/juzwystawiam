@@ -2,12 +2,15 @@
 
 namespace App\Mail;
 
+use App\Enums\ContractorRole;
 use App\Enums\EmailStatus;
 use App\Models\Invoice;
 use App\Models\InvoiceEmail;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -16,12 +19,15 @@ class IssueAnInvoice extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
+    public $buyer;
+    public $seller;
+
     public function __construct(public Invoice $invoice, public InvoiceEmail $invoice_email)
     {
-        //
+        $invoice->load("invoice_products", "invoice_contractors");
+        $this->invoice['sale_date'] = date_format(date_create($this->invoice['sale_date']), "Y-m-d");
+        $this->buyer = collect($this->invoice['invoice_contractors'])->firstWhere('role', ContractorRole::BUYER) ?? null;
+        $this->seller = collect($this->invoice['invoice_contractors'])->firstWhere('role', ContractorRole::SELLER) ?? null;
     }
 
     public function failed(): void
@@ -29,11 +35,9 @@ class IssueAnInvoice extends Mailable implements ShouldQueue
         $this->invoice_email->update([
             'status' => EmailStatus::FAILED->value
         ]);
+
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -41,24 +45,21 @@ class IssueAnInvoice extends Mailable implements ShouldQueue
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(
             markdown: 'mail.invoice.issue',
+            with: ['seller' => $this->seller, 'buyer' => $this->buyer],
         );
     }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
     public function attachments(): array
     {
-        //todo: add invoice pdf attachment
-        return [];
+        $pdf = Pdf::loadView('invoice-pdf', ['invoice' => $this->invoice, 'seller' => $this->seller, 'buyer' => $this->buyer]);
+
+        return [
+            Attachment::fromData(fn() => $pdf->output(), 'invoice.pdf')
+                ->withMime('application/pdf')
+        ];
     }
 }

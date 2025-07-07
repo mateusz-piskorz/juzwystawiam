@@ -1,5 +1,6 @@
 import { CONTRACTOR_ROLE } from '../constants/enums/contractor-role';
 import { Currency } from '../constants/enums/currency';
+import { EMAIL_STATUS } from '../constants/enums/email-status';
 import { INVOICE_TYPE } from '../constants/enums/invoice-type';
 import { MEASURE_UNIT } from '../constants/enums/measure-unit';
 import { PaymentMethod } from '../constants/enums/payment-method';
@@ -26,6 +27,14 @@ type InvoiceContractor = {
     street_name: string;
     surname: string | null;
     type_of_business: TYPE_OF_BUSINESS;
+    updated_at: string;
+};
+
+type InvoiceEmail = {
+    id: number;
+    invoice_id: number;
+    status: EMAIL_STATUS;
+    created_at: string;
     updated_at: string;
 };
 
@@ -83,6 +92,7 @@ export type Invoice =
           total_discount_amount: number;
           total_vat_amount: number;
           total_with_vat: number;
+          latest_invoice_email: InvoiceEmail | null;
       }
     | {
           id: number;
@@ -104,4 +114,5 @@ export type Invoice =
           total_before_vat: number;
           total_vat_amount: number;
           total_with_vat: number;
+          latest_invoice_email: InvoiceEmail | null;
       };
