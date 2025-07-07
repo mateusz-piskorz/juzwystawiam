@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { MainContentLayout } from '@/layouts/main-content-layout';
-import { deleteInvoice } from '@/lib/data/invoices';
+import { deleteInvoice, sendEmailIssuingInvoice } from '@/lib/data/invoices';
 import { usePage } from '@/lib/hooks/use-page';
 import type { BreadcrumbItem } from '@/lib/types';
 import { Invoice } from '@/lib/types/invoice';
@@ -39,10 +39,22 @@ const InvoicePage = () => {
         }
     };
 
+    const handleEmailSending = async () => {
+        try {
+            const response = await sendEmailIssuingInvoice({ invoiceId: invoice.id, body: { recipient: 'owcaofficial@yahoo.com' } });
+            toast.success(response.message);
+        } catch (error: unknown) {
+            toast.error('something went wrong');
+            console.error(error);
+        }
+    };
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={`Invoice ${invoice.number}`} />
-            <MainContentLayout headerText={`Invoice ${invoice.id}`}>
+            <MainContentLayout>
+                <h1>Invoice {invoice.number}</h1>
+
                 <div className="flex justify-end">
                     <Button variant="secondary">
                         <a href={`/dashboard/invoices/${invoice.id}/pdf-preview`} target="_blank">
@@ -53,6 +65,9 @@ const InvoicePage = () => {
                         <a href={`/dashboard/invoices/${invoice.id}/pdf-download`} target="_blank">
                             Download
                         </a>
+                    </Button>
+                    <Button variant="secondary" onClick={handleEmailSending}>
+                        Send email
                     </Button>
                     <Button variant="secondary">
                         <Link href={`/dashboard/invoices/${invoice.id}/edit`}>Edit</Link>

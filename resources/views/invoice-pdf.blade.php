@@ -179,16 +179,16 @@
                             <p style="line-height: 1.2">
                                 <strong style="display: block;">Sprzedawca:</strong>
                                 {{ $seller['company_name'] }}<br />
-                                {{ $seller['street_name'] }} {{ $seller['building_number'] }}<br />
+                                {{ $seller['street_name'] }}<br />
                                 {{ $seller['postal_code'] }} {{ $seller['city'] }}<br />
-                                bank: {{ $seller['bank_account'] }}<br />
+                                Bank Account: {{ $seller['bank_account'] }}<br />
                             </p>
                         </td>
                         <td class="py-20">
                             <p class="ta-right" style="line-height: 1.2;">
                                 <strong style="display: block;">Nabywca:</strong>
                                 {{ $buyer['company_name'] }}<br />
-                                {{ $buyer['street_name'] }} {{ $buyer['building_number'] }}<br />
+                                {{ $buyer['street_name'] }}<br />
                                 {{ $buyer['postal_code'] }} {{ $buyer['city'] }}<br />
                             </p>
                         </td>

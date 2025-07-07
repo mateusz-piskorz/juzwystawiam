@@ -21,7 +21,7 @@ export const InvoicesTable = () => {
         queryKey: ['invoice-list', page, limit, q, order_column, order_direction, type, is_already_paid],
         queryFn: () => getInvoices({ page, limit, q, order_column, order_direction, type, is_already_paid }),
     });
-    // const d = <Link href={''} />;
+
     return (
         <DataTable
             totalPages={String(data?.last_page)}

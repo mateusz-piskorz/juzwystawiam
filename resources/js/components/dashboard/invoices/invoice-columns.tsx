@@ -88,6 +88,18 @@ export const invoiceColumns: ColumnDef<Invoice>[] = [
         },
     },
     {
+        accessorKey: 'latest_invoice_email.status',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Email status" />,
+        cell: ({ row }) => {
+            return (
+                <div className="flex w-[100px] items-center">
+                    <span>{String(row.original.latest_invoice_email?.status)}</span>
+                </div>
+            );
+        },
+        enableSorting: false,
+    },
+    {
         id: 'actions',
         cell: ({ row }) => <DataTableRowActions actions={[{ label: 'show', action: () => router.get(`/dashboard/invoices/${row.original.id}`) }]} />,
     },

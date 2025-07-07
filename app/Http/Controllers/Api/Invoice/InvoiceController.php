@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Invoice;
 
 use App\Helpers\InvoiceValidationRulesFactory;
 use App\Http\Controllers\Controller;
@@ -19,14 +19,14 @@ class InvoiceController extends Controller
     // List all invoices
     public function index(Request $request)
     {
-        $query = $request->user()->invoices()->with(['invoice_products', 'invoice_contractors']);
+        $query = $request->user()->invoices()->with(['invoice_products', 'invoice_contractors', 'latest_invoice_email']);
 
         $query = $this->applyQueryFilters(
             $request,
             $query,
             'number',
             sortable: ['number', 'type', 'sale_date', 'total', 'is_already_paid'],
-            filterable: ['type', 'is_already_paid']
+            filterable: ['type', 'is_already_paid', 'latest_invoice_email.status']
         );
 
         return response()->json($query);
