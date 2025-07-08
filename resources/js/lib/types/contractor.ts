@@ -6,13 +6,12 @@ export type Contractor = {
     type_of_business: TYPE_OF_BUSINESS;
     is_own_company: boolean;
     postal_code: string;
-    building_number: string;
     city: string;
     country: string;
     company_name: string;
     nip: string | null;
     email: string | null;
-    street_name: string | null;
+    street_name: string;
     phone: string | null;
     first_name: string | null;
     surname: string | null;

@@ -12,12 +12,11 @@ export const createContractorDTO = z
             .refine((val) => val.length === 10)
             .nullish(),
         postal_code: z.string().nonempty().max(255),
-        building_number: z.string().nonempty().max(255),
         city: z.string().nonempty().max(255),
         country: z.string().max(255),
         company_name: z.string().nonempty().max(255).nullish(),
         email: z.union([z.literal(''), z.string().email()]).nullish(),
-        street_name: z.string().max(255).nullish(),
+        street_name: z.string().max(255),
         phone: z.string().nullish(),
         first_name: z.string().max(255).nullish(),
         surname: z.string().max(255).nullish(),

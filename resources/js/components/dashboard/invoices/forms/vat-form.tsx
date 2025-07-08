@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { Separator } from '@/components/ui/separator';
 import { CONTRACTOR_ROLE } from '@/lib/constants/enums/contractor-role';
 import { Currency } from '@/lib/constants/enums/currency';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
@@ -55,7 +54,6 @@ export const VatForm = ({ defaultValues, invoiceId }: Props) => {
     const [total, setTotal] = useState(0);
     const { watch, getValues } = form;
 
-    // todo check if this reacting to discount changes
     useEffect(() => {
         const { unsubscribe } = watch((_, { name, type }) => {
             const value = getValues();
@@ -81,18 +79,17 @@ export const VatForm = ({ defaultValues, invoiceId }: Props) => {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <HeaderSection form={form} />
-                <div className="space-y-4 py-4 sm:space-y-8 sm:py-8">
+                <div className="space-y-4 border-b-[1px] py-8 sm:space-y-8">
                     <TopSection form={form} />
 
                     <ContractorsSection form={form} />
                     <ProductsSection form={form} />
-                    <Separator />
-                    <div className="flex items-center justify-between px-4">
-                        <span>Grand Total: {total} PLN</span>
-                        <Button type="submit" className="cursor-pointer" disabled={form.formState.isSubmitting}>
-                            Submit
-                        </Button>
-                    </div>
+                </div>
+                <div className="flex items-center justify-between px-4 pt-6 md:p-6">
+                    <span>Grand Total: {total} PLN</span>
+                    <Button type="submit" className="cursor-pointer" disabled={form.formState.isSubmitting}>
+                        Submit
+                    </Button>
                 </div>
             </form>
         </Form>

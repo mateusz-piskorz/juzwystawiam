@@ -26,7 +26,7 @@ class InvoiceController extends Controller
             $query,
             'number',
             sortable: ['number', 'type', 'sale_date', 'total', 'is_already_paid'],
-            filterable: ['type', 'is_already_paid', 'latest_invoice_email.status']
+            filterable: ['type', 'is_already_paid']
         );
 
         return response()->json($query);
@@ -71,7 +71,7 @@ class InvoiceController extends Controller
                 'type_of_business' => $contractor->type_of_business,
                 'is_own_company'   => $contractor->is_own_company,
                 'postal_code'      => $contractor->postal_code,
-                'building_number'  => $contractor->building_number,
+
                 'city'             => $contractor->city,
                 'country'          => $contractor->country,
                 'bank_account'     => $contractor->bank_account,
@@ -119,7 +119,7 @@ class InvoiceController extends Controller
                 'type_of_business' => $contractor->type_of_business,
                 'is_own_company'   => $contractor->is_own_company,
                 'postal_code'      => $contractor->postal_code,
-                'building_number'  => $contractor->building_number,
+
                 'city'             => $contractor->city,
                 'country'          => $contractor->country,
                 'bank_account'     => $contractor->bank_account,

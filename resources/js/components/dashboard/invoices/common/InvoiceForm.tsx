@@ -30,7 +30,5 @@ export const InvoiceForm = ({ type, invoiceId, defaultValues }: Props) => {
             invoiceForm = <p className="text-destructive-foreground">Invoice type not found</p>;
     }
 
-    console.log(invoiceForm);
-
     return invoiceForm;
 };

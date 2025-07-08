@@ -37,8 +37,8 @@ const InvoiceListPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={`Edit Invoice ${invoice.number}`} />
-            <MainContentLayout>
-                {/* <h1>Edit Invoice ${invoice.id}</h1> */}
+            <MainContentLayout className="p-0 md:p-0">
+                {/* <h1>Edit Invoice {invoice.number}</h1> */}
                 <div className="flex items-center gap-2 pt-4 pl-4">
                     <p className="hidden sm:inline-block">Invoice type</p>
                     <Select

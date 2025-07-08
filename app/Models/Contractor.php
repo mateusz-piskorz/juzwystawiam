@@ -13,7 +13,6 @@ class Contractor extends Model
         'type_of_business',
         'is_own_company',
         'postal_code',
-        'building_number',
         'city',
         'country',
         'bank_account',

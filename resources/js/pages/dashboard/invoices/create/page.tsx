@@ -24,7 +24,7 @@ const CreateInvoicePage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Create invoice" />
-            <MainContentLayout className="p-0">
+            <MainContentLayout className="p-0 md:p-0">
                 <div className="flex items-center gap-2 pt-4 pl-4">
                     <p className="hidden sm:inline-block">Invoice type</p>
                     <Select

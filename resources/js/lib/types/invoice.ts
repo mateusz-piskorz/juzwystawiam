@@ -9,7 +9,7 @@ import { VAT_RATE } from '../constants/enums/vat-rate';
 
 type InvoiceContractor = {
     bank_account: string | null;
-    building_number: string;
+
     city: string;
     company_name: string | null;
     contractor_id: number;

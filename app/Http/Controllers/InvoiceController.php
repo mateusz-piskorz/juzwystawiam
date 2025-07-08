@@ -6,7 +6,6 @@ use App\Enums\ContractorRole;
 use App\Models\Invoice;
 use App\Traits\CalculatesProductTotals;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -18,7 +17,7 @@ class InvoiceController extends Controller
     /**
      * Render the invoices page.
      */
-    public function index(Request $request): Response
+    public function index(): Response
     {
         return Inertia::render('dashboard/invoices/page');
     }

@@ -8,9 +8,7 @@ type Props = Contractor & {
     onEdit?: () => void;
 };
 
-// todo: we no longer keeps building_number in db, just street name is good
 export const ContractorInfo = (p: Props) => {
-    const addressFirstLine = `${p.street_name} ${p.building_number}`;
     const addressSecondLine = `${p.postal_code} ${p.city}`;
     return (
         <>
@@ -21,7 +19,7 @@ export const ContractorInfo = (p: Props) => {
                         <User className="ml-1 inline-block" aria-label="user-icon" size={20} />
                     </h4>
 
-                    <p>{addressFirstLine}</p>
+                    <p>{p.street_name}</p>
                     <p>{addressSecondLine}</p>
                 </div>
                 <div className={cn('flex flex-col items-end justify-end', p.onEdit && 'justify-between')}>

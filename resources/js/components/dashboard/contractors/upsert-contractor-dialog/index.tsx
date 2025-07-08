@@ -74,6 +74,31 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                         <ContractorTripleBox form={form} />
 
                         <div className="rounded border">
+                            <div className="flex h-[60px]">
+                                <InputField form={form} name="postal_code" label="Postal code" className="rounded-none rounded-ss border-none" />
+                                <Separator orientation="vertical" />
+                                <InputField form={form} name="city" label="City" className="rounded-none rounded-se border-none" />
+                            </div>
+
+                            <Separator orientation="horizontal" />
+
+                            <InputField form={form} name="street_name" label="Street name" className="rounded-none border-none" />
+
+                            <Separator orientation="horizontal" />
+
+                            <SelectField
+                                className="rounded-none rounded-ee rounded-es border-none"
+                                form={form}
+                                name="country"
+                                label="Country"
+                                selectOptions={COUNTRIES.map((val) => ({
+                                    label: val,
+                                    value: val,
+                                }))}
+                            />
+                        </div>
+
+                        <div className="rounded border">
                             {isSelfEmployed && (
                                 <>
                                     <div className="flex h-[60px]">
@@ -120,31 +145,6 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                             />
                         </div>
 
-                        <div className="rounded border">
-                            <InputField form={form} name="city" label="City" className="rounded-none rounded-ss rounded-se border-none" />
-
-                            <Separator orientation="horizontal" />
-
-                            <InputField form={form} name="street_name" label="Street name (Optional)" className="rounded-none border-none" />
-
-                            <Separator orientation="horizontal" />
-                            <div className="flex h-[60px]">
-                                <InputField form={form} name="postal_code" label="Postal code" className="rounded-none border-none" />
-                                <Separator orientation="vertical" />
-                                <InputField form={form} name="building_number" label="Building number" className="rounded-none border-none" />
-                            </div>
-                            <Separator orientation="horizontal" />
-                            <SelectField
-                                className="rounded-none rounded-ee rounded-es border-none"
-                                form={form}
-                                name="country"
-                                label="Country"
-                                selectOptions={COUNTRIES.map((val) => ({
-                                    label: val,
-                                    value: val,
-                                }))}
-                            />
-                        </div>
                         <div className="w-full text-right">
                             <Button type="submit">{contractorId ? 'Update' : 'Create'} Contractor</Button>
                         </div>
