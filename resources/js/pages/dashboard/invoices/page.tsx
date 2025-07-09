@@ -19,7 +19,8 @@ const InvoiceListPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Invoices" />
-            <MainContentLayout headerText="Invoices">
+            <MainContentLayout>
+                <h1 className="mb-5 text-xl">Invoices</h1>
                 <InvoicesTable />
             </MainContentLayout>
         </AppLayout>

@@ -1,4 +1,4 @@
-import { QueryValue } from '../types';
+import { QueryValue } from '../types/query-value';
 
 type Args = {
     [key: string]: QueryValue;

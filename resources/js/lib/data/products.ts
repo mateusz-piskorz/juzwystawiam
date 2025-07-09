@@ -1,7 +1,8 @@
 import { apiFetch } from '@/lib/utils/api-fetch';
-import { CreateProductDTO } from '../constants/zod/products';
-import { Pagination, QueryValue } from '../types';
+import { CreateProductDTO } from '../constants/zod/product';
+import { Pagination } from '../types/pagination';
 import { Product } from '../types/product';
+import { QueryValue } from '../types/query-value';
 import { SharedQueryArgs } from '../types/shared-query-args';
 import { buildURLParams } from '../utils/build-url-params';
 

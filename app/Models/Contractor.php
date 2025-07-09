@@ -30,9 +30,4 @@ class Contractor extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function invoices(): BelongsToMany
-    // {
-    //     return $this->belongsToMany(Invoice::class, 'invoice_contractor')
-    //         ->withPivot('role');
-    // }
 }

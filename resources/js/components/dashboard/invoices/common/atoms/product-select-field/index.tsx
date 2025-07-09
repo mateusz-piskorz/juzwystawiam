@@ -1,7 +1,7 @@
 import { ReactSelect } from '@/components/common/react-select';
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
-import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';
+import { InvoiceSchema } from '@/lib/constants/zod/invoice';
 import { getProducts } from '@/lib/data/products';
 import { Product } from '@/lib/types/product';
 import { useQuery } from '@tanstack/react-query';
@@ -9,13 +9,13 @@ import { UseFormReturn } from 'react-hook-form';
 import { CustomOption } from './custom-option';
 import { Option } from './types';
 
-type Props<T extends CreateInvoiceDTO> = {
+type Props<T extends InvoiceSchema> = {
     form: UseFormReturn<T>;
     idx: number;
 };
 
-export const ProductSelectField = <T extends CreateInvoiceDTO>({ form: formProps, idx }: Props<T>) => {
-    const form = formProps as unknown as UseFormReturn<CreateInvoiceDTO>;
+export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, idx }: Props<T>) => {
+    const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
     const invoiceType = form.watch('type');
 
     // todo: custom search from db

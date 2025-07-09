@@ -6,7 +6,7 @@ import { Form } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import { COUNTRIES } from '@/lib/constants/countries';
 import { TYPE_OF_BUSINESS, TypeOfBusinessTranslation } from '@/lib/constants/enums/type-of-business';
-import { CreateContractorDTO, createContractorDTO } from '@/lib/constants/zod/contractors';
+import { CreateContractorDTO, createContractorDTO } from '@/lib/constants/zod/contractor';
 import { upsertContractor } from '@/lib/data/contractors';
 import { Contractor } from '@/lib/types/contractor';
 import { cn } from '@/lib/utils/cn';

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\UpsertContractorRequest;
 use App\Models\Contractor;
 use App\Traits\AppliesQueryFilters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class ContractorController extends Controller
+class ContractorController
 {
     use AppliesQueryFilters;
 

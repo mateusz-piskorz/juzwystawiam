@@ -1,46 +1,29 @@
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { CONTRACTOR_ROLE } from '@/lib/constants/enums/contractor-role';
-import { Currency } from '@/lib/constants/enums/currency';
-import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
-import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
-import { PaymentMethod } from '@/lib/constants/enums/payment-method';
-import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
-import { vatSchema, VatSchema } from '@/lib/constants/zod/invoices';
+import { InvoiceSchema, invoiceSchema } from '@/lib/constants/zod/invoice';
 import { upsertInvoice } from '@/lib/data/invoices';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { ContractorsSection } from '../common/sections/contractors-section';
-import { HeaderSection } from '../common/sections/header-section';
-import { ProductsSection } from '../common/sections/products-section';
-import { TopSection } from '../common/sections/top-section';
+import { ContractorsSection } from './common/sections/contractors-section';
+import { HeaderSection } from './common/sections/header-section';
+import { ProductsSection } from './common/sections/products-section';
+import { TopSection } from './common/sections/top-section';
 
 type Props = {
-    defaultValues?: VatSchema;
+    defaultValues?: Partial<InvoiceSchema>;
     invoiceId?: number;
 };
 
-export const VatForm = ({ defaultValues, invoiceId }: Props) => {
-    const form = useForm<VatSchema>({
-        resolver: zodResolver(vatSchema),
-        defaultValues: defaultValues || {
-            type: INVOICE_TYPE.VAT,
-            is_already_paid: true,
-            number: '2/07/2025',
-            invoice_products: [{ name: '', vat_rate: VAT_RATE.CASE23, measure_unit: MEASURE_UNIT.PCS, quantity: 1, price: 0 }],
-            invoice_contractors: [{ role: CONTRACTOR_ROLE.SELLER }, { role: CONTRACTOR_ROLE.BUYER }],
-            currency: Currency.PLN,
-            sale_date: new Date('2025-06-20T22:00:00.000Z'),
-            due_date: new Date('2025-06-23T22:00:00.000Z'),
-            issue_date: new Date('2025-06-22T22:00:00.000Z'),
-            payment_method: PaymentMethod.CARD,
-        },
+export const InvoiceForm = ({ defaultValues, invoiceId }: Props) => {
+    const form = useForm<InvoiceSchema>({
+        resolver: zodResolver(invoiceSchema),
+        defaultValues: defaultValues,
     });
 
-    async function onSubmit(body: VatSchema) {
+    async function onSubmit(body: InvoiceSchema) {
         try {
             const response = await upsertInvoice({ body, invoiceId });
             toast.success(invoiceId ? 'invoice updated successfully!' : 'invoice created successfully!');
@@ -59,14 +42,22 @@ export const VatForm = ({ defaultValues, invoiceId }: Props) => {
             const value = getValues();
 
             if (type === 'change' && name) {
-                if (name.endsWith('quantity') || name.endsWith('vat') || name.endsWith('price') || name.endsWith('discount')) {
+                if (name.endsWith('quantity') || name.endsWith('price') || name.endsWith('discount') || name.endsWith('vat_rate')) {
                     const items = value.invoice_products || [];
 
-                    const total = items.reduce(
-                        (sum, item) =>
-                            item ? sum + (Number(item.price) || 0) * (Number(item.quantity) || 0) * (1 - (item.discount || 0) / 100) : sum,
-                        0,
-                    );
+                    const total = items.reduce((sum, item) => {
+                        if (!item) return sum;
+                        const price = Number(item.price) || 0;
+                        const quantity = Number(item.quantity) || 0;
+                        const discount = (item.discount || 0) / 100;
+                        let vatRate = 0;
+                        if ('vat_rate' in item) {
+                            vatRate = Number(item.vat_rate) / 100;
+                        }
+                        const net = price * quantity * (1 - discount);
+                        const gross = net * (1 + vatRate);
+                        return sum + gross;
+                    }, 0);
 
                     setTotal(Number(total.toFixed(2)));
                 }

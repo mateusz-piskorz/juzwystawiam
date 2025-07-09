@@ -1,5 +1,5 @@
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { TypedFieldPath } from '@/lib/types';
+import { TypedFieldPath } from '@/lib/types/typed-field-path';
 import { cn } from '@/lib/utils/cn';
 import { useEffect, useReducer } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';

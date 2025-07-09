@@ -33,9 +33,4 @@ class InvoiceContractor extends Model
         return $this->belongsTo(Invoice::class);
     }
 
-    // public function contractor(): BelongsTo
-    // {
-    //     return $this->belongsTo(Contractor::class);
-    // }
-
 }

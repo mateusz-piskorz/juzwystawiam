@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import { Select } from '@/components/common/select';
-import { InvoiceForm } from '@/components/dashboard/invoices/common/InvoiceForm';
+import { InvoiceForm } from '@/components/dashboard/invoices/invoice-form';
 import AppLayout from '@/layouts/app-layout';
 import { MainContentLayout } from '@/layouts/main-content-layout';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
@@ -8,7 +10,7 @@ import { Invoice } from '@/lib/types/invoice';
 import { Head, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
-const InvoiceListPage = () => {
+const EditInvoicePage = () => {
     const {
         props: { invoice },
     } = usePage<{ invoice: Invoice }>();
@@ -33,14 +35,15 @@ const InvoiceListPage = () => {
     ];
 
     const [invoiceType, setInvoiceType] = useState(invoice.type);
-    console.log(invoiceType);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={`Edit Invoice ${invoice.number}`} />
             <MainContentLayout className="p-0 md:p-0">
-                {/* <h1>Edit Invoice {invoice.number}</h1> */}
-                <div className="flex items-center gap-2 pt-4 pl-4">
-                    <p className="hidden sm:inline-block">Invoice type</p>
+                <div className="flex items-center gap-2 px-4 pt-4 md:px-6 md:pt-6">
+                    <h1>
+                        <span className="text-muted-foreground">Edit Invoice</span> {invoice.number}
+                    </h1>
                     <Select
                         defaultValue={invoiceType}
                         label="Invoice type"
@@ -49,9 +52,10 @@ const InvoiceListPage = () => {
                     />
                 </div>
                 <InvoiceForm
-                    type={invoiceType}
+                    // @ts-ignore Warning: This is a TypeScript quirk! Don't look.
                     defaultValues={{
                         ...invoice,
+                        type: invoiceType,
                         issue_date: new Date(invoice.issue_date),
                         sale_date: new Date(invoice.sale_date),
                         due_date: new Date(invoice.due_date),
@@ -63,4 +67,4 @@ const InvoiceListPage = () => {
     );
 };
 
-export default InvoiceListPage;
+export default EditInvoicePage;

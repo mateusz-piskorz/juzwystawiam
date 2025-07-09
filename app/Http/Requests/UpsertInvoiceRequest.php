@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Http\Requests;
 
 use App\Enums\ContractorRole;
 use App\Enums\Currency;
@@ -10,14 +10,15 @@ use App\Enums\PaymentMethod;
 use App\Enums\VatRate;
 use App\Rules\ContractorBelongsToUser;
 use App\Rules\ProductBelongsToUser;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class InvoiceValidationRulesFactory
+class UpsertInvoiceRequest extends FormRequest
 {
-    public static function getRules(string $type, string $userId): array
+
+    public function rules(): array
     {
-        // Common rules for all invoices
-        $common = [
+        return [
             'type'                                => ['required', Rule::enum(InvoiceType::class)],
             'number'                              => 'required|string',
             'issue_date'                          => 'required|date',
@@ -28,29 +29,18 @@ class InvoiceValidationRulesFactory
             'due_date'                            => 'required|date',
             'secret_note'                         => 'nullable|string',
 
-            'invoice_contractors.*.contractor_id' => ['required', new ContractorBelongsToUser($userId)],
+            'invoice_contractors.*.contractor_id' => ['required', new ContractorBelongsToUser($this->user()->id)],
             'invoice_contractors.*.role'          => ['required', Rule::enum(ContractorRole::class)],
 
             'invoice_products'                    => 'required|array|min:1',
-            'invoice_products.*.product_id'       => ['nullable', new ProductBelongsToUser($userId)],
+            'invoice_products.*.product_id'       => ['nullable', new ProductBelongsToUser($this->user()->id)],
             'invoice_products.*.name'             => 'required|string',
             'invoice_products.*.quantity'         => 'required|integer',
             'invoice_products.*.price'            => 'required|decimal:0,2',
             'invoice_products.*.measure_unit'     => ['required', Rule::enum(MeasureUnit::class)],
-            'invoice_products.*.discount'         => 'nullable|integer'
-        ];
+            'invoice_products.*.discount'         => 'nullable|integer',
 
-        // Type-specific rules
-        $types = [
-            'VAT'    => [
-                'type'                        => ['required', Rule::in(InvoiceType::VAT->value)],
-                'invoice_products.*.vat_rate' => ['required', Rule::enum(VatRate::class)]
-            ],
-            'NO_VAT' => [
-                'type' => ['required', Rule::in(InvoiceType::NO_VAT->value)]
-            ]
+            'invoice_products.*.vat_rate'         => ['required_if:type,VAT', 'exclude_unless:type,VAT', Rule::enum(VatRate::class)]
         ];
-
-        return array_merge($common, $types[$type] ?? []);
     }
 }

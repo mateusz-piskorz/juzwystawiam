@@ -1,7 +1,8 @@
 import { apiFetch } from '@/lib/utils/api-fetch';
-import { CreateContractorDTO } from '../constants/zod/contractors';
-import { Pagination, QueryValue } from '../types';
+import { CreateContractorDTO } from '../constants/zod/contractor';
 import { Contractor } from '../types/contractor';
+import { Pagination } from '../types/pagination';
+import { QueryValue } from '../types/query-value';
 import { SharedQueryArgs } from '../types/shared-query-args';
 import { buildURLParams } from '../utils/build-url-params';
 

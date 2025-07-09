@@ -7,7 +7,7 @@ import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
-import { createProductDTO, CreateProductDTO } from '@/lib/constants/zod/products';
+import { createProductDTO, CreateProductDTO } from '@/lib/constants/zod/product';
 import { upsertProduct } from '@/lib/data/products';
 import { Product } from '@/lib/types/product';
 import { zodResolver } from '@hookform/resolvers/zod';
