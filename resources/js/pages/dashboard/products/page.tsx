@@ -19,7 +19,8 @@ const ProductsPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Contractors" />
-            <MainContentLayout headerText="Products">
+            <MainContentLayout>
+                <h1 className="mb-5 text-xl">Products</h1>
                 <ProductTable />
             </MainContentLayout>
         </AppLayout>

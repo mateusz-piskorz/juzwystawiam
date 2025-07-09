@@ -28,6 +28,7 @@ export const ProductTable = () => {
         queryFn: () => getProducts({ page, limit, q, order_column, order_direction, vat_rate, measure_unit }),
     });
 
+    //todo: handleDelete opens confirmation dialog
     const columns = getProductColumns({
         handleDeleteProduct: async (productId: number) => {
             try {

@@ -5,12 +5,12 @@ import { Separator } from '@/components/ui/separator';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
-import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';
+import { InvoiceSchema } from '@/lib/constants/zod/invoice';
 import { UseFieldArrayRemove, UseFormReturn } from 'react-hook-form';
-import { ProductSelectField } from '../product-select-field';
+import { ProductSelectField } from '../../../atoms/product-select-field';
 import { RemoveItemButton } from './remove-item-button';
 
-type Props<T extends CreateInvoiceDTO> = {
+type Props<T extends InvoiceSchema> = {
     form: UseFormReturn<T>;
     idx: number;
     remove: UseFieldArrayRemove;
@@ -18,8 +18,8 @@ type Props<T extends CreateInvoiceDTO> = {
     total: string;
 };
 
-export const ProductItemMobile = <T extends CreateInvoiceDTO>({ form: formProps, idx, remove, fieldsLength, total }: Props<T>) => {
-    const form = formProps as unknown as UseFormReturn<CreateInvoiceDTO>;
+export const ProductItemMobile = <T extends InvoiceSchema>({ form: formProps, idx, remove, fieldsLength, total }: Props<T>) => {
+    const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
     const formType = form.watch('type');
 
     return (

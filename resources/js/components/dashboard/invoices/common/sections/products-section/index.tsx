@@ -3,7 +3,7 @@ import { Separator } from '@/components/ui/separator';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
-import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';
+import { InvoiceSchema } from '@/lib/constants/zod/invoice';
 import { useIsMobile } from '@/lib/hooks/use-mobile';
 import { SquarePlus } from 'lucide-react';
 import React from 'react';
@@ -11,13 +11,13 @@ import { useFieldArray, UseFormReturn } from 'react-hook-form';
 import { ProductItemDesktop } from './product-item/product-item-desktop';
 import { ProductItemMobile } from './product-item/product-item-mobile';
 
-type Props<T extends CreateInvoiceDTO> = {
+type Props<T extends InvoiceSchema> = {
     form: UseFormReturn<T>;
 };
-export const ProductsSection = <T extends CreateInvoiceDTO>({ form: formProps }: Props<T>) => {
+export const ProductsSection = <T extends InvoiceSchema>({ form: formProps }: Props<T>) => {
     const isMobile = useIsMobile();
 
-    const form = formProps as unknown as UseFormReturn<CreateInvoiceDTO>;
+    const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
     const formType = form.watch('type');
 
     const { fields, append, remove } = useFieldArray({
@@ -34,9 +34,10 @@ export const ProductsSection = <T extends CreateInvoiceDTO>({ form: formProps }:
                         const priceW = form.watch(`invoice_products.${idx}.price`);
                         const quantityW = form.watch(`invoice_products.${idx}.quantity`);
                         const discountW = form.watch(`invoice_products.${idx}.discount`) || 0;
+                        const vatRateW = Number(form.watch(`invoice_products.${idx}.vat_rate`)) || 0;
 
-                        // total not reacting to discount change
-                        const total = (quantityW * priceW * (1 - discountW / 100)).toFixed(2);
+                        const netTotal = quantityW * priceW * (1 - discountW / 100);
+                        const total = (netTotal * (1 + vatRateW / 100)).toFixed(2);
 
                         if (isMobile) {
                             return (

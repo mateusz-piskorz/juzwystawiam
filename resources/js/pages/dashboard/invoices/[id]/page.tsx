@@ -28,6 +28,7 @@ const InvoicePage = () => {
         },
     ];
 
+    //todo: handleDelete opens confirmation dialog
     const handleDelete = async () => {
         try {
             const response = await deleteInvoice({ invoiceId: invoice.id });

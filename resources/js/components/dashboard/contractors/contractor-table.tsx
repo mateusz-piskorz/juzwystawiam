@@ -27,6 +27,7 @@ export const ContractorTable = () => {
         queryFn: () => getContractors({ page, limit, q, order_column, order_direction, is_own_company, type_of_business }),
     });
 
+    //todo: handleDelete opens confirmation dialog
     const columns = getContractorColumns({
         handleDeleteContractor: async (contractorId: number) => {
             try {

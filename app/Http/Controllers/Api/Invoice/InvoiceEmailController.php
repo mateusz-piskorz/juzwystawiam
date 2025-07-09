@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Api\Invoice;
 
-use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class InvoiceEmailController extends Controller
+class InvoiceEmailController
 {
     public function sendEmailIssuingInvoice(Request $request, Invoice $invoice)
     {

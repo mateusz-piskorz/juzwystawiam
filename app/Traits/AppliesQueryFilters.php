@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 trait AppliesQueryFilters
 {
@@ -27,31 +28,14 @@ trait AppliesQueryFilters
             array_fill_keys($filterable, $stringOrArray)
         );
 
-        // Apply filters
-        foreach ($validatedFilters as $key => $value) {
-            if (is_null($value)) {
-                continue;
-            }
+        [$arrays, $strings] = Arr::partition($validatedFilters, fn($v) => is_array($v));
 
-            if (str_contains($key, '.')) {
-                [$relation, $column] = explode('.', $key, 2);
-                if (is_array($value)) {
-                    $query->whereHas($relation, function ($q) use ($column, $value) {
-                        $q->whereIn($column, $value);
-                    });
-                } else {
-                    $query->whereHas($relation, function ($q) use ($column, $value) {
-                        $q->where($column, $value);
-                    });
-                }
-            } else {
-                if (is_array($value)) {
-                    $query->whereIn($key, $value);
-                } else {
-                    $query->where($key, $value);
-                }
+        // Apply filters
+        $query->where($strings)->where(function ($q) use ($arrays) {
+            foreach ($arrays as $key => $values) {
+                $q->whereIn($key, $values);
             }
-        }
+        });
 
         // Apply search
         if ($search = $request->input('q')) {

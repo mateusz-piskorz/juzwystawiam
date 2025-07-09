@@ -19,7 +19,8 @@ const ContractorsPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Contractors" />
-            <MainContentLayout headerText="Contractors">
+            <MainContentLayout>
+                <h1 className="mb-5 text-xl">Contractors</h1>
                 <ContractorTable />
             </MainContentLayout>
         </AppLayout>

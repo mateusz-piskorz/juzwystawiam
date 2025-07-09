@@ -2,13 +2,13 @@ import { SelectField } from '@/components/common/select-field';
 import { SwitchField } from '@/components/common/switch-field';
 import { Separator } from '@/components/ui/separator';
 import { CURRENCIES } from '@/lib/constants/currencies';
-import { PaymentMethod } from '@/lib/constants/enums/payment-method';
-import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';
+import { PAYMENT_METHOD } from '@/lib/constants/enums/payment-method';
+import { InvoiceSchema } from '@/lib/constants/zod/invoice';
 import { cn } from '@/lib/utils/cn';
 import { UseFormReturn } from 'react-hook-form';
 
 type Props = {
-    form: UseFormReturn<CreateInvoiceDTO>;
+    form: UseFormReturn<InvoiceSchema>;
     className?: string;
 };
 
@@ -20,7 +20,7 @@ export const PaymentTripleBox = ({ form, className }: Props) => {
                     form={form}
                     name="payment_method"
                     label="Sposób płatności"
-                    selectOptions={Object.values(PaymentMethod).map((val) => ({ label: val, value: val }))}
+                    selectOptions={Object.values(PAYMENT_METHOD).map((val) => ({ label: val, value: val }))}
                     className="flex-2/3 rounded-none rounded-ss border-none"
                 />
 

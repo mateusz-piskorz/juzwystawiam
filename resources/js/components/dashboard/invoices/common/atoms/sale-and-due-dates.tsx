@@ -1,12 +1,12 @@
 import { CalendarField } from '@/components/common/calendar-field';
 import { Separator } from '@/components/ui/separator';
-import { CreateInvoiceDTO } from '@/lib/constants/zod/invoices';
+import { InvoiceSchema } from '@/lib/constants/zod/invoice';
 import { cn } from '@/lib/utils/cn';
 
 import { UseFormReturn } from 'react-hook-form';
 
 type Props = {
-    form: UseFormReturn<CreateInvoiceDTO>;
+    form: UseFormReturn<InvoiceSchema>;
     className?: string;
 };
 

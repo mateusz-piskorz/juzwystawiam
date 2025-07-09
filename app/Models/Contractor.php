@@ -13,7 +13,6 @@ class Contractor extends Model
         'type_of_business',
         'is_own_company',
         'postal_code',
-        'building_number',
         'city',
         'country',
         'bank_account',
@@ -31,9 +30,4 @@ class Contractor extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function invoices(): BelongsToMany
-    // {
-    //     return $this->belongsToMany(Invoice::class, 'invoice_contractor')
-    //         ->withPivot('role');
-    // }
 }

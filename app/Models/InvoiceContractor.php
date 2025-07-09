@@ -15,7 +15,6 @@ class InvoiceContractor extends Model
         'type_of_business',
         'is_own_company',
         'postal_code',
-        'building_number',
         'city',
         'country',
         'bank_account',
@@ -33,10 +32,5 @@ class InvoiceContractor extends Model
     {
         return $this->belongsTo(Invoice::class);
     }
-
-    // public function contractor(): BelongsTo
-    // {
-    //     return $this->belongsTo(Contractor::class);
-    // }
 
 }

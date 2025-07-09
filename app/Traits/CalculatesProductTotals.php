@@ -32,7 +32,6 @@ trait CalculatesProductTotals
     }
 
     public function CalculateSingleProductTotals(mixed $product)
-    // we also need to return calculate discountAmount and save in db
     {
 
         $quantity = $product['quantity'];

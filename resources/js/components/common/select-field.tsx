@@ -1,6 +1,7 @@
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
-import { Nullable, TypedFieldPath } from '@/lib/types';
+import { Nullable } from '@/lib/types/nullable';
+import { TypedFieldPath } from '@/lib/types/typed-field-path';
 import { cn } from '@/lib/utils/cn';
 
 import { FieldValues, UseFormReturn } from 'react-hook-form';

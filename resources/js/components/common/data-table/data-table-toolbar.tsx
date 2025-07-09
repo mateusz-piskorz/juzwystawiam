@@ -35,7 +35,7 @@ export function DataTableToolbar<TData>({ table, addNewRecord, filters }: DataTa
                 placeholder="Search..."
                 onChange={debounce((event) => searchParams.set({ q: event.target.value || undefined }), 500)}
                 defaultValue={q}
-                className="min-w-[150px] rounded md:max-w-xs"
+                className="min-w-[150px] rounded max-md:h-[50px] md:max-w-xs"
             />
             <div className="mr-auto flex items-center">
                 {filters.map((e) => (

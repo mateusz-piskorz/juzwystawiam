@@ -1,7 +1,8 @@
 import { apiFetch } from '@/lib/utils/api-fetch';
-import { CreateInvoiceDTO } from '../constants/zod/invoices';
-import { Pagination, QueryValue } from '../types';
+import { InvoiceSchema } from '../constants/zod/invoice';
 import { Invoice } from '../types/invoice';
+import { Pagination } from '../types/pagination';
+import { QueryValue } from '../types/query-value';
 import { SharedQueryArgs } from '../types/shared-query-args';
 import { buildURLParams } from '../utils/build-url-params';
 
@@ -26,7 +27,7 @@ export const deleteInvoice = async ({ invoiceId }: DeleteProduct) => {
     });
 };
 
-export const upsertInvoice = async ({ body, invoiceId }: { body: CreateInvoiceDTO; invoiceId?: number }) => {
+export const upsertInvoice = async ({ body, invoiceId }: { body: InvoiceSchema; invoiceId?: number }) => {
     const url = invoiceId ? `${BASE_URL}/${invoiceId}` : BASE_URL;
     const method = invoiceId ? 'PUT' : 'POST';
 
