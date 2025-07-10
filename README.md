@@ -19,3 +19,7 @@
 4. go to localhost without any port
 
 - http://localhost/
+
+# stripe events locally
+
+stripe listen --forward-to http://127.0.0.1:8000/stripe/webhook

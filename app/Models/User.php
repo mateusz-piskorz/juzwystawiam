@@ -7,17 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
 
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens, Billable;
 
     protected $fillable = [
         'name',
         'email',
-        'password'
+        'password',
+        'premium_access_expires_at'
     ];
 
     protected $hidden = [
@@ -46,5 +48,10 @@ class User extends Authenticatable
     public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class);
+    }
+
+    public function hasPremium(): bool
+    {
+        return $this->premium_access_expires_at && $this->premium_access_expires_at > now();
     }
 }
