@@ -1,4 +1,4 @@
-import { InvoicesTable } from '@/components/dashboard/invoices/invoice-table';
+import { InvoiceTable } from '@/components/dashboard/invoices/invoice-table';
 import AppLayout from '@/layouts/app-layout';
 import { MainContentLayout } from '@/layouts/main-content-layout';
 import type { BreadcrumbItem } from '@/lib/types';
@@ -21,7 +21,7 @@ const InvoiceListPage = () => {
             <Head title="Invoices" />
             <MainContentLayout>
                 <h1 className="mb-5 text-xl">Invoices</h1>
-                <InvoicesTable />
+                <InvoiceTable />
             </MainContentLayout>
         </AppLayout>
     );

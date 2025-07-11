@@ -39,7 +39,7 @@ class InvoiceController
 
     public function store(UpsertInvoiceRequest $request)
     {
-
+        Gate::authorize('create', Invoice::class);
         $invoice = null;
 
         DB::transaction(function () use ($request, &$invoice) {

@@ -38,11 +38,7 @@ export const getProductColumns = ({
         accessorKey: 'name',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
         cell: ({ row }) => {
-            return (
-                <div className="flex space-x-2">
-                    <span className="max-w-[500px] truncate font-medium">{row.original.name}</span>
-                </div>
-            );
+            return row.original.name;
         },
         enableSorting: false,
     },
@@ -50,33 +46,21 @@ export const getProductColumns = ({
         accessorKey: 'measure_unit',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Measure unit" />,
         cell: ({ row }) => {
-            return (
-                <div className="flex w-[100px] items-center">
-                    <span>{String(row.original.measure_unit)}</span>
-                </div>
-            );
+            return String(row.original.measure_unit);
         },
     },
     {
         accessorKey: 'vat_rate',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Vat rate" />,
         cell: ({ row }) => {
-            return (
-                <div className="flex w-[100px] items-center">
-                    <span>{row.original.vat_rate}</span>
-                </div>
-            );
+            return row.original.vat_rate;
         },
     },
     {
         accessorKey: 'price',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Price" />,
         cell: ({ row }) => {
-            return (
-                <div className="flex w-[100px] items-center">
-                    <span>{row.original.price}</span>
-                </div>
-            );
+            return row.original.price;
         },
     },
     {

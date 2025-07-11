@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { InvoiceSchema, invoiceSchema } from '@/lib/constants/zod/invoice';
 import { upsertInvoice } from '@/lib/data/invoices';
+import { getErrorMessage } from '@/lib/utils/error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
@@ -29,8 +30,9 @@ export const InvoiceForm = ({ defaultValues, invoiceId }: Props) => {
             toast.success(invoiceId ? 'invoice updated successfully!' : 'invoice created successfully!');
             router.visit(`/dashboard/invoices/${response.id}`);
         } catch (error: unknown) {
-            toast.error('something went wrong');
-            console.error(error);
+            const errorMessage = getErrorMessage(error);
+            toast.error(errorMessage || 'something went wrong');
+            console.error(errorMessage);
         }
     }
 

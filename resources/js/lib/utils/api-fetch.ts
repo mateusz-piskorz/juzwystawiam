@@ -28,10 +28,12 @@ export const apiFetch = async <T>(url: string, options: RequestInit = {}) => {
         credentials: 'include',
     });
 
-    if (!res.ok) {
-        throw new Error(res.statusText);
-    }
     const data = (await res.json()) as T;
+
+    if (!res.ok) {
+        const message = (data as { message: string }).message;
+        throw new Error(message || res.statusText);
+    }
 
     return data;
 };

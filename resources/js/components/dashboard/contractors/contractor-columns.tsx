@@ -38,11 +38,7 @@ export const getContractorColumns = ({
         accessorKey: 'company_name',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
         cell: ({ row }) => {
-            return (
-                <div className="flex space-x-2">
-                    <span className="max-w-[500px] truncate font-medium">{row.original.company_name}</span>
-                </div>
-            );
+            return row.original.company_name;
         },
         enableSorting: false,
     },
@@ -50,33 +46,21 @@ export const getContractorColumns = ({
         accessorKey: 'is_own_company',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Is own company" />,
         cell: ({ row }) => {
-            return (
-                <div className="flex w-[100px] items-center">
-                    <span>{String(row.original.is_own_company)}</span>
-                </div>
-            );
+            return String(row.original.is_own_company);
         },
     },
     {
         accessorKey: 'type_of_business',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Type of business" />,
         cell: ({ row }) => {
-            return (
-                <div className="flex w-[100px] items-center">
-                    <span>{row.original.type_of_business}</span>
-                </div>
-            );
+            return row.original.type_of_business;
         },
     },
     {
         accessorKey: 'country',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Country" />,
         cell: ({ row }) => {
-            return (
-                <div className="flex w-[100px] items-center">
-                    <span>{row.original.country}</span>
-                </div>
-            );
+            return row.original.country;
         },
         enableSorting: false,
     },
@@ -84,13 +68,7 @@ export const getContractorColumns = ({
         accessorKey: 'address',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Address" />,
         cell: ({ row }) => {
-            return (
-                <div className="flex w-[100px] items-center">
-                    <span>
-                        {row.original.postal_code} {row.original.city}
-                    </span>
-                </div>
-            );
+            return `${row.original.postal_code} ${row.original.city}`;
         },
         enableSorting: false,
     },

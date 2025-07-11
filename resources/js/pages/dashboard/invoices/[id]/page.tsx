@@ -5,6 +5,7 @@ import { deleteInvoice, sendEmailIssuingInvoice } from '@/lib/data/invoices';
 import { usePage } from '@/lib/hooks/use-page';
 import type { BreadcrumbItem } from '@/lib/types';
 import { Invoice } from '@/lib/types/invoice';
+import { getErrorMessage } from '@/lib/utils/error-message';
 import { Head, Link, router } from '@inertiajs/react';
 import { toast } from 'sonner';
 
@@ -45,8 +46,9 @@ const InvoicePage = () => {
             const response = await sendEmailIssuingInvoice({ invoiceId: invoice.id, body: { recipient: 'owcaofficial@yahoo.com' } });
             toast.success(response.message);
         } catch (error: unknown) {
-            toast.error('something went wrong');
-            console.error(error);
+            const errorMessage = getErrorMessage(error);
+            toast.error(errorMessage || 'something went wrong');
+            console.error(errorMessage);
         }
     };
 

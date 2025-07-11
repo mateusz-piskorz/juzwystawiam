@@ -1,3 +1,6 @@
+import { DisplayPremiumDays } from '@/components/common/display-premium-days';
+import { PaymentsTable } from '@/components/dashboard/premium-account/payments-table';
+import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { MainContentLayout } from '@/layouts/main-content-layout';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
@@ -33,10 +36,20 @@ const PremiumAccountPage = () => {
             <Head title="Invoices" />
             <MainContentLayout>
                 <h1 className="mb-5 text-xl">Premium account</h1>
-                <div className="flex flex-col gap-2">
-                    <a href="/dashboard/premium-account/buy?days=1">Buy 1 day of premium</a>
-                    <a href="#">Buy 7 days of premium</a>
+                <DisplayPremiumDays />
+                <div>
+                    <h1>Buy premium</h1>
+                    <a href="/dashboard/premium-account/buy?days=1">
+                        <Button>Premium 1 day</Button>
+                    </a>
+                    <a href="/dashboard/premium-account/buy?days=7">
+                        <Button>Premium 7 day</Button>
+                    </a>
+                    <a href="/dashboard/premium-account/buy?days=30">
+                        <Button>Premium 30 day</Button>
+                    </a>
                 </div>
+                <PaymentsTable />
             </MainContentLayout>
         </AppLayout>
     );

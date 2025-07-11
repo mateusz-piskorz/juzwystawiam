@@ -22,8 +22,8 @@ class PremiumAccountController
 
         $stripePriceIds = [
             'day1'  => 'price_1RjHSg4FjKtzGWoFXjZK12bO',
-            'day7'  => 'price_deluxe_album_day7',
-            'day30' => 'price_deluxe_album_day30'
+            'day7'  => 'price_1RjgzQ4FjKtzGWoFq9wlpz8y',
+            'day30' => 'price_1Rjh044FjKtzGWoFsb5IZhKm'
         ];
         // todo: check if we can't just do if($stripePriceId = $stripePriceIds[$key])
         $key = 'day' . $validatedDays;

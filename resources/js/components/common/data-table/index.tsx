@@ -1,5 +1,6 @@
 'use client';
 
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import {
     ColumnDef,
     flexRender,
@@ -12,9 +13,6 @@ import {
     VisibilityState,
 } from '@tanstack/react-table';
 import { ComponentProps, useState } from 'react';
-
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-
 import { DataTablePagination } from './data-table-pagination';
 import { DataTableToolbar } from './data-table-toolbar';
 
@@ -22,11 +20,19 @@ interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
     filters: ComponentProps<typeof DataTableToolbar>['filters'];
-    addNewRecord: ComponentProps<typeof DataTableToolbar>['addNewRecord'];
-    totalPages: string;
+    addNewRecord?: ComponentProps<typeof DataTableToolbar>['addNewRecord'];
+    totalPages?: string;
+    displayDataTableToolbar?: boolean;
 }
 
-export function DataTable<TData, TValue>({ columns, data, filters, addNewRecord, totalPages }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+    columns,
+    data,
+    filters,
+    addNewRecord,
+    totalPages,
+    displayDataTableToolbar = true,
+}: DataTableProps<TData, TValue>) {
     const [rowSelection, setRowSelection] = useState({});
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
@@ -49,7 +55,7 @@ export function DataTable<TData, TValue>({ columns, data, filters, addNewRecord,
 
     return (
         <div className="flex flex-col gap-4">
-            <DataTableToolbar table={table} filters={filters} addNewRecord={addNewRecord} />
+            {displayDataTableToolbar && <DataTableToolbar table={table} filters={filters} addNewRecord={addNewRecord} />}
             <div className="rounded border">
                 <Table>
                     <TableHeader>
@@ -84,7 +90,7 @@ export function DataTable<TData, TValue>({ columns, data, filters, addNewRecord,
                     </TableBody>
                 </Table>
             </div>
-            <DataTablePagination table={table} totalPages={totalPages} />
+            {totalPages && <DataTablePagination table={table} totalPages={totalPages} />}
         </div>
     );
 }

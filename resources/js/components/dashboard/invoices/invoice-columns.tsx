@@ -34,22 +34,14 @@ export const invoiceColumns: ColumnDef<Invoice>[] = [
         accessorKey: 'number',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Number" />,
         cell: ({ row }) => {
-            return (
-                <div className="flex space-x-2">
-                    <span className="max-w-[500px] truncate font-medium">{row.original.number}</span>
-                </div>
-            );
+            return row.original.number;
         },
     },
     {
         accessorKey: 'type',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Type" />,
         cell: ({ row }) => {
-            return (
-                <div className="flex w-[100px] items-center">
-                    <span>{String(row.original.type)}</span>
-                </div>
-            );
+            return String(row.original.type);
         },
     },
     {
@@ -58,44 +50,28 @@ export const invoiceColumns: ColumnDef<Invoice>[] = [
         cell: ({ row }) => {
             const formattedDate = dayjs(row.original.sale_date).format('DD-MM-YYYY');
 
-            return (
-                <div className="flex w-[100px] items-center">
-                    <span>{formattedDate}</span>
-                </div>
-            );
+            return formattedDate;
         },
     },
     {
         accessorKey: 'total',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Total" />,
         cell: ({ row }) => {
-            return (
-                <div className="flex w-[100px] items-center">
-                    <span>{row.original.total}</span>
-                </div>
-            );
+            return row.original.total;
         },
     },
     {
         accessorKey: 'is_already_paid',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Is already paid" />,
         cell: ({ row }) => {
-            return (
-                <div className="flex w-[100px] items-center">
-                    <span>{String(row.original.is_already_paid)}</span>
-                </div>
-            );
+            return String(row.original.is_already_paid);
         },
     },
     {
         accessorKey: 'latest_invoice_email.status',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Email status" />,
         cell: ({ row }) => {
-            return (
-                <div className="flex w-[100px] items-center">
-                    <span>{String(row.original.latest_invoice_email?.status)}</span>
-                </div>
-            );
+            return row.original.latest_invoice_email?.status;
         },
         enableSorting: false,
     },
