@@ -3,33 +3,43 @@ import { TYPE_OF_BUSINESS } from '../enums/type-of-business';
 
 const { OTHER_BUSINESS, PRIVATE_PERSON, SELF_EMPLOYED } = TYPE_OF_BUSINESS;
 
-//todo: check if validation pass after you type in field and then remove everything
 export const createContractorDTO = z
     .object({
         type_of_business: z.nativeEnum(TYPE_OF_BUSINESS),
         is_own_company: z.boolean(),
-        nip: z
-            .string()
-            .refine((val) => val.length === 10)
-            .nullish(),
-        postal_code: z.string().nonempty().max(255),
-        city: z.string().nonempty().max(255),
-        country: z.string().max(255),
-        company_name: z.string().nonempty().max(255).nullish(),
+        nip: z.string().nullish(),
+        postal_code: z.string().nonempty(),
+        city: z.string().nonempty(),
+        country: z.string(),
+        company_name: z.string().nullish(),
         email: z.union([z.literal(''), z.string().email()]).nullish(),
-        street_name: z.string().max(255),
+        street_name: z.string(),
         phone: z.string().nullish(),
-        first_name: z.string().max(255).nullish(),
-        surname: z.string().max(255).nullish(),
+        first_name: z.string().nullish(),
+        surname: z.string().nullish(),
         bank_account: z
             .string()
             .refine((val) => String(val).length >= 5 && String(val).length <= 17)
             .nullish(),
     })
-    .refine((data) => !(!data.nip && (data.type_of_business === SELF_EMPLOYED || data.type_of_business === OTHER_BUSINESS)), {
-        message: 'required',
-        path: ['nip'],
-    })
+    .refine(
+        (data) => {
+            const nipIsMissing = !data.nip || data.nip === '';
+            if (nipIsMissing) {
+                if (data.type_of_business === SELF_EMPLOYED || data.type_of_business === OTHER_BUSINESS) {
+                    return false;
+                } else {
+                    return data.nip?.length === 10;
+                }
+            }
+
+            return true;
+        },
+        {
+            message: 'required',
+            path: ['nip'],
+        },
+    )
     .refine((data) => !(!data.company_name && (data.type_of_business === SELF_EMPLOYED || data.type_of_business === OTHER_BUSINESS)), {
         message: 'required',
         path: ['company_name'],

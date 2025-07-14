@@ -3,10 +3,8 @@ import { InvoiceForm } from '@/components/dashboard/invoices/invoice-form';
 import AppLayout from '@/layouts/app-layout';
 import { MainContentLayout } from '@/layouts/main-content-layout';
 import { CONTRACTOR_ROLE } from '@/lib/constants/enums/contractor-role';
-import { CURRENCY } from '@/lib/constants/enums/currency';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
-import { PAYMENT_METHOD } from '@/lib/constants/enums/payment-method';
 import { BreadcrumbItem } from '@/lib/types';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
@@ -48,11 +46,6 @@ const CreateInvoicePage = () => {
                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                         // @ts-ignore
                         invoice_contractors: [{ role: CONTRACTOR_ROLE.SELLER }, { role: CONTRACTOR_ROLE.BUYER }],
-                        currency: CURRENCY.PLN,
-                        sale_date: new Date('2025-06-20T22:00:00.000Z'),
-                        due_date: new Date('2025-06-23T22:00:00.000Z'),
-                        issue_date: new Date('2025-06-22T22:00:00.000Z'),
-                        payment_method: PAYMENT_METHOD.CARD,
                     }}
                 />
             </MainContentLayout>

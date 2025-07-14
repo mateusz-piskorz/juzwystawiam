@@ -16,10 +16,10 @@ class UpsertContractorRequest extends FormRequest
             'type_of_business' => ['required', Rule::enum(TypeOfBusiness::class)],
             'is_own_company'   => ['required', 'boolean'],
             'nip'              => [
-                'nullable',
+                'required_if:type_of_business,SELF_EMPLOYED,OTHER_BUSINESS',
+                'exclude_unless:type_of_business,SELF_EMPLOYED,OTHER_BUSINESS',
                 'string',
                 'size:10',
-                'required_if:type_of_business,SELF_EMPLOYED,OTHER_BUSINESS',
                 Rule::unique('contractors')->where(fn(Builder $query) => $query
                         ->where('user_id', $this->user()->id)
                         ->when($this->contractor, function (Builder $query, $contractor) {
@@ -30,23 +30,23 @@ class UpsertContractorRequest extends FormRequest
             'city'             => ['required', 'string'],
             'country'          => ['required', 'string'],
             'company_name'     => [
-                'nullable',
-                'string',
-                'required_if:type_of_business,SELF_EMPLOYED,OTHER_BUSINESS'
+                'required_if:type_of_business,SELF_EMPLOYED,OTHER_BUSINESS',
+                'exclude_unless:type_of_business,SELF_EMPLOYED,OTHER_BUSINESS',
+                'string'
             ],
             'street_name'      => ['required', 'string'],
             'email'            => ['nullable', 'email'],
             'phone'            => ['nullable', 'string'],
             'bank_account'     => ['nullable', 'integer', 'digits_between:5,17'],
             'first_name'       => [
-                'nullable',
-                'string',
-                'required_if:type_of_business,PRIVATE_PERSON,SELF_EMPLOYED'
+                'required_if:type_of_business,PRIVATE_PERSON,SELF_EMPLOYED',
+                'exclude_unless:type_of_business,PRIVATE_PERSON,SELF_EMPLOYED',
+                'string'
             ],
             'surname'          => [
-                'nullable',
-                'string',
-                'required_if:type_of_business,PRIVATE_PERSON,SELF_EMPLOYED'
+                'required_if:type_of_business,PRIVATE_PERSON,SELF_EMPLOYED',
+                'exclude_unless:type_of_business,PRIVATE_PERSON,SELF_EMPLOYED',
+                'string'
             ]
         ];
     }

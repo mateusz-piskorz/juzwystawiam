@@ -11,15 +11,16 @@ type InvoiceContractor = Contractor & {
     role: CONTRACTOR_ROLE;
 };
 
-type InvoiceEmail = {
+export type InvoiceEmail = {
     id: number;
     invoice_id: number;
     status: EMAIL_STATUS;
+    recipient: string;
     created_at: string;
     updated_at: string;
 };
 
-type InvoiceProduct = {
+export type InvoiceProduct = {
     created_at: string;
     discount: number | null;
     id: number;
@@ -31,9 +32,10 @@ type InvoiceProduct = {
     quantity: number;
     updated_at: string;
     vat_rate: VAT_RATE;
-    total_before_vat: number;
+    total: number;
     total_vat_amount: number;
-    total_with_vat: number;
+    total_discount_amount: number;
+    grand_total: number;
 };
 
 export type Invoice = {
@@ -53,8 +55,9 @@ export type Invoice = {
     updated_at: string;
     user_id: number;
     total: number;
-    total_discount_amount: number;
     total_vat_amount: number;
-    total_with_vat: number;
+    total_discount_amount: number;
+    grand_total: number;
     latest_invoice_email: InvoiceEmail | null;
+    invoice_emails: InvoiceEmail[];
 };

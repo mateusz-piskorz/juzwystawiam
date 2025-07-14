@@ -13,6 +13,7 @@ class PremiumAccountController
 
     public function index(): Response
     {
+        // todo: pass data here instead of making api call to Api/PremiumAccountController.php
         return Inertia::render('dashboard/premium-account/page');
     }
 

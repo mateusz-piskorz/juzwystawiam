@@ -14,7 +14,6 @@ export const invoiceProductBase = z.object({
     discount: z.coerce.number().min(0).nullish(),
 });
 
-//todo: check if validation pass after you type in field and then remove everything
 export const invoiceSchemaBase = z.object({
     type: z.nativeEnum(INVOICE_TYPE),
     number: z.string().min(1, 'Invoice number is required'),
