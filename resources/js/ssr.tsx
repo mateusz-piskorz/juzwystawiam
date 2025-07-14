@@ -28,8 +28,8 @@ createServer((page) =>
             /* eslint-enable */
             return (
                 <QueryClientProvider client={queryClient}>
-                    <App {...props} />
                     <Toaster />
+                    <App {...props} />
                 </QueryClientProvider>
             );
         },

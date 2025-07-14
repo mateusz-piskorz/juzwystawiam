@@ -6,7 +6,7 @@ import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
 import { invoiceColumns } from './invoice-columns';
 
-export const InvoicesTable = () => {
+export const InvoiceTable = () => {
     const searchParams = useSearchParams();
 
     const page = searchParams.get('page');

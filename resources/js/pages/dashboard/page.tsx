@@ -1,7 +1,8 @@
+import { DisplayPremiumDays } from '@/components/common/display-premium-days';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/lib/types';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -23,7 +24,13 @@ export default function DashboardPage() {
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                     </div>
                     <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+                        <div className="flex h-full flex-col items-center justify-center">
+                            <h2>Here</h2>
+                            <DisplayPremiumDays />
+                            <Link href="/dashboard/premium-account" className="text-blue-500 hover:underline">
+                                Buy Premium Account
+                            </Link>
+                        </div>
                     </div>
                 </div>
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">

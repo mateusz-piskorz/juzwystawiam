@@ -17,8 +17,8 @@ createInertiaApp({
     setup({ el, App, props }) {
         createRoot(el).render(
             <QueryClientProvider client={queryClient}>
-                <App {...props} />
                 <Toaster />
+                <App {...props} />
             </QueryClientProvider>,
         );
         // hydrateRoot(

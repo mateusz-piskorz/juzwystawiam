@@ -29,7 +29,8 @@ export const apiFetch = async <T>(url: string, options: RequestInit = {}) => {
     });
 
     if (!res.ok) {
-        throw new Error(res.statusText);
+        const errorMessage = await res.text();
+        throw new Error(errorMessage || res.statusText);
     }
     const data = (await res.json()) as T;
 

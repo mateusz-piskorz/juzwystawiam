@@ -5,13 +5,8 @@ namespace App\Listeners;
 use App\Enums\EmailStatus;
 use Illuminate\Mail\Events\MessageSent;
 
-class IssueAnInvoice
+class IssueAnInvoiceListener
 {
-
-    public function __construct()
-    {
-        //
-    }
 
     public function handle(MessageSent $event): void
     {

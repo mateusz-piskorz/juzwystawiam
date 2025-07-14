@@ -3,6 +3,7 @@ import { TYPE_OF_BUSINESS } from '../enums/type-of-business';
 
 const { OTHER_BUSINESS, PRIVATE_PERSON, SELF_EMPLOYED } = TYPE_OF_BUSINESS;
 
+//todo: check if validation pass after you type in field and then remove everything
 export const createContractorDTO = z
     .object({
         type_of_business: z.nativeEnum(TYPE_OF_BUSINESS),

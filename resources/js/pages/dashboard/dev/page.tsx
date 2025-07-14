@@ -1,7 +1,8 @@
-import { InvoiceTable } from '@/components/dashboard/invoices/invoice-table';
+import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { MainContentLayout } from '@/layouts/main-content-layout';
-import type { BreadcrumbItem } from '@/lib/types';
+import { getDev1 } from '@/lib/data/dev';
+import { BreadcrumbItem } from '@/lib/types';
 import { Head } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -10,21 +11,21 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/dashboard',
     },
     {
-        title: 'Invoices',
-        href: '/dashboard/invoices',
+        title: 'Dev',
+        href: '/dashboard/dev',
     },
 ];
 
-const InvoiceListPage = () => {
+const DevPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Invoices" />
+            <Head title="dev" />
             <MainContentLayout>
-                <h1 className="mb-5 text-xl">Invoices</h1>
-                <InvoiceTable />
+                <h1 className="mb-5 text-xl">De</h1>
+                <Button onClick={() => getDev1()}>dev1</Button>
             </MainContentLayout>
         </AppLayout>
     );
 };
 
-export default InvoiceListPage;
+export default DevPage;
