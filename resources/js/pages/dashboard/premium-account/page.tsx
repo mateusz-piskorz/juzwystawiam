@@ -32,6 +32,7 @@ const PremiumAccountPage = () => {
             toast.success('Payment successful! Your premium account will be activated shortly.');
             searchParams.clear('checkout');
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
