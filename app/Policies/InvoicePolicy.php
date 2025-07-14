@@ -12,7 +12,7 @@ class InvoicePolicy
     public function create(User $user): Response
     {
         $limit = 10;
-        if (!$user->premium_days > 0 && $user->invoicesCreatedThisMonth() >= $limit) {
+        if ((!$user->premium_days > 0) && $user->invoicesCreatedThisMonth() >= $limit) {
             return Response::deny('Monthly limit of ' . $limit . ' invoices reached. Please upgrade to premium to create more invoices.');
         }
 
@@ -39,8 +39,8 @@ class InvoicePolicy
         if ($user->id !== $invoice->user_id) {
             return Response::deny('You do not own this invoice.');
         }
-        $limit = 10;
-        if (!$user->premium_days > 0 && $user->emailsSentThisMonth() >= $limit) {
+        $limit = 3;
+        if ((!$user->premium_days > 0) && $user->emailsSentThisMonth() >= $limit) {
             return Response::deny('Monthly limit of ' . $limit . ' emails reached. Please upgrade to premium to send more emails.');
         }
         return Response::allow();

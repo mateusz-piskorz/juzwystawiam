@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
+// todo: refactor PremiumAccountController
+// check if we can't just do if($stripePriceId = $stripePriceIds[$key])
 class PremiumAccountController
 {
 
@@ -25,7 +27,7 @@ class PremiumAccountController
             'day7'  => 'price_1RjgzQ4FjKtzGWoFq9wlpz8y',
             'day30' => 'price_1Rjh044FjKtzGWoFsb5IZhKm'
         ];
-        // todo: check if we can't just do if($stripePriceId = $stripePriceIds[$key])
+
         $key = 'day' . $validatedDays;
         if (!isset($stripePriceIds[$key])) {
             abort(422, 'Invalid premium account duration selected.');

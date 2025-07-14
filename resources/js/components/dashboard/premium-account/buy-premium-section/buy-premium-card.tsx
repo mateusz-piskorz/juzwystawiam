@@ -8,7 +8,7 @@ export const BuyPremiumCard = ({ days }: Props) => {
     const text = days !== 1 ? 'days' : 'day';
     return (
         <div className="bg-secondary flex flex-col gap-2 rounded border p-4 py-6 text-center sm:max-w-[250px]">
-            <a href="/dashboard/premium-account/buy?days=1">
+            <a href={`/dashboard/premium-account/buy?days=${days}`}>
                 <Button>
                     {days} {text} of Premium
                 </Button>

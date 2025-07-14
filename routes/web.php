@@ -24,6 +24,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/products', [ProductController::class, 'index']);
     Route::get('/dashboard/premium-account', [PremiumAccountController::class, 'index'])->name("premium-account");
     Route::get('/dashboard/premium-account/buy', [PremiumAccountController::class, 'buy']);
+
+    Route::get('/dashboard/dev', function () {
+        return Inertia::render('dashboard/dev/page');
+    });
 });
 
 require __DIR__ . '/settings.php';

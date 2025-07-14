@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ContractorController;
+use App\Http\Controllers\Api\DevController;
 use App\Http\Controllers\Api\Invoice\InvoiceController;
 use App\Http\Controllers\Api\Invoice\InvoiceEmailController;
 use App\Http\Controllers\Api\PremiumAccountController;
@@ -18,4 +19,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('contractors', ContractorController::class);
     Route::apiResource('products', ProductController::class);
     Route::get('premium-account/payments', [PremiumAccountController::class, 'getAllPremiumAccountPayments']);
+    Route::get('dev/dev1', [DevController::class, 'dev1']);
 });

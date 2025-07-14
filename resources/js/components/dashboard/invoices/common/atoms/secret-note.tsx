@@ -34,6 +34,7 @@ export const SecretNote = ({ form, className }: Props) => {
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Button variant="ghost" className="absolute top-1 right-2" type="button">
+                                <span className="sr-only">Information about secret note</span>
                                 <CircleAlert />
                             </Button>
                         </TooltipTrigger>

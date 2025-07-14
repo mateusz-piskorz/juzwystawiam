@@ -75,12 +75,11 @@ class User extends Authenticatable
     public function emailsSentThisMonth(): int
     {
         return $this->invoices()
-            ->withCount(['invoice_emails as emails_sent_count' => function ($query) {
-                $query->whereMonth('created_at', now()->month)
-                    ->whereYear('created_at', now()->year)
-                    ->where('status', EmailStatus::SENT->value);
-            }])
-            ->get()
-            ->sum('emails_sent_count');
+            ->join('invoice_emails', 'invoices.id', '=', 'invoice_emails.invoice_id')
+            ->whereMonth('invoice_emails.created_at', now()->month)
+            ->whereYear('invoice_emails.created_at', now()->year)
+            ->where('invoice_emails.status', EmailStatus::SENT->value)
+            ->count();
     }
+
 }
