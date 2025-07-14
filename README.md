@@ -23,3 +23,11 @@
 # stripe events locally
 
 stripe listen --forward-to http://127.0.0.1:8000/stripe/webhook
+
+# remove volumne on coolify
+
+coolify doesn't remove volumnes after removing presistant storage, so you need to remove it yourself if needed.
+
+- Go to terminal
+- select correct container to run command on
+- rm -rf {path to volumne e.g./bitnami/postgresql}
