@@ -4,8 +4,8 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     # needs to remove ports when running on coolify
-    ports:
-      - 9000:9000
+    # ports:
+    #   - 9000:9000
     depends_on:
       - db
     env_file:
@@ -33,9 +33,9 @@ services:
       context: ./docker/ngnix
       dockerfile: Dockerfile
     # needs to remove ports when running on coolify
-    ports:
-      - 80:80
-      - 443:443
+    # ports:
+    #   - 80:80
+    #   - 443:443
     volumes:
       - storage:/usr/share/nginx/html/storage:rw`
       - public:/usr/share/nginx/html/public:ro
@@ -43,8 +43,8 @@ services:
     image: bitnami/postgresql:16.3.0
     platform: linux/amd64
     # needs to remove ports when running on coolify
-    ports:
-      - 5432:5432
+    # ports:
+    #   - 5432:5432
     restart: always
     volumes:
       - db-data:/bitnami/postgresql
@@ -56,8 +56,8 @@ services:
     image: bitnami/redis:7.2
     platform: linux/amd64
     # needs to remove ports when running on coolify
-    ports:
-      - 6379:6379
+    # ports:
+    #   - 6379:6379
     restart: always
     volumes:
       - redis-data:/bitnami/redis/data
