@@ -116,7 +116,7 @@
             font-size: 12px;
         }
 
-        .dwa {
+        .tl-f {
             table-layout: fixed;
         }
 
@@ -198,7 +198,7 @@
         </tr>
         <tr>
             <td>
-                <table class="w-full bs-0 p-0 b dwa">
+                <table class="w-full bs-0 p-0 b tl-f">
                     <thead>
                         <tr>
                             <th class="bg-primary bb p-12 ta-left nowrap w-40">Nazwa</th>

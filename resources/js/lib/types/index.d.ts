@@ -39,5 +39,7 @@ export interface User {
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
+    premium_access_expires_at: string | null;
+    premium_days: number;
     [key: string]: unknown;
 }

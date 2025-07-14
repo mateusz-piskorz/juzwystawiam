@@ -27,7 +27,7 @@ class UpsertInvoiceRequest extends FormRequest
             'is_already_paid'                     => 'required|boolean',
             'sale_date'                           => 'required|date',
             'due_date'                            => 'required|date',
-            'secret_note'                         => 'nullable|string',
+            'secret_note'                         => $this->user()->can('use-secret-note') ? 'nullable|string' : 'prohibited',
 
             'invoice_contractors.*.contractor_id' => ['required', new ContractorBelongsToUser($this->user()->id)],
             'invoice_contractors.*.role'          => ['required', Rule::enum(ContractorRole::class)],

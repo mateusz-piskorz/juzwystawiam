@@ -1,8 +1,10 @@
 import { DisplayPremiumDays } from '@/components/common/display-premium-days';
+import { BenefitsSection } from '@/components/dashboard/premium-account/benefits-section';
+import { BuyPremiumSection } from '@/components/dashboard/premium-account/buy-premium-section';
 import { PaymentsTable } from '@/components/dashboard/premium-account/payments-table';
-import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { MainContentLayout } from '@/layouts/main-content-layout';
+import { usePremium } from '@/lib/hooks/use-premium';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
 import type { BreadcrumbItem } from '@/lib/types';
 import { Head } from '@inertiajs/react';
@@ -21,6 +23,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const PremiumAccountPage = () => {
+    const { hasPremium } = usePremium();
     const searchParams = useSearchParams();
     const checkoutSuccess = searchParams.get('checkout') === 'success';
 
@@ -34,22 +37,21 @@ const PremiumAccountPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Invoices" />
-            <MainContentLayout>
-                <h1 className="mb-5 text-xl">Premium account</h1>
-                <DisplayPremiumDays />
-                <div>
-                    <h1>Buy premium</h1>
-                    <a href="/dashboard/premium-account/buy?days=1">
-                        <Button>Premium 1 day</Button>
-                    </a>
-                    <a href="/dashboard/premium-account/buy?days=7">
-                        <Button>Premium 7 day</Button>
-                    </a>
-                    <a href="/dashboard/premium-account/buy?days=30">
-                        <Button>Premium 30 day</Button>
-                    </a>
+            <MainContentLayout className="flex flex-col gap-5 md:gap-10 md:bg-transparent md:p-0">
+                <div className="md:bg-sidebar space-y-12 md:space-y-8 md:rounded md:p-6">
+                    <div>
+                        <h1 className="mb-2 text-xl font-medium">Premium Status</h1>
+                        <p>
+                            Your premium account is {hasPremium ? 'active' : 'inactive'}. You have <DisplayPremiumDays /> left.
+                        </p>
+                    </div>
+                    <BenefitsSection />
+                    <BuyPremiumSection />
                 </div>
-                <PaymentsTable />
+                <div className="md:bg-sidebar md:rounded md:p-6">
+                    <h1 className="mb-8 text-xl font-medium">Payments History</h1>
+                    <PaymentsTable />
+                </div>
             </MainContentLayout>
         </AppLayout>
     );

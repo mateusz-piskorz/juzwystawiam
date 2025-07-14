@@ -5,6 +5,8 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Enums\EmailStatus;
+use App\Support\PremiumDays;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,6 +31,8 @@ class User extends Authenticatable
         'remember_token'
     ];
 
+    protected $appends = ['premium_days'];
+
     protected function casts(): array
     {
         return [
@@ -36,6 +40,13 @@ class User extends Authenticatable
             'premium_access_expires_at' => 'datetime',
             'password'                  => 'hashed'
         ];
+    }
+
+    protected function premiumDays(): Attribute
+    {
+        return Attribute::make(
+            get: fn(mixed $value, array $attributes) => PremiumDays::daysLeft($attributes['premium_access_expires_at']),
+        );
     }
 
     public function contractors(): HasMany
@@ -51,20 +62,6 @@ class User extends Authenticatable
     public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class);
-    }
-
-    public function hasPremium(): bool
-    {
-        return $this->premium_access_expires_at && $this->premium_access_expires_at > now();
-    }
-
-    public function premiumDays(): int
-    {
-        if (!$this->premium_access_expires_at || $this->premium_access_expires_at <= now()) {
-            return 0;
-        }
-        $minutes = now()->diffInMinutes($this->premium_access_expires_at, false);
-        return (int) ceil($minutes / 1440);
     }
 
     public function invoicesCreatedThisMonth(): int

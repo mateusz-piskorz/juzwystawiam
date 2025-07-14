@@ -18,5 +18,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('contractors', ContractorController::class);
     Route::apiResource('products', ProductController::class);
     Route::get('premium-account/payments', [PremiumAccountController::class, 'getAllPremiumAccountPayments']);
-    Route::get('premium-account/get-premium-days', [PremiumAccountController::class, 'getPremiumDays']);
 });

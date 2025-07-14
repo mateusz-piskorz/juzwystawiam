@@ -4,7 +4,7 @@ import { NavUser } from '@/components/default/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/lib/types';
 import { Link } from '@inertiajs/react';
-import { AirVentIcon, BookOpen, Folder, LayoutGrid, RadioReceiver, Users2 } from 'lucide-react';
+import { AirVentIcon, BookOpen, Crown, Folder, LayoutGrid, RadioReceiver, Users2 } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -27,6 +27,11 @@ const mainNavItems: NavItem[] = [
         title: 'Products',
         href: '/dashboard/products',
         icon: AirVentIcon,
+    },
+    {
+        title: 'Premium Account',
+        href: '/dashboard/premium-account',
+        icon: Crown,
     },
 ];
 

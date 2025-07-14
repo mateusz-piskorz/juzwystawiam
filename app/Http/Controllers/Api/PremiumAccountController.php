@@ -35,11 +35,4 @@ class PremiumAccountController
         return response()->json($allIntents);
     }
 
-    public function getPremiumDays(Request $request)
-    {
-
-        return response()->json(["premium_days" => $request->user()->premiumDays()]);
-
-    }
-
 }
