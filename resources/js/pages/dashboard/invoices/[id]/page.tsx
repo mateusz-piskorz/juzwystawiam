@@ -10,8 +10,6 @@ import { Invoice } from '@/lib/types/invoice';
 import { Head } from '@inertiajs/react';
 import dayjs from 'dayjs';
 
-// todo: view to create
-
 const InvoicePage = () => {
     const {
         props: { invoice },
