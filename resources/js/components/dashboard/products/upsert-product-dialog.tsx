@@ -26,7 +26,6 @@ type Props = {
 
 const initialDefaultValue = {
     vat_rate: VAT_RATE.CASE23,
-    description: 'dwa',
     price: 0,
 };
 
