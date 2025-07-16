@@ -10,6 +10,7 @@ import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
 import { createProductDTO, CreateProductDTO } from '@/lib/constants/zod/product';
 import { upsertProduct } from '@/lib/data/products';
 import { Product } from '@/lib/types/product';
+import { getErrorMessage } from '@/lib/utils/error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -23,20 +24,19 @@ type Props = {
     onSuccess?: (product: Product) => void;
 };
 
+const initialDefaultValue = {
+    vat_rate: VAT_RATE.CASE23,
+    price: 0,
+};
+
 export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, onSuccess }: Props) => {
     const form = useForm<CreateProductDTO>({
         resolver: zodResolver(createProductDTO),
-        defaultValues: defaultValues || {
-            description: 'opis',
-            name: 'product-test',
-            vat_rate: VAT_RATE.CASE23,
-            measure_unit: MEASURE_UNIT.HOUR,
-            price: 32.2,
-        },
+        defaultValues: defaultValues || initialDefaultValue,
     });
 
     useEffect(() => {
-        form.reset(defaultValues ?? { vat_rate: VAT_RATE.CASE23 });
+        form.reset(defaultValues ?? initialDefaultValue);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [defaultValues, form.formState.isSubmitSuccessful]);
 
@@ -47,8 +47,9 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
             onSuccess?.(product);
             setOpen(false);
         } catch (error: unknown) {
-            console.error(error);
-            toast.error('Something went wrong');
+            const errorMessage = getErrorMessage(error);
+            console.error(errorMessage);
+            toast.error(errorMessage || 'Something went wrong');
         }
     }
 

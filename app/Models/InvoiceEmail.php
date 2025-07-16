@@ -9,7 +9,8 @@ class InvoiceEmail extends Model
 {
     protected $fillable = [
         'invoice_id',
-        'status'
+        'status',
+        'recipient'
     ];
 
     public function invoice(): BelongsTo

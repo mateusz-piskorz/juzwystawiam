@@ -10,6 +10,7 @@ import { CreateContractorDTO, createContractorDTO } from '@/lib/constants/zod/co
 import { upsertContractor } from '@/lib/data/contractors';
 import { Contractor } from '@/lib/types/contractor';
 import { cn } from '@/lib/utils/cn';
+import { getErrorMessage } from '@/lib/utils/error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -43,8 +44,9 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
             toast.success(`Contractor ${contractorId ? 'updated' : 'created'} successfully`);
             onSuccess?.(contractor);
         } catch (error: unknown) {
-            console.error(error);
-            toast.error('Something went wrong');
+            const errorMessage = getErrorMessage(error);
+            console.error(errorMessage);
+            toast.error(errorMessage || 'Something went wrong');
         }
         setOpen(false);
     }

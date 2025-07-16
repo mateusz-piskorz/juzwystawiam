@@ -63,7 +63,8 @@ class Invoice extends Model
 
         $invoice_email = InvoiceEmail::create([
             'invoice_id' => $this->id,
-            'status'     => EmailStatus::PENDING->value
+            'status'     => EmailStatus::PENDING->value,
+            'recipient'  => $recipient
         ]);
 
         dispatch(fn() => Mail::to($recipient)->send(new IssueAnInvoice($this, $invoice_email)))->afterResponse();
@@ -92,7 +93,7 @@ class Invoice extends Model
 
     public function generatePdf()
     {
-        $this->load("invoice_products", "invoice_contractors");
+        $this->load(["invoice_products", "invoice_contractors"]);
         $this['sale_date'] = date_format(date_create($this['sale_date']), "Y-m-d");
         [$buyer, $seller] = $this->getContractors();
 
@@ -101,7 +102,7 @@ class Invoice extends Model
 
     public function getContractors()
     {
-        $this->loadMissing("invoice_products", "invoice_contractors");
+        $this->loadMissing(["invoice_products", "invoice_contractors"]);
 
         return [
             collect($this['invoice_contractors'])->firstWhere('role', ContractorRole::BUYER) ?? null,

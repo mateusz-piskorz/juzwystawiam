@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\EmailStatus;
 use App\Models\Invoice;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -39,6 +40,13 @@ class InvoicePolicy
         if ($user->id !== $invoice->user_id) {
             return Response::deny('You do not own this invoice.');
         }
+
+        $invoice->loadMissing(["invoice_emails"]);
+
+        if (collect($invoice->invoice_emails)->firstWhere('status', EmailStatus::PENDING->value)) {
+            return Response::deny('Another email is still in status pending...');
+        };
+
         $limit = 3;
         if ((!$user->premium_days > 0) && $user->emailsSentThisMonth() >= $limit) {
             return Response::deny('Monthly limit of ' . $limit . ' emails reached. Please upgrade to premium to send more emails.');

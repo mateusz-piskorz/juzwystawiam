@@ -16,6 +16,7 @@ return new class() extends Migration
             $table->id();
             $table->foreignId('invoice_id')->constrained()->onDelete('cascade');
             $table->enum('status', array_column(EmailStatus::cases(), 'value'))->default(EmailStatus::PENDING->value);
+            $table->string('recipient');
             $table->timestamps();
         });
     }

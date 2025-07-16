@@ -21,7 +21,7 @@ type Props = {
 export const InvoiceForm = ({ defaultValues, invoiceId }: Props) => {
     const form = useForm<InvoiceSchema>({
         resolver: zodResolver(invoiceSchema),
-        defaultValues: defaultValues,
+        defaultValues,
     });
 
     async function onSubmit(body: InvoiceSchema) {
