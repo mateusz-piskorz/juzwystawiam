@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import { ReactSelect } from '@/components/common/react-select';
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
@@ -5,6 +7,8 @@ import { InvoiceSchema } from '@/lib/constants/zod/invoice';
 import { getProducts } from '@/lib/data/products';
 import { Product } from '@/lib/types/product';
 import { useQuery } from '@tanstack/react-query';
+import { debounce } from 'lodash';
+import { useCallback, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { CustomOption } from './custom-option';
 import { Option } from './types';
@@ -17,13 +21,14 @@ type Props<T extends InvoiceSchema> = {
 export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, idx }: Props<T>) => {
     const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
     const invoiceType = form.watch('type');
+    const [q, setQ] = useState('');
 
-    // todo: custom search from db
     const { data, isLoading } = useQuery({
-        queryKey: ['product-list'],
+        queryKey: ['product-list', q],
         queryFn: () =>
             getProducts({
                 limit: '100',
+                q,
             }).then((res) => res.data.map((p) => ({ ...p, label: p.name, value: p.id }))),
     });
 
@@ -39,6 +44,11 @@ export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, i
         }
     };
 
+    const debouncedSetQ = useCallback(
+        debounce((q) => setQ(q), 400),
+        [],
+    );
+
     return (
         <>
             <FormField
@@ -49,10 +59,12 @@ export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, i
                         <FormItem className="w-full min-w-[160px]">
                             <FormControl>
                                 <ReactSelect
+                                    filterOption={() => true}
                                     name={field.name}
                                     onInputChange={(value, { action }) => {
                                         if (action === 'input-change') {
                                             field.onChange(value);
+                                            debouncedSetQ(value);
                                         }
                                     }}
                                     inputValue={field.value}
