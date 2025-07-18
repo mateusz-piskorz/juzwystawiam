@@ -75,7 +75,12 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
                             render={({ field }) => (
                                 <FormItem className="w-full">
                                     <FormControl>
-                                        <Textarea placeholder="Product description" className="h-[123px] resize-none" {...field} />
+                                        <Textarea
+                                            placeholder="Product description"
+                                            className="h-[123px] resize-none"
+                                            {...field}
+                                            value={field.value || ''}
+                                        />
                                     </FormControl>
                                 </FormItem>
                             )}

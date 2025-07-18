@@ -17,9 +17,10 @@ type Props = {
         value: string;
         icon?: React.ComponentType<{ className?: string }>;
     }[];
+    singleChoice?: boolean;
 };
 
-export function DataTableFilter({ filterKey, title, options }: Props) {
+export function MultiOptionsFilter({ filterKey, title, options, singleChoice }: Props) {
     const searchParams = useSearchParams();
     const values = searchParams.getAll(filterKey);
 
@@ -69,12 +70,13 @@ export function DataTableFilter({ filterKey, title, options }: Props) {
 
                                 return (
                                     <CommandItem
+                                        value={option.value}
                                         key={option.value}
                                         onSelect={() => {
                                             if (isSelected) {
                                                 setValues(values.filter((v) => v !== option.value));
                                             } else {
-                                                setValues([...values, option.value]);
+                                                setValues(singleChoice ? [option.value] : [...values, option.value]);
                                             }
                                         }}
                                     >

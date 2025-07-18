@@ -4,6 +4,7 @@ namespace App\Support;
 
 use Carbon\Carbon;
 
+// todo: support classes refactor
 class PremiumDays
 {
     public static function daysLeft($expiresAt)
