@@ -16,7 +16,7 @@ type DeleteProduct = {
     productId: number;
 };
 
-export const getProducts = async (args: GetProducts) => {
+export const getProducts = async (args?: GetProducts) => {
     return await apiFetch<Pagination<Product>>(`${BASE_URL}?${args ? buildURLParams(args) : ''}`);
 };
 

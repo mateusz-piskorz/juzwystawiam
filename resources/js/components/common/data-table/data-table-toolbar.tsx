@@ -1,5 +1,6 @@
 'use client';
 
+import { MultiOptionsFilter } from '@/components/common/multi-options-filter';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
@@ -8,7 +9,6 @@ import { Table } from '@tanstack/react-table';
 import { debounce } from 'lodash';
 import { X } from 'lucide-react';
 import { ComponentProps } from 'react';
-import { DataTableFilter } from './data-table-filter';
 import { DataTableViewOptions } from './data-table-view-options';
 
 interface DataTableToolbarProps<TData> {
@@ -22,7 +22,7 @@ interface DataTableToolbarProps<TData> {
               label: string;
               href: string;
           };
-    filters: ComponentProps<typeof DataTableFilter>[];
+    filters: ComponentProps<typeof MultiOptionsFilter>[];
 }
 
 export function DataTableToolbar<TData>({ table, addNewRecord, filters }: DataTableToolbarProps<TData>) {
@@ -39,7 +39,7 @@ export function DataTableToolbar<TData>({ table, addNewRecord, filters }: DataTa
             />
             <div className="mr-auto flex items-center">
                 {filters.map((e) => (
-                    <DataTableFilter title={e.title} options={e.options} filterKey={e.filterKey} />
+                    <MultiOptionsFilter title={e.title} options={e.options} filterKey={e.filterKey} />
                 ))}
 
                 {searchParams.has(filters.map((e) => e.filterKey)) && (

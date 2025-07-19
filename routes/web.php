@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ContractorController;
 use App\Http\Controllers\Invoice\InvoiceController;
 use App\Http\Controllers\Invoice\InvoicePdfController;
@@ -22,6 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/invoices/{invoice}/pdf-download', [InvoicePdfController::class, 'pdfDownload']);
     Route::get('/dashboard/contractors', [ContractorController::class, 'index']);
     Route::get('/dashboard/products', [ProductController::class, 'index']);
+    Route::get('/dashboard/analytics', [AnalyticsController::class, 'index']);
     Route::get('/dashboard/premium-account', [PremiumAccountController::class, 'index'])->name("premium-account");
     Route::get('/dashboard/premium-account/buy', [PremiumAccountController::class, 'buy']);
 

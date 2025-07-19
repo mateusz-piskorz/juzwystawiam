@@ -6,7 +6,13 @@ import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
 import { invoiceColumns } from './invoice-columns';
 
-export const InvoiceTable = () => {
+type Props = {
+    displayDataTableToolbar?: boolean;
+    withFilters?: boolean;
+    displayPagination?: boolean;
+};
+
+export const InvoiceTable = ({ displayDataTableToolbar = true, withFilters = true, displayPagination = true }: Props) => {
     const searchParams = useSearchParams();
 
     const page = searchParams.get('page');
@@ -19,33 +25,38 @@ export const InvoiceTable = () => {
 
     const { data } = useQuery({
         queryKey: ['invoice-list', page, limit, q, order_column, order_direction, type, is_already_paid],
-        queryFn: () => getInvoices({ page, limit, q, order_column, order_direction, type, is_already_paid }),
+        queryFn: () => getInvoices(withFilters ? { page, limit, q, order_column, order_direction, type, is_already_paid } : { limit: '20' }),
     });
 
     return (
         <DataTable
-            totalPages={String(data?.last_page)}
+            displayDataTableToolbar={displayDataTableToolbar}
+            totalPages={displayPagination ? String(data?.last_page) : undefined}
             data={data?.data ?? []}
             columns={invoiceColumns}
             addNewRecord={{
                 label: 'Add new invoice',
                 href: '/dashboard/invoices/create',
             }}
-            filters={[
-                {
-                    filterKey: 'is_already_paid',
-                    title: 'Is already paid',
-                    options: [
-                        { label: 'true', value: 'true' },
-                        { label: 'false', value: 'false' },
-                    ],
-                },
-                {
-                    filterKey: 'type',
-                    title: 'Type',
-                    options: Object.values(INVOICE_TYPE).map((e) => ({ label: e, value: e })),
-                },
-            ]}
+            filters={
+                withFilters
+                    ? [
+                          {
+                              filterKey: 'is_already_paid',
+                              title: 'Is already paid',
+                              options: [
+                                  { label: 'true', value: 'true' },
+                                  { label: 'false', value: 'false' },
+                              ],
+                          },
+                          {
+                              filterKey: 'type',
+                              title: 'Type',
+                              options: Object.values(INVOICE_TYPE).map((e) => ({ label: e, value: e })),
+                          },
+                      ]
+                    : []
+            }
         />
     );
 };

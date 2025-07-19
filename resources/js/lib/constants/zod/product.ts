@@ -4,7 +4,7 @@ import { VAT_RATE } from '../enums/vat-rate';
 
 export const createProductDTO = z.object({
     name: z.string().nonempty().max(255),
-    description: z.string().optional(),
+    description: z.string().nullish(),
     price: z.coerce.number().min(0),
     measure_unit: z.nativeEnum(MEASURE_UNIT),
     vat_rate: z.nativeEnum(VAT_RATE),

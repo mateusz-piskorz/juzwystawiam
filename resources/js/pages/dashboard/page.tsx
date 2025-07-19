@@ -1,7 +1,12 @@
 import { DisplayPremiumDays } from '@/components/common/display-premium-days';
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
+import { MainAnalyticChart } from '@/components/dashboard/analytics/main-analytic-chart';
+import { InvoiceTable } from '@/components/dashboard/invoices/invoice-table';
+import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
+import { MainContentLayout } from '@/layouts/main-content-layout';
+import { usePremium } from '@/lib/hooks/use-premium';
 import { type BreadcrumbItem } from '@/lib/types';
+
 import { Head, Link } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -12,31 +17,34 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function DashboardPage() {
+    const { hasPremium } = usePremium();
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+
+            <MainContentLayout className="flex flex-col gap-14 md:gap-4 md:bg-transparent md:p-0 xl:gap-10">
+                <div className="flex flex-col gap-14 md:h-[300px] md:flex-row md:gap-4 xl:gap-10">
+                    <div className="md:bg-sidebar flex-2/3 space-y-12 md:space-y-8 md:overflow-y-auto md:rounded md:p-6">
+                        <h1 className="mb-5 text-xl">Latest invoices</h1>
+                        <InvoiceTable displayDataTableToolbar={false} withFilters={false} displayPagination={false} />
                     </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <div className="flex h-full flex-col items-center justify-center">
-                            <h2>Here</h2>
-                            <DisplayPremiumDays />
-                            <Link href="/dashboard/premium-account" className="text-blue-500 hover:underline">
-                                Buy Premium Account
-                            </Link>
-                        </div>
+
+                    <div className="md:bg-sidebar flex-1/3 space-y-2 md:rounded md:p-6">
+                        <h1 className="mb-2 text-xl">Premium Status</h1>
+                        <p>
+                            Your premium account is {hasPremium ? 'active' : 'inactive'}. You have <DisplayPremiumDays /> left.
+                        </p>
+                        <Link href="/dashboard/premium-account">
+                            <Button variant="secondary">Manage</Button>
+                        </Link>
                     </div>
                 </div>
-                <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+
+                <div className="md:bg-sidebar md:rounded md:p-6">
+                    <h1 className="mb-5 text-xl">Invoices</h1>
+                    <MainAnalyticChart withFilters={false} className="" />
                 </div>
-            </div>
+            </MainContentLayout>
         </AppLayout>
     );
 }

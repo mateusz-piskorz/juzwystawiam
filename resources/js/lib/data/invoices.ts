@@ -44,3 +44,17 @@ export const sendEmailIssuingInvoice = async ({ body, invoiceId }: { body: SendE
         body: JSON.stringify(body),
     });
 };
+
+type GetChartData = {
+    period?: QueryValue;
+    product?: QueryValue;
+};
+
+export const getChartData = async (args?: GetChartData) => {
+    return await apiFetch<{ month: string; paid: number; unpaid: number }[]>(
+        `${BASE_URL}/invoices-chart-data-this-year?${args ? buildURLParams(args) : ''}`,
+        {
+            method: 'GET',
+        },
+    );
+};
