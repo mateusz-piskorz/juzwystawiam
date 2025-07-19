@@ -33,7 +33,6 @@ class InvoiceController
     public function show(Invoice $invoice)
     {
         Gate::authorize('view', $invoice);
-
         return $invoice->toJson();
     }
 

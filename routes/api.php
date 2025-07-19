@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\ContractorController;
-use App\Http\Controllers\Api\DevController;
 use App\Http\Controllers\Api\Invoice\InvoiceChartDataController;
 use App\Http\Controllers\Api\Invoice\InvoiceController;
 use App\Http\Controllers\Api\Invoice\InvoiceEmailController;
@@ -15,11 +14,11 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    Route::get('/invoices/invoices-chart-data-this-year', [InvoiceChartDataController::class, 'chartDataThisYear']);
+    Route::get('/invoices/invoices-chart-data', [InvoiceChartDataController::class, 'invoiceChartData']);
     Route::apiResource('invoices', InvoiceController::class);
     Route::post('/invoices/{invoice}/send-email-issuing-invoice', [InvoiceEmailController::class, 'sendEmailIssuingInvoice']);
     Route::apiResource('contractors', ContractorController::class);
     Route::apiResource('products', ProductController::class);
     Route::get('premium-account/payments', [PremiumAccountController::class, 'getAllPremiumAccountPayments']);
-    Route::get('dev/dev1', [DevController::class, 'dev1']);
+
 });
