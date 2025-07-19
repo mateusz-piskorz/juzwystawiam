@@ -2,7 +2,7 @@ import ConfirmDialog from '@/components/common/confirm-dialog';
 import { Button } from '@/components/ui/button';
 import { deleteInvoice } from '@/lib/data/invoices';
 import { Nullable } from '@/lib/types/nullable';
-import { getErrorMessage } from '@/lib/utils/error-message';
+import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { Link, router } from '@inertiajs/react';
 import { useState } from 'react';
 import { toast } from 'sonner';

@@ -18,9 +18,9 @@ const breadcrumbs: BreadcrumbItem[] = [
 const AnalyticsPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Contractors" />
+            <Head title="Analytics" />
             <MainContentLayout>
-                <h1 className="mb-5 text-xl">Analytics</h1>
+                <h1 className="mb-5 text-xl">Invoices</h1>
                 <MainAnalyticChart />
             </MainContentLayout>
         </AppLayout>

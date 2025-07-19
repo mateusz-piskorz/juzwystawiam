@@ -1,6 +1,7 @@
 'use client';
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { cn } from '@/lib/utils/cn';
 import {
     ColumnDef,
     flexRender,
@@ -23,6 +24,7 @@ interface DataTableProps<TData, TValue> {
     addNewRecord?: ComponentProps<typeof DataTableToolbar>['addNewRecord'];
     totalPages?: string;
     displayDataTableToolbar?: boolean;
+    className?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -32,6 +34,7 @@ export function DataTable<TData, TValue>({
     addNewRecord,
     totalPages,
     displayDataTableToolbar = true,
+    className,
 }: DataTableProps<TData, TValue>) {
     const [rowSelection, setRowSelection] = useState({});
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -54,7 +57,7 @@ export function DataTable<TData, TValue>({
     });
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className={cn('flex flex-col gap-4', className)}>
             {displayDataTableToolbar && <DataTableToolbar table={table} filters={filters} addNewRecord={addNewRecord} />}
             <div className="rounded border">
                 <Table>

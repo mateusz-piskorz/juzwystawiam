@@ -10,7 +10,7 @@ import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
 import { createProductDTO, CreateProductDTO } from '@/lib/constants/zod/product';
 import { upsertProduct } from '@/lib/data/products';
 import { Product } from '@/lib/types/product';
-import { getErrorMessage } from '@/lib/utils/error-message';
+import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';

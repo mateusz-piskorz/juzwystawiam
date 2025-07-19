@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { InvoiceSchema, invoiceSchema } from '@/lib/constants/zod/invoice';
 import { upsertInvoice } from '@/lib/data/invoices';
-import { getErrorMessage } from '@/lib/utils/error-message';
+import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
