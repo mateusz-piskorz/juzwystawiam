@@ -1,5 +1,3 @@
-/* global RequestInit */
-
 export const apiFetch = async <T>(url: string, options: RequestInit = {}) => {
     let xsrfToken = decodeURIComponent(
         document.cookie

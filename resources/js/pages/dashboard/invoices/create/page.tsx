@@ -22,7 +22,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const CreateInvoicePage = () => {
     const [invoiceType, setInvoiceType] = useState(INVOICE_TYPE.VAT);
-    console.log(invoiceType);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Create invoice" />
