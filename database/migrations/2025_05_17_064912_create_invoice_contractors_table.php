@@ -16,7 +16,7 @@ return new class() extends Migration
         Schema::create('invoice_contractors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('invoice_id')->constrained()->onDelete('cascade');
-            $table->foreignId('contractor_id')->constrained()->nullOnDelete();
+            $table->foreignId('contractor_id')->nullable()->constrained()->nullOnDelete();
             $table->enum('role', array_column(ContractorRole::cases(), 'value'));
             $table->enum('type_of_business', array_column(TypeOfBusiness::cases(), 'value'));
             $table->boolean('is_own_company')->default(false);

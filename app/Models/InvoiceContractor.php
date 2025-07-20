@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class InvoiceContractor extends Model
 {
-
     protected $fillable = [
         'invoice_id',
         'contractor_id',
@@ -32,5 +31,4 @@ class InvoiceContractor extends Model
     {
         return $this->belongsTo(Invoice::class);
     }
-
 }

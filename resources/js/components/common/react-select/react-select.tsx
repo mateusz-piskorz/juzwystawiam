@@ -19,6 +19,7 @@ export const ReactSelect = (props: Props) => {
             {...props}
             menuPortalTarget={document.body}
             placeholder={label}
+            //todo: add styled noOptionsMessage component
             components={{ Placeholder, DropdownIndicator, SingleValue, Input: Input, ...props.components }}
             styles={{ ...STYLES, ...props.styles }}
             theme={THEME}

@@ -31,6 +31,7 @@ export const ProductsSection = <T extends InvoiceSchema>({ form: formProps }: Pr
                 <h1 className="px-4 text-lg md:px-0">Products</h1>
                 <div className="flex flex-col gap-4 md:gap-4 md:overflow-x-auto">
                     {fields.map((invoiceItem, idx) => {
+                        // todo: refactor total calculation
                         const priceW = form.watch(`invoice_products.${idx}.price`);
                         const quantityW = form.watch(`invoice_products.${idx}.quantity`);
                         const discountW = form.watch(`invoice_products.${idx}.discount`) || 0;

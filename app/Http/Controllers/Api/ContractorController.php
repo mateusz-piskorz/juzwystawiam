@@ -29,7 +29,6 @@ class ContractorController
     public function show(Contractor $contractor)
     {
         Gate::authorize('view', $contractor);
-
         return $contractor->toJson();
     }
 

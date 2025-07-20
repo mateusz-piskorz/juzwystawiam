@@ -51,10 +51,7 @@ type GetChartData = {
 };
 
 export const getChartData = async (args?: GetChartData) => {
-    return await apiFetch<{ month: string; paid: number; unpaid: number }[]>(
-        `${BASE_URL}/invoices-chart-data-this-year?${args ? buildURLParams(args) : ''}`,
-        {
-            method: 'GET',
-        },
-    );
+    return await apiFetch<{ month: string; paid: number; unpaid: number }[]>(`${BASE_URL}/invoices-chart-data?${args ? buildURLParams(args) : ''}`, {
+        method: 'GET',
+    });
 };

@@ -1,3 +1,4 @@
+import ConfirmDialog from '@/components/common/confirm-dialog';
 import { DataTable } from '@/components/common/data-table';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
@@ -13,6 +14,7 @@ import { UpsertProductDialog } from './upsert-product-dialog';
 export const ProductTable = () => {
     const searchParams = useSearchParams();
     const [open, setOpen] = useState(false);
+    const [openConfirm, setOpenConfirm] = useState(false);
     const [selectedProductId, setSelectedProductId] = useState<number | undefined>(undefined);
 
     const page = searchParams.get('page');
@@ -28,17 +30,21 @@ export const ProductTable = () => {
         queryFn: () => getProducts({ page, limit, q, order_column, order_direction, vat_rate, measure_unit }),
     });
 
-    //todo: handleDelete opens confirmation dialog
+    const handleDeleteProduct = async (productId: number) => {
+        try {
+            await deleteProduct({ productId });
+            toast.success(`Product deleted successfully`);
+            refetch();
+            setOpenConfirm(false);
+        } catch (err) {
+            toast.error(typeof err === 'string' ? err : 'Something went wrong');
+        }
+    };
+
     const columns = getProductColumns({
-        handleDeleteProduct: async (productId: number) => {
-            try {
-                await deleteProduct({ productId });
-                toast.success(`Product deleted successfully`);
-                refetch();
-                setOpen(false);
-            } catch (err) {
-                toast.error(typeof err === 'string' ? err : 'Something went wrong');
-            }
+        handleDeleteProduct: (productId: number) => {
+            setSelectedProductId(productId);
+            setOpenConfirm(true);
         },
         handleEditProduct: async (productId: number) => {
             const product = data?.data.find((p) => p.id === productId);
@@ -57,6 +63,18 @@ export const ProductTable = () => {
                 setOpen={setOpen}
                 defaultValues={data?.data.find((e) => e.id === selectedProductId)}
                 productId={selectedProductId}
+            />
+
+            <ConfirmDialog
+                open={openConfirm}
+                setOpen={setOpenConfirm}
+                onContinue={async () => {
+                    if (selectedProductId) {
+                        await handleDeleteProduct(selectedProductId);
+                    }
+                }}
+                title="Are you sure you want to remove this product?"
+                description="This action cannot be undone. Product will be permanently deleted."
             />
 
             <DataTable

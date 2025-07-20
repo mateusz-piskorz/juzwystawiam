@@ -50,5 +50,4 @@ class ProductController
         $product->delete();
         return response()->json(['message' => 'Product deleted']);
     }
-
 }

@@ -26,5 +26,4 @@ class InvoiceProduct extends Model
     {
         return $this->belongsTo(Invoice::class);
     }
-
 }

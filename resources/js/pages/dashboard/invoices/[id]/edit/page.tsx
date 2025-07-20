@@ -52,10 +52,10 @@ const EditInvoicePage = () => {
                     />
                 </div>
                 <InvoiceForm
+                    type={invoiceType}
                     // @ts-ignore Warning: This is a TypeScript quirk! Don't look.
                     defaultValues={{
                         ...invoice,
-                        type: invoiceType,
                         issue_date: new Date(invoice.issue_date),
                         sale_date: new Date(invoice.sale_date),
                         due_date: new Date(invoice.due_date),

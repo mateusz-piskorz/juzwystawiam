@@ -1,3 +1,4 @@
+import ConfirmDialog from '@/components/common/confirm-dialog';
 import { DataTable } from '@/components/common/data-table';
 import { TYPE_OF_BUSINESS } from '@/lib/constants/enums/type-of-business';
 import { deleteContractor, getContractors } from '@/lib/data/contractors';
@@ -12,6 +13,7 @@ import { UpsertContractorDialog } from './upsert-contractor-dialog';
 export const ContractorTable = () => {
     const searchParams = useSearchParams();
     const [open, setOpen] = useState(false);
+    const [openConfirm, setOpenConfirm] = useState(false);
     const [selectedContractorId, setSelectedContractorId] = useState<number | undefined>(undefined);
 
     const page = searchParams.get('page');
@@ -27,16 +29,21 @@ export const ContractorTable = () => {
         queryFn: () => getContractors({ page, limit, q, order_column, order_direction, is_own_company, type_of_business }),
     });
 
+    const handleDeleteContractor = async (contractorId: number) => {
+        try {
+            await deleteContractor({ contractorId });
+            toast.success('Contractor deleted successfully');
+            refetch();
+            setOpenConfirm(false);
+        } catch (err) {
+            toast.error(typeof err === 'string' ? err : 'Something went wrong');
+        }
+    };
+
     const columns = getContractorColumns({
-        handleDeleteContractor: async (contractorId: number) => {
-            try {
-                await deleteContractor({ contractorId });
-                toast.success('Contractor deleted successfully');
-                refetch();
-                setOpen(false);
-            } catch (err) {
-                toast.error(typeof err === 'string' ? err : 'Something went wrong');
-            }
+        handleDeleteContractor: (contractorId: number) => {
+            setSelectedContractorId(contractorId);
+            setOpenConfirm(true);
         },
         handleEditContractor: (contractorId: number) => {
             const contractor = data?.data.find((p) => p.id === contractorId);
@@ -55,6 +62,18 @@ export const ContractorTable = () => {
                 setOpen={setOpen}
                 defaultValues={data?.data.find((e) => e.id === selectedContractorId)}
                 contractorId={selectedContractorId}
+            />
+
+            <ConfirmDialog
+                open={openConfirm}
+                setOpen={setOpenConfirm}
+                onContinue={async () => {
+                    if (selectedContractorId) {
+                        await handleDeleteContractor(selectedContractorId);
+                    }
+                }}
+                title="Are you sure you want to remove this Contractor?"
+                description="This action cannot be undone. Contractor will be permanently deleted."
             />
 
             <DataTable

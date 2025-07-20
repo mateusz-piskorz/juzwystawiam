@@ -1,5 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
+import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { InvoiceSchema, invoiceSchema } from '@/lib/constants/zod/invoice';
 import { upsertInvoice } from '@/lib/data/invoices';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
@@ -16,9 +19,10 @@ import { TopSection } from './common/sections/top-section';
 type Props = {
     defaultValues?: Partial<InvoiceSchema>;
     invoiceId?: number;
+    type: INVOICE_TYPE;
 };
 
-export const InvoiceForm = ({ defaultValues, invoiceId }: Props) => {
+export const InvoiceForm = ({ defaultValues, invoiceId, type }: Props) => {
     const form = useForm<InvoiceSchema>({
         resolver: zodResolver(invoiceSchema),
         defaultValues,
@@ -40,6 +44,10 @@ export const InvoiceForm = ({ defaultValues, invoiceId }: Props) => {
     const { watch, getValues } = form;
 
     useEffect(() => {
+        form.setValue('type', type);
+    }, [type]);
+
+    useEffect(() => {
         const { unsubscribe } = watch((_, { name, type }) => {
             const value = getValues();
 
@@ -47,6 +55,7 @@ export const InvoiceForm = ({ defaultValues, invoiceId }: Props) => {
                 if (name.endsWith('quantity') || name.endsWith('price') || name.endsWith('discount') || name.endsWith('vat_rate')) {
                     const items = value.invoice_products || [];
 
+                    //todo: refactor total calculation
                     const total = items.reduce((sum, item) => {
                         if (!item) return sum;
                         const price = Number(item.price) || 0;

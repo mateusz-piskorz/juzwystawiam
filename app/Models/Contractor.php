@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Contractor extends Model
 {
-
     protected $fillable = [
         'user_id',
         'type_of_business',
@@ -29,5 +28,4 @@ class Contractor extends Model
     {
         return $this->belongsTo(User::class);
     }
-
 }
