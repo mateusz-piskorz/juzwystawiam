@@ -56,6 +56,7 @@ export const InvoiceForm = ({ defaultValues, invoiceId, type }: Props) => {
                     const items = value.invoice_products || [];
 
                     //todo: refactor total calculation
+                    //todo: it returns NAN when type=NO_VAT
                     const total = items.reduce((sum, item) => {
                         if (!item) return sum;
                         const price = Number(item.price) || 0;

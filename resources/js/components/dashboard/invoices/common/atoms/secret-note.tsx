@@ -13,6 +13,7 @@ type Props = {
     className?: string;
 };
 
+// todo: tooltip is not working on mobile
 export const SecretNote = ({ form, className }: Props) => {
     const { hasPremium } = usePremium();
 

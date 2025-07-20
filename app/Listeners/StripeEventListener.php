@@ -20,7 +20,7 @@ class StripeEventListener
                 if ($user) {
                     $now = Carbon::now();
                     $currentExpiry = $user->premium_days > 0 ? Carbon::parse($user->premium_access_expires_at) : $now;
-                    $newExpiry = $currentExpiry->addDays($charge['metadata']['premium_days']);
+                    $newExpiry = $currentExpiry->addDays((int) $charge['metadata']['premium_days']);
                     $user->premium_access_expires_at = $newExpiry;
                     $user->save();
                 }

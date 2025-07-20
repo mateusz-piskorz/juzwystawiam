@@ -34,7 +34,7 @@ export const InvoiceActionsSection = ({ invoiceId, buyerEmail }: Props) => {
         <>
             <div>
                 <h1 className="mb-2 text-xl font-medium">Actions</h1>
-                <div className="space-x-4">
+                <div className="space-y-4 space-x-4">
                     <Button variant="secondary">
                         <a href={`/dashboard/invoices/${invoiceId}/pdf-preview`} target="_blank">
                             Preview
