@@ -24,9 +24,7 @@ export const createContractorDTO = z
     })
     .refine(
         (data) => {
-            const nipIsMissing = !data.nip || data.nip === '';
-
-            if (nipIsMissing && (data.type_of_business === SELF_EMPLOYED || data.type_of_business === OTHER_BUSINESS)) {
+            if (data.type_of_business === SELF_EMPLOYED || data.type_of_business === OTHER_BUSINESS) {
                 return data.nip?.length === 10;
             }
 

@@ -12,7 +12,6 @@ use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
 class IssueAnInvoice extends Mailable implements ShouldQueue
 {
@@ -20,7 +19,7 @@ class IssueAnInvoice extends Mailable implements ShouldQueue
 
     public function __construct(public Invoice $invoice, public InvoiceEmail $invoice_email)
     {
-        Log::info("here123");
+
     }
 
     public function failed(): void
