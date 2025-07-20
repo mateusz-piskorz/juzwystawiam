@@ -4,7 +4,7 @@ import { NavUser } from '@/components/default/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/lib/types';
 import { Link } from '@inertiajs/react';
-import { AirVentIcon, BookOpen, ChartNoAxesCombined, Crown, Folder, LayoutGrid, PenTool, RadioReceiver, Users2 } from 'lucide-react';
+import { AirVentIcon, BookOpen, ChartNoAxesCombined, Crown, Folder, LayoutGrid, RadioReceiver, Users2 } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -37,11 +37,6 @@ const mainNavItems: NavItem[] = [
         title: 'Premium Account',
         href: '/dashboard/premium-account',
         icon: Crown,
-    },
-    {
-        title: 'Dev',
-        href: '/dashboard/dev',
-        icon: PenTool,
     },
 ];
 

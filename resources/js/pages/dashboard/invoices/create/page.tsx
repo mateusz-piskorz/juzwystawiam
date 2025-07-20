@@ -29,6 +29,7 @@ const CreateInvoicePage = () => {
             <MainContentLayout className="p-0 md:p-0">
                 <div className="flex items-center gap-2 px-4 pt-4 md:px-6 md:pt-6">
                     <p className="hidden sm:inline-block">Invoice type</p>
+
                     <Select
                         defaultValue={invoiceType}
                         label="Invoice type"
@@ -38,6 +39,7 @@ const CreateInvoicePage = () => {
                 </div>
 
                 <InvoiceForm
+                    type={invoiceType}
                     defaultValues={{
                         type: invoiceType,
                         is_already_paid: true,

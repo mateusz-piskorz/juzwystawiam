@@ -83,10 +83,7 @@ export const ContractorsSelectField = <T extends InvoiceSchema>({ form: formProp
                                     isLoading={isLoading}
                                     onChange={(val) => {
                                         const data = val as Option;
-                                        if (data.__isNew__) {
-                                            setDefaultValues({ company_name: data.value });
-                                            setOpen(true);
-                                        } else {
+                                        if (!data.__isNew__) {
                                             field.onChange(data.id);
                                         }
                                     }}
@@ -97,6 +94,10 @@ export const ContractorsSelectField = <T extends InvoiceSchema>({ form: formProp
                                     }}
                                     value={data?.find((contractor) => contractor.id === selectedContractorId)}
                                     filterOption={() => true}
+                                    onCreateOption={(value) => {
+                                        setDefaultValues({ company_name: value });
+                                        setOpen(true);
+                                    }}
                                 />
                             </FormControl>
                         </FormItem>

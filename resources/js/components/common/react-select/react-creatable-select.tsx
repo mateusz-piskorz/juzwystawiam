@@ -14,6 +14,7 @@ export const ReactCreatableSelect = (props: Props) => {
             {...props}
             menuPortalTarget={document.body}
             placeholder={label}
+            //todo: add styled noOptionsMessage component
             components={{ Placeholder, DropdownIndicator, SingleValue: (props) => SingleValue(props, label), ...props.components }}
             styles={{ ...STYLES, ...props.styles }}
             theme={THEME}

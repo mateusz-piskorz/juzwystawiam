@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use App\Enums\EmailStatus;
 use App\Models\Invoice;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Access\Response;
 
 class InvoicePolicy
@@ -43,11 +43,15 @@ class InvoicePolicy
 
         $invoice->loadMissing(["invoice_emails"]);
 
-        if (collect($invoice->invoice_emails)->firstWhere('status', EmailStatus::PENDING->value)) {
-            return Response::deny('Another email is still in status pending...');
-        };
+        if (
+            collect($invoice->invoice_emails)->firstWhere(function ($email) {
+                return Carbon::parse($email->created_at)->gt(now()->subMinutes(2));
+            })
+        ) {
+            return Response::deny('You need to wait 2 minutes before sending another email');
+        }
 
-        $limit = 3;
+        $limit = 10;
         if ((!$user->premium_days > 0) && $user->emailsSentThisMonth() >= $limit) {
             return Response::deny('Monthly limit of ' . $limit . ' emails reached. Please upgrade to premium to send more emails.');
         }
