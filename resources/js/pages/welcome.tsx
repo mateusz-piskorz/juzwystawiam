@@ -2,7 +2,9 @@ import { usePage } from '@/lib/hooks/use-page';
 import { Head, Link } from '@inertiajs/react';
 
 export default function Welcome() {
-    const { auth } = usePage().props;
+    const props = usePage().props;
+    const { auth } = props;
+    console.log(props);
 
     return (
         <>
