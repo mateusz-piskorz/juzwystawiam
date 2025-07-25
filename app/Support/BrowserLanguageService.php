@@ -8,15 +8,17 @@ class BrowserLanguageService
 {
     public function detectLanguage(Request $request)
     {
-        // todo: include cookie preference
-        $preferredLanguages = $request->getLanguages();
+        $locale = $request->cookie('locale') ?? 'system';
 
-        $browserLanguage = reset($preferredLanguages);
+        $languageCode = $locale === 'system' ? 'en' : $locale;
 
-        if (preg_match('/^([a-z]+)/i', $browserLanguage, $matches)) {
-            $languageCode = strtolower($matches[1]);
+        if ($locale === 'system') {
+            $browserLanguages = $request->getLanguages();
+            if (preg_match('/^([a-z]+)/i', reset($browserLanguages), $matches)) {
+                $languageCode = strtolower($matches[1]);
+            }
+        };
 
-            return $languageCode;
-        }
+        return ['langCode' => $languageCode, 'selectedLocale' => $locale];
     }
 }

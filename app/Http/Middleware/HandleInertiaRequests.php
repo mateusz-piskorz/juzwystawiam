@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Support\LocaleDataService;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
 
@@ -40,23 +42,27 @@ class HandleInertiaRequests extends Middleware
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
         return [
-            ...parent::share($request),
-            'name' => config('app.name'),
-            'quote' => ['message' => trim($message), 'author' => trim($author)],
-            'auth' => [
-                'user' => $request->user(),
+             ...parent::share($request),
+            'name'        => config('app.name'),
+            'quote'       => ['message' => trim($message), 'author' => trim($author)],
+            'auth'        => [
+                'user' => $request->user()
                 // 'permissions' => [
                 //     'post' => [
                 //         'create' => $request->user()->can('create', Post::class),
                 //     ],
                 // ],
             ],
-            'ziggy' => fn (): array => [
-                ...(new Ziggy())->toArray(),
+            'ziggy'       => fn(): array      => [
+                 ...(new Ziggy())->toArray(),
                 'location' => $request->url(),
-                'query' => $request->query()
+                'query'    => $request->query()
             ],
-            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'localeData'  => [
+                'languageCode' => App::currentLocale(),
+                'data'         => LocaleDataService::getLocaleData()
+            ]
         ];
     }
 }

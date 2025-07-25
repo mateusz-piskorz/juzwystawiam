@@ -1,3 +1,9 @@
 {
-    "welcome": "Witaj w naszej aplikacji"
+    "welcome": "Witaj w naszej aplikacji",
+    "enum": {
+        "LOCALE_CODE": {
+            "pl": "Polski",
+            "en": "Angielski"
+        }
+    }
 }

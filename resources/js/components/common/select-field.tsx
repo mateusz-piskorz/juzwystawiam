@@ -32,6 +32,7 @@ export const SelectField = <T extends FieldValues>({ form, className, selectOpti
                         className,
                     )}
                 >
+                    {/* todo: use Select component from components/common */}
                     <Select onValueChange={field.onChange} defaultValue={field.value ?? ''}>
                         <FormControl>
                             <SelectTrigger className={cn('border-sidebar-ring relative h-full cursor-pointer border-none')}>
