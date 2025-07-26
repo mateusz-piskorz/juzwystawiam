@@ -8,6 +8,8 @@ class BrowserLanguageService
 {
     public function detectLanguage(Request $request)
     {
+        // todo: we need an enum of supported locales and default to en if locale is not supported
+
         $locale = $request->cookie('locale') ?? 'system';
 
         $languageCode = $locale === 'system' ? 'en' : $locale;

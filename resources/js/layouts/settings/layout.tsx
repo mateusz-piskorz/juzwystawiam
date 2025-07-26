@@ -1,40 +1,43 @@
-import Heading from '@/components/default/heading';
+import { Heading } from '@/components/common/heading';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { usePage } from '@/lib/hooks/use-page';
 import { type NavItem } from '@/lib/types';
 import { cn } from '@/lib/utils/cn';
 import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 
-const sidebarNavItems: NavItem[] = [
-    {
-        title: 'Profile',
-        href: '/dashboard/settings/profile',
-        icon: null,
-    },
-    {
-        title: 'Password',
-        href: '/dashboard/settings/password',
-        icon: null,
-    },
-    {
-        title: 'Appearance',
-        href: '/dashboard/settings/appearance',
-        icon: null,
-    },
-];
-
 export default function SettingsLayout({ children }: PropsWithChildren) {
+    const locale = usePage().props.localeData.data.dashboard.settings.index;
+
     // When server-side rendering, we only render the layout on the client...
     if (typeof window === 'undefined') {
         return null;
     }
 
+    const sidebarNavItems: NavItem[] = [
+        {
+            title: locale.Profile,
+            href: '/dashboard/settings/profile',
+            icon: null,
+        },
+        {
+            title: locale.Password,
+            href: '/dashboard/settings/password',
+            icon: null,
+        },
+        {
+            title: locale.Appearance,
+            href: '/dashboard/settings/appearance',
+            icon: null,
+        },
+    ];
+
     const currentPath = window.location.pathname;
 
     return (
         <div className="px-4 py-6">
-            <Heading title="Settings" description="Manage your profile and account settings" />
+            <Heading title={locale.Settings} description={locale['Manage your profile and account settings']} className="mb-8" />
 
             <div className="flex flex-col space-y-8 lg:flex-row lg:space-y-0 lg:space-x-12">
                 <aside className="w-full max-w-xl lg:w-48">

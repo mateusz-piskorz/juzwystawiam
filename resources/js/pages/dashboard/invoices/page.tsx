@@ -1,3 +1,4 @@
+import { Heading } from '@/components/common/heading';
 import { InvoiceTable } from '@/components/dashboard/invoices/invoice-table';
 import AppLayout from '@/layouts/app-layout';
 import { MainContentLayout } from '@/layouts/main-content-layout';
@@ -20,7 +21,7 @@ const InvoiceListPage = () => {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Invoices" />
             <MainContentLayout>
-                <h1 className="mb-5 text-xl">Invoices</h1>
+                <Heading title="Invoices" description="Manage your invoices and see details." />
                 <InvoiceTable />
             </MainContentLayout>
         </AppLayout>

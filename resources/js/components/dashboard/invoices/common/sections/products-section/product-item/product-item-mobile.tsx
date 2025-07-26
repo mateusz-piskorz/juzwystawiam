@@ -1,6 +1,6 @@
-import { CurrencyField } from '@/components/common/currency-field';
-import { InputField } from '@/components/common/input-field';
-import { SelectField } from '@/components/common/select-field';
+import { CurrencyField } from '@/components/common/form-fields/currency-field';
+import { InputField } from '@/components/common/form-fields/input-field';
+import { SelectField } from '@/components/common/form-fields/select-field';
 import { Separator } from '@/components/ui/separator';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';

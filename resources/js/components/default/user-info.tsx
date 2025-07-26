@@ -1,9 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/lib/hooks/use-initials';
-import { type User } from '@/lib/types';
+import { usePage } from '@/lib/hooks/use-page';
 
-export function UserInfo({ user, showEmail = false }: { user: User; showEmail?: boolean }) {
+export function UserInfo({ showEmail = false }: { showEmail?: boolean }) {
     const getInitials = useInitials();
+    const { user } = usePage().props.auth;
 
     return (
         <>

@@ -2,7 +2,7 @@ import { FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/
 import { TypedFieldPath } from '@/lib/types/typed-field-path';
 import { cn } from '@/lib/utils/cn';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
-import { Switch } from '../ui/switch';
+import { Switch } from '../../ui/switch';
 
 type FieldType = boolean;
 

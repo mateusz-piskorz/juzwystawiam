@@ -1,4 +1,5 @@
 import { DisplayPremiumDays } from '@/components/common/display-premium-days';
+import { Heading } from '@/components/common/heading';
 import { BenefitsSection } from '@/components/dashboard/premium-account/benefits-section';
 import { BuyPremiumSection } from '@/components/dashboard/premium-account/buy-premium-section';
 import { PaymentsTable } from '@/components/dashboard/premium-account/payments-table';
@@ -41,10 +42,14 @@ const PremiumAccountPage = () => {
             <MainContentLayout className="flex flex-col gap-5 md:gap-10 md:bg-transparent md:p-0">
                 <div className="md:bg-sidebar space-y-12 md:space-y-8 md:rounded md:p-6">
                     <div>
-                        <h1 className="mb-2 text-xl font-medium">Premium Status</h1>
-                        <p>
-                            Your premium account is {hasPremium ? 'active' : 'inactive'}. You have <DisplayPremiumDays /> left.
-                        </p>
+                        <Heading
+                            title="Premium Status"
+                            description={
+                                <p className="text-muted-foreground">
+                                    Your premium account is {hasPremium ? 'active' : 'inactive'}. You have <DisplayPremiumDays /> left.
+                                </p>
+                            }
+                        />
                     </div>
                     <BenefitsSection />
                     <BuyPremiumSection />

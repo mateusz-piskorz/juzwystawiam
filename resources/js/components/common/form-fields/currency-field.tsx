@@ -3,7 +3,7 @@ import { TypedFieldPath } from '@/lib/types/typed-field-path';
 import { cn } from '@/lib/utils/cn';
 import { useEffect, useReducer } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
-import { Input } from '../ui/input';
+import { Input } from '../../ui/input';
 
 type FieldType = number;
 

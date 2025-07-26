@@ -7,11 +7,11 @@ export const LocaleSelectInput = () => {
 
     return (
         <div>
-            <h4 className="mb-2">Locale</h4>
+            <h4 className="mb-2">{localeData.data.dashboard.settings.appearance.Language}</h4>
             <Select
                 defaultValue={localeData.languageCode}
                 onValueChange={(val) => setPreferredLocale(val)}
-                options={Object.values(LOCALE_CODE).map((val) => ({ label: val, value: val }))}
+                options={Object.values(LOCALE_CODE).map((val) => ({ label: localeData.data.enum.LOCALE_CODE[val], value: val }))}
             />
         </div>
     );

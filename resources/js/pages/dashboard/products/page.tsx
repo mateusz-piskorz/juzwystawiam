@@ -1,3 +1,4 @@
+import { Heading } from '@/components/common/heading';
 import { ProductTable } from '@/components/dashboard/products/product-table';
 import AppLayout from '@/layouts/app-layout';
 import { MainContentLayout } from '@/layouts/main-content-layout';
@@ -18,9 +19,9 @@ const breadcrumbs: BreadcrumbItem[] = [
 const ProductsPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Contractors" />
+            <Head title="Products" />
             <MainContentLayout>
-                <h1 className="mb-5 text-xl">Products</h1>
+                <Heading title="Products" description="Manage your products and see details." />
                 <ProductTable />
             </MainContentLayout>
         </AppLayout>

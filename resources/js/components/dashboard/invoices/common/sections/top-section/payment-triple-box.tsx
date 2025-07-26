@@ -1,5 +1,5 @@
-import { SelectField } from '@/components/common/select-field';
-import { SwitchField } from '@/components/common/switch-field';
+import { SelectField } from '@/components/common/form-fields/select-field';
+import { SwitchField } from '@/components/common/form-fields/switch-field';
 import { Separator } from '@/components/ui/separator';
 import { CURRENCIES } from '@/lib/constants/currencies';
 import { PAYMENT_METHOD } from '@/lib/constants/enums/payment-method';

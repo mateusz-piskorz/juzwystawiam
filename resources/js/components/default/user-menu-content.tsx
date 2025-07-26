@@ -1,15 +1,10 @@
 import { UserInfo } from '@/components/default/user-info';
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { useMobileNavigation } from '@/lib/hooks/use-mobile-navigation';
-import { type User } from '@/lib/types';
 import { Link, router } from '@inertiajs/react';
 import { LogOut, Settings } from 'lucide-react';
 
-interface UserMenuContentProps {
-    user: User;
-}
-
-export function UserMenuContent({ user }: UserMenuContentProps) {
+export function UserMenuContent() {
     const cleanup = useMobileNavigation();
 
     const handleLogout = () => {
@@ -21,7 +16,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
         <>
             <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                    <UserInfo user={user} showEmail={true} />
+                    <UserInfo showEmail={true} />
                 </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />

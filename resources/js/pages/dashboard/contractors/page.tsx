@@ -1,3 +1,4 @@
+import { Heading } from '@/components/common/heading';
 import { ContractorTable } from '@/components/dashboard/contractors/contractor-table';
 import AppLayout from '@/layouts/app-layout';
 import { MainContentLayout } from '@/layouts/main-content-layout';
@@ -20,7 +21,7 @@ const ContractorsPage = () => {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Contractors" />
             <MainContentLayout>
-                <h1 className="mb-5 text-xl">Contractors</h1>
+                <Heading title="Contractors" description="Manage your contractors and their details." />
                 <ContractorTable />
             </MainContentLayout>
         </AppLayout>

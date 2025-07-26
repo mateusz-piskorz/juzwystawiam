@@ -61,6 +61,7 @@ class HandleInertiaRequests extends Middleware
             'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'localeData'  => [
                 'languageCode' => App::currentLocale(),
+                // todo: Consider injecting only the necessary locale data into specific pages instead of sharing all locale data globally. This can help reduce unnecessary data transfer.
                 'data'         => LocaleDataService::getLocaleData()
             ]
         ];

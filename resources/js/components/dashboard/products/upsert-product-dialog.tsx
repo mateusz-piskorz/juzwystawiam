@@ -1,6 +1,6 @@
-import { CurrencyField } from '@/components/common/currency-field';
-import { InputField } from '@/components/common/input-field';
-import { SelectField } from '@/components/common/select-field';
+import { CurrencyField } from '@/components/common/form-fields/currency-field';
+import { InputField } from '@/components/common/form-fields/input-field';
+import { SelectField } from '@/components/common/form-fields/select-field';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
