@@ -1,0 +1,211 @@
+{
+    "enum": {
+        "LOCALE_CODE": {
+            "pl": "Polski",
+            "en": "Angielski",
+            "system": "System"
+        },
+        "THEME": {
+            "system": "System",
+            "light": "Jasny",
+            "dark": "Ciemny"
+        },
+        "CONTRACTOR_ROLE": {
+            "BUYER": "Kupujący",
+            "SELLER": "Sprzedający"
+        },
+        "EMAIL_STATUS": {
+            "PENDING": "Oczekujące",
+            "SENT": "Wysłane",
+            "FAILED": "Nieudane"
+        },
+        "INVOICE_TYPE": {
+            "VAT": "VAT",
+            "NO_VAT": "Bez VAT"
+        },
+        "MEASURE_UNIT": {
+            "PCS": "szt.",
+            "HOUR": "godzina",
+            "SERVICE": "usługa"
+        },
+        "PAYMENT_METHOD": {
+            "BANK_TRANSFER": "Przelew bankowy",
+            "CASH": "Gotówka",
+            "CARD": "Karta",
+            "BARTER": "Barter",
+            "CHEQUE": "Czek",
+            "COD": "Pobranie",
+            "OTHER": "Inne",
+            "COMPENSATION": "Kompensata",
+            "LETTER_OF_CREDIT": "Akredytywa",
+            "PAYPAL": "PayPal",
+            "PAYU": "PayU",
+            "PROMISSORY_NOTE": "Weksel",
+            "PREPAYMENT": "Przedpłata",
+            "INSTALLMENT_SALE": "Sprzedaż ratalna",
+            "TPAY": "Tpay",
+            "PRZELEWY24": "Przelewy24",
+            "DOTPAY": "Dotpay"
+        },
+        "TYPE_OF_BUSINESS": {
+            "PRIVATE_PERSON": "Osoba prywatna",
+            "SELF_EMPLOYED": "Samozatrudniony",
+            "OTHER_BUSINESS": "Inna działalność"
+        }
+    },
+
+    "common": {
+        "Saved": "Zapisano",
+        "Cancel": "Anuluj",
+        "Manage": "Zarządzaj",
+        "Invoices": "Faktury",
+        "Dashboard": "Panel",
+
+        "premium-status-heading": {
+            "Your premium account is": "Twój konto premium jest",
+            "Days left": "Pozostało dni",
+            "active": "aktywne",
+            "inactive": "nieaktywne",
+            "Premium Status": "Status premium"
+        },
+        "sidebar": {
+            "Dashboard": "Panel",
+            "Invoices": "Faktury",
+            "Contractors": "Kontrahenci",
+            "Products": "Produkty",
+            "Analytics": "Analizy",
+            "Premium Account": "Konto Premium",
+            "Settings": "Ustawienia",
+            "Log out": "Wyloguj się"
+        },
+        "data-table": {
+            "No results.": "Brak wyników.",
+            "View": "Widok",
+            "Search": "Wyszukaj...",
+            "Reset": "Resetuj",
+            "Open menu": "Otwórz menu",
+            "Actions": "Akcje",
+            "Asc": "Rosnąco",
+            "Desc": "Malejąco",
+            "Hide": "Ukryj",
+            "Toggle columns": "Przełącz kolumny"
+        }
+    },
+
+    "dashboard": {
+        "Latest invoices": "Najnowsze faktury"
+    },
+    "dashboard/invoices": {
+        "Manage your invoices and see details.": "Zarządzaj swoimi fakturami i zobacz szczegóły.",
+        "Add new invoice": "Dodaj nową fakturę",
+        "Number": "Numer",
+        "Type": "Typ",
+        "Sale Date": "Data sprzedaży",
+        "Is already paid": "Czy już opłacona",
+        "Email status": "Status e-maila",
+        "Show": "Pokaż",
+        "Total": "Suma",
+        "Invoice": "Faktura",
+        "Here you can check details about your invoice.": "Tutaj możesz sprawdzić szczegóły swojej faktury.",
+        "Details": "Szczegóły",
+        "Seller": "Sprzedawca",
+        "Buyer": "Kupujący",
+        "Create Date": "Data utworzenia",
+        "Grand Total": "Suma końcowa",
+        "Invoice Products": "Produkty na fakturze",
+        "Invoice Emails": "E-maile do faktury",
+        "Name": "Nazwa",
+        "Measure Unit": "Jednostka miary",
+        "Date": "Data",
+        "Recipient": "Odbiorca",
+        "Status": "Status",
+        "Preview": "Podgląd",
+        "Download": "Pobierz",
+        "Edit this invoice": "Edytuj tę fakturę",
+        "Delete this invoice": "Usuń tę fakturę",
+        "Actions": "Akcje",
+        "Send email": "Wyślij e-mail"
+    },
+
+    "dashboard/analytics": {
+        "Analytics and statistics for your invoices": "Analizy i statystyki dla Twoich faktur",
+        "Period": "Okres",
+        "Product": "Produkt",
+        "This year": "Ten rok",
+        "Prev year": "Poprzedni rok",
+        "paid": "opłacone",
+        "unpaid": "nieopłacone"
+    },
+
+    "dashboard/premium-account": {
+        "payments-history": {
+            "Payments History": "Historia płatności",
+            "Amount": "Kwota",
+            "Status": "Status",
+            "Description": "Opis",
+            "Date": "Data"
+        },
+        "Premium Account": "Konto Premium",
+        "Payment successful! Your premium account will be activated shortly.": "Płatność zakończona sukcesem! Twoje konto premium zostanie wkrótce aktywowane.",
+        "Buy Premium Days": "Kup dni premium",
+        "Choose a plan that suits you and continue enjoying premium benefits!": "Wybierz plan, który Ci odpowiada i korzystaj dalej z korzyści premium!",
+        "days": "dni",
+        "day": "dzień",
+        "of Premium": "premium",
+        "Premium account for": "Konto premium na",
+
+        "benefits": {
+            "Benefits": "Korzyści",
+            "unlimited invoices": "nielimitowane faktury",
+            "unlimited emails": "nielimitowane e-maile",
+            "secret note for invoice": "tajna notatka do faktury",
+            "priority customer support": "priorytetowa obsługa klienta",
+            "access to exclusive content": "dostęp do ekskluzywnych treści"
+        }
+    },
+
+    "dashboard/settings": {
+        "appearance": {
+            "Language": "Język",
+            "Theme": "Motyw",
+            "Appearance settings": "Ustawienia wyglądu",
+            "Update your account's appearance settings": "Zaktualizuj ustawienia wyglądu konta"
+        },
+        "password": {
+            "Update password": "Zmień hasło",
+            "Ensure your account is using a long, random password to stay secure": "Upewnij się, że Twoje konto używa długiego, losowego hasła, aby zachować bezpieczeństwo",
+            "Current password": "Obecne hasło",
+            "New password": "Nowe hasło",
+            "Confirm password": "Potwierdź hasło",
+            "Save password": "Zapisz hasło",
+            "Password settings": "Ustawienia hasła"
+        },
+        "profile": {
+            "Profile information": "Informacje o profilu",
+            "Update your name and email address": "Zaktualizuj swoje imię i adres e-mail",
+            "Name": "Imię i nazwisko",
+            "Email address": "Adres e-mail",
+            "Save": "Zapisz",
+            "Delete account": "Usuń konto",
+            "Delete your account and all of its resources": "Usuń swoje konto i wszystkie jego zasoby",
+            "Warning": "Ostrzeżenie",
+            "Please proceed with caution, this cannot be undone.": "Proszę zachować ostrożność, tej operacji nie można cofnąć.",
+            "Your email address is unverified.": "Twój adres e-mail nie został zweryfikowany.",
+            "Click here to resend the verification email.": "Kliknij tutaj, aby ponownie wysłać e-mail weryfikacyjny.",
+            "A new verification link has been sent to your email address.": "Nowy link weryfikacyjny został wysłany na Twój adres e-mail.",
+            "Profile settings": "Ustawienia profilu",
+            "delete-user-dialog": {
+                "Are you sure you want to delete your account?": "Czy na pewno chcesz usunąć swoje konto?",
+                "Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.": "Po usunięciu konta wszystkie jego zasoby i dane zostaną trwale usunięte. Wprowadź swoje hasło, aby potwierdzić trwałe usunięcie konta.",
+                "Password": "Hasło"
+            }
+        },
+        "index": {
+            "Settings": "Ustawienia",
+            "Manage your profile and account settings": "Zarządzaj swoim profilem i ustawieniami konta",
+            "Profile": "Konto",
+            "Password": "Hasło",
+            "Appearance": "Wygląd"
+        }
+    }
+}

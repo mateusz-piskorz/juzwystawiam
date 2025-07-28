@@ -1,6 +1,7 @@
 import ConfirmDialog from '@/components/common/confirm-dialog';
 import { Button } from '@/components/ui/button';
 import { deleteInvoice } from '@/lib/data/invoices';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { Nullable } from '@/lib/types/nullable';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { Link, router } from '@inertiajs/react';
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export const InvoiceActionsSection = ({ invoiceId, buyerEmail }: Props) => {
+    const locale = useLocale().locale.data['dashboard/invoices'];
     const [openRemoveConfirm, setOpenRemoveConfirm] = useState(false);
     const [openEmailSendingDialog, setOpenEmailSendingDialog] = useState(false);
 
@@ -33,26 +35,26 @@ export const InvoiceActionsSection = ({ invoiceId, buyerEmail }: Props) => {
     return (
         <>
             <div>
-                <h1 className="mb-2 text-xl font-medium">Actions</h1>
+                <h1 className="mb-2 text-xl font-medium">{locale.Actions}</h1>
                 <div className="space-y-4 space-x-4">
                     <Button variant="secondary">
                         <a href={`/dashboard/invoices/${invoiceId}/pdf-preview`} target="_blank">
-                            Preview
+                            {locale.Preview}
                         </a>
                     </Button>
                     <Button variant="secondary">
                         <a href={`/dashboard/invoices/${invoiceId}/pdf-download`} target="_blank">
-                            Download
+                            {locale.Download}
                         </a>
                     </Button>
                     <Button variant="secondary" onClick={() => setOpenEmailSendingDialog(true)}>
-                        Send email
+                        {locale['Send email']}
                     </Button>
                     <Button variant="secondary">
-                        <Link href={`/dashboard/invoices/${invoiceId}/edit`}>Edit</Link>
+                        <Link href={`/dashboard/invoices/${invoiceId}/edit`}>{locale['Edit this invoice']}</Link>
                     </Button>
                     <Button variant="destructive" onClick={() => setOpenRemoveConfirm(true)}>
-                        Delete this invoice
+                        {locale['Delete this invoice']}
                     </Button>
                 </div>
             </div>

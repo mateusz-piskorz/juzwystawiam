@@ -3,7 +3,7 @@ import { setCookie } from '../utils/set-cookie';
 import { usePage } from './use-page';
 
 export const useLocale = () => {
-    const { localeData } = usePage().props;
+    const { locale } = usePage().props;
 
     const setPreferredLocale = (lang: LOCALE_CODE) => {
         setCookie('locale', lang);
@@ -11,5 +11,5 @@ export const useLocale = () => {
         location.reload();
     };
 
-    return { localeData, setPreferredLocale };
+    return { locale, setPreferredLocale };
 };

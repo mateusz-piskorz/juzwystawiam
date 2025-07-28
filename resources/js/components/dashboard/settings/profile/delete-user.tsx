@@ -10,8 +10,8 @@ import { usePage } from '@/lib/hooks/use-page';
 import { Heading } from '../../../common/heading';
 
 export function DeleteUser() {
-    const localeData = usePage().props.localeData.data;
-    const locale = localeData.dashboard.settings.profile;
+    const localeData = usePage().props.locale.data;
+    const locale = localeData['dashboard/settings'].profile;
 
     const passwordInput = useRef<HTMLInputElement>(null);
     const { data, setData, delete: destroy, processing, reset, errors, clearErrors } = useForm<Required<{ password: string }>>({ password: '' });

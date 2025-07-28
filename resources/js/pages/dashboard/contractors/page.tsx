@@ -1,8 +1,9 @@
+import type { BreadcrumbItem } from '@/lib/types';
+
 import { Heading } from '@/components/common/heading';
 import { ContractorTable } from '@/components/dashboard/contractors/contractor-table';
-import AppLayout from '@/layouts/app-layout';
-import { MainContentLayout } from '@/layouts/main-content-layout';
-import { BreadcrumbItem } from '@/lib/types';
+import { AppLayout } from '@/layouts/dashboard/app-layout';
+import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { Head } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [

@@ -1,31 +1,37 @@
+import type { BreadcrumbItem } from '@/lib/types';
+
+import { Heading } from '@/components/common/heading';
 import { InvoiceActionsSection } from '@/components/dashboard/invoices/[id]/invoice-actions-section';
 import { InvoiceEmailTable } from '@/components/dashboard/invoices/[id]/invoice-email-table';
 import { InvoiceProductTable } from '@/components/dashboard/invoices/[id]/invoice-product-table';
-import AppLayout from '@/layouts/app-layout';
-import { MainContentLayout } from '@/layouts/main-content-layout';
+import { AppLayout } from '@/layouts/dashboard/app-layout';
+import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { CONTRACTOR_ROLE } from '@/lib/constants/enums/contractor-role';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { usePage } from '@/lib/hooks/use-page';
-import type { BreadcrumbItem } from '@/lib/types';
 import { Invoice } from '@/lib/types/invoice';
 import { Head } from '@inertiajs/react';
 import dayjs from 'dayjs';
 
 const InvoicePage = () => {
+    const l = useLocale().locale.data;
+    const locale = { ...l['dashboard/invoices'], common: l.common };
+
     const {
         props: { invoice },
     } = usePage<{ invoice: Invoice }>();
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
-            title: 'Dashboard',
+            title: locale.common.Dashboard,
             href: '/dashboard',
         },
         {
-            title: 'Invoices',
+            title: locale.common.Invoices,
             href: '/dashboard/invoices',
         },
         {
-            title: `Invoice ${invoice.id}`,
+            title: `${locale.Invoice} ${invoice.id}`,
             href: `/dashboard/invoices/${invoice.id}`,
         },
     ];
@@ -41,45 +47,47 @@ const InvoicePage = () => {
                     <div className="md:bg-sidebar space-y-12 md:space-y-8 md:rounded md:p-6">
                         <div>
                             <h1 className="mb-2 text-xl font-medium">{invoice.number}</h1>
-                            <p>Here you can check details about your invoice.</p>
+                            <p>{locale['Here you can check details about your invoice.']}</p>
                         </div>
                         <div>
-                            <h1 className="mb-2 text-xl font-medium">Details</h1>
+                            <h1 className="mb-2 text-xl font-medium">{locale.Details}</h1>
                             <ul>
                                 <li>
-                                    Number: <span className="text-muted-foreground">{invoice.number}</span>
+                                    {locale.Number}: <span className="text-muted-foreground">{invoice.number}</span>
                                 </li>
                                 <li>
-                                    Seller:{' '}
+                                    {locale.Seller}:{' '}
                                     <span className="text-muted-foreground">
                                         {seller?.company_name}, {seller?.street_name}, {seller?.postal_code}, {seller?.city}
                                     </span>
                                 </li>
                                 <li>
-                                    Buyer:{' '}
+                                    {locale.Buyer}:{' '}
                                     <span className="text-muted-foreground">
                                         {buyer?.company_name}, {buyer?.street_name}, {buyer?.postal_code}, {buyer?.city}
                                     </span>
                                 </li>
                                 <li>
-                                    Create Date: <span className="text-muted-foreground">{dayjs(invoice.created_at).format('DD-MM-YYYY')}</span>
+                                    {locale['Create Date']}:{' '}
+                                    <span className="text-muted-foreground">{dayjs(invoice.created_at).format('DD-MM-YYYY')}</span>
                                 </li>
                                 <li>
-                                    Sale Date: <span className="text-muted-foreground">{dayjs(invoice.sale_date).format('DD-MM-YYYY')}</span>
+                                    {locale['Sale Date']}:{' '}
+                                    <span className="text-muted-foreground">{dayjs(invoice.sale_date).format('DD-MM-YYYY')}</span>
                                 </li>
                                 <li>
-                                    Grand Total: <span className="text-muted-foreground">{invoice.grand_total}</span>
+                                    {locale['Grand Total']}: <span className="text-muted-foreground">{invoice.grand_total}</span>
                                 </li>
                             </ul>
                         </div>
                         <InvoiceActionsSection invoiceId={invoice.id} buyerEmail={buyer?.email} />
                     </div>
                     <div className="md:bg-sidebar md:rounded md:p-6">
-                        <h1 className="mb-8 text-xl font-medium">Invoice Products</h1>
+                        <Heading title={locale['Invoice Products']} />
                         <InvoiceProductTable data={invoice.invoice_products} />
                     </div>
                     <div className="md:bg-sidebar md:rounded md:p-6">
-                        <h1 className="mb-8 text-xl font-medium">Invoice Emails</h1>
+                        <Heading title={locale['Invoice Emails']} />
                         <InvoiceEmailTable data={invoice.invoice_emails} />
                     </div>
                 </MainContentLayout>

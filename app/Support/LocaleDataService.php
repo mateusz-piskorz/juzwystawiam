@@ -10,7 +10,7 @@ class LocaleDataService
     public static function getLocaleData()
     {
         $langCode = App::currentLocale();
-        $localesPath = base_path('lang');
+        $localesPath = base_path('resources/lang');
         $languageFilePath = "{$localesPath}/{$langCode}.json";
 
         if (file_exists($languageFilePath)) {

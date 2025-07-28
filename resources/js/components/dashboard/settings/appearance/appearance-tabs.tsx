@@ -1,15 +1,13 @@
 import { Appearance, useAppearance } from '@/lib/hooks/use-appearance';
-import { usePage } from '@/lib/hooks/use-page';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { cn } from '@/lib/utils/cn';
 import { LucideIcon, Monitor, Moon, Sun } from 'lucide-react';
 import { HTMLAttributes } from 'react';
 
 export function AppearanceTabs({ className = '', ...props }: HTMLAttributes<HTMLDivElement>) {
-    const {
-        props: { localeData },
-    } = usePage();
+    const { locale } = useLocale();
     const { appearance, updateAppearance } = useAppearance();
-    const { dark, light, system } = localeData.data.enum.THEME;
+    const { dark, light, system } = locale.data.enum.THEME;
 
     const tabs: { value: Appearance; icon: LucideIcon; label: string }[] = [
         { value: 'light', icon: Sun, label: light },
@@ -19,7 +17,7 @@ export function AppearanceTabs({ className = '', ...props }: HTMLAttributes<HTML
 
     return (
         <div>
-            <h4 className="mb-2">{localeData.data.dashboard.settings.appearance.Theme}</h4>
+            <h4 className="mb-2">{locale.data['dashboard/settings'].appearance.Theme}</h4>
             <div className={cn('inline-flex gap-1 rounded bg-neutral-100 p-1 dark:bg-neutral-800', className)} {...props}>
                 {tabs.map(({ value, icon: Icon, label }) => (
                     <button

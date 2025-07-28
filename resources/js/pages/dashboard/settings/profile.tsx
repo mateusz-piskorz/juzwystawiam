@@ -1,7 +1,4 @@
 import type { BreadcrumbItem } from '@/lib/types';
-import { Transition } from '@headlessui/react';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
 
 import { Heading } from '@/components/common/heading';
 import { DeleteUser } from '@/components/dashboard/settings/profile/delete-user';
@@ -9,9 +6,13 @@ import InputError from '@/components/default/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AppLayout from '@/layouts/app-layout';
-import SettingsLayout from '@/layouts/settings/layout';
+import { AppLayout } from '@/layouts/dashboard/app-layout';
+import { SettingsLayout } from '@/layouts/dashboard/settings';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { usePage } from '@/lib/hooks/use-page';
+import { Transition } from '@headlessui/react';
+import { Head, Link, useForm } from '@inertiajs/react';
+import { FormEventHandler } from 'react';
 
 type ProfileForm = {
     name: string;
@@ -19,12 +20,13 @@ type ProfileForm = {
 };
 
 export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: boolean; status?: string }) {
-    const { auth, localeData } = usePage().props;
-    const locale = localeData.data.dashboard.settings.profile;
+    const { user } = usePage().props.auth;
+    const l = useLocale().locale.data;
+    const locale = { ...l['dashboard/settings'].profile, common: l.common };
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<ProfileForm>>({
-        name: auth.user.name,
-        email: auth.user.email,
+        name: user.name,
+        email: user.email,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -36,6 +38,10 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
     };
 
     const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: locale.common.Dashboard,
+            href: '/dashboard',
+        },
         {
             title: locale['Profile settings'],
             href: 'dashboard/settings/profile',
@@ -84,7 +90,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                             <InputError className="mt-2" message={errors.email} />
                         </div>
 
-                        {mustVerifyEmail && auth.user.email_verified_at === null && (
+                        {mustVerifyEmail && user.email_verified_at === null && (
                             <div>
                                 <p className="text-muted-foreground -mt-4 text-sm">
                                     {locale['Your email address is unverified.']}{' '}
@@ -116,7 +122,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                                 leave="transition ease-in-out"
                                 leaveTo="opacity-0"
                             >
-                                <p className="text-sm text-neutral-600">{localeData.data.common.Saved}</p>
+                                <p className="text-sm text-neutral-600">{locale.common.Saved}</p>
                             </Transition>
                         </div>
                     </form>

@@ -1,0 +1,212 @@
+{
+    "enum": {
+        "LOCALE_CODE": {
+            "pl": "Polish",
+            "en": "English",
+            "system": "System"
+        },
+        "THEME": {
+            "system": "System",
+            "light": "Light",
+            "dark": "Dark"
+        },
+        "CONTRACTOR_ROLE": {
+            "BUYER": "Buyer",
+            "SELLER": "Seller"
+        },
+        "EMAIL_STATUS": {
+            "PENDING": "Pending",
+            "SENT": "Sent",
+            "FAILED": "Failed"
+        },
+        "INVOICE_TYPE": {
+            "VAT": "VAT",
+            "NO_VAT": "No VAT"
+        },
+        "MEASURE_UNIT": {
+            "PCS": "pcs",
+            "HOUR": "hour",
+            "SERVICE": "service"
+        },
+        "PAYMENT_METHOD": {
+            "BANK_TRANSFER": "Bank transfer",
+            "CASH": "Cash",
+            "CARD": "Card",
+            "BARTER": "Barter",
+            "CHEQUE": "Cheque",
+            "COD": "Cash on delivery",
+            "OTHER": "Other",
+            "COMPENSATION": "Compensation",
+            "LETTER_OF_CREDIT": "Letter of credit",
+            "PAYPAL": "PayPal",
+            "PAYU": "PayU",
+            "PROMISSORY_NOTE": "Promissory note",
+            "PREPAYMENT": "Prepayment",
+            "INSTALLMENT_SALE": "Installment sale",
+            "TPAY": "Tpay",
+            "PRZELEWY24": "Przelewy24",
+            "DOTPAY": "Dotpay"
+        },
+        "TYPE_OF_BUSINESS": {
+            "PRIVATE_PERSON": "Private person",
+            "SELF_EMPLOYED": "Self-employed",
+            "OTHER_BUSINESS": "Other business"
+        }
+    },
+
+    "common": {
+        "Saved": "Saved",
+        "Cancel": "Cancel",
+        "Manage": "Manage",
+        "Invoices": "Invoices",
+        "Dashboard": "Dashboard",
+
+        "premium-status-heading": {
+            "Your premium account is": "Your premium account is",
+            "Days left": "Days left",
+            "active": "active",
+            "inactive": "inactive",
+            "Premium Status": "Premium Status"
+        },
+        "sidebar": {
+            "Dashboard": "Dashboard",
+            "Invoices": "Invoices",
+            "Contractors": "Contractors",
+            "Products": "Products",
+            "Analytics": "Analytics",
+            "Premium Account": "Premium Account",
+            "Settings": "Settings",
+            "Log out": "Log out"
+        },
+        "data-table": {
+            "No results.": "No results.",
+            "View": "View",
+            "Search": "Search...",
+            "Reset": "Reset",
+            "Open menu": "Open menu",
+            "Actions": "Actions",
+            "Asc": "Asc",
+            "Desc": "Desc",
+            "Hide": "Hide",
+            "Toggle columns": "Toggle columns"
+        }
+    },
+
+    "dashboard": {
+        "Latest invoices": "Latest invoices"
+    },
+
+    "dashboard/invoices": {
+        "Manage your invoices and see details.": "Manage your invoices and see details.",
+        "Add new invoice": "Add new invoice",
+        "Number": "Number",
+        "Type": "Type",
+        "Sale Date": "Sale Date",
+        "Is already paid": "Is already paid",
+        "Email status": "Email status",
+        "Show": "Show",
+        "Total": "Total",
+        "Invoice": "Invoice",
+        "Here you can check details about your invoice.": "Here you can check details about your invoice.",
+        "Details": "Details",
+        "Seller": "Seller",
+        "Buyer": "Buyer",
+        "Create Date": "Create Date",
+        "Grand Total": "Grand Total",
+        "Invoice Products": "Invoice Products",
+        "Invoice Emails": "Invoice Emails",
+        "Name": "Name",
+        "Measure Unit": "Measure Unit",
+        "Date": "Date",
+        "Recipient": "Recipient",
+        "Status": "Status",
+        "Preview": "Preview",
+        "Download": "Download",
+        "Edit this invoice": "Edit this invoice",
+        "Delete this invoice": "Delete this invoice",
+        "Actions": "Actions",
+        "Send email": "Send email"
+    },
+
+    "dashboard/analytics": {
+        "Analytics and statistics for your invoices": "Analytics and statistics for your invoices",
+        "Period": "Period",
+        "Product": "Product",
+        "This year": "This year",
+        "Prev year": "Prev year",
+        "paid": "paid",
+        "unpaid": "unpaid"
+    },
+
+    "dashboard/premium-account": {
+        "payments-history": {
+            "Payments History": "Payments History",
+            "Amount": "Amount",
+            "Status": "Status",
+            "Description": "Description",
+            "Date": "Date"
+        },
+        "Premium Account": "Premium Account",
+        "Payment successful! Your premium account will be activated shortly.": "Payment successful! Your premium account will be activated shortly.",
+        "Buy Premium Days": "Buy Premium Days",
+        "Choose a plan that suits you and continue enjoying premium benefits!": "Choose a plan that suits you and continue enjoying premium benefits!",
+        "days": "days",
+        "day": "day",
+        "of Premium": "of Premium",
+        "Premium account for": "Premium account for",
+
+        "benefits": {
+            "Benefits": "Benefits",
+            "unlimited invoices": "unlimited invoices",
+            "unlimited emails": "unlimited emails",
+            "secret note for invoice": "secret note for invoice",
+            "priority customer support": "priority customer support",
+            "access to exclusive content": "access to exclusive content"
+        }
+    },
+
+    "dashboard/settings": {
+        "appearance": {
+            "Language": "Language",
+            "Theme": "Theme",
+            "Appearance settings": "Appearance settings",
+            "Update your account's appearance settings": "Update your account's appearance settings"
+        },
+        "password": {
+            "Update password": "Update password",
+            "Ensure your account is using a long, random password to stay secure": "Ensure your account is using a long, random password to stay secure",
+            "Current password": "Current password",
+            "New password": "New password",
+            "Confirm password": "Confirm password",
+            "Save password": "Save password",
+            "Password settings": "Password settings"
+        },
+        "profile": {
+            "Profile information": "Profile information",
+            "Update your name and email address": "Update your name and email address",
+            "Name": "Name",
+            "Email address": "Email address",
+            "Save": "Save",
+            "Delete account": "Delete account",
+            "Delete your account and all of its resources": "Delete your account and all of its resources",
+            "Warning": "Warning",
+            "Please proceed with caution, this cannot be undone.": "Please proceed with caution, this cannot be undone.",
+            "Your email address is unverified.": "Your email address is unverified.",
+            "Click here to resend the verification email.": "Click here to resend the verification email.",
+            "A new verification link has been sent to your email address.": "A new verification link has been sent to your email address.",
+            "Profile settings": "Profile settings",
+            "delete-user-dialog": {
+                "Are you sure you want to delete your account?": "Are you sure you want to delete your account?",
+                "Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.": "Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.",
+                "Password": "Password"
+            }
+        },
+        "index": {
+            "Settings": "Settings",
+            "Manage your profile and account settings": "Manage your profile and account settings",
+            "Profile": "Account",
+            "Password": "Password",
+            "Appearance": "Appearance"
+        }
+    }
+}

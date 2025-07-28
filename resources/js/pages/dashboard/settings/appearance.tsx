@@ -1,20 +1,25 @@
-import { Head } from '@inertiajs/react';
+import { type BreadcrumbItem } from '@/lib/types';
 
 import { Heading } from '@/components/common/heading';
 import { AppearanceTabs } from '@/components/dashboard/settings/appearance/appearance-tabs';
 import { LocaleSelectInput } from '@/components/dashboard/settings/appearance/locale-select-input';
-import AppLayout from '@/layouts/app-layout';
-import SettingsLayout from '@/layouts/settings/layout';
+import { AppLayout } from '@/layouts/dashboard/app-layout';
+import { SettingsLayout } from '@/layouts/dashboard/settings';
 import { usePage } from '@/lib/hooks/use-page';
-import { type BreadcrumbItem } from '@/lib/types';
+import { Head } from '@inertiajs/react';
 
 export default function Appearance() {
-    const locale = usePage().props.localeData.data.dashboard.settings.appearance;
+    const l = usePage().props.locale.data;
+    const locale = { ...l['dashboard/settings'].appearance, common: l.common };
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
+            title: locale.common.Dashboard,
+            href: '/dashboard',
+        },
+        {
             title: locale['Appearance settings'],
-            href: 'dashboard/settings/appearance',
+            href: '/dashboard/settings/appearance',
         },
     ];
     return (

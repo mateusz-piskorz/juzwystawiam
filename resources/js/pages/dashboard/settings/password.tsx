@@ -1,20 +1,20 @@
-import InputError from '@/components/default/input-error';
-import AppLayout from '@/layouts/app-layout';
-import SettingsLayout from '@/layouts/settings/layout';
 import { type BreadcrumbItem } from '@/lib/types';
+
+import { Heading } from '@/components/common/heading';
+import InputError from '@/components/default/input-error';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { AppLayout } from '@/layouts/dashboard/app-layout';
+import { SettingsLayout } from '@/layouts/dashboard/settings';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { Transition } from '@headlessui/react';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
 
-import { Heading } from '@/components/common/heading';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { usePage } from '@/lib/hooks/use-page';
-
 export default function Password() {
-    const localeProps = usePage().props.localeData.data;
-    const locale = localeProps.dashboard.settings.password;
+    const l = useLocale().locale.data;
+    const locale = { ...l['dashboard/settings'].password, common: l.common };
     const passwordInput = useRef<HTMLInputElement>(null);
     const currentPasswordInput = useRef<HTMLInputElement>(null);
 
@@ -46,8 +46,12 @@ export default function Password() {
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
+            title: locale.common.Dashboard,
+            href: '/dashboard',
+        },
+        {
             title: locale['Password settings'],
-            href: 'dashboard/settings/password',
+            href: '/dashboard/settings/password',
         },
     ];
 
@@ -124,7 +128,7 @@ export default function Password() {
                                 leave="transition ease-in-out"
                                 leaveTo="opacity-0"
                             >
-                                <p className="text-sm text-neutral-600">{localeProps.common.Saved}</p>
+                                <p className="text-sm text-neutral-600">{locale.common.Saved}</p>
                             </Transition>
                         </div>
                     </form>

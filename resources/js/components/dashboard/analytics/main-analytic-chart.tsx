@@ -2,21 +2,11 @@ import { MultiOptionsFilter } from '@/components/common/multi-options-filter';
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, type ChartConfig } from '@/components/ui/chart';
 import { getChartData } from '@/lib/data/invoices';
 import { getProducts } from '@/lib/data/products';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
 import { cn } from '@/lib/utils/cn';
 import { useQuery } from '@tanstack/react-query';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
-
-const chartConfig = {
-    paid: {
-        label: 'Paid',
-        color: '#2563eb',
-    },
-    unpaid: {
-        label: 'Unpaid',
-        color: '#60a5fa',
-    },
-} satisfies ChartConfig;
 
 type Props = {
     className?: string;
@@ -24,6 +14,8 @@ type Props = {
 };
 
 export const MainAnalyticChart = ({ className, withFilters = true }: Props) => {
+    const locale = useLocale().locale.data['dashboard/analytics'];
+
     const searchParams = useSearchParams();
     const period = searchParams.get('period');
     const product = searchParams.getAll('product');
@@ -39,15 +31,26 @@ export const MainAnalyticChart = ({ className, withFilters = true }: Props) => {
         enabled: withFilters,
     });
 
+    const chartConfig = {
+        paid: {
+            label: locale.paid,
+            color: '#2563eb',
+        },
+        unpaid: {
+            label: locale.unpaid,
+            color: '#60a5fa',
+        },
+    } satisfies ChartConfig;
+
     return (
         <div className="overflow-x-auto">
             {withFilters && (
                 <>
                     <MultiOptionsFilter
-                        title="Period"
+                        title={locale.Period}
                         options={[
-                            { label: 'This year', value: 'this_year' },
-                            { label: 'Prev year', value: 'prev_year' },
+                            { label: locale['This year'], value: 'this_year' },
+                            { label: locale['Prev year'], value: 'prev_year' },
                         ]}
                         filterKey="period"
                         singleChoice
@@ -61,7 +64,14 @@ export const MainAnalyticChart = ({ className, withFilters = true }: Props) => {
             )}
 
             <ChartContainer config={chartConfig} className={cn('h-[400px] w-full min-w-[600px]', className)}>
-                <BarChart accessibilityLayer data={data}>
+                <BarChart
+                    accessibilityLayer
+                    data={data?.map(({ month, paid, unpaid }) => ({
+                        month,
+                        paid,
+                        unpaid,
+                    }))}
+                >
                     <CartesianGrid vertical={false} />
                     <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false} tickFormatter={(value) => value.slice(0, 3)} />
                     <ChartTooltip content={<ChartTooltipContent />} />

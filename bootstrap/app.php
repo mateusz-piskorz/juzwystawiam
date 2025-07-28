@@ -26,6 +26,9 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class
         ]);
+        $middleware->api(append: [
+            HandleLocale::class
+        ]);
         $middleware->trustProxies(at: '*');
         $middleware->validateCsrfTokens(except: [
             'stripe/*'

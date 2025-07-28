@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
+import type { BreadcrumbItem } from '@/lib/types';
+
 import { Select } from '@/components/common/select';
 import { InvoiceForm } from '@/components/dashboard/invoices/invoice-form';
-import AppLayout from '@/layouts/app-layout';
-import { MainContentLayout } from '@/layouts/main-content-layout';
+import { AppLayout } from '@/layouts/dashboard/app-layout';
+import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
-import type { BreadcrumbItem } from '@/lib/types';
 import { Invoice } from '@/lib/types/invoice';
 import { Head, usePage } from '@inertiajs/react';
 import { useState } from 'react';

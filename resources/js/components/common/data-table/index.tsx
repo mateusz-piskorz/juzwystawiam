@@ -1,6 +1,7 @@
 'use client';
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { cn } from '@/lib/utils/cn';
 import {
     ColumnDef,
@@ -36,6 +37,8 @@ export function DataTable<TData, TValue>({
     displayDataTableToolbar = true,
     className,
 }: DataTableProps<TData, TValue>) {
+    const locale = useLocale().locale.data.common['data-table'];
+
     const [rowSelection, setRowSelection] = useState({});
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
@@ -86,7 +89,7 @@ export function DataTable<TData, TValue>({
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
+                                    {locale['No results.']}
                                 </TableCell>
                             </TableRow>
                         )}

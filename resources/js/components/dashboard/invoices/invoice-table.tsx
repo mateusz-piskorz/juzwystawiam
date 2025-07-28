@@ -1,10 +1,11 @@
 import { DataTable } from '@/components/common/data-table';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { getInvoices } from '@/lib/data/invoices';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
 import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
-import { invoiceColumns } from './invoice-columns';
+import { getInvoiceColumns } from './invoice-columns';
 
 type Props = {
     displayDataTableToolbar?: boolean;
@@ -13,6 +14,7 @@ type Props = {
 };
 
 export const InvoiceTable = ({ displayDataTableToolbar = true, withFilters = true, displayPagination = true }: Props) => {
+    const locale = useLocale().locale.data['dashboard/invoices'];
     const searchParams = useSearchParams();
 
     const page = searchParams.get('page');
@@ -28,14 +30,16 @@ export const InvoiceTable = ({ displayDataTableToolbar = true, withFilters = tru
         queryFn: () => getInvoices(withFilters ? { page, limit, q, order_column, order_direction, type, is_already_paid } : { limit: '20' }),
     });
 
+    const columns = getInvoiceColumns({ locale });
+
     return (
         <DataTable
             displayDataTableToolbar={displayDataTableToolbar}
             totalPages={displayPagination ? String(data?.last_page) : undefined}
             data={data?.data ?? []}
-            columns={invoiceColumns}
+            columns={columns}
             addNewRecord={{
-                label: 'Add new invoice',
+                label: locale['Add new invoice'],
                 href: '/dashboard/invoices/create',
             }}
             filters={
@@ -43,7 +47,7 @@ export const InvoiceTable = ({ displayDataTableToolbar = true, withFilters = tru
                     ? [
                           {
                               filterKey: 'is_already_paid',
-                              title: 'Is already paid',
+                              title: locale['Is already paid'],
                               options: [
                                   { label: 'true', value: 'true' },
                                   { label: 'false', value: 'false' },
@@ -51,7 +55,7 @@ export const InvoiceTable = ({ displayDataTableToolbar = true, withFilters = tru
                           },
                           {
                               filterKey: 'type',
-                              title: 'Type',
+                              title: locale.Type,
                               options: Object.values(INVOICE_TYPE).map((e) => ({ label: e, value: e })),
                           },
                       ]

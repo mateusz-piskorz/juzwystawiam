@@ -1,10 +1,11 @@
-import { UserInfo } from '@/components/default/user-info';
-import { UserMenuContent } from '@/components/default/user-menu-content';
+import { UserInfo } from '@/components/common/user-info';
+
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { useIsMobile } from '@/lib/hooks/use-mobile';
 
 import { ChevronsUpDown } from 'lucide-react';
+import { UserMenuContent } from './user-menu-content';
 
 export function NavUser() {
     const { state } = useSidebar();

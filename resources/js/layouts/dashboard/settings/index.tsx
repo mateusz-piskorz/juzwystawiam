@@ -1,14 +1,14 @@
 import { Heading } from '@/components/common/heading';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { usePage } from '@/lib/hooks/use-page';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { type NavItem } from '@/lib/types';
 import { cn } from '@/lib/utils/cn';
 import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 
-export default function SettingsLayout({ children }: PropsWithChildren) {
-    const locale = usePage().props.localeData.data.dashboard.settings.index;
+export function SettingsLayout({ children }: PropsWithChildren) {
+    const locale = useLocale().locale.data['dashboard/settings'].index;
 
     // When server-side rendering, we only render the layout on the client...
     if (typeof window === 'undefined') {

@@ -1,6 +1,6 @@
 import { usePage as usePageInertia } from '@inertiajs/react';
 import type { Config } from 'ziggy-js';
-import enLang from '../../../../lang/en.json';
+import enLang from '../../../lang/en.json';
 import { LOCALE_CODE } from '../constants/enums/locale-code';
 
 type User = {
@@ -22,7 +22,7 @@ type SharedData = {
     auth: { user: User };
     ziggy: Config & { location: string; query: { [key: string]: string | string[] } };
     sidebarOpen: boolean;
-    localeData: {
+    locale: {
         data: typeof enLang;
         languageCode: LOCALE_CODE;
     };
