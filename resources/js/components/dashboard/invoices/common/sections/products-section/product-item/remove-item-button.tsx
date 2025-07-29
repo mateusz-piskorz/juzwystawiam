@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { X } from 'lucide-react';
 
 type Props = {
@@ -7,6 +8,7 @@ type Props = {
     total: string;
 };
 export const RemoveItemButton = ({ disabled, onRemove, total }: Props) => {
+    const locale = useLocale().locale['dashboard/invoices']['invoice-form'];
     return (
         <div className="flex items-center justify-end">
             <p className="text-nowrap md:text-sm">{total} PLN</p>
@@ -16,7 +18,7 @@ export const RemoveItemButton = ({ disabled, onRemove, total }: Props) => {
                 variant="ghost"
                 type="button"
                 onClick={onRemove}
-                aria-label="remove item"
+                aria-label={locale['remove item']}
                 className="cursor-pointer hover:bg-transparent"
             >
                 <X />

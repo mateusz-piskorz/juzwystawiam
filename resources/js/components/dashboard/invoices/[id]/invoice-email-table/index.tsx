@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const InvoiceEmailTable = ({ data }: Props) => {
-    const locale = useLocale().locale.data['dashboard/invoices'];
+    const locale = useLocale().locale['dashboard/invoices'];
     const columns = getInvoiceEmailColumns({ locale });
     return <DataTable displayDataTableToolbar={false} data={data ?? []} columns={columns} filters={[]} />;
 };

@@ -7,7 +7,7 @@ import { HTMLAttributes } from 'react';
 export function AppearanceTabs({ className = '', ...props }: HTMLAttributes<HTMLDivElement>) {
     const { locale } = useLocale();
     const { appearance, updateAppearance } = useAppearance();
-    const { dark, light, system } = locale.data.enum.THEME;
+    const { dark, light, system } = locale.enum.THEME;
 
     const tabs: { value: Appearance; icon: LucideIcon; label: string }[] = [
         { value: 'light', icon: Sun, label: light },
@@ -17,7 +17,7 @@ export function AppearanceTabs({ className = '', ...props }: HTMLAttributes<HTML
 
     return (
         <div>
-            <h4 className="mb-2">{locale.data['dashboard/settings'].appearance.Theme}</h4>
+            <h4 className="mb-2">{locale['dashboard/settings'].appearance.Theme}</h4>
             <div className={cn('inline-flex gap-1 rounded bg-neutral-100 p-1 dark:bg-neutral-800', className)} {...props}>
                 {tabs.map(({ value, icon: Icon, label }) => (
                     <button

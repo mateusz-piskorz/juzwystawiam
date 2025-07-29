@@ -21,7 +21,7 @@ type ProfileForm = {
 
 export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: boolean; status?: string }) {
     const { user } = usePage().props.auth;
-    const l = useLocale().locale.data;
+    const l = useLocale().locale;
     const locale = { ...l['dashboard/settings'].profile, common: l.common };
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<ProfileForm>>({

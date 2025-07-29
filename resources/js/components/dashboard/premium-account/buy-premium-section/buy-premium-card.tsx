@@ -6,7 +6,7 @@ type Props = {
 };
 
 export const BuyPremiumCard = ({ days }: Props) => {
-    const locale = useLocale().locale.data['dashboard/premium-account'];
+    const locale = useLocale().locale['dashboard/premium-account'];
 
     const text = days !== 1 ? locale.days : locale.day;
     return (

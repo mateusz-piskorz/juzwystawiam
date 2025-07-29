@@ -10,7 +10,7 @@ import type { BreadcrumbItem } from '@/lib/types';
 import { Head, Link } from '@inertiajs/react';
 
 export default function DashboardPage() {
-    const locale = useLocale().locale.data;
+    const { locale } = useLocale();
 
     const breadcrumbs: BreadcrumbItem[] = [
         {

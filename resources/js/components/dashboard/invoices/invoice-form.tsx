@@ -5,6 +5,7 @@ import { Form } from '@/components/ui/form';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { InvoiceSchema, invoiceSchema } from '@/lib/constants/zod/invoice';
 import { upsertInvoice } from '@/lib/data/invoices';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from '@inertiajs/react';
@@ -23,6 +24,8 @@ type Props = {
 };
 
 export const InvoiceForm = ({ defaultValues, invoiceId, type }: Props) => {
+    const l = useLocale().locale;
+    const locale = { ...l['dashboard/invoices']['invoice-form'], common: l.common };
     const form = useForm<InvoiceSchema>({
         resolver: zodResolver(invoiceSchema),
         defaultValues,
@@ -31,11 +34,11 @@ export const InvoiceForm = ({ defaultValues, invoiceId, type }: Props) => {
     async function onSubmit(body: InvoiceSchema) {
         try {
             const response = await upsertInvoice({ body, invoiceId });
-            toast.success(invoiceId ? 'invoice updated successfully!' : 'invoice created successfully!');
+            toast.success(invoiceId ? locale['invoice updated successfully!'] : locale['invoice created successfully!']);
             router.visit(`/dashboard/invoices/${response.id}`);
         } catch (error: unknown) {
             const errorMessage = getErrorMessage(error);
-            toast.error(errorMessage || 'something went wrong');
+            toast.error(errorMessage || locale.common['something went wrong']);
             console.error(errorMessage);
         }
     }
@@ -89,9 +92,12 @@ export const InvoiceForm = ({ defaultValues, invoiceId, type }: Props) => {
                     <ProductsSection form={form} />
                 </div>
                 <div className="flex items-center justify-between px-4 pt-6 md:p-6">
-                    <span>Grand Total: {total} PLN</span>
+                    <span>
+                        {/* todo: static currency */}
+                        {locale['Grand Total']}: {total} PLN
+                    </span>
                     <Button type="submit" className="cursor-pointer" disabled={form.formState.isSubmitting}>
-                        Submit
+                        {locale.common.Submit}
                     </Button>
                 </div>
             </form>

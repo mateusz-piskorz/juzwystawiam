@@ -19,7 +19,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const AnalyticsPage = () => {
-    const l = useLocale().locale.data;
+    const l = useLocale().locale;
     const locale = { ...l['dashboard/analytics'], common: l.common };
 
     return (

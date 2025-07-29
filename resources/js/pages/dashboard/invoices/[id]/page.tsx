@@ -14,7 +14,7 @@ import { Head } from '@inertiajs/react';
 import dayjs from 'dayjs';
 
 const InvoicePage = () => {
-    const l = useLocale().locale.data;
+    const l = useLocale().locale;
     const locale = { ...l['dashboard/invoices'], common: l.common };
 
     const {
@@ -42,7 +42,7 @@ const InvoicePage = () => {
     return (
         <>
             <AppLayout breadcrumbs={breadcrumbs}>
-                <Head title="Invoices" />
+                <Head title={locale.common.Invoices} />
                 <MainContentLayout className="flex flex-col gap-5 md:gap-10 md:bg-transparent md:p-0">
                     <div className="md:bg-sidebar space-y-12 md:space-y-8 md:rounded md:p-6">
                         <div>

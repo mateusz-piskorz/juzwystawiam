@@ -27,7 +27,7 @@ interface DataTableToolbarProps<TData> {
 }
 
 export function DataTableToolbar<TData>({ table, addNewRecord, filters }: DataTableToolbarProps<TData>) {
-    const locale = useLocale().locale.data.common['data-table'];
+    const locale = useLocale().locale.common['data-table'];
     const searchParams = useSearchParams();
     const q = searchParams.get('q');
 

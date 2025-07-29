@@ -8,7 +8,7 @@ import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 
 export function SettingsLayout({ children }: PropsWithChildren) {
-    const locale = useLocale().locale.data['dashboard/settings'].index;
+    const locale = useLocale().locale['dashboard/settings'].index;
 
     // When server-side rendering, we only render the layout on the client...
     if (typeof window === 'undefined') {

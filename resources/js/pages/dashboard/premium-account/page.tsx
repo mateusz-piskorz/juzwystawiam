@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 import { toast } from 'sonner';
 
 const PremiumAccountPage = () => {
-    const l = useLocale().locale.data;
+    const l = useLocale().locale;
     const locale = { ...l['dashboard/premium-account'], common: l.common };
 
     const searchParams = useSearchParams();

@@ -20,7 +20,7 @@
             "FAILED": "Nieudane"
         },
         "INVOICE_TYPE": {
-            "VAT": "VAT",
+            "VAT": "Vat",
             "NO_VAT": "Bez VAT"
         },
         "MEASURE_UNIT": {
@@ -60,6 +60,7 @@
         "Manage": "Zarządzaj",
         "Invoices": "Faktury",
         "Dashboard": "Panel",
+        "something went wrong": "coś poszło nie tak",
 
         "premium-status-heading": {
             "Your premium account is": "Twój konto premium jest",
@@ -121,10 +122,37 @@
         "Status": "Status",
         "Preview": "Podgląd",
         "Download": "Pobierz",
-        "Edit this invoice": "Edytuj tę fakturę",
-        "Delete this invoice": "Usuń tę fakturę",
+        "Edit invoice": "Edytuj fakturę",
+        "Delete invoice": "Usuń fakturę",
         "Actions": "Akcje",
-        "Send email": "Wyślij e-mail"
+        "Send email": "Wyślij e-mail",
+        "Create invoice": "Utwórz fakturę",
+        "Invoice type": "Typ faktury",
+        "invoice-form": {
+            "invoice updated successfully!": "faktura została zaktualizowana!",
+            "invoice created successfully!": "faktura została utworzona!",
+            "Issue date": "Data wystawienia",
+            "A secret note for Your invoice": "Tajna notatka do Twojej faktury",
+            "Information about secret note": "Informacje o tajnej notatce",
+            "Secret note visible only to you. This feature is for": "Tajna notatka widoczna tylko dla Ciebie. Ta funkcja jest dla",
+            "premium users": "użytkowników premium",
+            "Payment method": "Metoda płatności",
+            "Currency": "Waluta",
+            "Invoice paid": "Faktura opłacona",
+            "Mark invoice as paid": "Oznacz fakturę jako opłaconą",
+            "Sale Date": "Data sprzedaży",
+            "Due date": "Termin płatności",
+            "Products": "Produkty",
+            "Product name": "Nazwa produktu",
+            "Price": "Cena",
+            "Quantity": "Ilość",
+            "Measure Unit": "Jednostka miary",
+            "Vat": "VAT",
+            "Discount": "Rabat",
+            "remove item": "usuń pozycję",
+            "add invoice product": "dodaj produkt do faktury",
+            "Grand Total": "Suma końcowa"
+        }
     },
 
     "dashboard/analytics": {

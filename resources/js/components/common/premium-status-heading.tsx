@@ -4,7 +4,7 @@ import { Heading } from './heading';
 
 export const PremiumStatusHeading = () => {
     const { hasPremium, premiumDays } = usePremium();
-    const locale = useLocale().locale.data.common['premium-status-heading'];
+    const locale = useLocale().locale.common['premium-status-heading'];
 
     return (
         <Heading

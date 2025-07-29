@@ -6,6 +6,7 @@ import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
 import { InvoiceSchema } from '@/lib/constants/zod/invoice';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { UseFieldArrayRemove, UseFormReturn } from 'react-hook-form';
 import { ProductSelectField } from '../../../atoms/product-select-field';
 import { RemoveItemButton } from './remove-item-button';
@@ -19,6 +20,7 @@ type Props<T extends InvoiceSchema> = {
 };
 
 export const ProductItemMobile = <T extends InvoiceSchema>({ form: formProps, idx, remove, fieldsLength, total }: Props<T>) => {
+    const locale = useLocale().locale['dashboard/invoices']['invoice-form'];
     const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
     const formType = form.watch('type');
 
@@ -28,12 +30,17 @@ export const ProductItemMobile = <T extends InvoiceSchema>({ form: formProps, id
 
             <div className="flex flex-col rounded border">
                 <div className="flex h-[60px]">
-                    <CurrencyField form={form} name={`invoice_products.${idx}.price`} label="Price" className="rounded-none rounded-ss border-none" />
+                    <CurrencyField
+                        form={form}
+                        name={`invoice_products.${idx}.price`}
+                        label={locale.Price}
+                        className="rounded-none rounded-ss border-none"
+                    />
                     <Separator orientation="vertical" />
                     <InputField
                         form={form}
                         name={`invoice_products.${idx}.quantity`}
-                        label="Quantity"
+                        label={locale.Quantity}
                         type="number"
                         inputMode="numeric"
                         className="rounded-none rounded-se border-none"
@@ -44,7 +51,7 @@ export const ProductItemMobile = <T extends InvoiceSchema>({ form: formProps, id
                     <SelectField
                         form={form}
                         name={`invoice_products.${idx}.measure_unit`}
-                        label="Jednostka miary"
+                        label={locale['Measure Unit']}
                         selectOptions={Object.values(MEASURE_UNIT).map((val) => ({ label: val, value: val }))}
                         className="rounded-none rounded-es border-none"
                     />
@@ -53,7 +60,7 @@ export const ProductItemMobile = <T extends InvoiceSchema>({ form: formProps, id
                         <SelectField
                             form={form}
                             name={`invoice_products.${idx}.vat_rate`}
-                            label="VAT"
+                            label={locale.Vat}
                             selectOptions={Object.values(VAT_RATE).map((val) => ({ label: `${val}%`, value: val }))}
                             className="rounded-none border-none"
                         />
@@ -62,7 +69,7 @@ export const ProductItemMobile = <T extends InvoiceSchema>({ form: formProps, id
                     <InputField
                         form={form}
                         name={`invoice_products.${idx}.discount`}
-                        label="Discount %"
+                        label={`${locale.Discount} %`}
                         type="number"
                         inputMode="numeric"
                         className="rounded-none rounded-ee border-none"

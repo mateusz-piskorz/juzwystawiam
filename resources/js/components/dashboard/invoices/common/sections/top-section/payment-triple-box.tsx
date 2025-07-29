@@ -4,6 +4,7 @@ import { Separator } from '@/components/ui/separator';
 import { CURRENCIES } from '@/lib/constants/currencies';
 import { PAYMENT_METHOD } from '@/lib/constants/enums/payment-method';
 import { InvoiceSchema } from '@/lib/constants/zod/invoice';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { cn } from '@/lib/utils/cn';
 import { UseFormReturn } from 'react-hook-form';
 
@@ -13,13 +14,15 @@ type Props = {
 };
 
 export const PaymentTripleBox = ({ form, className }: Props) => {
+    const locale = useLocale().locale['dashboard/invoices']['invoice-form'];
+
     return (
         <div className={cn('w-full min-w-[200px] rounded border', className)}>
             <div className="flex h-[60px]">
                 <SelectField
                     form={form}
                     name="payment_method"
-                    label="Sposób płatności"
+                    label={locale['Payment method']}
                     selectOptions={Object.values(PAYMENT_METHOD).map((val) => ({ label: val, value: val }))}
                     className="flex-2/3 rounded-none rounded-ss border-none"
                 />
@@ -29,7 +32,7 @@ export const PaymentTripleBox = ({ form, className }: Props) => {
                 <SelectField
                     form={form}
                     name="currency"
-                    label="Waluta"
+                    label={locale.Currency}
                     selectOptions={CURRENCIES.map((val) => ({ label: val, value: val }))}
                     className="flex-1/3 rounded-none rounded-se border-none"
                 />
@@ -41,8 +44,8 @@ export const PaymentTripleBox = ({ form, className }: Props) => {
                 form={form}
                 name="is_already_paid"
                 className="rounded-none rounded-ee rounded-es border-none"
-                label="Faktura opłacona"
-                description="Oznacz fakturę jako opłaconą"
+                label={locale['Invoice paid']}
+                description={locale['Mark invoice as paid']}
             />
         </div>
     );

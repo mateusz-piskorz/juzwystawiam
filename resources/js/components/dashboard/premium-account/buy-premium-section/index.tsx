@@ -2,7 +2,7 @@ import { useLocale } from '@/lib/hooks/use-locale';
 import { BuyPremiumCard } from './buy-premium-card';
 
 export const BuyPremiumSection = () => {
-    const locale = useLocale().locale.data['dashboard/premium-account'];
+    const locale = useLocale().locale['dashboard/premium-account'];
     return (
         <div className="flex flex-col items-center text-center">
             <h1 className="mb-2 text-xl font-medium">{locale['Buy Premium Days']}</h1>

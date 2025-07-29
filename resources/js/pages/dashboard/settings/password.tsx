@@ -13,7 +13,7 @@ import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
 
 export default function Password() {
-    const l = useLocale().locale.data;
+    const l = useLocale().locale;
     const locale = { ...l['dashboard/settings'].password, common: l.common };
     const passwordInput = useRef<HTMLInputElement>(null);
     const currentPasswordInput = useRef<HTMLInputElement>(null);

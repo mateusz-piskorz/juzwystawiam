@@ -1,7 +1,7 @@
 import { useLocale } from '@/lib/hooks/use-locale';
 
 export const BenefitsSection = () => {
-    const locale = useLocale().locale.data['dashboard/premium-account'].benefits;
+    const locale = useLocale().locale['dashboard/premium-account'].benefits;
     return (
         <div>
             <h1 className="mb-2 text-xl font-medium">{locale.Benefits}</h1>

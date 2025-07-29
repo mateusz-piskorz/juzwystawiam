@@ -6,12 +6,12 @@ import { useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
 
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { usePage } from '@/lib/hooks/use-page';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { Heading } from '../../../common/heading';
 
 export function DeleteUser() {
-    const localeData = usePage().props.locale.data;
-    const locale = localeData['dashboard/settings'].profile;
+    const l = useLocale().locale;
+    const locale = { ...l['dashboard/settings'].profile, common: l.common };
 
     const passwordInput = useRef<HTMLInputElement>(null);
     const { data, setData, delete: destroy, processing, reset, errors, clearErrors } = useForm<Required<{ password: string }>>({ password: '' });
@@ -77,7 +77,7 @@ export function DeleteUser() {
                             <DialogFooter className="gap-2">
                                 <DialogClose asChild>
                                     <Button variant="secondary" onClick={closeModal}>
-                                        {localeData.common.Cancel}
+                                        {locale.common.Cancel}
                                     </Button>
                                 </DialogClose>
 

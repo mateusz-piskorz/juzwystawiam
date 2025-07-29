@@ -5,11 +5,11 @@ import { AppearanceTabs } from '@/components/dashboard/settings/appearance/appea
 import { LocaleSelectInput } from '@/components/dashboard/settings/appearance/locale-select-input';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { SettingsLayout } from '@/layouts/dashboard/settings';
-import { usePage } from '@/lib/hooks/use-page';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { Head } from '@inertiajs/react';
 
 export default function Appearance() {
-    const l = usePage().props.locale.data;
+    const l = useLocale().locale;
     const locale = { ...l['dashboard/settings'].appearance, common: l.common };
 
     const breadcrumbs: BreadcrumbItem[] = [

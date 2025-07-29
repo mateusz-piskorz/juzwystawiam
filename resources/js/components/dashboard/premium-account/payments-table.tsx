@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getPaymentsColumns } from './payments-columns';
 
 export const PaymentsTable = () => {
-    const locale = useLocale().locale.data['dashboard/premium-account']['payments-history'];
+    const locale = useLocale().locale['dashboard/premium-account']['payments-history'];
 
     const { data } = useQuery({
         queryKey: ['getAllPremiumAccountPayments'],

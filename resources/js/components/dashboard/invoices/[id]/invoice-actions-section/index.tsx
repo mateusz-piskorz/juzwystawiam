@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const InvoiceActionsSection = ({ invoiceId, buyerEmail }: Props) => {
-    const locale = useLocale().locale.data['dashboard/invoices'];
+    const locale = useLocale().locale['dashboard/invoices'];
     const [openRemoveConfirm, setOpenRemoveConfirm] = useState(false);
     const [openEmailSendingDialog, setOpenEmailSendingDialog] = useState(false);
 
@@ -51,10 +51,10 @@ export const InvoiceActionsSection = ({ invoiceId, buyerEmail }: Props) => {
                         {locale['Send email']}
                     </Button>
                     <Button variant="secondary">
-                        <Link href={`/dashboard/invoices/${invoiceId}/edit`}>{locale['Edit this invoice']}</Link>
+                        <Link href={`/dashboard/invoices/${invoiceId}/edit`}>{locale['Edit invoice']}</Link>
                     </Button>
                     <Button variant="destructive" onClick={() => setOpenRemoveConfirm(true)}>
-                        {locale['Delete this invoice']}
+                        {locale['Delete invoice']}
                     </Button>
                 </div>
             </div>

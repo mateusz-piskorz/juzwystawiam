@@ -9,7 +9,7 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { useLocale } from '@/lib/hooks/use-locale';
 
 export function DataTableViewOptions<TData>({ table }: { table: Table<TData> }) {
-    const locale = useLocale().locale.data.common['data-table'];
+    const locale = useLocale().locale.common['data-table'];
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>

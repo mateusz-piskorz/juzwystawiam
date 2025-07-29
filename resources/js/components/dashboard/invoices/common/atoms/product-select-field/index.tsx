@@ -5,6 +5,7 @@ import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { InvoiceSchema } from '@/lib/constants/zod/invoice';
 import { getProducts } from '@/lib/data/products';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { Product } from '@/lib/types/product';
 import { useQuery } from '@tanstack/react-query';
 import { debounce } from 'lodash';
@@ -19,6 +20,7 @@ type Props<T extends InvoiceSchema> = {
 };
 
 export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, idx }: Props<T>) => {
+    const locale = useLocale().locale['dashboard/invoices']['invoice-form'];
     const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
     const invoiceType = form.watch('type');
     const [q, setQ] = useState('');
@@ -68,7 +70,7 @@ export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, i
                                         }
                                     }}
                                     inputValue={field.value}
-                                    label="Product name"
+                                    label={locale['Product name']}
                                     styles={{
                                         input: (baseStyles) => ({
                                             ...baseStyles,

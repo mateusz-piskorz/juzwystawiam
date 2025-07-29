@@ -8,7 +8,7 @@ import { useLocale } from '@/lib/hooks/use-locale';
 import { Head } from '@inertiajs/react';
 
 const InvoiceListPage = () => {
-    const l = useLocale().locale.data;
+    const l = useLocale().locale;
     const locale = { ...l['dashboard/invoices'], common: l.common };
 
     const breadcrumbs: BreadcrumbItem[] = [

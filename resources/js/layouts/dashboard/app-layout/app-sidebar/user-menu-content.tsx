@@ -6,7 +6,7 @@ import { Link, router } from '@inertiajs/react';
 import { LogOut, Settings } from 'lucide-react';
 
 export function UserMenuContent() {
-    const locale = useLocale().locale.data.common.sidebar;
+    const locale = useLocale().locale.common.sidebar;
     const cleanup = useMobileNavigation();
 
     const handleLogout = () => {

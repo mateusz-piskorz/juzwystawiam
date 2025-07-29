@@ -13,7 +13,7 @@ interface DataTableColumnHeaderProps<TData, TValue> extends React.HTMLAttributes
 }
 
 export function DataTableColumnHeader<TData, TValue>({ column, className }: DataTableColumnHeaderProps<TData, TValue>) {
-    const locale = useLocale().locale.data.common['data-table'];
+    const locale = useLocale().locale.common['data-table'];
     const searchParams = useSearchParams();
     const orderColumn = searchParams.get('order_column');
     const orderDirection = searchParams.get('order_direction');

@@ -20,7 +20,7 @@
             "FAILED": "Failed"
         },
         "INVOICE_TYPE": {
-            "VAT": "VAT",
+            "VAT": "Vat",
             "NO_VAT": "No VAT"
         },
         "MEASURE_UNIT": {
@@ -55,11 +55,13 @@
     },
 
     "common": {
+        "Submit": "Submit",
         "Saved": "Saved",
         "Cancel": "Cancel",
         "Manage": "Manage",
         "Invoices": "Invoices",
         "Dashboard": "Dashboard",
+        "something went wrong": "something went wrong",
 
         "premium-status-heading": {
             "Your premium account is": "Your premium account is",
@@ -122,10 +124,37 @@
         "Status": "Status",
         "Preview": "Preview",
         "Download": "Download",
-        "Edit this invoice": "Edit this invoice",
-        "Delete this invoice": "Delete this invoice",
+        "Edit invoice": "Edit invoice",
+        "Delete invoice": "Delete invoice",
         "Actions": "Actions",
-        "Send email": "Send email"
+        "Send email": "Send email",
+        "Create invoice": "Create invoice",
+        "Invoice type": "Invoice type",
+        "invoice-form": {
+            "invoice updated successfully!": "invoice updated successfully!",
+            "invoice created successfully!": "invoice created successfully!",
+            "Issue date": "Issue date",
+            "A secret note for Your invoice": "A secret note for Your invoice",
+            "Information about secret note": "Information about secret note",
+            "Secret note visible only to you. This feature is for": "Secret note visible only to you. This feature is for",
+            "premium users": "premium users",
+            "Payment method": "Payment method",
+            "Currency": "Currency",
+            "Invoice paid": "Invoice paid",
+            "Mark invoice as paid": "Mark invoice as paid",
+            "Sale Date": "Sale Date",
+            "Due date": "Due date",
+            "Products": "Products",
+            "Product name": "Product name",
+            "Price": "Price",
+            "Quantity": "Quantity",
+            "Measure Unit": "Measure Unit",
+            "Vat": "Vat",
+            "Discount": "Discount",
+            "remove item": "remove item",
+            "add invoice product": "add invoice product",
+            "Grand Total": "Grand Total"
+        }
     },
 
     "dashboard/analytics": {

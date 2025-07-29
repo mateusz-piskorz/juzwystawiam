@@ -8,7 +8,7 @@ import { NavMain } from './nav-main';
 import { NavUser } from './nav-user';
 
 export function AppSidebar() {
-    const locale = useLocale().locale.data.common.sidebar;
+    const locale = useLocale().locale.common.sidebar;
     const mainNavItems: NavItem[] = [
         {
             title: locale.Dashboard,

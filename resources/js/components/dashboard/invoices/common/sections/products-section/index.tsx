@@ -4,6 +4,7 @@ import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
 import { InvoiceSchema } from '@/lib/constants/zod/invoice';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { useIsMobile } from '@/lib/hooks/use-mobile';
 import { SquarePlus } from 'lucide-react';
 import React from 'react';
@@ -15,6 +16,7 @@ type Props<T extends InvoiceSchema> = {
     form: UseFormReturn<T>;
 };
 export const ProductsSection = <T extends InvoiceSchema>({ form: formProps }: Props<T>) => {
+    const locale = useLocale().locale['dashboard/invoices']['invoice-form'];
     const isMobile = useIsMobile();
 
     const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
@@ -28,7 +30,7 @@ export const ProductsSection = <T extends InvoiceSchema>({ form: formProps }: Pr
     return (
         <>
             <div className="relative z-0 mt-14 space-y-4 md:px-6">
-                <h1 className="px-4 text-lg md:px-0">Products</h1>
+                <h1 className="px-4 text-lg md:px-0">{locale.Products}</h1>
                 <div className="flex flex-col gap-4 md:gap-4 md:overflow-x-auto">
                     {fields.map((invoiceItem, idx) => {
                         // todo: refactor total calculation
@@ -77,6 +79,7 @@ export const ProductsSection = <T extends InvoiceSchema>({ form: formProps }: Pr
                         }
                     >
                         <SquarePlus />
+                        <span className="sr-only">{locale['add invoice product']}</span>
                     </Button>
                 </div>
             </div>

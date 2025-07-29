@@ -18,7 +18,7 @@ interface DataTableRowActionsProps {
 }
 
 export function DataTableRowActions({ actions }: DataTableRowActionsProps) {
-    const locale = useLocale().locale.data.common['data-table'];
+    const locale = useLocale().locale.common['data-table'];
     return (
         <div className="text-right">
             <DropdownMenu>

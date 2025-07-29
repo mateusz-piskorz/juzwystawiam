@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const MainAnalyticChart = ({ className, withFilters = true }: Props) => {
-    const locale = useLocale().locale.data['dashboard/analytics'];
+    const locale = useLocale().locale['dashboard/analytics'];
 
     const searchParams = useSearchParams();
     const period = searchParams.get('period');

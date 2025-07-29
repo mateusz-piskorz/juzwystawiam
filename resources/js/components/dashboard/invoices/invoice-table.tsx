@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const InvoiceTable = ({ displayDataTableToolbar = true, withFilters = true, displayPagination = true }: Props) => {
-    const locale = useLocale().locale.data['dashboard/invoices'];
+    const locale = useLocale().locale['dashboard/invoices'];
     const searchParams = useSearchParams();
 
     const page = searchParams.get('page');

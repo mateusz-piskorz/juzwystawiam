@@ -37,7 +37,7 @@ export function DataTable<TData, TValue>({
     displayDataTableToolbar = true,
     className,
 }: DataTableProps<TData, TValue>) {
-    const locale = useLocale().locale.data.common['data-table'];
+    const locale = useLocale().locale.common['data-table'];
 
     const [rowSelection, setRowSelection] = useState({});
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
