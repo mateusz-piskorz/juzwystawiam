@@ -55,6 +55,15 @@
     },
 
     "common": {
+        "Vat rate": "Vat rate",
+        "Measure Unit": "Measure Unit",
+        "Updated": "Updated",
+        "Created": "Created",
+        "Update": "Update",
+        "Create": "Create",
+        "Successfully": "Successfully",
+        "False": "False",
+        "True": "True",
         "Submit": "Submit",
         "Saved": "Saved",
         "Cancel": "Cancel",
@@ -62,6 +71,8 @@
         "Invoices": "Invoices",
         "Dashboard": "Dashboard",
         "something went wrong": "something went wrong",
+        "Fill in the details below to": "Fill in the details below to",
+        "Optional": "Optional",
 
         "premium-status-heading": {
             "Your premium account is": "Your premium account is",
@@ -90,7 +101,11 @@
             "Asc": "Asc",
             "Desc": "Desc",
             "Hide": "Hide",
-            "Toggle columns": "Toggle columns"
+            "Toggle columns": "Toggle columns",
+            "row(s) selected.": "row(s) selected.",
+            "of": "of",
+            "Rows per page": "Rows per page",
+            "Page": "Page"
         }
     },
 
@@ -118,7 +133,7 @@
         "Invoice Products": "Invoice Products",
         "Invoice Emails": "Invoice Emails",
         "Name": "Name",
-        "Measure Unit": "Measure Unit",
+
         "Date": "Date",
         "Recipient": "Recipient",
         "Status": "Status",
@@ -130,6 +145,8 @@
         "Send email": "Send email",
         "Create invoice": "Create invoice",
         "Invoice type": "Invoice type",
+        "Are you sure you want to remove this Invoice": "Are you sure you want to remove this Invoice",
+        "This action cannot be undone. Invoice will be permanently deleted.": "This action cannot be undone. Invoice will be permanently deleted.",
         "invoice-form": {
             "invoice updated successfully!": "invoice updated successfully!",
             "invoice created successfully!": "invoice created successfully!",
@@ -148,13 +165,52 @@
             "Product name": "Product name",
             "Price": "Price",
             "Quantity": "Quantity",
-            "Measure Unit": "Measure Unit",
-            "Vat": "Vat",
             "Discount": "Discount",
             "remove item": "remove item",
             "add invoice product": "add invoice product",
             "Grand Total": "Grand Total"
         }
+    },
+
+    "dashboard/contractors": {
+        "Contractor": "Contractor",
+        "Contractors": "Contractors",
+        "Manage your contractors and their details.": "Manage your contractors and their details.",
+        "Add new contractor": "Add new contractor",
+        "Is own company": "Is own company",
+        "Type of business": "Type of business",
+        "Delete contractor": "Delete contractor",
+        "Edit contractor": "Edit contractor",
+        "Contractor deleted successfully": "Contractor deleted successfully",
+        "Are you sure you want to remove this Contractor": "Are you sure you want to remove this Contractor",
+        "This action cannot be undone. Contractor will be permanently deleted.": "This action cannot be undone. Contractor will be permanently deleted.",
+        "Company name": "Company name",
+        "Country": "Country",
+        "Address": "Address",
+        "Postal code": "Postal code",
+        "City": "City",
+        "Street name": "Street name",
+        "First name": "First name",
+        "Surname": "Surname",
+        "Email": "Email",
+        "Phone": "Phone",
+        "Bank Account": "Bank Account",
+        "Company nip": "Company nip",
+        "indicates whether the company is owned by the user": "indicates whether the company is owned by the user"
+    },
+
+    "dashboard/products": {
+        "Products": "Products",
+        "Manage your products and see details.": "Manage your products and see details.",
+        "Product name": "Product name",
+        "Price": "Price",
+        "Delete product": "Delete product",
+        "Edit product": "Edit product",
+        "Add new product": "Add new product",
+        "Are you sure you want to remove this product": "Are you sure you want to remove this product",
+        "This action cannot be undone. Product will be permanently deleted": "This action cannot be undone. Product will be permanently deleted",
+        "Product": "Product",
+        "Product description": "Product description"
     },
 
     "dashboard/analytics": {
@@ -237,5 +293,39 @@
             "Password": "Password",
             "Appearance": "Appearance"
         }
+    },
+
+    "auth": {
+        "Create an account": "Create an account",
+        "Enter your details below to create your account": "Enter your details below to create your account",
+        "Register": "Register",
+        "Name": "Name",
+        "Full name": "Full name",
+        "Email address": "Email address",
+        "email@example.com": "email@example.com",
+        "Password": "Password",
+        "Confirm password": "Confirm password",
+        "Create account": "Create account",
+        "Already have an account": "Already have an account",
+        "Log in": "Log in",
+        "Log in to your account": "Log in to your account",
+        "Enter your email and password below to log in": "Enter your email and password below to log in",
+        "Forgot password": "Forgot password",
+        "Remember me": "Remember me",
+        "Don't have an account": "Don't have an account",
+        "Sign up": "Sign up",
+        "Confirm your password": "Confirm your password",
+        "This is a secure area of the application. Please confirm your password before continuing": "This is a secure area of the application. Please confirm your password before continuing",
+        "Reset password": "Reset password",
+        "Verify email": "Verify email",
+        "Please verify your email address by clicking on the link we just emailed to you": "Please verify your email address by clicking on the link we just emailed to you",
+        "Email verification": "Email verification",
+        "A new verification link has been sent to the email address you provided during registration": "A new verification link has been sent to the email address you provided during registration",
+        "Resend verification email": "Resend verification email",
+        "Log out": "Log out",
+        "Email password reset link": "Email password reset link",
+        "Or, return to": "Or, return to",
+        "Please enter your new password below": "Please enter your new password below",
+        "Email": "Email"
     }
 }

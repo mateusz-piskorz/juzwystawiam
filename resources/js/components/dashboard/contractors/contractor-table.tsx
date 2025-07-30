@@ -2,6 +2,7 @@ import ConfirmDialog from '@/components/common/confirm-dialog';
 import { DataTable } from '@/components/common/data-table';
 import { TYPE_OF_BUSINESS } from '@/lib/constants/enums/type-of-business';
 import { deleteContractor, getContractors } from '@/lib/data/contractors';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
 import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
@@ -11,6 +12,9 @@ import { getContractorColumns } from './contractor-columns';
 import { UpsertContractorDialog } from './upsert-contractor-dialog';
 
 export const ContractorTable = () => {
+    const l = useLocale().locale;
+    const locale = { ...l['dashboard/contractors'], common: l.common, enums: l.enum };
+
     const searchParams = useSearchParams();
     const [open, setOpen] = useState(false);
     const [openConfirm, setOpenConfirm] = useState(false);
@@ -32,11 +36,11 @@ export const ContractorTable = () => {
     const handleDeleteContractor = async (contractorId: number) => {
         try {
             await deleteContractor({ contractorId });
-            toast.success('Contractor deleted successfully');
+            toast.success(locale['Contractor deleted successfully']);
             refetch();
             setOpenConfirm(false);
         } catch (err) {
-            toast.error(typeof err === 'string' ? err : 'Something went wrong');
+            toast.error(typeof err === 'string' ? err : locale.common['something went wrong']);
         }
     };
 
@@ -52,6 +56,7 @@ export const ContractorTable = () => {
             setSelectedContractorId(contractorId);
             setOpen(true);
         },
+        locale,
     });
 
     return (
@@ -72,8 +77,8 @@ export const ContractorTable = () => {
                         await handleDeleteContractor(selectedContractorId);
                     }
                 }}
-                title="Are you sure you want to remove this Contractor?"
-                description="This action cannot be undone. Contractor will be permanently deleted."
+                title={`${locale['Are you sure you want to remove this Contractor']}?`}
+                description={locale['This action cannot be undone. Contractor will be permanently deleted.']}
             />
 
             <DataTable
@@ -81,7 +86,7 @@ export const ContractorTable = () => {
                 data={data?.data ?? []}
                 columns={columns}
                 addNewRecord={{
-                    label: 'Add new contractor',
+                    label: locale['Add new contractor'],
                     action: () => {
                         setSelectedContractorId(undefined);
                         setOpen(true);
@@ -90,16 +95,16 @@ export const ContractorTable = () => {
                 filters={[
                     {
                         filterKey: 'is_own_company',
-                        title: 'Is own company',
+                        title: locale['Is own company'],
                         options: [
-                            { label: 'true', value: 'true' },
-                            { label: 'false', value: 'false' },
+                            { label: locale.common.True, value: 'true' },
+                            { label: locale.common.False, value: 'false' },
                         ],
                     },
                     {
                         filterKey: 'type_of_business',
-                        title: 'Type of business',
-                        options: Object.values(TYPE_OF_BUSINESS).map((e) => ({ label: e, value: e })),
+                        title: locale['Type of business'],
+                        options: Object.values(TYPE_OF_BUSINESS).map((val) => ({ label: locale.enums.TYPE_OF_BUSINESS[val], value: val })),
                     },
                 ]}
             />

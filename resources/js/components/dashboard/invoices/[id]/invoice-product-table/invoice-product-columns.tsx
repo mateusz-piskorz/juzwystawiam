@@ -9,7 +9,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 
 type Props = {
-    locale: ReturnType<typeof useLocale>['locale']['data']['dashboard/invoices'];
+    locale: ReturnType<typeof useLocale>['locale']['dashboard/invoices'] & { common: ReturnType<typeof useLocale>['locale']['common'] };
 };
 
 export function getInvoiceProductColumns({ locale }: Props): ColumnDef<InvoiceProduct>[] {
@@ -46,7 +46,7 @@ export function getInvoiceProductColumns({ locale }: Props): ColumnDef<InvoicePr
         },
         {
             meta: {
-                title: locale['Measure Unit'],
+                title: locale.common['Measure Unit'],
             },
             accessorKey: 'measure_unit',
             header: ({ column }) => <DataTableColumnHeader column={column} />,

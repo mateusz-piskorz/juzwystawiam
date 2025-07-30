@@ -9,7 +9,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 
 type Props = {
-    locale: ReturnType<typeof useLocale>['locale']['data']['dashboard/invoices'];
+    locale: ReturnType<typeof useLocale>['locale']['dashboard/invoices'];
 };
 
 export function getInvoiceEmailColumns({ locale }: Props): ColumnDef<InvoiceEmail>[] {

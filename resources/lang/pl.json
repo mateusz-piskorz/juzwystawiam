@@ -55,12 +55,24 @@
     },
 
     "common": {
+        "Vat rate": "Stawka VAT",
+        "Measure Unit": "Jednostka miary",
+        "Updated": "Zaktualizowano",
+        "Created": "Utworzono",
+        "Update": "Aktualizuj",
+        "Create": "Utwórz",
+        "Successfully": "Pomyślnie",
+        "False": "Fałsz",
+        "True": "Prawda",
+        "Submit": "Wyślij",
         "Saved": "Zapisano",
         "Cancel": "Anuluj",
         "Manage": "Zarządzaj",
         "Invoices": "Faktury",
         "Dashboard": "Panel",
         "something went wrong": "coś poszło nie tak",
+        "Fill in the details below to": "Wypełnij poniższe dane, aby",
+        "Optional": "Opcjonalne",
 
         "premium-status-heading": {
             "Your premium account is": "Twój konto premium jest",
@@ -89,7 +101,11 @@
             "Asc": "Rosnąco",
             "Desc": "Malejąco",
             "Hide": "Ukryj",
-            "Toggle columns": "Przełącz kolumny"
+            "Toggle columns": "Przełącz kolumny",
+            "row(s) selected.": "wybrano wiersz(e).",
+            "of": "z",
+            "Rows per page": "Wierszy na stronę",
+            "Page": "Strona"
         }
     },
 
@@ -116,7 +132,7 @@
         "Invoice Products": "Produkty na fakturze",
         "Invoice Emails": "E-maile do faktury",
         "Name": "Nazwa",
-        "Measure Unit": "Jednostka miary",
+
         "Date": "Data",
         "Recipient": "Odbiorca",
         "Status": "Status",
@@ -128,6 +144,8 @@
         "Send email": "Wyślij e-mail",
         "Create invoice": "Utwórz fakturę",
         "Invoice type": "Typ faktury",
+        "Are you sure you want to remove this Invoice": "Czy na pewno chcesz usunąć tę fakturę?",
+        "This action cannot be undone. Invoice will be permanently deleted.": "Tej operacji nie można cofnąć. Faktura zostanie trwale usunięta.",
         "invoice-form": {
             "invoice updated successfully!": "faktura została zaktualizowana!",
             "invoice created successfully!": "faktura została utworzona!",
@@ -153,6 +171,46 @@
             "add invoice product": "dodaj produkt do faktury",
             "Grand Total": "Suma końcowa"
         }
+    },
+
+    "dashboard/contractors": {
+        "Contractors": "Kontrahenci",
+        "Manage your contractors and their details.": "Zarządzaj swoimi kontrahentami i ich danymi.",
+        "Add new contractor": "Dodaj nowego kontrahenta",
+        "Is own company": "Własna firma",
+        "Type of business": "Typ działalności",
+        "Delete contractor": "Usuń kontrahenta",
+        "Edit contractor": "Edytuj kontrahenta",
+        "Contractor deleted successfully": "Kontrahent został pomyślnie usunięty",
+        "Are you sure you want to remove this Contractor?": "Czy na pewno chcesz usunąć tego kontrahenta?",
+        "This action cannot be undone. Contractor will be permanently deleted.": "Tej operacji nie można cofnąć. Kontrahent zostanie trwale usunięty.",
+        "Company name": "Nazwa firmy",
+        "Country": "Kraj",
+        "Address": "Adres",
+        "Postal code": "Kod pocztowy",
+        "City": "Miasto",
+        "Street name": "Nazwa ulicy",
+        "First name": "Imię",
+        "Surname": "Nazwisko",
+        "Email": "E-mail",
+        "Phone": "Telefon",
+        "Bank Account": "Konto bankowe",
+        "Company nip": "NIP firmy",
+        "indicates whether the company is owned by the user": "wskazuje, czy firma jest własnością użytkownika"
+    },
+
+    "dashboard/products": {
+        "Products": "Produkty",
+        "Manage your products and see details.": "Zarządzaj swoimi produktami i zobacz szczegóły.",
+        "Product name": "Nazwa produktu",
+        "Price": "Cena",
+        "Delete product": "Usuń produkt",
+        "Edit product": "Edytuj produkt",
+        "Add new product": "Dodaj nowy produkt",
+        "Are you sure you want to remove this product": "Czy na pewno chcesz usunąć ten produkt?",
+        "This action cannot be undone. Product will be permanently deleted": "Tej operacji nie można cofnąć. Produkt zostanie trwale usunięty.",
+        "Product": "Produkt",
+        "Product description": "Opis produktu"
     },
 
     "dashboard/analytics": {
@@ -235,5 +293,39 @@
             "Password": "Hasło",
             "Appearance": "Wygląd"
         }
+    },
+
+    "auth": {
+        "Create an account": "Utwórz konto",
+        "Enter your details below to create your account": "Wprowadź poniżej swoje dane, aby utworzyć konto",
+        "Register": "Zarejestruj się",
+        "Name": "Imię",
+        "Full name": "Imię i nazwisko",
+        "Email address": "Adres e-mail",
+        "email@example.com": "email@przyklad.com",
+        "Password": "Hasło",
+        "Confirm password": "Potwierdź hasło",
+        "Create account": "Utwórz konto",
+        "Already have an account": "Masz już konto",
+        "Log in": "Zaloguj się",
+        "Log in to your account": "Zaloguj się na swoje konto",
+        "Enter your email and password below to log in": "Wprowadź poniżej swój e-mail i hasło, aby się zalogować",
+        "Forgot password": "Nie pamiętasz hasła",
+        "Remember me": "Zapamiętaj mnie",
+        "Don't have an account": "Nie masz konta",
+        "Sign up": "Zarejestruj się",
+        "Confirm your password": "Potwierdź swoje hasło",
+        "This is a secure area of the application. Please confirm your password before continuing": "To jest bezpieczny obszar aplikacji. Potwierdź swoje hasło przed kontynuacją",
+        "Reset password": "Zresetuj hasło",
+        "Verify email": "Zweryfikuj e-mail",
+        "Please verify your email address by clicking on the link we just emailed to you": "Zweryfikuj swój adres e-mail, klikając w link, który właśnie wysłaliśmy",
+        "Email verification": "Weryfikacja e-maila",
+        "A new verification link has been sent to the email address you provided during registration": "Nowy link weryfikacyjny został wysłany na adres e-mail podany podczas rejestracji",
+        "Resend verification email": "Wyślij ponownie e-mail weryfikacyjny",
+        "Log out": "Wyloguj się",
+        "Email password reset link": "Wyślij link do resetowania hasła",
+        "Or, return to": "Lub wróć do",
+        "Please enter your new password below": "Wprowadź poniżej swoje nowe hasło",
+        "Email": "Email"
     }
 }

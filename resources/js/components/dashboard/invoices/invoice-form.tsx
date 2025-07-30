@@ -25,7 +25,7 @@ type Props = {
 
 export const InvoiceForm = ({ defaultValues, invoiceId, type }: Props) => {
     const l = useLocale().locale;
-    const locale = { ...l['dashboard/invoices']['invoice-form'], common: l.common };
+    const locale = { ...l['dashboard/invoices']['invoice-form'], common: l.common, base: l['dashboard/invoices'] };
     const form = useForm<InvoiceSchema>({
         resolver: zodResolver(invoiceSchema),
         defaultValues,
@@ -34,7 +34,7 @@ export const InvoiceForm = ({ defaultValues, invoiceId, type }: Props) => {
     async function onSubmit(body: InvoiceSchema) {
         try {
             const response = await upsertInvoice({ body, invoiceId });
-            toast.success(invoiceId ? locale['invoice updated successfully!'] : locale['invoice created successfully!']);
+            toast.success(`${locale.base.Invoice} ${invoiceId ? locale['common'].Updated : locale['common'].Created} ${locale.common.Successfully}!`);
             router.visit(`/dashboard/invoices/${response.id}`);
         } catch (error: unknown) {
             const errorMessage = getErrorMessage(error);

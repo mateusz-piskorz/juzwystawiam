@@ -9,6 +9,7 @@ import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
 import { createProductDTO, CreateProductDTO } from '@/lib/constants/zod/product';
 import { upsertProduct } from '@/lib/data/products';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { Product } from '@/lib/types/product';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -30,6 +31,9 @@ const initialDefaultValue = {
 };
 
 export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, onSuccess }: Props) => {
+    const l = useLocale().locale;
+    const locale = { ...l['dashboard/products'], common: l.common, enum: l.enum };
+
     const form = useForm<CreateProductDTO>({
         resolver: zodResolver(createProductDTO),
         defaultValues: defaultValues || initialDefaultValue,
@@ -43,13 +47,13 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
     async function onSubmit(body: CreateProductDTO) {
         try {
             const product = await upsertProduct({ body, productId });
-            toast.success(`Product ${productId ? 'updated' : 'created'} successfully`);
+            toast.success(`${locale.Product} ${productId ? locale.common.Updated : locale.common.Created} ${locale.common.Successfully}`);
             onSuccess?.(product);
             setOpen(false);
         } catch (error: unknown) {
             const errorMessage = getErrorMessage(error);
             console.error(errorMessage);
-            toast.error(errorMessage || 'Something went wrong');
+            toast.error(errorMessage || locale.common['something went wrong']);
         }
     }
 
@@ -58,7 +62,10 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
             <DialogContent className="md:min-w-[700px]">
                 <DialogHeader>
                     <DialogTitle>{productId ? 'Update' : 'Create'} Product</DialogTitle>
-                    <DialogDescription>Fill in the details below to {productId ? 'update' : 'create'} Product.</DialogDescription>
+                    <DialogDescription>
+                        {locale.common['Fill in the details below to']}
+                        {productId ? locale.common.Updated : locale.common.Created} {locale.Product}.
+                    </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
                     <form
@@ -68,7 +75,7 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
                         }}
                         className="space-y-5"
                     >
-                        <InputField form={form} name="name" label="Product name" />
+                        <InputField form={form} name="name" label={locale['Product name']} />
                         <FormField
                             control={form.control}
                             name="description"
@@ -76,7 +83,7 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
                                 <FormItem className="w-full">
                                     <FormControl>
                                         <Textarea
-                                            placeholder="Product description"
+                                            placeholder={locale['Product description']}
                                             className="h-[123px] resize-none"
                                             {...field}
                                             value={field.value || ''}
@@ -86,7 +93,7 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
                             )}
                         />
 
-                        <CurrencyField form={form} name="price" label="Product price" />
+                        <CurrencyField form={form} name="price" label={`${locale.Product} ${locale.Price}`} />
 
                         <div className="flex w-full flex-col gap-5 sm:flex-row">
                             <SelectField
@@ -99,7 +106,7 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
                                 form={form}
                                 name="measure_unit"
                                 label="Jednostka miary"
-                                selectOptions={Object.values(MEASURE_UNIT).map((val) => ({ label: val, value: val }))}
+                                selectOptions={Object.values(MEASURE_UNIT).map((val) => ({ label: locale.enum.MEASURE_UNIT[val], value: val }))}
                             />
                         </div>
 

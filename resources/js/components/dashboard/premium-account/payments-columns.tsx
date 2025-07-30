@@ -9,7 +9,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 
 type Props = {
-    locale: ReturnType<typeof useLocale>['locale']['data']['dashboard/premium-account']['payments-history'];
+    locale: ReturnType<typeof useLocale>['locale']['dashboard/premium-account']['payments-history'];
 };
 
 export function getPaymentsColumns({ locale }: Props): ColumnDef<PremiumAccountPayment>[] {

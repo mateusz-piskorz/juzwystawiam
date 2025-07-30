@@ -2,26 +2,29 @@ import { Heading } from '@/components/common/heading';
 import { ProductTable } from '@/components/dashboard/products/product-table';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { BreadcrumbItem } from '@/lib/types';
 import { Head } from '@inertiajs/react';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-    },
-    {
-        title: 'Products',
-        href: '/dashboard/products',
-    },
-];
-
 const ProductsPage = () => {
+    const l = useLocale().locale;
+    const locale = { ...l['dashboard/products'], common: l.common };
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: locale.common.Dashboard,
+            href: '/dashboard',
+        },
+        {
+            title: locale.Products,
+            href: '/dashboard/products',
+        },
+    ];
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Products" />
+            <Head title={locale.Products} />
             <MainContentLayout>
-                <Heading title="Products" description="Manage your products and see details." />
+                <Heading title={locale.Products} description={locale['Manage your products and see details.']} />
                 <ProductTable />
             </MainContentLayout>
         </AppLayout>

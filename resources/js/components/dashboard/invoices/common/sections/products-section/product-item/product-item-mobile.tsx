@@ -20,7 +20,9 @@ type Props<T extends InvoiceSchema> = {
 };
 
 export const ProductItemMobile = <T extends InvoiceSchema>({ form: formProps, idx, remove, fieldsLength, total }: Props<T>) => {
-    const locale = useLocale().locale['dashboard/invoices']['invoice-form'];
+    const l = useLocale().locale;
+    const locale = { ...l['dashboard/invoices']['invoice-form'], common: l.common, enum: l.enum };
+
     const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
     const formType = form.watch('type');
 
@@ -51,8 +53,8 @@ export const ProductItemMobile = <T extends InvoiceSchema>({ form: formProps, id
                     <SelectField
                         form={form}
                         name={`invoice_products.${idx}.measure_unit`}
-                        label={locale['Measure Unit']}
-                        selectOptions={Object.values(MEASURE_UNIT).map((val) => ({ label: val, value: val }))}
+                        label={locale.common['Measure Unit']}
+                        selectOptions={Object.values(MEASURE_UNIT).map((val) => ({ label: locale.enum.MEASURE_UNIT[val], value: val }))}
                         className="rounded-none rounded-es border-none"
                     />
                     <Separator orientation="vertical" />
@@ -60,7 +62,7 @@ export const ProductItemMobile = <T extends InvoiceSchema>({ form: formProps, id
                         <SelectField
                             form={form}
                             name={`invoice_products.${idx}.vat_rate`}
-                            label={locale.Vat}
+                            label={locale.common['Vat rate']}
                             selectOptions={Object.values(VAT_RATE).map((val) => ({ label: `${val}%`, value: val }))}
                             className="rounded-none border-none"
                         />

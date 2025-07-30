@@ -18,7 +18,7 @@ export const PaymentsTable = () => {
     return (
         <>
             <Heading title={locale['Payments History']} />
-            <DataTable displayDataTableToolbar={false} data={data ?? []} columns={columns} filters={[]} />;
+            <DataTable displayDataTableToolbar={false} data={data ?? []} columns={columns} filters={[]} />
         </>
     );
 };

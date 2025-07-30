@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-r
 
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
 import { cn } from '@/lib/utils/cn';
 
@@ -12,6 +13,7 @@ interface DataTablePaginationProps<TData> {
 }
 
 export function DataTablePagination<TData>({ table, totalPages }: DataTablePaginationProps<TData>) {
+    const locale = useLocale().locale.common['data-table'];
     const searchParams = useSearchParams();
     const limit = searchParams.get('limit');
     const page = searchParams.get('page') ?? '1';
@@ -25,12 +27,12 @@ export function DataTablePagination<TData>({ table, totalPages }: DataTablePagin
             <div
                 className={cn('text-muted-foreground hidden flex-1 text-sm sm:block', table.getFilteredSelectedRowModel().rows.length > 0 && 'block')}
             >
-                {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected.
+                {table.getFilteredSelectedRowModel().rows.length} {locale.of} {table.getFilteredRowModel().rows.length} {locale['row(s) selected.']}
             </div>
 
             <div className="flex justify-between gap-4 sm:gap-0">
                 <div className="flex items-center space-x-2">
-                    <p className="hidden text-sm font-medium sm:inline-block">Rows per page</p>
+                    <p className="hidden text-sm font-medium sm:inline-block">{locale['Rows per page']}</p>
                     <Select
                         value={limit ? String(limit) : '25'}
                         onValueChange={(value) => {
@@ -51,7 +53,7 @@ export function DataTablePagination<TData>({ table, totalPages }: DataTablePagin
                 </div>
                 <div className="flex">
                     <div className="hidden w-[100px] items-center justify-center text-sm font-medium sm:flex">
-                        Page {page} of {totalPages}
+                        {locale.Page} {page} {locale.of} {totalPages}
                     </div>
                     <div className="flex items-center gap-2">
                         <Button

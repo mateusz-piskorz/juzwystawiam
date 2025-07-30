@@ -58,7 +58,13 @@ export const InvoiceActionsSection = ({ invoiceId, buyerEmail }: Props) => {
                     </Button>
                 </div>
             </div>
-            <ConfirmDialog open={openRemoveConfirm} setOpen={setOpenRemoveConfirm} onContinue={handleDelete} title="Remove invoice" />
+            <ConfirmDialog
+                open={openRemoveConfirm}
+                setOpen={setOpenRemoveConfirm}
+                onContinue={handleDelete}
+                title={locale['Are you sure you want to remove this Invoice']}
+                description={locale['This action cannot be undone. Invoice will be permanently deleted.']}
+            />
             <SendEmailDialog
                 open={openEmailSendingDialog}
                 setOpen={setOpenEmailSendingDialog}
