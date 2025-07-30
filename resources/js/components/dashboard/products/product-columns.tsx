@@ -73,7 +73,7 @@ export const getProductColumns = ({
             title: locale['Price'],
         },
         accessorKey: 'price',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Price" />,
+        header: ({ column }) => <DataTableColumnHeader column={column} />,
         cell: ({ row }) => {
             return row.original.price;
         },

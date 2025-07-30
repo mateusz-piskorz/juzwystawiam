@@ -103,7 +103,7 @@ export default function Password() {
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password_confirmation">{locale['New password']}</Label>
+                            <Label htmlFor="password_confirmation">{locale['Confirm password']}</Label>
 
                             <Input
                                 id="password_confirmation"
@@ -112,7 +112,7 @@ export default function Password() {
                                 type="password"
                                 className="mt-1 block w-full"
                                 autoComplete="new-password"
-                                placeholder={locale['New password']}
+                                placeholder={locale['Confirm password']}
                             />
 
                             <InputError message={errors.password_confirmation} />

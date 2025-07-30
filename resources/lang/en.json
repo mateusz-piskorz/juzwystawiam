@@ -326,6 +326,7 @@
         "Email password reset link": "Email password reset link",
         "Or, return to": "Or, return to",
         "Please enter your new password below": "Please enter your new password below",
-        "Email": "Email"
+        "Email": "Email",
+        "Enter your email to receive a password reset link": "Enter your email to receive a password reset link"
     }
 }

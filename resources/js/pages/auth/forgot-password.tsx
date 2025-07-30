@@ -24,7 +24,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
     };
 
     return (
-        <AuthLayout title={locale['Forgot password']} description={locale['Enter your email and password below to log in']}>
+        <AuthLayout title={locale['Forgot password']} description={locale['Enter your email to receive a password reset link']}>
             <Head title={locale['Forgot password']} />
 
             {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
@@ -57,7 +57,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
 
                 <div className="text-muted-foreground space-x-1 text-center text-sm">
                     <span>{locale['Or, return to']}</span>
-                    <TextLink href={route('login')}>{locale['Log in']}</TextLink>
+                    <TextLink href={route('login')}>{locale['Log in']}27</TextLink>
                 </div>
             </div>
         </AuthLayout>

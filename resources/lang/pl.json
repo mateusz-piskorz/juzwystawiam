@@ -326,6 +326,7 @@
         "Email password reset link": "Wyślij link do resetowania hasła",
         "Or, return to": "Lub wróć do",
         "Please enter your new password below": "Wprowadź poniżej swoje nowe hasło",
-        "Email": "Email"
+        "Email": "Email",
+        "Enter your email to receive a password reset link": "Wprowadź swój e-mail, aby otrzymać link do resetowania hasła"
     }
 }
