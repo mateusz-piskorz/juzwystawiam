@@ -13,7 +13,7 @@ import { UpsertContractorDialog } from './upsert-contractor-dialog';
 
 export const ContractorTable = () => {
     const l = useLocale().locale;
-    const locale = { ...l['dashboard/contractors'], common: l.common, enums: l.enum };
+    const locale = { ...l['dashboard/contractors'], common: l.common, enum: l.enum };
 
     const searchParams = useSearchParams();
     const [open, setOpen] = useState(false);
@@ -97,14 +97,14 @@ export const ContractorTable = () => {
                         filterKey: 'is_own_company',
                         title: locale['Is own company'],
                         options: [
-                            { label: locale.common.True, value: 'true' },
-                            { label: locale.common.False, value: 'false' },
+                            { label: locale.common.true, value: 'true' },
+                            { label: locale.common.false, value: 'false' },
                         ],
                     },
                     {
                         filterKey: 'type_of_business',
                         title: locale['Type of business'],
-                        options: Object.values(TYPE_OF_BUSINESS).map((val) => ({ label: locale.enums.TYPE_OF_BUSINESS[val], value: val })),
+                        options: Object.values(TYPE_OF_BUSINESS).map((val) => ({ label: locale.enum.TYPE_OF_BUSINESS[val], value: val })),
                     },
                 ]}
             />

@@ -9,7 +9,7 @@ type Props = {
 
 export const InvoiceProductTable = ({ data }: Props) => {
     const l = useLocale().locale;
-    const locale = { ...l['dashboard/invoices'], common: l.common };
+    const locale = { ...l['dashboard/invoices'], common: l.common, enum: l.enum };
     const columns = getInvoiceProductColumns({ locale });
     return <DataTable displayDataTableToolbar={false} data={data ?? []} columns={columns} filters={[]} />;
 };

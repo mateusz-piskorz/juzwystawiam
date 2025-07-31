@@ -14,7 +14,8 @@ type Props = {
 };
 
 export const InvoiceTable = ({ displayDataTableToolbar = true, withFilters = true, displayPagination = true }: Props) => {
-    const locale = useLocale().locale['dashboard/invoices'];
+    const l = useLocale().locale;
+    const locale = { ...l['dashboard/invoices'], common: l.common, enum: l.enum };
     const searchParams = useSearchParams();
 
     const page = searchParams.get('page');
@@ -49,14 +50,14 @@ export const InvoiceTable = ({ displayDataTableToolbar = true, withFilters = tru
                               filterKey: 'is_already_paid',
                               title: locale['Is already paid'],
                               options: [
-                                  { label: 'true', value: 'true' },
-                                  { label: 'false', value: 'false' },
+                                  { label: locale.common.true, value: 'true' },
+                                  { label: locale.common.false, value: 'false' },
                               ],
                           },
                           {
                               filterKey: 'type',
                               title: locale.Type,
-                              options: Object.values(INVOICE_TYPE).map((e) => ({ label: e, value: e })),
+                              options: Object.values(INVOICE_TYPE).map((e) => ({ label: locale.enum.INVOICE_TYPE[e], value: e })),
                           },
                       ]
                     : []

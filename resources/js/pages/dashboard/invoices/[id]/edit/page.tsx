@@ -14,7 +14,7 @@ import { useState } from 'react';
 
 const EditInvoicePage = () => {
     const l = useLocale().locale;
-    const locale = { ...l['dashboard/invoices'], common: l.common };
+    const locale = { ...l['dashboard/invoices'], common: l.common, enum: l.enum };
     const {
         props: { invoice },
     } = usePage<{ invoice: Invoice }>();
@@ -50,9 +50,9 @@ const EditInvoicePage = () => {
                     </h1>
                     <Select
                         defaultValue={invoiceType}
-                        label="Invoice type"
+                        label={locale['Invoice type']}
                         onValueChange={(val) => setInvoiceType(val as INVOICE_TYPE)}
-                        options={Object.values(INVOICE_TYPE).map((e) => ({ label: e, value: e }))}
+                        options={Object.values(INVOICE_TYPE).map((val) => ({ label: locale.enum.INVOICE_TYPE[val], value: val }))}
                     />
                 </div>
                 <InvoiceForm

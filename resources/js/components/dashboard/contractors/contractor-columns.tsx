@@ -14,7 +14,10 @@ export const getContractorColumns = ({
 }: {
     handleEditContractor: (contractorId: number) => void;
     handleDeleteContractor: (contractorId: number) => void;
-    locale: ReturnType<typeof useLocale>['locale']['dashboard/contractors'];
+    locale: ReturnType<typeof useLocale>['locale']['dashboard/contractors'] & {
+        common: ReturnType<typeof useLocale>['locale']['common'];
+        enum: ReturnType<typeof useLocale>['locale']['enum'];
+    };
 }): ColumnDef<Contractor>[] => [
     {
         id: 'select',
@@ -38,25 +41,17 @@ export const getContractorColumns = ({
         enableHiding: false,
     },
     {
-        meta: {
-            title: locale['Company name'],
-        },
         accessorKey: 'company_name',
+        meta: { title: locale['Company name'] },
         header: ({ column }) => <DataTableColumnHeader column={column} />,
-        cell: ({ row }) => {
-            return row.original.company_name;
-        },
+        cell: ({ row }) => row.original.company_name,
         enableSorting: false,
     },
     {
-        meta: {
-            title: locale['Is own company'],
-        },
         accessorKey: 'is_own_company',
+        meta: { title: locale['Is own company'] },
         header: ({ column }) => <DataTableColumnHeader column={column} />,
-        cell: ({ row }) => {
-            return String(row.original.is_own_company);
-        },
+        cell: ({ row }) => (row.original.is_own_company ? locale.common.true : locale.common.false),
     },
     {
         meta: {
@@ -64,9 +59,7 @@ export const getContractorColumns = ({
         },
         accessorKey: 'type_of_business',
         header: ({ column }) => <DataTableColumnHeader column={column} />,
-        cell: ({ row }) => {
-            return row.original.type_of_business;
-        },
+        cell: ({ row }) => locale.enum.TYPE_OF_BUSINESS[row.original.type_of_business],
     },
     {
         meta: {
@@ -74,9 +67,7 @@ export const getContractorColumns = ({
         },
         accessorKey: 'country',
         header: ({ column }) => <DataTableColumnHeader column={column} />,
-        cell: ({ row }) => {
-            return row.original.country;
-        },
+        cell: ({ row }) => row.original.country,
         enableSorting: false,
     },
     {
@@ -85,9 +76,7 @@ export const getContractorColumns = ({
         },
         accessorKey: 'address',
         header: ({ column }) => <DataTableColumnHeader column={column} />,
-        cell: ({ row }) => {
-            return `${row.original.postal_code} ${row.original.city}`;
-        },
+        cell: ({ row }) => `${row.original.postal_code} ${row.original.city}`,
         enableSorting: false,
     },
     {

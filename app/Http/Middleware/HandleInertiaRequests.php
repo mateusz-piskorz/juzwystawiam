@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Support\LocaleDataService;
+use App\Traits\Locale;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -11,6 +11,8 @@ use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
+
+    use Locale;
     /**
      * The root template that's loaded on the first page visit.
      *
@@ -62,7 +64,7 @@ class HandleInertiaRequests extends Middleware
             'locale'      => [
                 'languageCode' => App::currentLocale(),
                 // todo: Consider injecting only the necessary locale data into specific pages instead of sharing all locale data globally. This can help reduce unnecessary data transfer.
-                'data'         => LocaleDataService::getLocaleData()
+                'data'         => $this->locale
             ]
         ];
     }

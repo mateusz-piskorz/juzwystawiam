@@ -8,7 +8,6 @@ use App\Traits\AppliesQueryFilters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-// todo: add accessor to translate enums like type_of_business using LocaleDataService
 class ContractorController
 {
     use AppliesQueryFilters;

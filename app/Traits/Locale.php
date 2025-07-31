@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Support;
+namespace App\Traits;
 
 use Illuminate\Support\Facades\App;
 
-class LocaleDataService
+trait Locale
 {
 
-    public static function getLocaleData()
+    protected $locale;
+
+    public function __construct()
     {
         $langCode = App::currentLocale();
         $localesPath = base_path('resources/lang');
         $languageFilePath = "{$localesPath}/{$langCode}.json";
 
         if (file_exists($languageFilePath)) {
-            $data = json_decode(file_get_contents($languageFilePath), true);
+            $this->locale = json_decode(file_get_contents($languageFilePath), true);
         } else {
             $englishFilePath = "{$localesPath}/en.json";
-            $data = json_decode(file_get_contents($englishFilePath), true);
+            $this->locale = json_decode(file_get_contents($englishFilePath), true);
         }
-
-        return $data;
-
     }
+
 }

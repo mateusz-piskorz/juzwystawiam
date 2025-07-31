@@ -9,7 +9,10 @@ import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 
 type Props = {
-    locale: ReturnType<typeof useLocale>['locale']['dashboard/invoices'] & { common: ReturnType<typeof useLocale>['locale']['common'] };
+    locale: ReturnType<typeof useLocale>['locale']['dashboard/invoices'] & {
+        common: ReturnType<typeof useLocale>['locale']['common'];
+        enum: ReturnType<typeof useLocale>['locale']['enum'];
+    };
 };
 
 export function getInvoiceProductColumns({ locale }: Props): ColumnDef<InvoiceProduct>[] {
@@ -37,35 +40,27 @@ export function getInvoiceProductColumns({ locale }: Props): ColumnDef<InvoicePr
         },
         {
             accessorKey: 'name',
-            meta: {
-                title: locale.Name,
-            },
+            meta: { title: locale.Name },
             header: ({ column }) => <DataTableColumnHeader column={column} />,
             cell: ({ row }) => row.original.name,
             enableSorting: false,
         },
         {
-            meta: {
-                title: locale.common['Measure Unit'],
-            },
+            meta: { title: locale.common['Measure Unit'] },
             accessorKey: 'measure_unit',
             header: ({ column }) => <DataTableColumnHeader column={column} />,
-            cell: ({ row }) => row.original.measure_unit,
+            cell: ({ row }) => locale.enum.MEASURE_UNIT[row.original.measure_unit],
             enableSorting: false,
         },
         {
-            meta: {
-                title: locale['Grand Total'],
-            },
+            meta: { title: locale['Grand Total'] },
             accessorKey: 'grand_total',
             header: ({ column }) => <DataTableColumnHeader column={column} />,
             cell: ({ row }) => row.original.grand_total,
             enableSorting: false,
         },
         {
-            meta: {
-                title: locale.Date,
-            },
+            meta: { title: locale.Date },
             accessorKey: 'created',
             header: ({ column }) => <DataTableColumnHeader column={column} />,
             cell: ({ row }) => {

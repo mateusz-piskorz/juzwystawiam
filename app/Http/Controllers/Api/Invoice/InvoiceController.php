@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
-// todo: add accessor to translate enums like type using LocaleDataService
 class InvoiceController
 {
     use AppliesQueryFilters;

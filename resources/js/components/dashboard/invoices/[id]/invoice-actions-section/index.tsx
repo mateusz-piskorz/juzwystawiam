@@ -15,7 +15,8 @@ type Props = {
 };
 
 export const InvoiceActionsSection = ({ invoiceId, buyerEmail }: Props) => {
-    const locale = useLocale().locale['dashboard/invoices'];
+    const l = useLocale().locale;
+    const locale = { ...l['dashboard/invoices'], common: l.common };
     const [openRemoveConfirm, setOpenRemoveConfirm] = useState(false);
     const [openEmailSendingDialog, setOpenEmailSendingDialog] = useState(false);
 
@@ -26,7 +27,7 @@ export const InvoiceActionsSection = ({ invoiceId, buyerEmail }: Props) => {
             router.visit(`/dashboard/invoices`);
         } catch (error: unknown) {
             const errorMessage = getErrorMessage(error);
-            toast.error(errorMessage || 'something went wrong');
+            toast.error(errorMessage || locale.common['something went wrong']);
             console.error(errorMessage);
         }
         setOpenRemoveConfirm(false);

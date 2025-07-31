@@ -37,11 +37,11 @@ export const ProductTable = () => {
     const handleDeleteProduct = async (productId: number) => {
         try {
             await deleteProduct({ productId });
-            toast.success(`Product deleted successfully`);
+            toast.success(locale['Product deleted successfully']);
             refetch();
             setOpenConfirm(false);
         } catch (err) {
-            toast.error(typeof err === 'string' ? err : 'Something went wrong');
+            toast.error(typeof err === 'string' ? err : locale.common['something went wrong']);
         }
     };
 
@@ -78,7 +78,7 @@ export const ProductTable = () => {
                         await handleDeleteProduct(selectedProductId);
                     }
                 }}
-                title={locale['Are you sure you want to remove this product']}
+                title={`${locale['Are you sure you want to remove this product']}?`}
                 description={locale['This action cannot be undone. Product will be permanently deleted']}
             />
 

@@ -9,7 +9,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 
 type Props = {
-    locale: ReturnType<typeof useLocale>['locale']['dashboard/invoices'];
+    locale: ReturnType<typeof useLocale>['locale']['dashboard/invoices'] & { enum: ReturnType<typeof useLocale>['locale']['enum'] };
 };
 
 export function getInvoiceEmailColumns({ locale }: Props): ColumnDef<InvoiceEmail>[] {
@@ -45,18 +45,14 @@ export function getInvoiceEmailColumns({ locale }: Props): ColumnDef<InvoiceEmai
             enableSorting: false,
         },
         {
-            meta: {
-                title: locale.Status,
-            },
+            meta: { title: locale.Status },
             accessorKey: 'status',
             header: ({ column }) => <DataTableColumnHeader column={column} />,
-            cell: ({ row }) => row.original.status,
+            cell: ({ row }) => locale.enum.EMAIL_STATUS[row.original.status],
             enableSorting: false,
         },
         {
-            meta: {
-                title: locale.Date,
-            },
+            meta: { title: locale.Date },
             accessorKey: 'created',
             header: ({ column }) => <DataTableColumnHeader column={column} />,
             cell: ({ row }) => {

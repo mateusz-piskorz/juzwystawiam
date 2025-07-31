@@ -14,7 +14,10 @@ export const getProductColumns = ({
 }: {
     handleEditProduct: (productId: number) => void;
     handleDeleteProduct: (productId: number) => void;
-    locale: ReturnType<typeof useLocale>['locale']['dashboard/products'] & { common: ReturnType<typeof useLocale>['locale']['common'] };
+    locale: ReturnType<typeof useLocale>['locale']['dashboard/products'] & {
+        common: ReturnType<typeof useLocale>['locale']['common'];
+        enum: ReturnType<typeof useLocale>['locale']['enum'];
+    };
 }): ColumnDef<Product>[] => [
     {
         id: 'select',
@@ -38,45 +41,29 @@ export const getProductColumns = ({
         enableHiding: false,
     },
     {
-        meta: {
-            title: locale['Product name'],
-        },
         accessorKey: 'name',
+        meta: { title: locale['Product name'] },
         header: ({ column }) => <DataTableColumnHeader column={column} />,
-        cell: ({ row }) => {
-            return row.original.name;
-        },
+        cell: ({ row }) => row.original.name,
         enableSorting: false,
     },
     {
-        meta: {
-            title: locale.common['Measure Unit'],
-        },
         accessorKey: 'measure_unit',
+        meta: { title: locale.common['Measure Unit'] },
         header: ({ column }) => <DataTableColumnHeader column={column} />,
-        cell: ({ row }) => {
-            return String(row.original.measure_unit);
-        },
+        cell: ({ row }) => locale['enum']['MEASURE_UNIT'][row.original.measure_unit],
     },
     {
-        meta: {
-            title: locale.common['Vat rate'],
-        },
         accessorKey: 'vat_rate',
+        meta: { title: locale.common['Vat rate'] },
         header: ({ column }) => <DataTableColumnHeader column={column} />,
-        cell: ({ row }) => {
-            return row.original.vat_rate;
-        },
+        cell: ({ row }) => `${row.original.vat_rate}%`,
     },
     {
-        meta: {
-            title: locale['Price'],
-        },
         accessorKey: 'price',
+        meta: { title: locale['Price'] },
         header: ({ column }) => <DataTableColumnHeader column={column} />,
-        cell: ({ row }) => {
-            return row.original.price;
-        },
+        cell: ({ row }) => row.original.price,
     },
     {
         id: 'actions',

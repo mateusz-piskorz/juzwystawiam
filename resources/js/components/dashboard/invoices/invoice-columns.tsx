@@ -10,7 +10,10 @@ import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 
 type Props = {
-    locale: ReturnType<typeof useLocale>['locale']['dashboard/invoices'];
+    locale: ReturnType<typeof useLocale>['locale']['dashboard/invoices'] & {
+        common: ReturnType<typeof useLocale>['locale']['common'];
+        enum: ReturnType<typeof useLocale>['locale']['enum'];
+    };
 };
 
 export function getInvoiceColumns({ locale }: Props): ColumnDef<Invoice>[] {
@@ -40,17 +43,13 @@ export function getInvoiceColumns({ locale }: Props): ColumnDef<Invoice>[] {
             accessorKey: 'number',
             meta: { title: locale.Number },
             header: ({ column }) => <DataTableColumnHeader column={column} />,
-            cell: ({ row }) => {
-                return row.original.number;
-            },
+            cell: ({ row }) => row.original.number,
         },
         {
             accessorKey: 'type',
             meta: { title: locale.Type },
             header: ({ column }) => <DataTableColumnHeader column={column} />,
-            cell: ({ row }) => {
-                return String(row.original.type);
-            },
+            cell: ({ row }) => locale.enum.INVOICE_TYPE[row.original.type],
         },
         {
             accessorKey: 'sale_date',
@@ -65,25 +64,19 @@ export function getInvoiceColumns({ locale }: Props): ColumnDef<Invoice>[] {
             accessorKey: 'total',
             meta: { title: locale.Total },
             header: ({ column }) => <DataTableColumnHeader column={column} />,
-            cell: ({ row }) => {
-                return row.original.total;
-            },
+            cell: ({ row }) => row.original.total,
         },
         {
             meta: { title: locale['Is already paid'] },
             accessorKey: 'is_already_paid',
             header: ({ column }) => <DataTableColumnHeader column={column} />,
-            cell: ({ row }) => {
-                return String(row.original.is_already_paid);
-            },
+            cell: ({ row }) => (row.original.is_already_paid ? locale.common.true : locale.common.false),
         },
         {
             meta: { title: locale['Email status'] },
             accessorKey: 'latest_invoice_email.status',
             header: ({ column }) => <DataTableColumnHeader column={column} />,
-            cell: ({ row }) => {
-                return row.original.latest_invoice_email?.status;
-            },
+            cell: ({ row }) => (row.original.latest_invoice_email ? locale.enum.EMAIL_STATUS[row.original.latest_invoice_email?.status] : ''),
             enableSorting: false,
         },
         {
