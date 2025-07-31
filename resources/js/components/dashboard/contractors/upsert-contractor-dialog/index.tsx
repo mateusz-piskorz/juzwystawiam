@@ -1,13 +1,14 @@
-import { InputField } from '@/components/common/input-field';
-import { SelectField } from '@/components/common/select-field';
+import { InputField } from '@/components/common/form-fields/input-field';
+import { SelectField } from '@/components/common/form-fields/select-field';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import { COUNTRIES } from '@/lib/constants/countries';
-import { TYPE_OF_BUSINESS, TypeOfBusinessTranslation } from '@/lib/constants/enums/type-of-business';
+import { TYPE_OF_BUSINESS } from '@/lib/constants/enums/type-of-business';
 import { CreateContractorDTO, createContractorDTO } from '@/lib/constants/zod/contractor';
 import { upsertContractor } from '@/lib/data/contractors';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { Contractor } from '@/lib/types/contractor';
 import { cn } from '@/lib/utils/cn';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
@@ -27,6 +28,9 @@ type Props = {
 };
 
 export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contractorId, onSuccess }: Props) => {
+    const l = useLocale().locale;
+    const locale = { ...l['dashboard/contractors'], common: l.common, enum: l.enum };
+
     const form = useForm<CreateContractorDTO>({
         resolver: zodResolver(createContractorDTO),
         defaultValues,
@@ -41,12 +45,12 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
     async function onSubmit(body: z.infer<typeof createContractorDTO>) {
         try {
             const contractor = await upsertContractor({ body, contractorId });
-            toast.success(`Contractor ${contractorId ? 'updated' : 'created'} successfully`);
+            toast.success(`${locale.Contractor} ${contractorId ? locale.common.Updated : locale.common.Created} ${locale.common.Successfully}!`);
             onSuccess?.(contractor);
         } catch (error: unknown) {
             const errorMessage = getErrorMessage(error);
             console.error(errorMessage);
-            toast.error(errorMessage || 'Something went wrong');
+            toast.error(errorMessage || locale.common['something went wrong']);
         }
         setOpen(false);
     }
@@ -55,8 +59,13 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent className="md:min-w-[700px]">
                 <DialogHeader>
-                    <DialogTitle>{contractorId ? 'Update' : 'Create'} Contractor</DialogTitle>
-                    <DialogDescription>Fill in the details below to {contractorId ? 'update' : 'create'} contractor.</DialogDescription>
+                    <DialogTitle>
+                        {contractorId ? locale.common.Update : locale.common.Create} {locale.Contractor}
+                    </DialogTitle>
+                    <DialogDescription>
+                        {locale.common['Fill in the details below to']} {contractorId ? locale.common.Update : locale.common.Create}{' '}
+                        {locale.Contractor}.
+                    </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
                     <form
@@ -69,22 +78,27 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                         <SelectField
                             form={form}
                             name="type_of_business"
-                            label="Rodzaj działalności gospodarczej"
-                            selectOptions={Object.values(TYPE_OF_BUSINESS).map((val) => ({ label: TypeOfBusinessTranslation[val], value: val }))}
+                            label={locale['Type of business']}
+                            selectOptions={Object.values(TYPE_OF_BUSINESS).map((val) => ({ label: locale.enum.TYPE_OF_BUSINESS[val], value: val }))}
                         />
 
                         <ContractorTripleBox form={form} />
 
                         <div className="rounded border">
                             <div className="flex h-[60px]">
-                                <InputField form={form} name="postal_code" label="Postal code" className="rounded-none rounded-ss border-none" />
+                                <InputField
+                                    form={form}
+                                    name="postal_code"
+                                    label={locale['Postal code']}
+                                    className="rounded-none rounded-ss border-none"
+                                />
                                 <Separator orientation="vertical" />
-                                <InputField form={form} name="city" label="City" className="rounded-none rounded-se border-none" />
+                                <InputField form={form} name="city" label={locale.City} className="rounded-none rounded-se border-none" />
                             </div>
 
                             <Separator orientation="horizontal" />
 
-                            <InputField form={form} name="street_name" label="Street name" className="rounded-none border-none" />
+                            <InputField form={form} name="street_name" label={locale['Street name']} className="rounded-none border-none" />
 
                             <Separator orientation="horizontal" />
 
@@ -92,7 +106,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                                 className="rounded-none rounded-ee rounded-es border-none"
                                 form={form}
                                 name="country"
-                                label="Country"
+                                label={locale.Country}
                                 selectOptions={COUNTRIES.map((val) => ({
                                     label: val,
                                     value: val,
@@ -107,11 +121,16 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                                         <InputField
                                             form={form}
                                             name="first_name"
-                                            label="First name"
+                                            label={locale['First name']}
                                             className="rounded-none rounded-ss rounded-se border-none"
                                         />
                                         <Separator orientation="vertical" />
-                                        <InputField form={form} name="surname" label="Surname" className="rounded-none rounded-se border-none" />
+                                        <InputField
+                                            form={form}
+                                            name="surname"
+                                            label={locale.Surname}
+                                            className="rounded-none rounded-se border-none"
+                                        />
                                     </div>
                                     <Separator orientation="horizontal" />
                                 </>
@@ -121,7 +140,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                                 <InputField
                                     form={form}
                                     name="email"
-                                    label="Email (Optional)"
+                                    label={`${locale.Email} (${locale.common.Optional})`}
                                     type="email"
                                     inputMode="email"
                                     className={cn('rounded-none border-none', !isSelfEmployed && 'rounded-ss')}
@@ -130,7 +149,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                                 <InputField
                                     form={form}
                                     name="phone"
-                                    label="Phone (Optional)"
+                                    label={`${locale.Phone} (${locale.common.Optional})`}
                                     type="tel"
                                     inputMode="numeric"
                                     className={cn('rounded-none border-none', !isSelfEmployed && 'rounded-se')}
@@ -140,7 +159,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                             <InputField
                                 form={form}
                                 name="bank_account"
-                                label="Bank Account (Optional)"
+                                label={`${locale['Bank Account']} (${locale.common.Optional})`}
                                 type="text"
                                 inputMode="numeric"
                                 className={cn('rounded-none rounded-ee rounded-es border-none', !isSelfEmployed && 'rounded-se')}
@@ -148,7 +167,9 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                         </div>
 
                         <div className="w-full text-right">
-                            <Button type="submit">{contractorId ? 'Update' : 'Create'} Contractor</Button>
+                            <Button type="submit">
+                                {contractorId ? locale.common.Update : locale.common.Create} {locale.Contractor}
+                            </Button>
                         </div>
                     </form>
                 </Form>

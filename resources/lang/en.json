@@ -1,0 +1,333 @@
+{
+    "enum": {
+        "LOCALE_CODE": {
+            "pl": "Polish",
+            "en": "English",
+            "system": "System"
+        },
+        "THEME": {
+            "system": "System",
+            "light": "Light",
+            "dark": "Dark"
+        },
+        "CONTRACTOR_ROLE": {
+            "BUYER": "Buyer",
+            "SELLER": "Seller"
+        },
+        "EMAIL_STATUS": {
+            "PENDING": "Pending",
+            "SENT": "Sent",
+            "FAILED": "Failed"
+        },
+        "INVOICE_TYPE": {
+            "VAT": "Vat",
+            "NO_VAT": "No VAT"
+        },
+        "MEASURE_UNIT": {
+            "PCS": "pcs",
+            "HOUR": "hour",
+            "SERVICE": "service"
+        },
+        "PAYMENT_METHOD": {
+            "BANK_TRANSFER": "Bank transfer",
+            "CASH": "Cash",
+            "CARD": "Card",
+            "BARTER": "Barter",
+            "CHEQUE": "Cheque",
+            "COD": "Cash on delivery",
+            "OTHER": "Other",
+            "COMPENSATION": "Compensation",
+            "LETTER_OF_CREDIT": "Letter of credit",
+            "PAYPAL": "PayPal",
+            "PAYU": "PayU",
+            "PROMISSORY_NOTE": "Promissory note",
+            "PREPAYMENT": "Prepayment",
+            "INSTALLMENT_SALE": "Installment sale",
+            "TPAY": "Tpay",
+            "PRZELEWY24": "Przelewy24",
+            "DOTPAY": "Dotpay"
+        },
+        "TYPE_OF_BUSINESS": {
+            "PRIVATE_PERSON": "Private person",
+            "SELF_EMPLOYED": "Self-employed",
+            "OTHER_BUSINESS": "Other business"
+        }
+    },
+
+    "common": {
+        "Vat rate": "Vat rate",
+        "Measure Unit": "Measure Unit",
+        "Updated": "Updated",
+        "Created": "Created",
+        "Update": "Update",
+        "Create": "Create",
+        "Successfully": "Successfully",
+        "false": "False",
+        "true": "True",
+        "Submit": "Submit",
+        "Saved": "Saved",
+        "Cancel": "Cancel",
+        "Manage": "Manage",
+        "Invoices": "Invoices",
+        "Dashboard": "Dashboard",
+        "something went wrong": "something went wrong",
+        "Fill in the details below to": "Fill in the details below to",
+        "Optional": "Optional",
+
+        "premium-status-heading": {
+            "Your premium account is": "Your premium account is",
+            "Days left": "Days left",
+            "active": "active",
+            "inactive": "inactive",
+            "Premium Status": "Premium Status"
+        },
+        "sidebar": {
+            "Dashboard": "Dashboard",
+            "Invoices": "Invoices",
+            "Contractors": "Contractors",
+            "Products": "Products",
+            "Analytics": "Analytics",
+            "Premium Account": "Premium Account",
+            "Settings": "Settings",
+            "Log out": "Log out"
+        },
+        "data-table": {
+            "No results.": "No results.",
+            "View": "View",
+            "Search": "Search...",
+            "Reset": "Reset",
+            "Open menu": "Open menu",
+            "Actions": "Actions",
+            "Asc": "Asc",
+            "Desc": "Desc",
+            "Hide": "Hide",
+            "Toggle columns": "Toggle columns",
+            "row(s) selected.": "row(s) selected.",
+            "of": "of",
+            "Rows per page": "Rows per page",
+            "Page": "Page"
+        }
+    },
+
+    "dashboard": {
+        "Latest invoices": "Latest invoices"
+    },
+
+    "dashboard/invoices": {
+        "Manage your invoices and see details.": "Manage your invoices and see details.",
+        "Add new invoice": "Add new invoice",
+        "Number": "Number",
+        "Type": "Type",
+        "Sale Date": "Sale Date",
+        "Is already paid": "Is already paid",
+        "Email status": "Email status",
+        "Show": "Show",
+        "Total": "Total",
+        "Invoice": "Invoice",
+        "Here you can check details about your invoice.": "Here you can check details about your invoice.",
+        "Details": "Details",
+        "Seller": "Seller",
+        "Buyer": "Buyer",
+        "Create Date": "Create Date",
+        "Grand Total": "Grand Total",
+        "Invoice Products": "Invoice Products",
+        "Invoice Emails": "Invoice Emails",
+        "Name": "Name",
+
+        "Date": "Date",
+        "Recipient": "Recipient",
+        "Status": "Status",
+        "Preview": "Preview",
+        "Download": "Download",
+        "Edit invoice": "Edit invoice",
+        "Delete invoice": "Delete invoice",
+        "Actions": "Actions",
+        "Send email": "Send email",
+        "Create invoice": "Create invoice",
+        "Invoice type": "Invoice type",
+        "Are you sure you want to remove this Invoice": "Are you sure you want to remove this Invoice",
+        "This action cannot be undone. Invoice will be permanently deleted.": "This action cannot be undone. Invoice will be permanently deleted.",
+        "invoice-form": {
+            "invoice updated successfully!": "invoice updated successfully!",
+            "invoice created successfully!": "invoice created successfully!",
+            "Issue date": "Issue date",
+            "A secret note for Your invoice": "A secret note for Your invoice",
+            "Information about secret note": "Information about secret note",
+            "Secret note visible only to you. This feature is for": "Secret note visible only to you. This feature is for",
+            "premium users": "premium users",
+            "Payment method": "Payment method",
+            "Currency": "Currency",
+            "Invoice paid": "Invoice paid",
+            "Mark invoice as paid": "Mark invoice as paid",
+            "Sale Date": "Sale Date",
+            "Due date": "Due date",
+            "Products": "Products",
+            "Product name": "Product name",
+            "Price": "Price",
+            "Quantity": "Quantity",
+            "Discount": "Discount",
+            "remove item": "remove item",
+            "add invoice product": "add invoice product",
+            "Grand Total": "Grand Total"
+        }
+    },
+
+    "dashboard/contractors": {
+        "Contractor": "Contractor",
+        "Contractors": "Contractors",
+        "Manage your contractors and their details.": "Manage your contractors and their details.",
+        "Add new contractor": "Add new contractor",
+        "Is own company": "Is own company",
+        "Type of business": "Type of business",
+        "Delete contractor": "Delete contractor",
+        "Edit contractor": "Edit contractor",
+        "Contractor deleted successfully": "Contractor deleted successfully",
+        "Are you sure you want to remove this Contractor": "Are you sure you want to remove this Contractor",
+        "This action cannot be undone. Contractor will be permanently deleted.": "This action cannot be undone. Contractor will be permanently deleted.",
+        "Company name": "Company name",
+        "Country": "Country",
+        "Address": "Address",
+        "Postal code": "Postal code",
+        "City": "City",
+        "Street name": "Street name",
+        "First name": "First name",
+        "Surname": "Surname",
+        "Email": "Email",
+        "Phone": "Phone",
+        "Bank Account": "Bank Account",
+        "Company nip": "Company nip",
+        "indicates whether the company is owned by the user": "indicates whether the company is owned by the user"
+    },
+
+    "dashboard/products": {
+        "Products": "Products",
+        "Manage your products and see details.": "Manage your products and see details.",
+        "Product name": "Product name",
+        "Price": "Price",
+        "Delete product": "Delete product",
+        "Edit product": "Edit product",
+        "Add new product": "Add new product",
+        "Product deleted successfully": "Product deleted successfully",
+        "Are you sure you want to remove this product": "Are you sure you want to remove this product",
+        "This action cannot be undone. Product will be permanently deleted": "This action cannot be undone. Product will be permanently deleted",
+        "Product": "Product",
+        "Product description": "Product description"
+    },
+
+    "dashboard/analytics": {
+        "Analytics and statistics for your invoices": "Analytics and statistics for your invoices",
+        "Period": "Period",
+        "Product": "Product",
+        "This year": "This year",
+        "Prev year": "Prev year",
+        "paid": "paid",
+        "unpaid": "unpaid"
+    },
+
+    "dashboard/premium-account": {
+        "payments-history": {
+            "Payments History": "Payments History",
+            "Amount": "Amount",
+            "Status": "Status",
+            "Description": "Description",
+            "Date": "Date"
+        },
+        "Premium Account": "Premium Account",
+        "Payment successful! Your premium account will be activated shortly.": "Payment successful! Your premium account will be activated shortly.",
+        "Buy Premium Days": "Buy Premium Days",
+        "Choose a plan that suits you and continue enjoying premium benefits!": "Choose a plan that suits you and continue enjoying premium benefits!",
+        "days": "days",
+        "day": "day",
+        "of Premium": "of Premium",
+        "Premium account for": "Premium account for",
+
+        "benefits": {
+            "Benefits": "Benefits",
+            "unlimited invoices": "unlimited invoices",
+            "unlimited emails": "unlimited emails",
+            "secret note for invoice": "secret note for invoice",
+            "priority customer support": "priority customer support",
+            "access to exclusive content": "access to exclusive content"
+        }
+    },
+
+    "dashboard/settings": {
+        "appearance": {
+            "Language": "Language",
+            "Theme": "Theme",
+            "Appearance settings": "Appearance settings",
+            "Update your account's appearance settings": "Update your account's appearance settings"
+        },
+        "password": {
+            "Update password": "Update password",
+            "Ensure your account is using a long, random password to stay secure": "Ensure your account is using a long, random password to stay secure",
+            "Current password": "Current password",
+            "New password": "New password",
+            "Confirm password": "Confirm password",
+            "Save password": "Save password",
+            "Password settings": "Password settings"
+        },
+        "profile": {
+            "Profile information": "Profile information",
+            "Update your name and email address": "Update your name and email address",
+            "Name": "Name",
+            "Email address": "Email address",
+            "Save": "Save",
+            "Delete account": "Delete account",
+            "Delete your account and all of its resources": "Delete your account and all of its resources",
+            "Warning": "Warning",
+            "Please proceed with caution, this cannot be undone.": "Please proceed with caution, this cannot be undone.",
+            "Your email address is unverified.": "Your email address is unverified.",
+            "Click here to resend the verification email.": "Click here to resend the verification email.",
+            "A new verification link has been sent to your email address.": "A new verification link has been sent to your email address.",
+            "Profile settings": "Profile settings",
+            "delete-user-dialog": {
+                "Are you sure you want to delete your account?": "Are you sure you want to delete your account?",
+                "Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.": "Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.",
+                "Password": "Password"
+            }
+        },
+        "index": {
+            "Settings": "Settings",
+            "Manage your profile and account settings": "Manage your profile and account settings",
+            "Profile": "Account",
+            "Password": "Password",
+            "Appearance": "Appearance"
+        }
+    },
+
+    "auth": {
+        "Create an account": "Create an account",
+        "Enter your details below to create your account": "Enter your details below to create your account",
+        "Register": "Register",
+        "Name": "Name",
+        "Full name": "Full name",
+        "Email address": "Email address",
+        "email@example.com": "email@example.com",
+        "Password": "Password",
+        "Confirm password": "Confirm password",
+        "Create account": "Create account",
+        "Already have an account": "Already have an account",
+        "Log in": "Log in",
+        "Log in to your account": "Log in to your account",
+        "Enter your email and password below to log in": "Enter your email and password below to log in",
+        "Forgot password": "Forgot password",
+        "Remember me": "Remember me",
+        "Don't have an account": "Don't have an account",
+        "Sign up": "Sign up",
+        "Confirm your password": "Confirm your password",
+        "This is a secure area of the application. Please confirm your password before continuing": "This is a secure area of the application. Please confirm your password before continuing",
+        "Reset password": "Reset password",
+        "Verify email": "Verify email",
+        "Please verify your email address by clicking on the link we just emailed to you": "Please verify your email address by clicking on the link we just emailed to you",
+        "Email verification": "Email verification",
+        "A new verification link has been sent to the email address you provided during registration": "A new verification link has been sent to the email address you provided during registration",
+        "Resend verification email": "Resend verification email",
+        "Log out": "Log out",
+        "Email password reset link": "Email password reset link",
+        "Or, return to": "Or, return to",
+        "Please enter your new password below": "Please enter your new password below",
+        "Email": "Email",
+        "Enter your email to receive a password reset link": "Enter your email to receive a password reset link"
+    }
+}

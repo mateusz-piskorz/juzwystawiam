@@ -3,15 +3,21 @@
 import { DataTableColumnHeader } from '@/components/common/data-table/data-table-column-header';
 import { DataTableRowActions } from '@/components/common/data-table/data-table-row-actions';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { Product } from '@/lib/types/product';
 import { ColumnDef } from '@tanstack/react-table';
 
 export const getProductColumns = ({
     handleEditProduct,
     handleDeleteProduct,
+    locale,
 }: {
     handleEditProduct: (productId: number) => void;
     handleDeleteProduct: (productId: number) => void;
+    locale: ReturnType<typeof useLocale>['locale']['dashboard/products'] & {
+        common: ReturnType<typeof useLocale>['locale']['common'];
+        enum: ReturnType<typeof useLocale>['locale']['enum'];
+    };
 }): ColumnDef<Product>[] => [
     {
         id: 'select',
@@ -36,40 +42,36 @@ export const getProductColumns = ({
     },
     {
         accessorKey: 'name',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
-        cell: ({ row }) => {
-            return row.original.name;
-        },
+        meta: { title: locale['Product name'] },
+        header: ({ column }) => <DataTableColumnHeader column={column} />,
+        cell: ({ row }) => row.original.name,
         enableSorting: false,
     },
     {
         accessorKey: 'measure_unit',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Measure unit" />,
-        cell: ({ row }) => {
-            return String(row.original.measure_unit);
-        },
+        meta: { title: locale.common['Measure Unit'] },
+        header: ({ column }) => <DataTableColumnHeader column={column} />,
+        cell: ({ row }) => locale['enum']['MEASURE_UNIT'][row.original.measure_unit],
     },
     {
         accessorKey: 'vat_rate',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Vat rate" />,
-        cell: ({ row }) => {
-            return row.original.vat_rate;
-        },
+        meta: { title: locale.common['Vat rate'] },
+        header: ({ column }) => <DataTableColumnHeader column={column} />,
+        cell: ({ row }) => `${row.original.vat_rate}%`,
     },
     {
         accessorKey: 'price',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Price" />,
-        cell: ({ row }) => {
-            return row.original.price;
-        },
+        meta: { title: locale['Price'] },
+        header: ({ column }) => <DataTableColumnHeader column={column} />,
+        cell: ({ row }) => row.original.price,
     },
     {
         id: 'actions',
         cell: ({ row }) => (
             <DataTableRowActions
                 actions={[
-                    { label: 'delete', action: () => handleDeleteProduct(row.original.id) },
-                    { label: 'edit', action: () => handleEditProduct(row.original.id) },
+                    { label: locale['Delete product'], action: () => handleDeleteProduct(row.original.id) },
+                    { label: locale['Edit product'], action: () => handleEditProduct(row.original.id) },
                 ]}
             />
         ),

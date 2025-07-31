@@ -3,6 +3,7 @@
 import { MultiOptionsFilter } from '@/components/common/multi-options-filter';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
 import { Link } from '@inertiajs/react';
 import { Table } from '@tanstack/react-table';
@@ -26,13 +27,14 @@ interface DataTableToolbarProps<TData> {
 }
 
 export function DataTableToolbar<TData>({ table, addNewRecord, filters }: DataTableToolbarProps<TData>) {
+    const locale = useLocale().locale.common['data-table'];
     const searchParams = useSearchParams();
     const q = searchParams.get('q');
 
     return (
-        <div className="flex flex-col items-center justify-between gap-4 overflow-x-auto pb-4 md:flex-row">
+        <div className="flex flex-col items-center justify-between gap-4 overflow-x-auto pt-1 pr-1 pb-4 md:flex-row">
             <Input
-                placeholder="Search..."
+                placeholder={locale.Search}
                 onChange={debounce((event) => searchParams.set({ q: event.target.value || undefined }), 500)}
                 defaultValue={q}
                 className="min-w-[150px] rounded max-md:h-[50px] md:max-w-xs"
@@ -50,7 +52,7 @@ export function DataTableToolbar<TData>({ table, addNewRecord, filters }: DataTa
                             searchParams.clear(filters.map((e) => e.filterKey));
                         }}
                     >
-                        Reset
+                        {locale.Reset}
                         <X />
                     </Button>
                 )}

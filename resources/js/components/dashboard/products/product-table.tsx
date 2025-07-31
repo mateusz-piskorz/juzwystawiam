@@ -3,6 +3,7 @@ import { DataTable } from '@/components/common/data-table';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
 import { deleteProduct, getProducts } from '@/lib/data/products';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
 import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
@@ -12,6 +13,9 @@ import { getProductColumns } from './product-columns';
 import { UpsertProductDialog } from './upsert-product-dialog';
 
 export const ProductTable = () => {
+    const l = useLocale().locale;
+    const locale = { ...l['dashboard/products'], common: l.common, enum: l.enum };
+
     const searchParams = useSearchParams();
     const [open, setOpen] = useState(false);
     const [openConfirm, setOpenConfirm] = useState(false);
@@ -33,11 +37,11 @@ export const ProductTable = () => {
     const handleDeleteProduct = async (productId: number) => {
         try {
             await deleteProduct({ productId });
-            toast.success(`Product deleted successfully`);
+            toast.success(locale['Product deleted successfully']);
             refetch();
             setOpenConfirm(false);
         } catch (err) {
-            toast.error(typeof err === 'string' ? err : 'Something went wrong');
+            toast.error(typeof err === 'string' ? err : locale.common['something went wrong']);
         }
     };
 
@@ -53,6 +57,7 @@ export const ProductTable = () => {
             setSelectedProductId(productId);
             setOpen(true);
         },
+        locale,
     });
 
     return (
@@ -73,8 +78,8 @@ export const ProductTable = () => {
                         await handleDeleteProduct(selectedProductId);
                     }
                 }}
-                title="Are you sure you want to remove this product?"
-                description="This action cannot be undone. Product will be permanently deleted."
+                title={`${locale['Are you sure you want to remove this product']}?`}
+                description={locale['This action cannot be undone. Product will be permanently deleted']}
             />
 
             <DataTable
@@ -82,7 +87,7 @@ export const ProductTable = () => {
                 data={data?.data ?? []}
                 columns={columns}
                 addNewRecord={{
-                    label: 'Add new product',
+                    label: locale['Add new product'],
                     action: () => {
                         setSelectedProductId(undefined);
                         setOpen(true);
@@ -91,13 +96,13 @@ export const ProductTable = () => {
                 filters={[
                     {
                         filterKey: 'vat_rate',
-                        title: 'Vat rate',
+                        title: locale.common['Vat rate'],
                         options: Object.values(VAT_RATE).map((e) => ({ label: e, value: e })),
                     },
                     {
                         filterKey: 'measure_unit',
-                        title: 'Measure unit',
-                        options: Object.values(MEASURE_UNIT).map((e) => ({ label: e, value: e })),
+                        title: locale.common['Measure Unit'],
+                        options: Object.values(MEASURE_UNIT).map((e) => ({ label: locale.enum.MEASURE_UNIT[e], value: e })),
                     },
                 ]}
             />

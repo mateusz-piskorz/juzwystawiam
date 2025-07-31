@@ -1,24 +1,18 @@
 import type { BreadcrumbItem } from '@/lib/types';
-import { Transition } from '@headlessui/react';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
 
-import DeleteUser from '@/components/default/delete-user';
-import HeadingSmall from '@/components/default/heading-small';
+import { Heading } from '@/components/common/heading';
+import { DeleteUser } from '@/components/dashboard/settings/profile/delete-user';
 import InputError from '@/components/default/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AppLayout from '@/layouts/app-layout';
-import SettingsLayout from '@/layouts/settings/layout';
+import { AppLayout } from '@/layouts/dashboard/app-layout';
+import { SettingsLayout } from '@/layouts/dashboard/settings';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { usePage } from '@/lib/hooks/use-page';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Profile settings',
-        href: 'dashboard/settings/profile',
-    },
-];
+import { Transition } from '@headlessui/react';
+import { Head, Link, useForm } from '@inertiajs/react';
+import { FormEventHandler } from 'react';
 
 type ProfileForm = {
     name: string;
@@ -26,11 +20,13 @@ type ProfileForm = {
 };
 
 export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: boolean; status?: string }) {
-    const { auth } = usePage().props;
+    const { user } = usePage().props.auth;
+    const l = useLocale().locale;
+    const locale = { ...l['dashboard/settings'].profile, common: l.common };
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<ProfileForm>>({
-        name: auth.user.name,
-        email: auth.user.email,
+        name: user.name,
+        email: user.email,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -41,17 +37,28 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
         });
     };
 
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: locale.common.Dashboard,
+            href: '/dashboard',
+        },
+        {
+            title: locale['Profile settings'],
+            href: 'dashboard/settings/profile',
+        },
+    ];
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Profile settings" />
+            <Head title={locale['Profile settings']} />
 
             <SettingsLayout>
                 <div className="space-y-6">
-                    <HeadingSmall title="Profile information" description="Update your name and email address" />
+                    <Heading size="small" title={locale['Profile information']} description={locale['Update your name and email address']} />
 
                     <form onSubmit={submit} className="space-y-6">
                         <div className="grid gap-2">
-                            <Label htmlFor="name">Name</Label>
+                            <Label htmlFor="name">{locale.Name}</Label>
 
                             <Input
                                 id="name"
@@ -67,7 +74,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="email">Email address</Label>
+                            <Label htmlFor="email">{locale['Email address']}</Label>
 
                             <Input
                                 id="email"
@@ -83,30 +90,30 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                             <InputError className="mt-2" message={errors.email} />
                         </div>
 
-                        {mustVerifyEmail && auth.user.email_verified_at === null && (
+                        {mustVerifyEmail && user.email_verified_at === null && (
                             <div>
                                 <p className="text-muted-foreground -mt-4 text-sm">
-                                    Your email address is unverified.{' '}
+                                    {locale['Your email address is unverified.']}{' '}
                                     <Link
                                         href={route('verification.send')}
                                         method="post"
                                         as="button"
                                         className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                                     >
-                                        Click here to resend the verification email.
+                                        {locale['Click here to resend the verification email.']}
                                     </Link>
                                 </p>
 
                                 {status === 'verification-link-sent' && (
                                     <div className="mt-2 text-sm font-medium text-green-600">
-                                        A new verification link has been sent to your email address.
+                                        {locale['A new verification link has been sent to your email address.']}
                                     </div>
                                 )}
                             </div>
                         )}
 
                         <div className="flex items-center gap-4">
-                            <Button disabled={processing}>Save</Button>
+                            <Button disabled={processing}>{locale.Save}</Button>
 
                             <Transition
                                 show={recentlySuccessful}
@@ -115,7 +122,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                                 leave="transition ease-in-out"
                                 leaveTo="opacity-0"
                             >
-                                <p className="text-sm text-neutral-600">Saved</p>
+                                <p className="text-sm text-neutral-600">{locale.common.Saved}</p>
                             </Transition>
                         </div>
                     </form>

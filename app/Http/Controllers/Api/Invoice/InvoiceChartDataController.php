@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Invoice;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
 class InvoiceChartDataController
@@ -23,10 +24,11 @@ class InvoiceChartDataController
         if ($period === 'prev_year') {
             $year--;
         }
+        Carbon::setLocale(App::currentLocale());
 
         $months = collect(range(1, 12))->map(function ($month) {
             return [
-                'month'  => Carbon::create()->month($month)->format('F'),
+                'month'  => Carbon::create()->month($month)->translatedFormat("M"),
                 'paid'   => 0,
                 'unpaid' => 0
             ];

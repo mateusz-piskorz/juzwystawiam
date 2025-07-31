@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Locale;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
+    use Locale;
+
     protected $fillable = [
         'user_id',
         'name',

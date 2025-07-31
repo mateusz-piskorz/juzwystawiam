@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { setCookie } from '../utils/set-cookie';
 
 export type Appearance = 'light' | 'dark' | 'system';
 
@@ -8,15 +9,6 @@ const prefersDark = () => {
     }
 
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
-};
-
-const setCookie = (name: string, value: string, days = 365) => {
-    if (typeof document === 'undefined') {
-        return;
-    }
-
-    const maxAge = days * 24 * 60 * 60;
-    document.cookie = `${name}=${value};path=/;max-age=${maxAge};SameSite=Lax`;
 };
 
 const applyTheme = (appearance: Appearance) => {

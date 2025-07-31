@@ -3,15 +3,21 @@
 import { DataTableColumnHeader } from '@/components/common/data-table/data-table-column-header';
 import { DataTableRowActions } from '@/components/common/data-table/data-table-row-actions';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { Contractor } from '@/lib/types/contractor';
 import { ColumnDef } from '@tanstack/react-table';
 
 export const getContractorColumns = ({
     handleEditContractor,
     handleDeleteContractor,
+    locale,
 }: {
     handleEditContractor: (contractorId: number) => void;
     handleDeleteContractor: (contractorId: number) => void;
+    locale: ReturnType<typeof useLocale>['locale']['dashboard/contractors'] & {
+        common: ReturnType<typeof useLocale>['locale']['common'];
+        enum: ReturnType<typeof useLocale>['locale']['enum'];
+    };
 }): ColumnDef<Contractor>[] => [
     {
         id: 'select',
@@ -36,40 +42,41 @@ export const getContractorColumns = ({
     },
     {
         accessorKey: 'company_name',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
-        cell: ({ row }) => {
-            return row.original.company_name;
-        },
+        meta: { title: locale['Company name'] },
+        header: ({ column }) => <DataTableColumnHeader column={column} />,
+        cell: ({ row }) => row.original.company_name,
         enableSorting: false,
     },
     {
         accessorKey: 'is_own_company',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Is own company" />,
-        cell: ({ row }) => {
-            return String(row.original.is_own_company);
-        },
+        meta: { title: locale['Is own company'] },
+        header: ({ column }) => <DataTableColumnHeader column={column} />,
+        cell: ({ row }) => (row.original.is_own_company ? locale.common.true : locale.common.false),
     },
     {
+        meta: {
+            title: locale['Type of business'],
+        },
         accessorKey: 'type_of_business',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Type of business" />,
-        cell: ({ row }) => {
-            return row.original.type_of_business;
-        },
+        header: ({ column }) => <DataTableColumnHeader column={column} />,
+        cell: ({ row }) => locale.enum.TYPE_OF_BUSINESS[row.original.type_of_business],
     },
     {
-        accessorKey: 'country',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Country" />,
-        cell: ({ row }) => {
-            return row.original.country;
+        meta: {
+            title: locale.Country,
         },
+        accessorKey: 'country',
+        header: ({ column }) => <DataTableColumnHeader column={column} />,
+        cell: ({ row }) => row.original.country,
         enableSorting: false,
     },
     {
-        accessorKey: 'address',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Address" />,
-        cell: ({ row }) => {
-            return `${row.original.postal_code} ${row.original.city}`;
+        meta: {
+            title: locale.Address,
         },
+        accessorKey: 'address',
+        header: ({ column }) => <DataTableColumnHeader column={column} />,
+        cell: ({ row }) => `${row.original.postal_code} ${row.original.city}`,
         enableSorting: false,
     },
     {
@@ -77,8 +84,8 @@ export const getContractorColumns = ({
         cell: ({ row }) => (
             <DataTableRowActions
                 actions={[
-                    { label: 'delete', action: () => handleDeleteContractor(row.original.id) },
-                    { label: 'edit', action: () => handleEditContractor(row.original.id) },
+                    { label: locale['Delete contractor'], action: () => handleDeleteContractor(row.original.id) },
+                    { label: locale['Edit contractor'], action: () => handleEditContractor(row.original.id) },
                 ]}
             />
         ),

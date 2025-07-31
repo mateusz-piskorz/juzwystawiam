@@ -1,0 +1,333 @@
+{
+    "enum": {
+        "LOCALE_CODE": {
+            "pl": "Polski",
+            "en": "Angielski",
+            "system": "System"
+        },
+        "THEME": {
+            "system": "System",
+            "light": "Jasny",
+            "dark": "Ciemny"
+        },
+        "CONTRACTOR_ROLE": {
+            "BUYER": "Kupujący",
+            "SELLER": "Sprzedający"
+        },
+        "EMAIL_STATUS": {
+            "PENDING": "Oczekujące",
+            "SENT": "Wysłane",
+            "FAILED": "Nieudane"
+        },
+        "INVOICE_TYPE": {
+            "VAT": "Vat",
+            "NO_VAT": "Bez VAT"
+        },
+        "MEASURE_UNIT": {
+            "PCS": "szt.",
+            "HOUR": "godzina",
+            "SERVICE": "usługa"
+        },
+        "PAYMENT_METHOD": {
+            "BANK_TRANSFER": "Przelew bankowy",
+            "CASH": "Gotówka",
+            "CARD": "Karta",
+            "BARTER": "Barter",
+            "CHEQUE": "Czek",
+            "COD": "Pobranie",
+            "OTHER": "Inne",
+            "COMPENSATION": "Kompensata",
+            "LETTER_OF_CREDIT": "Akredytywa",
+            "PAYPAL": "PayPal",
+            "PAYU": "PayU",
+            "PROMISSORY_NOTE": "Weksel",
+            "PREPAYMENT": "Przedpłata",
+            "INSTALLMENT_SALE": "Sprzedaż ratalna",
+            "TPAY": "Tpay",
+            "PRZELEWY24": "Przelewy24",
+            "DOTPAY": "Dotpay"
+        },
+        "TYPE_OF_BUSINESS": {
+            "PRIVATE_PERSON": "Osoba prywatna",
+            "SELF_EMPLOYED": "Samozatrudniony",
+            "OTHER_BUSINESS": "Inna działalność"
+        }
+    },
+
+    "common": {
+        "Vat rate": "Stawka VAT",
+        "Measure Unit": "Jednostka miary",
+        "Updated": "Zaktualizowano",
+        "Created": "Utworzono",
+        "Update": "Aktualizuj",
+        "Create": "Utwórz",
+        "Successfully": "Pomyślnie",
+        "false": "Fałsz",
+        "true": "Prawda",
+        "Submit": "Wyślij",
+        "Saved": "Zapisano",
+        "Cancel": "Anuluj",
+        "Manage": "Zarządzaj",
+        "Invoices": "Faktury",
+        "Dashboard": "Panel",
+        "something went wrong": "coś poszło nie tak",
+        "Fill in the details below to": "Wypełnij poniższe dane, aby",
+        "Optional": "Opcjonalne",
+
+        "premium-status-heading": {
+            "Your premium account is": "Twój konto premium jest",
+            "Days left": "Pozostało dni",
+            "active": "aktywne",
+            "inactive": "nieaktywne",
+            "Premium Status": "Status premium"
+        },
+        "sidebar": {
+            "Dashboard": "Panel",
+            "Invoices": "Faktury",
+            "Contractors": "Kontrahenci",
+            "Products": "Produkty",
+            "Analytics": "Analizy",
+            "Premium Account": "Konto Premium",
+            "Settings": "Ustawienia",
+            "Log out": "Wyloguj się"
+        },
+        "data-table": {
+            "No results.": "Brak wyników.",
+            "View": "Widok",
+            "Search": "Wyszukaj...",
+            "Reset": "Resetuj",
+            "Open menu": "Otwórz menu",
+            "Actions": "Akcje",
+            "Asc": "Rosnąco",
+            "Desc": "Malejąco",
+            "Hide": "Ukryj",
+            "Toggle columns": "Przełącz kolumny",
+            "row(s) selected.": "wybrano wiersz(e).",
+            "of": "z",
+            "Rows per page": "Wierszy na stronę",
+            "Page": "Strona"
+        }
+    },
+
+    "dashboard": {
+        "Latest invoices": "Najnowsze faktury"
+    },
+    "dashboard/invoices": {
+        "Manage your invoices and see details.": "Zarządzaj swoimi fakturami i zobacz szczegóły.",
+        "Add new invoice": "Dodaj nową fakturę",
+        "Number": "Numer",
+        "Type": "Typ",
+        "Sale Date": "Data sprzedaży",
+        "Is already paid": "Czy już opłacona",
+        "Email status": "Status e-maila",
+        "Show": "Pokaż",
+        "Total": "Suma",
+        "Invoice": "Faktura",
+        "Here you can check details about your invoice.": "Tutaj możesz sprawdzić szczegóły swojej faktury.",
+        "Details": "Szczegóły",
+        "Seller": "Sprzedawca",
+        "Buyer": "Kupujący",
+        "Create Date": "Data utworzenia",
+        "Grand Total": "Suma końcowa",
+        "Invoice Products": "Produkty na fakturze",
+        "Invoice Emails": "E-maile do faktury",
+        "Name": "Nazwa",
+
+        "Date": "Data",
+        "Recipient": "Odbiorca",
+        "Status": "Status",
+        "Preview": "Podgląd",
+        "Download": "Pobierz",
+        "Edit invoice": "Edytuj fakturę",
+        "Delete invoice": "Usuń fakturę",
+        "Actions": "Akcje",
+        "Send email": "Wyślij e-mail",
+        "Create invoice": "Utwórz fakturę",
+        "Invoice type": "Typ faktury",
+        "Are you sure you want to remove this Invoice": "Czy na pewno chcesz usunąć tę fakturę?",
+        "This action cannot be undone. Invoice will be permanently deleted.": "Tej operacji nie można cofnąć. Faktura zostanie trwale usunięta.",
+        "invoice-form": {
+            "invoice updated successfully!": "faktura została zaktualizowana!",
+            "invoice created successfully!": "faktura została utworzona!",
+            "Issue date": "Data wystawienia",
+            "A secret note for Your invoice": "Tajna notatka do Twojej faktury",
+            "Information about secret note": "Informacje o tajnej notatce",
+            "Secret note visible only to you. This feature is for": "Tajna notatka widoczna tylko dla Ciebie. Ta funkcja jest dla",
+            "premium users": "użytkowników premium",
+            "Payment method": "Metoda płatności",
+            "Currency": "Waluta",
+            "Invoice paid": "Faktura opłacona",
+            "Mark invoice as paid": "Oznacz fakturę jako opłaconą",
+            "Sale Date": "Data sprzedaży",
+            "Due date": "Termin płatności",
+            "Products": "Produkty",
+            "Product name": "Nazwa produktu",
+            "Price": "Cena",
+            "Quantity": "Ilość",
+            "Measure Unit": "Jednostka miary",
+            "Vat": "VAT",
+            "Discount": "Rabat",
+            "remove item": "usuń pozycję",
+            "add invoice product": "dodaj produkt do faktury",
+            "Grand Total": "Suma końcowa"
+        }
+    },
+
+    "dashboard/contractors": {
+        "Contractors": "Kontrahenci",
+        "Manage your contractors and their details.": "Zarządzaj swoimi kontrahentami i ich danymi.",
+        "Add new contractor": "Dodaj nowego kontrahenta",
+        "Is own company": "Własna firma",
+        "Type of business": "Typ działalności",
+        "Delete contractor": "Usuń kontrahenta",
+        "Edit contractor": "Edytuj kontrahenta",
+        "Contractor deleted successfully": "Kontrahent został pomyślnie usunięty",
+        "Are you sure you want to remove this Contractor": "Czy na pewno chcesz usunąć tego kontrahenta",
+        "This action cannot be undone. Contractor will be permanently deleted.": "Tej operacji nie można cofnąć. Kontrahent zostanie trwale usunięty.",
+        "Company name": "Nazwa firmy",
+        "Country": "Kraj",
+        "Address": "Adres",
+        "Postal code": "Kod pocztowy",
+        "City": "Miasto",
+        "Street name": "Nazwa ulicy",
+        "First name": "Imię",
+        "Surname": "Nazwisko",
+        "Email": "E-mail",
+        "Phone": "Telefon",
+        "Bank Account": "Konto bankowe",
+        "Company nip": "NIP firmy",
+        "indicates whether the company is owned by the user": "wskazuje, czy firma jest własnością użytkownika"
+    },
+
+    "dashboard/products": {
+        "Products": "Produkty",
+        "Manage your products and see details.": "Zarządzaj swoimi produktami i zobacz szczegóły.",
+        "Product name": "Nazwa produktu",
+        "Price": "Cena",
+        "Delete product": "Usuń produkt",
+        "Edit product": "Edytuj produkt",
+        "Add new product": "Dodaj nowy produkt",
+        "Product deleted successfully": "Product deleted successfully",
+        "Are you sure you want to remove this product": "Czy na pewno chcesz usunąć ten produkt",
+        "This action cannot be undone. Product will be permanently deleted": "Tej operacji nie można cofnąć. Produkt zostanie trwale usunięty.",
+        "Product": "Produkt",
+        "Product description": "Opis produktu"
+    },
+
+    "dashboard/analytics": {
+        "Analytics and statistics for your invoices": "Analizy i statystyki dla Twoich faktur",
+        "Period": "Okres",
+        "Product": "Produkt",
+        "This year": "Ten rok",
+        "Prev year": "Poprzedni rok",
+        "paid": "opłacone",
+        "unpaid": "nieopłacone"
+    },
+
+    "dashboard/premium-account": {
+        "payments-history": {
+            "Payments History": "Historia płatności",
+            "Amount": "Kwota",
+            "Status": "Status",
+            "Description": "Opis",
+            "Date": "Data"
+        },
+        "Premium Account": "Konto Premium",
+        "Payment successful! Your premium account will be activated shortly.": "Płatność zakończona sukcesem! Twoje konto premium zostanie wkrótce aktywowane.",
+        "Buy Premium Days": "Kup dni premium",
+        "Choose a plan that suits you and continue enjoying premium benefits!": "Wybierz plan, który Ci odpowiada i korzystaj dalej z korzyści premium!",
+        "days": "dni",
+        "day": "dzień",
+        "of Premium": "premium",
+        "Premium account for": "Konto premium na",
+
+        "benefits": {
+            "Benefits": "Korzyści",
+            "unlimited invoices": "nielimitowane faktury",
+            "unlimited emails": "nielimitowane e-maile",
+            "secret note for invoice": "tajna notatka do faktury",
+            "priority customer support": "priorytetowa obsługa klienta",
+            "access to exclusive content": "dostęp do ekskluzywnych treści"
+        }
+    },
+
+    "dashboard/settings": {
+        "appearance": {
+            "Language": "Język",
+            "Theme": "Motyw",
+            "Appearance settings": "Ustawienia wyglądu",
+            "Update your account's appearance settings": "Zaktualizuj ustawienia wyglądu konta"
+        },
+        "password": {
+            "Update password": "Zmień hasło",
+            "Ensure your account is using a long, random password to stay secure": "Upewnij się, że Twoje konto używa długiego, losowego hasła, aby zachować bezpieczeństwo",
+            "Current password": "Obecne hasło",
+            "New password": "Nowe hasło",
+            "Confirm password": "Potwierdź hasło",
+            "Save password": "Zapisz hasło",
+            "Password settings": "Ustawienia hasła"
+        },
+        "profile": {
+            "Profile information": "Informacje o profilu",
+            "Update your name and email address": "Zaktualizuj swoje imię i adres e-mail",
+            "Name": "Imię i nazwisko",
+            "Email address": "Adres e-mail",
+            "Save": "Zapisz",
+            "Delete account": "Usuń konto",
+            "Delete your account and all of its resources": "Usuń swoje konto i wszystkie jego zasoby",
+            "Warning": "Ostrzeżenie",
+            "Please proceed with caution, this cannot be undone.": "Proszę zachować ostrożność, tej operacji nie można cofnąć.",
+            "Your email address is unverified.": "Twój adres e-mail nie został zweryfikowany.",
+            "Click here to resend the verification email.": "Kliknij tutaj, aby ponownie wysłać e-mail weryfikacyjny.",
+            "A new verification link has been sent to your email address.": "Nowy link weryfikacyjny został wysłany na Twój adres e-mail.",
+            "Profile settings": "Ustawienia profilu",
+            "delete-user-dialog": {
+                "Are you sure you want to delete your account?": "Czy na pewno chcesz usunąć swoje konto?",
+                "Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.": "Po usunięciu konta wszystkie jego zasoby i dane zostaną trwale usunięte. Wprowadź swoje hasło, aby potwierdzić trwałe usunięcie konta.",
+                "Password": "Hasło"
+            }
+        },
+        "index": {
+            "Settings": "Ustawienia",
+            "Manage your profile and account settings": "Zarządzaj swoim profilem i ustawieniami konta",
+            "Profile": "Konto",
+            "Password": "Hasło",
+            "Appearance": "Wygląd"
+        }
+    },
+
+    "auth": {
+        "Create an account": "Utwórz konto",
+        "Enter your details below to create your account": "Wprowadź poniżej swoje dane, aby utworzyć konto",
+        "Register": "Zarejestruj się",
+        "Name": "Imię",
+        "Full name": "Imię i nazwisko",
+        "Email address": "Adres e-mail",
+        "email@example.com": "email@przyklad.com",
+        "Password": "Hasło",
+        "Confirm password": "Potwierdź hasło",
+        "Create account": "Utwórz konto",
+        "Already have an account": "Masz już konto",
+        "Log in": "Zaloguj się",
+        "Log in to your account": "Zaloguj się na swoje konto",
+        "Enter your email and password below to log in": "Wprowadź poniżej swój e-mail i hasło, aby się zalogować",
+        "Forgot password": "Nie pamiętasz hasła",
+        "Remember me": "Zapamiętaj mnie",
+        "Don't have an account": "Nie masz konta",
+        "Sign up": "Zarejestruj się",
+        "Confirm your password": "Potwierdź swoje hasło",
+        "This is a secure area of the application. Please confirm your password before continuing": "To jest bezpieczny obszar aplikacji. Potwierdź swoje hasło przed kontynuacją",
+        "Reset password": "Zresetuj hasło",
+        "Verify email": "Zweryfikuj e-mail",
+        "Please verify your email address by clicking on the link we just emailed to you": "Zweryfikuj swój adres e-mail, klikając w link, który właśnie wysłaliśmy",
+        "Email verification": "Weryfikacja e-maila",
+        "A new verification link has been sent to the email address you provided during registration": "Nowy link weryfikacyjny został wysłany na adres e-mail podany podczas rejestracji",
+        "Resend verification email": "Wyślij ponownie e-mail weryfikacyjny",
+        "Log out": "Wyloguj się",
+        "Email password reset link": "Wyślij link do resetowania hasła",
+        "Or, return to": "Lub wróć do",
+        "Please enter your new password below": "Wprowadź poniżej swoje nowe hasło",
+        "Email": "Email",
+        "Enter your email to receive a password reset link": "Wprowadź swój e-mail, aby otrzymać link do resetowania hasła"
+    }
+}

@@ -6,7 +6,7 @@ const { OTHER_BUSINESS, PRIVATE_PERSON, SELF_EMPLOYED } = TYPE_OF_BUSINESS;
 export const createContractorDTO = z
     .object({
         type_of_business: z.nativeEnum(TYPE_OF_BUSINESS),
-        is_own_company: z.boolean().optional(),
+        is_own_company: z.boolean(),
         nip: z.string().nullish(),
         postal_code: z.string().nonempty(),
         city: z.string().nonempty(),

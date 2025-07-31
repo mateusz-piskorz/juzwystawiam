@@ -6,18 +6,20 @@ import { Settings2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
+import { useLocale } from '@/lib/hooks/use-locale';
 
 export function DataTableViewOptions<TData>({ table }: { table: Table<TData> }) {
+    const locale = useLocale().locale.common['data-table'];
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="flex">
                     <Settings2 />
-                    View
+                    {locale.View}
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[150px]">
-                <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+                <DropdownMenuLabel>{locale['Toggle columns']}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {table
                     .getAllColumns()
@@ -30,7 +32,7 @@ export function DataTableViewOptions<TData>({ table }: { table: Table<TData> }) 
                                 checked={column.getIsVisible()}
                                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
                             >
-                                {column.id}
+                                {column.columnDef.meta?.title}
                             </DropdownMenuCheckboxItem>
                         );
                     })}
