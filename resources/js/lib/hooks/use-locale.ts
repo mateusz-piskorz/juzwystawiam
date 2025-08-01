@@ -7,7 +7,7 @@ export const useLocale = () => {
         locale: { data, languageCode },
     } = usePage().props;
 
-    const setPreferredLocale = (lang: LOCALE_CODE) => {
+    const setPreferredLocale = (lang: LOCALE_CODE | 'system') => {
         setCookie('locale', lang);
 
         location.reload();

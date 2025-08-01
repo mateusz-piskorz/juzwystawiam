@@ -1,7 +1,7 @@
 import { type BreadcrumbItem } from '@/lib/types';
 
+import { AppearanceToggle } from '@/components/common/appearance-toggle';
 import { Heading } from '@/components/common/heading';
-import { AppearanceTabs } from '@/components/dashboard/settings/appearance/appearance-tabs';
 import { LocaleSelectInput } from '@/components/dashboard/settings/appearance/locale-select-input';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { SettingsLayout } from '@/layouts/dashboard/settings';
@@ -29,8 +29,14 @@ export default function Appearance() {
             <SettingsLayout>
                 <div className="flex flex-col items-start space-y-6">
                     <Heading size="small" title={locale['Appearance settings']} description={locale["Update your account's appearance settings"]} />
-                    <AppearanceTabs />
-                    <LocaleSelectInput />
+                    <div>
+                        <h4 className="mb-2">{locale.Theme}</h4>
+                        <AppearanceToggle />
+                    </div>
+                    <div>
+                        <h4 className="mb-2">{locale.Language}</h4>
+                        <LocaleSelectInput />
+                    </div>
                 </div>
             </SettingsLayout>
         </AppLayout>

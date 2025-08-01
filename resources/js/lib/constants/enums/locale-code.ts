@@ -1,5 +1,9 @@
 export enum LOCALE_CODE {
-    SYSTEM = 'system',
     PL = 'pl',
     EN = 'en',
+}
+
+export enum COUNTRY_CODE {
+    PL = 'pl',
+    EN = 'gb',
 }

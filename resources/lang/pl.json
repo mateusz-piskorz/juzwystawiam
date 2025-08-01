@@ -221,7 +221,8 @@
         "This year": "Ten rok",
         "Prev year": "Poprzedni rok",
         "paid": "opłacone",
-        "unpaid": "nieopłacone"
+        "unpaid": "nieopłacone",
+        "Analytics": "Analizy"
     },
 
     "dashboard/premium-account": {
@@ -254,7 +255,9 @@
     "dashboard/settings": {
         "appearance": {
             "Language": "Język",
+            "Select language": "Wybierz język",
             "Theme": "Motyw",
+            "Toggle theme": "Przełącz motyw",
             "Appearance settings": "Ustawienia wyglądu",
             "Update your account's appearance settings": "Zaktualizuj ustawienia wyglądu konta"
         },
