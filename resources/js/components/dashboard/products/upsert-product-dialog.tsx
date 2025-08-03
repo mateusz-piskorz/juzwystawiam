@@ -76,6 +76,7 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
                         className="space-y-5"
                     >
                         <InputField form={form} name="name" label={locale['Product name']} />
+                        {/* todo: consider making reusable textarea */}
                         <FormField
                             control={form.control}
                             name="description"

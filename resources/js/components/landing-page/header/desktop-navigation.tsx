@@ -24,8 +24,10 @@ export const DesktopNavigation = () => {
                     </li>
                 </ul>
             </nav>
-            <AppearanceToggle variant="icon" align="end" />
-            <LocaleSelectInput variant="icon" align="end" />
+            <div className="space-x-4">
+                <AppearanceToggle variant="icon" align="end" />
+                <LocaleSelectInput variant="icon" align="end" />
+            </div>
         </div>
     );
 };

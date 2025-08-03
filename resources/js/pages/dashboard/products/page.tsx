@@ -1,4 +1,4 @@
-import { Heading } from '@/components/common/heading';
+import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { ProductTable } from '@/components/dashboard/products/product-table';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
@@ -24,7 +24,7 @@ const ProductsPage = () => {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={locale.Products} />
             <MainContentLayout>
-                <Heading title={locale.Products} description={locale['Manage your products and see details.']} />
+                <DashboardHeading title={locale.Products} description={locale['Manage your products and see details.']} />
                 <ProductTable />
             </MainContentLayout>
         </AppLayout>

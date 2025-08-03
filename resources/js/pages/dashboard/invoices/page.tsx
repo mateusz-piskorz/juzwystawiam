@@ -1,6 +1,6 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
-import { Heading } from '@/components/common/heading';
+import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { InvoiceTable } from '@/components/dashboard/invoices/invoice-table';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
@@ -25,7 +25,7 @@ const InvoiceListPage = () => {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={locale.common.Invoices} />
             <MainContentLayout>
-                <Heading title={locale.common.Invoices} description={locale['Manage your invoices and see details.']} />
+                <DashboardHeading title={locale.common.Invoices} description={locale['Manage your invoices and see details.']} />
                 <InvoiceTable />
             </MainContentLayout>
         </AppLayout>

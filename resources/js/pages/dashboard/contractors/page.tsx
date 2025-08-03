@@ -1,6 +1,6 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
-import { Heading } from '@/components/common/heading';
+import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { ContractorTable } from '@/components/dashboard/contractors/contractor-table';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
@@ -25,7 +25,7 @@ const ContractorsPage = () => {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={locale.Contractors} />
             <MainContentLayout>
-                <Heading title={locale.Contractors} description={locale['Manage your contractors and their details.']} />
+                <DashboardHeading title={locale.Contractors} description={locale['Manage your contractors and their details.']} />
                 <ContractorTable />
             </MainContentLayout>
         </AppLayout>

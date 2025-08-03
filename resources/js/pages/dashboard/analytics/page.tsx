@@ -1,6 +1,6 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
-import { Heading } from '@/components/common/heading';
+import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { MainAnalyticChart } from '@/components/dashboard/analytics/main-analytic-chart';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
@@ -26,7 +26,7 @@ const AnalyticsPage = () => {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={locale.Analytics} />
             <MainContentLayout>
-                <Heading title={locale.common.Invoices} description={locale['Analytics and statistics for your invoices']} />
+                <DashboardHeading title={locale.common.Invoices} description={locale['Analytics and statistics for your invoices']} />
                 <MainAnalyticChart />
             </MainContentLayout>
         </AppLayout>
