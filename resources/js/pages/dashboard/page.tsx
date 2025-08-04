@@ -1,4 +1,4 @@
-import { Heading } from '@/components/common/heading';
+import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { PremiumStatusHeading } from '@/components/common/premium-status-heading';
 import { MainAnalyticChart } from '@/components/dashboard/analytics/main-analytic-chart';
 import { InvoiceTable } from '@/components/dashboard/invoices/invoice-table';
@@ -26,7 +26,7 @@ export default function DashboardPage() {
             <MainContentLayout className="flex flex-col gap-14 md:gap-4 md:bg-transparent md:p-0">
                 <div className="flex flex-col gap-14 md:h-[300px] md:flex-row md:gap-4">
                     <div className="md:bg-sidebar flex-2/3 space-y-12 md:space-y-8 md:overflow-y-auto md:rounded md:p-6">
-                        <Heading title={locale.dashboard['Latest invoices']} />
+                        <DashboardHeading title={locale.dashboard['Latest invoices']} />
                         <InvoiceTable displayDataTableToolbar={false} withFilters={false} displayPagination={false} />
                     </div>
 
@@ -39,7 +39,7 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="md:bg-sidebar md:rounded md:p-6">
-                    <Heading title={locale.common.Invoices} />
+                    <DashboardHeading title={locale.common.Invoices} />
                     <MainAnalyticChart withFilters={false} className="" />
                 </div>
             </MainContentLayout>

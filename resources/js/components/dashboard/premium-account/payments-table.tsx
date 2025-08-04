@@ -1,5 +1,5 @@
+import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { DataTable } from '@/components/common/data-table';
-import { Heading } from '@/components/common/heading';
 import { getAllPremiumAccountPayments } from '@/lib/data/premium-account';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useQuery } from '@tanstack/react-query';
@@ -17,7 +17,7 @@ export const PaymentsTable = () => {
 
     return (
         <>
-            <Heading title={locale['Payments History']} />
+            <DashboardHeading title={locale['Payments History']} />
             <DataTable displayDataTableToolbar={false} data={data ?? []} columns={columns} filters={[]} />
         </>
     );

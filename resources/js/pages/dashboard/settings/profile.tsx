@@ -1,6 +1,6 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
-import { Heading } from '@/components/common/heading';
+import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { DeleteUser } from '@/components/dashboard/settings/profile/delete-user';
 import InputError from '@/components/default/input-error';
 import { Button } from '@/components/ui/button';
@@ -54,7 +54,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
 
             <SettingsLayout>
                 <div className="space-y-6">
-                    <Heading size="small" title={locale['Profile information']} description={locale['Update your name and email address']} />
+                    <DashboardHeading size="small" title={locale['Profile information']} description={locale['Update your name and email address']} />
 
                     <form onSubmit={submit} className="space-y-6">
                         <div className="grid gap-2">

@@ -221,7 +221,8 @@
         "This year": "This year",
         "Prev year": "Prev year",
         "paid": "paid",
-        "unpaid": "unpaid"
+        "unpaid": "unpaid",
+        "Analytics": "Analytics"
     },
 
     "dashboard/premium-account": {
@@ -254,7 +255,9 @@
     "dashboard/settings": {
         "appearance": {
             "Language": "Language",
+            "Select language": "Select language",
             "Theme": "Theme",
+            "Toggle theme": "Toggle theme",
             "Appearance settings": "Appearance settings",
             "Update your account's appearance settings": "Update your account's appearance settings"
         },

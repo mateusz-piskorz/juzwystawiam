@@ -1,6 +1,6 @@
 import { type BreadcrumbItem } from '@/lib/types';
 
-import { Heading } from '@/components/common/heading';
+import { DashboardHeading } from '@/components/common/dashboard-heading';
 import InputError from '@/components/default/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -61,7 +61,7 @@ export default function Password() {
 
             <SettingsLayout>
                 <div className="space-y-6">
-                    <Heading
+                    <DashboardHeading
                         size="small"
                         title={locale['Update password']}
                         description={locale['Ensure your account is using a long, random password to stay secure']}

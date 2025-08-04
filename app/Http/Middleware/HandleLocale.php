@@ -6,7 +6,6 @@ use App\Support\BrowserLanguageService;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class HandleLocale
@@ -16,8 +15,7 @@ class HandleLocale
         $browserLanguageService = new BrowserLanguageService();
         $langArr = $browserLanguageService->detectLanguage($request);
 
-        View::share('langCode', $langArr['langCode']);
-        App::setLocale($langArr['selectedLocale']);
+        App::setLocale($langArr['langCode']);
 
         return $next($request);
     }

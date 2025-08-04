@@ -2,9 +2,10 @@ import { cn } from '@/lib/utils/cn';
 
 type Props = {
     className?: string;
+    textClassName?: string;
 };
 
-export function AppLogo({ className }: Props) {
+export function AppLogo({ className, textClassName }: Props) {
     return (
         <>
             <div
@@ -28,7 +29,7 @@ export function AppLogo({ className }: Props) {
                     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
                 </svg>
             </div>
-            <div className="ml-1 grid flex-1 text-left text-sm">
+            <div className={cn('ml-1 grid flex-1 text-left', textClassName)}>
                 <span className="mb-0.5 truncate leading-none font-semibold">Juz Wystawiam</span>
             </div>
         </>

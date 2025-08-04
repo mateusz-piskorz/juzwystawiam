@@ -21,6 +21,6 @@ class BrowserLanguageService
             }
         };
 
-        return ['langCode' => $languageCode, 'selectedLocale' => $locale];
+        return ['langCode' => $languageCode];
     }
 }

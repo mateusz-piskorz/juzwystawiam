@@ -1,6 +1,6 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
-import { Heading } from '@/components/common/heading';
+import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { InvoiceActionsSection } from '@/components/dashboard/invoices/[id]/invoice-actions-section';
 import { InvoiceEmailTable } from '@/components/dashboard/invoices/[id]/invoice-email-table';
 import { InvoiceProductTable } from '@/components/dashboard/invoices/[id]/invoice-product-table';
@@ -83,11 +83,11 @@ const InvoicePage = () => {
                         <InvoiceActionsSection invoiceId={invoice.id} buyerEmail={buyer?.email} />
                     </div>
                     <div className="md:bg-sidebar md:rounded md:p-6">
-                        <Heading title={locale['Invoice Products']} />
+                        <DashboardHeading title={locale['Invoice Products']} />
                         <InvoiceProductTable data={invoice.invoice_products} />
                     </div>
                     <div className="md:bg-sidebar md:rounded md:p-6">
-                        <Heading title={locale['Invoice Emails']} />
+                        <DashboardHeading title={locale['Invoice Emails']} />
                         <InvoiceEmailTable data={invoice.invoice_emails} />
                     </div>
                 </MainContentLayout>

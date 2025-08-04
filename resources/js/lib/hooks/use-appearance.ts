@@ -40,10 +40,12 @@ export function initializeTheme() {
 }
 
 export function useAppearance() {
-    const [appearance, setAppearance] = useState<Appearance>('system');
+    const [appearance, setAppearance] = useState<'light' | 'dark'>(prefersDark() ? 'dark' : 'light');
 
     const updateAppearance = useCallback((mode: Appearance) => {
-        setAppearance(mode);
+        const isDark = mode === 'dark' || (mode === 'system' && prefersDark());
+
+        setAppearance(isDark ? 'dark' : 'light');
 
         // Store in localStorage for client-side persistence...
         localStorage.setItem('appearance', mode);

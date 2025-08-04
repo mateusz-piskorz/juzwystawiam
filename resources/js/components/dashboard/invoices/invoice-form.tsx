@@ -81,6 +81,8 @@ export const InvoiceForm = ({ defaultValues, invoiceId, type }: Props) => {
         return () => unsubscribe();
     }, [watch, getValues]);
 
+    // todo: some inputs here has broken styles (borders)
+    // also care how it looks in light mode
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
