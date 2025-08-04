@@ -1,6 +1,7 @@
 import { AboutUsSection } from '@/components/landing-page/about-us-section';
 import { ContactSection } from '@/components/landing-page/contact-section';
 import { CoverImageSection } from '@/components/landing-page/cover-image-section';
+import { Footer } from '@/components/landing-page/footer';
 import { Header } from '@/components/landing-page/header';
 import { HeroSection } from '@/components/landing-page/hero-section';
 import { PricingSection } from '@/components/landing-page/pricing-section';
@@ -22,6 +23,7 @@ export default function Welcome() {
             <ServicesSection />
             <PricingSection />
             <ContactSection />
+            <Footer />
         </div>
     );
 }

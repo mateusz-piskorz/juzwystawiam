@@ -1,15 +1,11 @@
 import { Heading } from '@/components/landing-page/common/Heading';
-import { Banknote, BarChart2, Download, FileMinus, FileText, HelpCircle, Send, Shield, Smartphone, UserPlus, Users, Zap } from 'lucide-react';
+import { BarChart2, Download, FileMinus, FileText, HelpCircle, Send, Shield, Smartphone, UserPlus, Users } from 'lucide-react';
 import { ServiceItem } from './service-item';
 
 const services = [
     {
         icon: FileText,
         text: 'Wystawiaj wszystkie typy faktur: VAT, proforma, zaliczkowe, końcowe.',
-    },
-    {
-        icon: Zap,
-        text: 'Szybkie i intuicyjne wystawianie faktur oraz zarządzanie firmą.',
     },
     {
         icon: Users,
@@ -36,10 +32,6 @@ const services = [
         text: 'Dostęp dla pracowników z różnymi poziomami uprawnień.',
     },
     {
-        icon: Banknote,
-        text: 'Automatyczne pobieranie wyciągów i powiązanie płatności.',
-    },
-    {
         icon: Shield,
         text: 'Dane chronione szyfrowaniem i regularnymi kopiami zapasowymi.',
     },
@@ -57,7 +49,7 @@ export const ServicesSection = () => {
     return (
         <div className="mx-auto max-w-[1640px] p-4 md:px-8 xl:px-12">
             <Heading title="Our Services" description="Discover the range of professional services we offer to help you achieve your goals." />
-            <div className="mt-18 flex flex-wrap gap-x-4 md:gap-y-8">
+            <div className="mt-18 flex flex-wrap justify-center gap-x-4 md:justify-start md:gap-y-8">
                 {services.map((service, idx) => (
                     <ServiceItem key={idx} text={service.text} Icon={service.icon} />
                 ))}
