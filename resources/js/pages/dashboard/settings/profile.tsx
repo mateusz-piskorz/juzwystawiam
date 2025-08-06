@@ -1,11 +1,12 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
 import { DashboardHeading } from '@/components/common/dashboard-heading';
-import { DeleteUser } from '@/components/dashboard/settings/profile/delete-user';
-import InputError from '@/components/default/input-error';
+
+import InputError from '@/components/common/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { SectionDashboardDeleteUser } from '@/features/section-dashboard-delete-user';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { SettingsLayout } from '@/layouts/dashboard/settings';
 import { useLocale } from '@/lib/hooks/use-locale';
@@ -128,7 +129,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                     </form>
                 </div>
 
-                <DeleteUser />
+                <SectionDashboardDeleteUser />
             </SettingsLayout>
         </AppLayout>
     );

@@ -1,9 +1,10 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
 import { DashboardHeading } from '@/components/common/dashboard-heading';
-import { InvoiceActionsSection } from '@/components/dashboard/invoices/[id]/invoice-actions-section';
-import { InvoiceEmailTable } from '@/components/dashboard/invoices/[id]/invoice-email-table';
-import { InvoiceProductTable } from '@/components/dashboard/invoices/[id]/invoice-product-table';
+
+import { SectionDashboardInvoiceActions } from '@/features/section-dashboard-invoice-actions';
+import { TableInvoiceEmail } from '@/features/table-invoice-email';
+import { TableInvoiceProduct } from '@/features/table-invoice-product';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { CONTRACTOR_ROLE } from '@/lib/constants/enums/contractor-role';
@@ -80,15 +81,15 @@ const InvoicePage = () => {
                                 </li>
                             </ul>
                         </div>
-                        <InvoiceActionsSection invoiceId={invoice.id} buyerEmail={buyer?.email} />
+                        <SectionDashboardInvoiceActions invoiceId={invoice.id} buyerEmail={buyer?.email} />
                     </div>
                     <div className="md:bg-sidebar md:rounded md:p-6">
                         <DashboardHeading title={locale['Invoice Products']} />
-                        <InvoiceProductTable data={invoice.invoice_products} />
+                        <TableInvoiceProduct data={invoice.invoice_products} />
                     </div>
                     <div className="md:bg-sidebar md:rounded md:p-6">
                         <DashboardHeading title={locale['Invoice Emails']} />
-                        <InvoiceEmailTable data={invoice.invoice_emails} />
+                        <TableInvoiceEmail data={invoice.invoice_emails} />
                     </div>
                 </MainContentLayout>
             </AppLayout>

@@ -3,7 +3,7 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
 import { Select } from '@/components/common/select';
-import { InvoiceForm } from '@/components/dashboard/invoices/invoice-form';
+import { FormInvoice } from '@/features/form-invoice';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
@@ -55,7 +55,7 @@ const EditInvoicePage = () => {
                         options={Object.values(INVOICE_TYPE).map((val) => ({ label: locale.enum.INVOICE_TYPE[val], value: val }))}
                     />
                 </div>
-                <InvoiceForm
+                <FormInvoice
                     type={invoiceType}
                     // @ts-ignore Warning: This is a TypeScript quirk! Don't look.
                     defaultValues={{

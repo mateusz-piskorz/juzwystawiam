@@ -1,0 +1,77 @@
+import ConfirmDialog from '@/components/common/confirm-dialog';
+import { Button } from '@/components/ui/button';
+import { deleteInvoice } from '@/lib/data/invoices';
+import { useLocale } from '@/lib/hooks/use-locale';
+import { Nullable } from '@/lib/types/nullable';
+import { getErrorMessage } from '@/lib/utils/get-error-message';
+import { Link, router } from '@inertiajs/react';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { SendEmailDialog } from './send-email-dialog';
+
+type Props = {
+    invoiceId: number;
+    buyerEmail: Nullable<string>;
+};
+
+export const SectionDashboardInvoiceActions = ({ invoiceId, buyerEmail }: Props) => {
+    const l = useLocale().locale;
+    const locale = { ...l['dashboard/invoices'], common: l.common };
+    const [openRemoveConfirm, setOpenRemoveConfirm] = useState(false);
+    const [openEmailSendingDialog, setOpenEmailSendingDialog] = useState(false);
+
+    const handleDelete = async () => {
+        try {
+            const response = await deleteInvoice({ invoiceId });
+            toast.success(response.message);
+            router.visit(`/dashboard/invoices`);
+        } catch (error: unknown) {
+            const errorMessage = getErrorMessage(error);
+            toast.error(errorMessage || locale.common['something went wrong']);
+            console.error(errorMessage);
+        }
+        setOpenRemoveConfirm(false);
+    };
+
+    return (
+        <>
+            <div>
+                <h1 className="mb-2 text-xl font-medium">{locale.Actions}</h1>
+                <div className="space-y-4 space-x-4">
+                    <Button variant="secondary">
+                        <a href={`/dashboard/invoices/${invoiceId}/pdf-preview`} target="_blank">
+                            {locale.Preview}
+                        </a>
+                    </Button>
+                    <Button variant="secondary">
+                        <a href={`/dashboard/invoices/${invoiceId}/pdf-download`} target="_blank">
+                            {locale.Download}
+                        </a>
+                    </Button>
+                    <Button variant="secondary" onClick={() => setOpenEmailSendingDialog(true)}>
+                        {locale['Send email']}
+                    </Button>
+                    <Button variant="secondary">
+                        <Link href={`/dashboard/invoices/${invoiceId}/edit`}>{locale['Edit invoice']}</Link>
+                    </Button>
+                    <Button variant="destructive" onClick={() => setOpenRemoveConfirm(true)}>
+                        {locale['Delete invoice']}
+                    </Button>
+                </div>
+            </div>
+            <ConfirmDialog
+                open={openRemoveConfirm}
+                setOpen={setOpenRemoveConfirm}
+                onContinue={handleDelete}
+                title={locale['Are you sure you want to remove this Invoice']}
+                description={locale['This action cannot be undone. Invoice will be permanently deleted.']}
+            />
+            <SendEmailDialog
+                open={openEmailSendingDialog}
+                setOpen={setOpenEmailSendingDialog}
+                invoiceId={invoiceId}
+                defaultValues={buyerEmail ? { recipient: buyerEmail } : undefined}
+            />
+        </>
+    );
+};

@@ -1,7 +1,7 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
 import { DashboardHeading } from '@/components/common/dashboard-heading';
-import { MainAnalyticChart } from '@/components/dashboard/analytics/main-analytic-chart';
+import { MainAnalyticChart } from '@/features/main-analytic-chart';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { useLocale } from '@/lib/hooks/use-locale';

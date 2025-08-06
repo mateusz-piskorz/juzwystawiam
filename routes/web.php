@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('landing-page/page');
+    return Inertia::render('root/page');
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {

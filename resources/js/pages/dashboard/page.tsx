@@ -1,8 +1,9 @@
 import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { PremiumStatusHeading } from '@/components/common/premium-status-heading';
-import { MainAnalyticChart } from '@/components/dashboard/analytics/main-analytic-chart';
-import { InvoiceTable } from '@/components/dashboard/invoices/invoice-table';
+
 import { Button } from '@/components/ui/button';
+import { MainAnalyticChart } from '@/features/main-analytic-chart';
+import { TableInvoice } from '@/features/table-invoice';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { useLocale } from '@/lib/hooks/use-locale';
@@ -27,7 +28,7 @@ export default function DashboardPage() {
                 <div className="flex flex-col gap-14 md:h-[300px] md:flex-row md:gap-4">
                     <div className="md:bg-sidebar flex-2/3 space-y-12 md:space-y-8 md:overflow-y-auto md:rounded md:p-6">
                         <DashboardHeading title={locale.dashboard['Latest invoices']} />
-                        <InvoiceTable displayDataTableToolbar={false} withFilters={false} displayPagination={false} />
+                        <TableInvoice displayDataTableToolbar={false} withFilters={false} displayPagination={false} />
                     </div>
 
                     <div className="md:bg-sidebar flex-1/3 space-y-2 md:rounded md:p-6">
