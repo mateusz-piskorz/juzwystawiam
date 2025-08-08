@@ -4,7 +4,6 @@ import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -21,7 +20,7 @@ type Schema = z.infer<typeof schema>;
 
 export const ContactForm = () => {
     const l = useLocale().locale;
-    const locale = { common: l.common };
+    const locale = { common: l.common, ...l.root };
 
     const form = useForm<Schema>({
         resolver: zodResolver(schema),
@@ -47,11 +46,11 @@ export const ContactForm = () => {
                 }}
                 className="space-y-5"
             >
-                <h4 className="text-xl font-medium">You can also send a message using form below</h4>
+                <h4 className="text-xl font-medium">{locale['You can also send a message using form below']}</h4>
 
-                <InputField form={form} name="first_name" label="First name" />
+                <InputField form={form} name="first_name" label={locale['First name']} />
                 <div className="flex flex-col gap-4 md:flex-row">
-                    <InputField form={form} name="phone" label="Phone (Optional)" />
+                    <InputField form={form} name="phone" label={`${locale.Phone} (${locale.common.Optional})`} />
                     <InputField form={form} name="email" label="E-mail" />
                 </div>
                 {/* todo: consider making reusable textarea */}
@@ -61,7 +60,12 @@ export const ContactForm = () => {
                     render={({ field }) => (
                         <FormItem className="w-full">
                             <FormControl>
-                                <Textarea placeholder="Message" className="h-[200px] resize-none border-2" {...field} value={field.value || ''} />
+                                <Textarea
+                                    placeholder={locale.Message}
+                                    className="h-[200px] resize-none border-2"
+                                    {...field}
+                                    value={field.value || ''}
+                                />
                             </FormControl>
                         </FormItem>
                     )}
@@ -69,7 +73,7 @@ export const ContactForm = () => {
 
                 <div className="w-full text-right">
                     <Button type="submit" className="w-full sm:w-auto" size="lg" disabled={form.formState.isSubmitting}>
-                        Submit
+                        {locale.common.Submit}
                     </Button>
                 </div>
             </form>

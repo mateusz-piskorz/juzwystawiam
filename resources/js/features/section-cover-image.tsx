@@ -1,3 +1,4 @@
+import { useLocale } from '@/lib/hooks/use-locale';
 import { cn } from '@/lib/utils/cn';
 import overlay from '../../../public/overlays/overlay1.jpg';
 
@@ -6,6 +7,7 @@ type Props = {
 };
 
 export const SectionCoverImage = ({ className }: Props) => {
+    const locale = useLocale().locale.root;
     return (
         <section
             style={{
@@ -26,8 +28,12 @@ export const SectionCoverImage = ({ className }: Props) => {
                         'dark:text-foreground max-w-[450px] pr-10 text-[clamp(1.1rem,2.5vw,2.5vw)] text-zinc-900 sm:max-w-[55vw] md:pr-0',
                     )}
                 >
-                    - Create, send, and track invoices in one place. Stay organized, manage clients, and get paid faster with our all-in-one invoicing
-                    system. Simplify your workflow, reduce paperwork, and focus on growing your business
+                    -{' '}
+                    {
+                        locale[
+                            'Create, send, and track invoices in one place. Stay organized, manage clients, and get paid faster with our all-in-one invoicing system. Simplify your workflow, reduce paperwork, and focus on growing your business'
+                        ]
+                    }
                 </p>
             </div>
         </section>

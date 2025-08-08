@@ -6,8 +6,7 @@ import { Header } from './header';
 export const RootLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <>
-            <Head title="Welcome">
-                <link rel="preconnect" href="https://fonts.bunny.net" />
+            <Head>
                 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..600&display=swap" rel="stylesheet" />
             </Head>
 
