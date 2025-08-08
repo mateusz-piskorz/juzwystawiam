@@ -23,7 +23,7 @@ export const SectionAboutUs = () => {
             <p className="max-w-[1200px] text-center text-sm md:text-left md:text-base lg:text-lg">
                 {
                     locale[
-                        'We take pride in fostering a collaboratie environment where every team member is encouraged to share ideas and contribute to our shared goals. Our diverse backgrounds and expertise allow us to approach challenges from multiple perspectives, ensuring that we deliver results that exceed expectations. Customer satisfaction is at the core of everything we do. We strive to build lasting relationships by being transparent, responsive, and attentive to the evolving needs of our clients. As we look to the future, we remain dedicated to continuous improvement and making a meaningful difference in the industries we serve'
+                        'We take pride in fostering a collaborative environment where every team member is encouraged to share ideas and contribute to our shared goals. Our diverse backgrounds and expertise allow us to approach challenges from multiple perspectives, ensuring that we deliver results that exceed expectations. Customer satisfaction is at the core of everything we do. We strive to build lasting relationships by being transparent, responsive, and attentive to the evolving needs of our clients. As we look to the future, we remain dedicated to continuous improvement and making a meaningful difference in the industries we serve'
                     ]
                 }
             </p>
