@@ -332,5 +332,34 @@
         "Please enter your new password below": "Please enter your new password below",
         "Email": "Email",
         "Enter your email to receive a password reset link": "Enter your email to receive a password reset link"
+    },
+
+    "root": {
+        "Navigation": "Navigation",
+        "Displays the mobile navigation": "Displays the mobile navigation",
+        "Dashboard": "Dashboard",
+        "Log in": "Log in",
+        "All Rights Reserved": "All Rights Reserved",
+        "Effortless payment management and intuitive invoicing": "Effortless payment management and intuitive invoicing",
+        "Simplify invoicing, track payments, and manage clients with ease. Automate tasks, create professional invoices in seconds, and get real-time financial insights. Perfect for freelancers and small businesses to stay organized and get paid faster": "Simplify invoicing, track payments, and manage clients with ease. Automate tasks, create professional invoices in seconds, and get real-time financial insights. Perfect for freelancers and small businesses to stay organized and get paid faster",
+        "Start Now": "Start Now",
+        "Create, send, and track invoices in one place. Stay organized, manage clients, and get paid faster with our all-in-one invoicing system. Simplify your workflow, reduce paperwork, and focus on growing your business": "Create, send, and track invoices in one place. Stay organized, manage clients, and get paid faster with our all-in-one invoicing system. Simplify your workflow, reduce paperwork, and focus on growing your business",
+        "About Us": "About Us",
+        "Learn more about our mission, values, and the dedicated team working to deliver exceptional solutions for our customers": "Learn more about our mission, values, and the dedicated team working to deliver exceptional solutions for our customers",
+        "At": "At",
+        "we believe that success is built on a foundation of trust, innovation, and dedication. Established with a vision to make a positive impact, our company has consistently focused on delivering high-quality solutions tailored to the unique needs of our clients. Our journey began with a small team of passionate individuals, and over the years, we have grown into a dynamic organization driven by creativity and a commitment to excellence": "we believe that success is built on a foundation of trust, innovation, and dedication. Established with a vision to make a positive impact, our company has consistently focused on delivering high-quality solutions tailored to the unique needs of our clients. Our journey began with a small team of passionate individuals, and over the years, we have grown into a dynamic organization driven by creativity and a commitment to excellence",
+        "We take pride in fostering a collaborative environment where every team member is encouraged to share ideas and contribute to our shared goals. Our diverse backgrounds and expertise allow us to approach challenges from multiple perspectives, ensuring that we deliver results that exceed expectations. Customer satisfaction is at the core of everything we do. We strive to build lasting relationships by being transparent, responsive, and attentive to the evolving needs of our clients. As we look to the future, we remain dedicated to continuous improvement and making a meaningful difference in the industries we serve": "We take pride in fostering a collaboratie environment where every team member is encouraged to share ideas and contribute to our shared goals. Our diverse backgrounds and expertise allow us to approach challenges from multiple perspectives, ensuring that we deliver results that exceed expectations. Customer satisfaction is at the core of everything we do. We strive to build lasting relationships by being transparent, responsive, and attentive to the evolving needs of our clients. As we look to the future, we remain dedicated to continuous improvement and making a meaningful difference in the industries we serve",
+        "Our Services": "Our Services",
+        "Discover the range of professional services we offer to help you achieve your goals": "Discover the range of professional services we offer to help you achieve your goals",
+        "Pricing": "Pricing",
+        "Explore our transparent pricing options and find a plan that fits your needs and budget": "Explore our transparent pricing options and find a plan that fits your needs and budget",
+        "Contact Us": "Contact Us",
+        "Have a question or need support? Contact us and our team will be happy to help!": "Have a question or need support? Contact us and our team will be happy to help!",
+        "Phone": "Phone",
+        "You can also send a message using form below": "You can also send a message using form below",
+        "First name": "First name",
+        "Message": "Message",
+        "Forever": "Forever",
+        "month": "month"
     }
 }

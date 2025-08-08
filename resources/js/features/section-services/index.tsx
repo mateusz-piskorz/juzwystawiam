@@ -1,59 +1,95 @@
 import { RootHeading } from '@/components/common/root-heading';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { BarChart2, Download, FileMinus, FileText, HelpCircle, Send, Shield, Smartphone, UserPlus, Users } from 'lucide-react';
 import { ServiceItem } from './service-item';
 
 const services = [
     {
         icon: FileText,
-        text: 'Wystawiaj wszystkie typy faktur: VAT, proforma, zaliczkowe, końcowe.',
+        text: {
+            pl: 'Wystawiaj wszystkie typy faktur: VAT, proforma, zaliczkowe, końcowe.',
+            en: 'Issue all types of invoices: VAT, proforma, advance, final.',
+        },
     },
     {
         icon: Users,
-        text: 'Zarządzaj klientami i produktami. Szybkie wyszukiwanie i edycja.',
+        text: {
+            pl: 'Zarządzaj klientami i produktami. Szybkie wyszukiwanie i edycja.',
+            en: 'Manage clients and products. Fast search and editing.',
+        },
     },
     {
         icon: BarChart2,
-        text: 'Przejrzyste raporty finansowe i automatyczne zestawienia księgowe.',
+        text: {
+            pl: 'Przejrzyste raporty finansowe i automatyczne zestawienia księgowe.',
+            en: 'Clear financial reports and automatic accounting summaries.',
+        },
     },
     {
         icon: FileMinus,
-        text: 'Kontroluj koszty, archiwizuj faktury i monitoruj zobowiązania.',
+        text: {
+            pl: 'Kontroluj koszty, archiwizuj faktury i monitoruj zobowiązania.',
+            en: 'Control costs, archive invoices, and monitor liabilities.',
+        },
     },
     {
         icon: Download,
-        text: 'Drukuj, zapisuj PDF lub archiwizuj faktury w chmurze.',
+        text: {
+            pl: 'Drukuj, zapisuj PDF lub archiwizuj faktury w chmurze.',
+            en: 'Print, save as PDF, or archive invoices in the cloud.',
+        },
     },
     {
         icon: Send,
-        text: 'Wyślij fakturę e-mailem bezpośrednio z aplikacji.',
+        text: {
+            pl: 'Wyślij fakturę e-mailem bezpośrednio z aplikacji.',
+            en: 'Send invoices by email directly from the app.',
+        },
     },
     {
         icon: UserPlus,
-        text: 'Dostęp dla pracowników z różnymi poziomami uprawnień.',
+        text: {
+            pl: 'Dostęp dla pracowników z różnymi poziomami uprawnień.',
+            en: 'Access for employees with different permission levels.',
+        },
     },
     {
         icon: Shield,
-        text: 'Dane chronione szyfrowaniem i regularnymi kopiami zapasowymi.',
+        text: {
+            pl: 'Dane chronione szyfrowaniem i regularnymi kopiami zapasowymi.',
+            en: 'Data protected by encryption and regular backups.',
+        },
     },
     {
         icon: Smartphone,
-        text: 'Korzystaj na komputerze, tablecie lub smartfonie.',
+        text: {
+            pl: 'Korzystaj na komputerze, tablecie lub smartfonie.',
+            en: 'Use on computer, tablet, or smartphone.',
+        },
     },
     {
         icon: HelpCircle,
-        text: 'Wsparcie techniczne przez czat, e-mail i telefon.',
+        text: {
+            pl: 'Wsparcie techniczne przez czat, e-mail i telefon.',
+            en: 'Technical support via chat, email, and phone.',
+        },
     },
 ];
 
 export const SectionServices = () => {
+    const { languageCode, locale } = useLocale();
+
     return (
-        <div className="mx-auto max-w-[1640px] p-4 md:px-8 xl:px-12">
-            <RootHeading title="Our Services" description="Discover the range of professional services we offer to help you achieve your goals." />
+        <section className="mx-auto max-w-[1640px] p-4 md:px-8 xl:px-12" id="services">
+            <RootHeading
+                title={locale.root['Our Services']}
+                description={locale.root['Discover the range of professional services we offer to help you achieve your goals']}
+            />
             <div className="mt-18 flex flex-wrap justify-center gap-x-4 md:justify-start md:gap-y-8">
                 {services.map((service, idx) => (
-                    <ServiceItem key={idx} text={service.text} Icon={service.icon} />
+                    <ServiceItem key={idx} text={service.text[languageCode]} Icon={service.icon} />
                 ))}
             </div>
-        </div>
+        </section>
     );
 };

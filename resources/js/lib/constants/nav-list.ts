@@ -1,6 +1,6 @@
 export const NAV_LIST = [
-    { label: 'About', href: '#about' },
-    { label: 'Services', href: '#services' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'Contact', href: '#contact' },
+    { label: { en: 'About', pl: 'O nas' }, href: '#about' },
+    { label: { en: 'Services', pl: 'Usługi' }, href: '#services' },
+    { label: { en: 'Pricing', pl: 'Cennik' }, href: '#pricing' },
+    { label: { en: 'Contact', pl: 'Kontakt' }, href: '#contact' },
 ];

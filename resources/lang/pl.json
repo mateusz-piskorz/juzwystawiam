@@ -332,5 +332,32 @@
         "Please enter your new password below": "Wprowadź poniżej swoje nowe hasło",
         "Email": "Email",
         "Enter your email to receive a password reset link": "Wprowadź swój e-mail, aby otrzymać link do resetowania hasła"
+    },
+    "root": {
+        "Navigation": "Nawigacja",
+        "Displays the mobile navigation": "Wyświetla nawigację mobilną",
+        "Log in": "Zaloguj się",
+        "All Rights Reserved": "Wszelkie prawa zastrzeżone",
+        "Effortless payment management and intuitive invoicing": "Bezproblemowe zarządzanie płatnościami i intuicyjne fakturowanie",
+        "Simplify invoicing, track payments, and manage clients with ease. Automate tasks, create professional invoices in seconds, and get real-time financial insights. Perfect for freelancers and small businesses to stay organized and get paid faster": "Uprość fakturowanie, śledź płatności i zarządzaj klientami z łatwością. Automatyzuj zadania, twórz profesjonalne faktury w kilka sekund i uzyskuj bieżące informacje finansowe. Idealne dla freelancerów i małych firm, aby zachować porządek i szybciej otrzymywać płatności",
+        "Start Now": "Rozpocznij teraz",
+        "Create, send, and track invoices in one place. Stay organized, manage clients, and get paid faster with our all-in-one invoicing system. Simplify your workflow, reduce paperwork, and focus on growing your business": "Twórz, wysyłaj i śledź faktury w jednym miejscu. Zachowaj porządek, zarządzaj klientami i szybciej otrzymuj płatności dzięki naszemu kompleksowemu systemowi fakturowania. Uprość swoją pracę, ogranicz papierologię i skup się na rozwoju firmy",
+        "About Us": "O nas",
+        "Learn more about our mission, values, and the dedicated team working to deliver exceptional solutions for our customers": "Dowiedz się więcej o naszej misji, wartościach i zespole, który dostarcza wyjątkowe rozwiązania naszym klientom",
+        "At": "W",
+        "we believe that success is built on a foundation of trust, innovation, and dedication. Established with a vision to make a positive impact, our company has consistently focused on delivering high-quality solutions tailored to the unique needs of our clients. Our journey began with a small team of passionate individuals, and over the years, we have grown into a dynamic organization driven by creativity and a commitment to excellence": "wierzymy, że sukces opiera się na zaufaniu, innowacyjności i zaangażowaniu. Założona z wizją wywierania pozytywnego wpływu, nasza firma konsekwentnie skupia się na dostarczaniu wysokiej jakości rozwiązań dostosowanych do unikalnych potrzeb klientów. Nasza podróż rozpoczęła się od małego zespołu pasjonatów, a z biegiem lat staliśmy się dynamiczną organizacją napędzaną kreatywnością i dążeniem do doskonałości",
+        "We take pride in fostering a collaborative environment where every team member is encouraged to share ideas and contribute to our shared goals. Our diverse backgrounds and expertise allow us to approach challenges from multiple perspectives, ensuring that we deliver results that exceed expectations. Customer satisfaction is at the core of everything we do. We strive to build lasting relationships by being transparent, responsive, and attentive to the evolving needs of our clients. As we look to the future, we remain dedicated to continuous improvement and making a meaningful difference in the industries we serve": "Jesteśmy dumni z tworzenia środowiska współpracy, w którym każdy członek zespołu jest zachęcany do dzielenia się pomysłami i realizacji wspólnych celów. Nasze różnorodne doświadczenia i wiedza pozwalają nam podchodzić do wyzwań z wielu perspektyw, zapewniając wyniki przekraczające oczekiwania. Satysfakcja klienta jest dla nas najważniejsza. Dążymy do budowania trwałych relacji poprzez przejrzystość, szybkość reakcji i uważność na zmieniające się potrzeby klientów. Patrząc w przyszłość, pozostajemy wierni ciągłemu doskonaleniu i wnoszeniu realnej wartości w branżach, którym służymy",
+        "Our Services": "Nasze usługi",
+        "Discover the range of professional services we offer to help you achieve your goals": "Poznaj zakres profesjonalnych usług, które oferujemy, aby pomóc Ci osiągnąć cele",
+        "Pricing": "Cennik",
+        "Explore our transparent pricing options and find a plan that fits your needs and budget": "Poznaj nasze przejrzyste opcje cenowe i znajdź plan dopasowany do Twoich potrzeb i budżetu",
+        "Contact Us": "Kontakt",
+        "Have a question or need support? Contact us and our team will be happy to help!": "Masz pytanie lub potrzebujesz wsparcia? Skontaktuj się z nami, a nasz zespół chętnie pomoże!",
+        "Phone": "Telefon",
+        "You can also send a message using form below": "Możesz również wysłać wiadomość za pomocą poniższego formularza",
+        "First name": "Imię",
+        "Message": "Wiadomość",
+        "Forever": "Forever",
+        "month": "miesiąc"
     }
 }
