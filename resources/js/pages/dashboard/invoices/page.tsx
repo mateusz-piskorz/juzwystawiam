@@ -1,7 +1,8 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
 import { DashboardHeading } from '@/components/common/dashboard-heading';
-import { InvoiceTable } from '@/components/dashboard/invoices/invoice-table';
+
+import { TableInvoice } from '@/features/table-invoice';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { useLocale } from '@/lib/hooks/use-locale';
@@ -26,7 +27,7 @@ const InvoiceListPage = () => {
             <Head title={locale.common.Invoices} />
             <MainContentLayout>
                 <DashboardHeading title={locale.common.Invoices} description={locale['Manage your invoices and see details.']} />
-                <InvoiceTable />
+                <TableInvoice />
             </MainContentLayout>
         </AppLayout>
     );

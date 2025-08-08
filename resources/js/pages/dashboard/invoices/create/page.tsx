@@ -1,7 +1,8 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
 import { Select } from '@/components/common/select';
-import { InvoiceForm } from '@/components/dashboard/invoices/invoice-form';
+
+import { FormInvoice } from '@/features/form-invoice';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { CONTRACTOR_ROLE } from '@/lib/constants/enums/contractor-role';
@@ -42,7 +43,7 @@ const CreateInvoicePage = () => {
                     />
                 </div>
 
-                <InvoiceForm
+                <FormInvoice
                     type={invoiceType}
                     defaultValues={{
                         type: invoiceType,

@@ -2,7 +2,8 @@ import { type BreadcrumbItem } from '@/lib/types';
 
 import { AppearanceToggle } from '@/components/common/appearance-toggle';
 import { DashboardHeading } from '@/components/common/dashboard-heading';
-import { LocaleSelectInput } from '@/components/dashboard/settings/appearance/locale-select-input';
+
+import { LocaleSelectInput } from '@/components/common/locale-select-input';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { SettingsLayout } from '@/layouts/dashboard/settings';
 import { useLocale } from '@/lib/hooks/use-locale';

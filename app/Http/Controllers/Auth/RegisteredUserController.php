@@ -19,7 +19,7 @@ class RegisteredUserController
      */
     public function create(): Response
     {
-        return Inertia::render('auth/register');
+        return Inertia::render('root/auth/register');
     }
 
     /**

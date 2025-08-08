@@ -1,5 +1,5 @@
 import { DashboardHeading } from '@/components/common/dashboard-heading';
-import { ProductTable } from '@/components/dashboard/products/product-table';
+import { TableProduct } from '@/features/table-product';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { useLocale } from '@/lib/hooks/use-locale';
@@ -25,7 +25,7 @@ const ProductsPage = () => {
             <Head title={locale.Products} />
             <MainContentLayout>
                 <DashboardHeading title={locale.Products} description={locale['Manage your products and see details.']} />
-                <ProductTable />
+                <TableProduct />
             </MainContentLayout>
         </AppLayout>
     );
