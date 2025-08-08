@@ -1,6 +1,6 @@
 import { Head } from '@inertiajs/react';
 import React from 'react';
-import { Footer } from 'react-day-picker';
+import { Footer } from './footer';
 import { Header } from './header';
 
 export const RootLayout = ({ children }: { children: React.ReactNode }) => {
