@@ -38,7 +38,7 @@ export const InputField = <T extends FieldValues, IT extends InputType>({
             render={({ field }) => (
                 <FormItem
                     className={cn(
-                        'hover:bg-accent relative z-10 block h-[60px] w-full min-w-[100px] rounded border-2',
+                        'hover:bg-accent relative z-10 block h-[60px] w-full min-w-[100px] rounded border',
                         'outline-[var(--accent-foreground)] focus-within:outline focus-within:outline-solid',
                         className,
                     )}

@@ -5,7 +5,6 @@ import type { BreadcrumbItem } from '@/lib/types';
 import { Select } from '@/components/common/select';
 import { FormInvoice } from '@/features/form-invoice';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
-import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Invoice } from '@/lib/types/invoice';
@@ -43,7 +42,7 @@ const EditInvoicePage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={`${locale['Edit invoice']} ${invoice.id}`} />
-            <MainContentLayout className="p-0 md:p-0">
+            <div className="px-4 py-4 md:px-8">
                 <div className="flex items-center gap-2 px-4 pt-4 md:px-6 md:pt-6">
                     <h1>
                         <span className="text-muted-foreground">{locale['Edit invoice']} </span> {invoice.number}
@@ -66,7 +65,7 @@ const EditInvoicePage = () => {
                     }}
                     invoiceId={invoice.id}
                 />
-            </MainContentLayout>
+            </div>
         </AppLayout>
     );
 };

@@ -1,7 +1,6 @@
 import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { TableProduct } from '@/features/table-product';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
-import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { BreadcrumbItem } from '@/lib/types';
 import { Head } from '@inertiajs/react';
@@ -23,10 +22,10 @@ const ProductsPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={locale.Products} />
-            <MainContentLayout>
+            <div className="px-4 py-4 md:px-8">
                 <DashboardHeading title={locale.Products} description={locale['Manage your products and see details.']} />
                 <TableProduct />
-            </MainContentLayout>
+            </div>
         </AppLayout>
     );
 };

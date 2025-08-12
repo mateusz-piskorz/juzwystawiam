@@ -9,7 +9,7 @@ import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useLocale } from '@/lib/hooks/use-locale';
 
-export function SectionDashboardDeleteUser() {
+export function SectionDeleteUser() {
     const l = useLocale().locale;
     const locale = { ...l['dashboard/settings'].profile, common: l.common };
 
@@ -33,8 +33,13 @@ export function SectionDashboardDeleteUser() {
     };
 
     return (
-        <div className="space-y-6">
-            <DashboardHeading title={locale['Delete account']} description={locale['Delete your account and all of its resources']} size="small" />
+        <div className="px-4 md:px-8">
+            <DashboardHeading
+                className="mb-8"
+                title={locale['Delete account']}
+                description={locale['Delete your account and all of its resources']}
+                size="small"
+            />
             <div className="space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10">
                 <div className="relative space-y-0.5 text-red-600 dark:text-red-100">
                     <p className="font-medium">{locale.Warning}</p>

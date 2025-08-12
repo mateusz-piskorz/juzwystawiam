@@ -1,6 +1,5 @@
 import { DataTableColumnHeader } from '@/components/common/data-table/data-table-column-header';
 import { DataTableRowActions } from '@/components/common/data-table/data-table-row-actions';
-import { Checkbox } from '@/components/ui/checkbox';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Contractor } from '@/lib/types/contractor';
 import { ColumnDef } from '@tanstack/react-table';
@@ -17,27 +16,6 @@ export const getContractorColumns = ({
         enum: ReturnType<typeof useLocale>['locale']['enum'];
     };
 }): ColumnDef<Contractor>[] => [
-    {
-        id: 'select',
-        header: ({ table }) => (
-            <Checkbox
-                checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
-                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                aria-label="Select all"
-                className="translate-y-[2px]"
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-                className="translate-y-[2px]"
-            />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-    },
     {
         accessorKey: 'company_name',
         meta: { title: locale['Company name'] },

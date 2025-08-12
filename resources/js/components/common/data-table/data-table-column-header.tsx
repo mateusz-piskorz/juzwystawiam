@@ -30,7 +30,7 @@ export function DataTableColumnHeader<TData, TValue>({ column, className }: Data
         <div className={cn('flex items-center space-x-2', className)}>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm" className="data-[state=open]:bg-accent -ml-3 h-8">
+                    <Button variant="ghost" size="sm" className="data-[state=open]:bg-card hover:bg-card -ml-3 h-8">
                         <span>{column.columnDef.meta?.title}</span>
                         {orderColumn === column.id ? orderDirection === 'desc' ? <ArrowDown /> : <ArrowUp /> : <ChevronsUpDown />}
                     </Button>

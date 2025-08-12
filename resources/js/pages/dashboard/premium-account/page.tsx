@@ -3,7 +3,8 @@ import type { BreadcrumbItem } from '@/lib/types';
 import { SectionDashboardPremiumAccount } from '@/features/section-dashboard-premium-account';
 import { TablePayments } from '@/features/table-payments';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
-import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
+
+import { Separator } from '@/components/ui/separator';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
 import { Head } from '@inertiajs/react';
@@ -39,12 +40,11 @@ const PremiumAccountPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={locale['Premium Account']} />
-            <MainContentLayout className="flex flex-col gap-5 md:gap-10 md:bg-transparent md:p-0">
+            <div className="space-y-8 py-8">
                 <SectionDashboardPremiumAccount />
-                <div className="md:bg-sidebar md:rounded md:p-6">
-                    <TablePayments />
-                </div>
-            </MainContentLayout>
+                <Separator orientation="horizontal" />
+                <TablePayments />
+            </div>
         </AppLayout>
     );
 };

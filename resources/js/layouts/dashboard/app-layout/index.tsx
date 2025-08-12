@@ -1,6 +1,7 @@
 import { type BreadcrumbItem } from '@/lib/types';
 import { type ReactNode } from 'react';
 
+import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { usePage } from '@/lib/hooks/use-page';
 import { AppHeader } from './app-header';
@@ -20,6 +21,8 @@ export const AppLayout = ({ children, breadcrumbs }: AppLayoutProps) => {
 
             <SidebarInset>
                 <AppHeader breadcrumbs={breadcrumbs} />
+                <Separator />
+
                 {children}
             </SidebarInset>
         </SidebarProvider>

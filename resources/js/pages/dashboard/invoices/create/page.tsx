@@ -1,10 +1,8 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
 import { Select } from '@/components/common/select';
-
 import { FormInvoice } from '@/features/form-invoice';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
-import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { CONTRACTOR_ROLE } from '@/lib/constants/enums/contractor-role';
 import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
@@ -19,6 +17,10 @@ const CreateInvoicePage = () => {
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
+            title: locale.common.Dashboard,
+            href: '/dashboard',
+        },
+        {
             title: locale.common.Invoices,
             href: '/dashboard/invoices',
         },
@@ -31,7 +33,7 @@ const CreateInvoicePage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={locale['Create invoice']} />
-            <MainContentLayout className="p-0 md:p-0">
+            <div className="px-4 py-4 md:px-8">
                 <div className="flex items-center gap-2 px-4 pt-4 md:px-6 md:pt-6">
                     <p className="hidden sm:inline-block">{locale['Invoice type']}</p>
 
@@ -55,7 +57,7 @@ const CreateInvoicePage = () => {
                         invoice_contractors: [{ role: CONTRACTOR_ROLE.SELLER }, { role: CONTRACTOR_ROLE.BUYER }],
                     }}
                 />
-            </MainContentLayout>
+            </div>
         </AppLayout>
     );
 };

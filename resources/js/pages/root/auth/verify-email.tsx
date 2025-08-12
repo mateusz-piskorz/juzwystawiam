@@ -8,7 +8,7 @@ import AuthLayout from '@/layouts/root/auth-layout';
 import { useLocale } from '@/lib/hooks/use-locale';
 
 export default function VerifyEmail({ status }: { status?: string }) {
-    const locale = useLocale().locale.auth;
+    const locale = useLocale().locale['root/auth'];
     const { post, processing } = useForm({});
 
     const submit: FormEventHandler = (e) => {

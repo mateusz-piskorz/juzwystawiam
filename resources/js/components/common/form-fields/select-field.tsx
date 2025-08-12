@@ -35,7 +35,7 @@ export const SelectField = <T extends FieldValues>({ form, className, selectOpti
                     {/* todo: use Select component from components/common */}
                     <Select onValueChange={field.onChange} defaultValue={field.value ?? ''}>
                         <FormControl>
-                            <SelectTrigger className={cn('border-sidebar-ring relative h-full cursor-pointer border-none')}>
+                            <SelectTrigger className={cn('border-sidebar-ring relative h-full cursor-pointer rounded-none border-none')}>
                                 <span className="invisible" />
                                 <div className="absolute flex w-[calc(100%-40px)] flex-col gap-1">
                                     <FormLabel className={cn('text-muted-foreground w-full truncate text-left', field.value && 'text-xs')}>

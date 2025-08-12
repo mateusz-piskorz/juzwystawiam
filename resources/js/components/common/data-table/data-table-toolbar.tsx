@@ -24,24 +24,27 @@ interface DataTableToolbarProps<TData> {
               href: string;
           };
     filters: ComponentProps<typeof MultiOptionsFilter>[];
+    displaySearchBar?: boolean;
 }
 
-export function DataTableToolbar<TData>({ table, addNewRecord, filters }: DataTableToolbarProps<TData>) {
+export function DataTableToolbar<TData>({ table, addNewRecord, filters, displaySearchBar = true }: DataTableToolbarProps<TData>) {
     const locale = useLocale().locale.common['data-table'];
     const searchParams = useSearchParams();
     const q = searchParams.get('q');
 
     return (
         <div className="flex flex-col items-center justify-between gap-4 overflow-x-auto pt-1 pr-1 pb-4 md:flex-row">
-            <Input
-                placeholder={locale.Search}
-                onChange={debounce((event) => searchParams.set({ q: event.target.value || undefined }), 500)}
-                defaultValue={q}
-                className="min-w-[150px] rounded max-md:h-[50px] md:max-w-xs"
-            />
-            <div className="mr-auto flex items-center">
+            {displaySearchBar && (
+                <Input
+                    placeholder={locale.Search}
+                    onChange={debounce((event) => searchParams.set({ q: event.target.value || undefined }), 500)}
+                    defaultValue={q}
+                    className="min-w-[150px] rounded max-md:h-[50px] md:max-w-xs"
+                />
+            )}
+            <div className="mr-auto flex items-center gap-2">
                 {filters.map((e) => (
-                    <MultiOptionsFilter title={e.title} options={e.options} filterKey={e.filterKey} />
+                    <MultiOptionsFilter key={e.filterKey} title={e.title} options={e.options} filterKey={e.filterKey} />
                 ))}
 
                 {searchParams.has(filters.map((e) => e.filterKey)) && (
@@ -63,11 +66,11 @@ export function DataTableToolbar<TData>({ table, addNewRecord, filters }: DataTa
                 {addNewRecord && (
                     <>
                         {'href' in addNewRecord ? (
-                            <Link prefetch className="ml-2 underline-offset-4 hover:underline" href={addNewRecord.href}>
+                            <Link prefetch className="ml-2 whitespace-nowrap underline-offset-4 hover:underline" href={addNewRecord.href}>
                                 {addNewRecord.label}
                             </Link>
                         ) : (
-                            <Button className="rounded" onClick={addNewRecord.action} variant="secondary">
+                            <Button variant="accent" onClick={addNewRecord.action}>
                                 {addNewRecord.label}
                             </Button>
                         )}

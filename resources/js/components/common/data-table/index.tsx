@@ -1,4 +1,4 @@
-'use client';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useLocale } from '@/lib/hooks/use-locale';
@@ -26,8 +26,10 @@ interface DataTableProps<TData, TValue> {
     totalPages?: string;
     displayDataTableToolbar?: boolean;
     className?: string;
+    displaySearchBar?: boolean;
 }
 
+// todo: layout shift on changing filters (when we need to fetch for data again)
 export function DataTable<TData, TValue>({
     columns,
     data,
@@ -35,22 +37,20 @@ export function DataTable<TData, TValue>({
     addNewRecord,
     totalPages,
     displayDataTableToolbar = true,
+    displaySearchBar = true,
     className,
 }: DataTableProps<TData, TValue>) {
     const locale = useLocale().locale.common['data-table'];
 
-    const [rowSelection, setRowSelection] = useState({});
-    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+        //@ts-ignore
+        Object.fromEntries(columns.filter((e) => e.meta?.initialVisibility).map(({ accessorKey }) => [accessorKey.replace(/\./g, '_'), false])),
+    );
 
     const table = useReactTable({
         data,
         columns,
-        state: {
-            columnVisibility,
-            rowSelection,
-        },
-        enableRowSelection: true,
-        onRowSelectionChange: setRowSelection,
+        state: { columnVisibility },
         onColumnVisibilityChange: setColumnVisibility,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
@@ -60,16 +60,22 @@ export function DataTable<TData, TValue>({
     });
 
     return (
-        <div className={cn('flex flex-col gap-4', className)}>
-            {displayDataTableToolbar && <DataTableToolbar table={table} filters={filters} addNewRecord={addNewRecord} />}
+        <div className={cn('bg-card flex flex-col gap-4 rounded-md p-4 shadow', className)}>
+            {displayDataTableToolbar && (
+                <DataTableToolbar table={table} filters={filters} addNewRecord={addNewRecord} displaySearchBar={displaySearchBar} />
+            )}
             <div className="rounded border">
                 <Table>
-                    <TableHeader>
+                    <TableHeader className="bg-accent">
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id} colSpan={header.colSpan}>
+                                        <TableHead
+                                            className={cn(headerGroup.headers[0].id === header.id ? 'pl-6' : '')}
+                                            key={header.id}
+                                            colSpan={header.colSpan}
+                                        >
                                             {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                                         </TableHead>
                                     );
@@ -80,9 +86,20 @@ export function DataTable<TData, TValue>({
                     <TableBody>
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
-                                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+                                <TableRow key={row.id}>
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                                        <TableCell
+                                            key={cell.id}
+                                            className={cn(
+                                                cell.getContext().row.getVisibleCells()[0].id === cell.id
+                                                    ? 'pl-6'
+                                                    : cell.getContext().row.getVisibleCells().slice(-1)[0].id === cell.id
+                                                      ? 'pr-6'
+                                                      : '',
+                                            )}
+                                        >
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </TableCell>
                                     ))}
                                 </TableRow>
                             ))

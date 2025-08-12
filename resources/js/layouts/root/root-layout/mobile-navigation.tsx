@@ -49,7 +49,7 @@ const Navigation = ({ closeSidebar }: NavProps) => {
                         </li>
                     ))}
                     <li>
-                        <Button variant="secondary">
+                        <Button variant="accent">
                             {auth.user ? (
                                 <Link href={route('dashboard')}>{locale.common.Dashboard}</Link>
                             ) : (

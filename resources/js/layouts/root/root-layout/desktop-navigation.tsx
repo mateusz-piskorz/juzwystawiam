@@ -21,7 +21,8 @@ export const DesktopNavigation = () => {
                         </li>
                     ))}
                     <li>
-                        <Button variant="secondary">
+                        {/* todo: we can extract this also from mobile-navigation to separate component */}
+                        <Button variant="accent">
                             {auth.user ? (
                                 <Link href={route('dashboard')}>{locale.common.Dashboard}</Link>
                             ) : (

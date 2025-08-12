@@ -28,7 +28,7 @@ export const FormInvoice = ({ defaultValues, invoiceId, type }: Props) => {
     const locale = { ...l['dashboard/invoices']['invoice-form'], common: l.common, base: l['dashboard/invoices'] };
     const form = useForm<InvoiceSchema>({
         resolver: zodResolver(invoiceSchema),
-        defaultValues,
+        defaultValues: { ...defaultValues, issue_date: new Date() },
     });
 
     async function onSubmit(body: InvoiceSchema) {

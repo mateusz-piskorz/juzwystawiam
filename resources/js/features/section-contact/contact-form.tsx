@@ -62,7 +62,7 @@ export const ContactForm = () => {
                             <FormControl>
                                 <Textarea
                                     placeholder={locale.Message}
-                                    className="h-[200px] resize-none border-2"
+                                    className="border-border h-[200px] resize-none border"
                                     {...field}
                                     value={field.value || ''}
                                 />
@@ -72,7 +72,7 @@ export const ContactForm = () => {
                 />
 
                 <div className="w-full text-right">
-                    <Button type="submit" className="w-full sm:w-auto" size="lg" disabled={form.formState.isSubmitting}>
+                    <Button type="submit" variant="accent" className="w-full sm:w-auto" size="lg" disabled={form.formState.isSubmitting}>
                         {locale.common.Submit}
                     </Button>
                 </div>

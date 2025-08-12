@@ -1,6 +1,8 @@
 import { MultiOptionsFilter } from '@/components/common/multi-options-filter';
+import { NoInvoicesMessage } from '@/components/common/no-invoices-message';
+import { Card, CardContent } from '@/components/ui/card';
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, type ChartConfig } from '@/components/ui/chart';
-import { getChartData } from '@/lib/data/invoices';
+import { getStatusMonthlyDistribution } from '@/lib/data/invoices';
 import { getProducts } from '@/lib/data/products';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
@@ -13,7 +15,7 @@ type Props = {
     withFilters?: boolean;
 };
 
-export const MainAnalyticChart = ({ className, withFilters = true }: Props) => {
+export const InvoicesAnalyticsChart = ({ className, withFilters = true }: Props) => {
     const locale = useLocale().locale['dashboard/analytics'];
 
     const searchParams = useSearchParams();
@@ -22,7 +24,7 @@ export const MainAnalyticChart = ({ className, withFilters = true }: Props) => {
 
     const { data } = useQuery({
         queryKey: ['chart-data', period, product],
-        queryFn: () => getChartData(withFilters ? { period, product } : undefined),
+        queryFn: () => getStatusMonthlyDistribution(withFilters ? { period, product } : undefined),
     });
 
     const products = useQuery({
@@ -34,18 +36,20 @@ export const MainAnalyticChart = ({ className, withFilters = true }: Props) => {
     const chartConfig = {
         paid: {
             label: locale.paid,
-            color: '#2563eb',
+            color: '#60a5fa',
         },
         unpaid: {
             label: locale.unpaid,
-            color: '#60a5fa',
+            color: '#d6d6d8',
         },
     } satisfies ChartConfig;
 
+    const noInvoices = !data?.overall.total && !period && !product.length;
+
     return (
-        <div className="overflow-x-auto">
+        <div className="relative overflow-x-auto">
             {withFilters && (
-                <>
+                <div className="mb-4">
                     <MultiOptionsFilter
                         title={locale.Period}
                         options={[
@@ -60,19 +64,19 @@ export const MainAnalyticChart = ({ className, withFilters = true }: Props) => {
                         options={(products.data?.data || []).map((e) => ({ value: String(e.id), label: e.name }))}
                         filterKey="product"
                     />
-                </>
+                </div>
             )}
 
-            <ChartContainer config={chartConfig} className={cn('h-[400px] w-full min-w-[600px]', className)}>
+            <ChartContainer config={chartConfig} className={cn('h-[350px] w-full min-w-[600px]', noInvoices && 'blur-[1.5px]', className)}>
                 <BarChart
                     accessibilityLayer
-                    data={data?.map(({ month, paid, unpaid }) => ({
+                    data={data?.months?.map(({ month, paid, unpaid }) => ({
                         month,
                         paid,
                         unpaid,
                     }))}
                 >
-                    <CartesianGrid vertical={false} />
+                    <CartesianGrid vertical={false} stroke="var(--border)" />
                     <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false} tickFormatter={(value) => value.slice(0, 3)} />
                     <ChartTooltip content={<ChartTooltipContent />} />
                     <ChartLegend content={<ChartLegendContent />} />
@@ -80,6 +84,15 @@ export const MainAnalyticChart = ({ className, withFilters = true }: Props) => {
                     <Bar dataKey="unpaid" fill="var(--color-unpaid)" radius={2} />
                 </BarChart>
             </ChartContainer>
+            {noInvoices && (
+                <div className="absolute inset-0 z-50 -mt-[150px] flex items-center justify-center">
+                    <Card className="border-none">
+                        <CardContent>
+                            <NoInvoicesMessage />
+                        </CardContent>
+                    </Card>
+                </div>
+            )}
         </div>
     );
 };

@@ -14,7 +14,7 @@ export const PricingItem = ({ name, price, forever, features }: Props) => {
     const { auth } = usePage().props;
     const { languageCode, locale } = useLocale();
     return (
-        <Link className="w-full max-w-[400px] rounded-lg border-2 p-6 hover:ring-1" href={auth.user ? route('premium-account') : route('login')}>
+        <Link className="w-full max-w-[400px] rounded-lg border p-6 hover:ring-1" href={auth.user ? route('premium-account') : route('login')}>
             <h3 className="mb-4 text-2xl">{name[languageCode]}</h3>
             <div className="mb-4 flex items-end gap-1">
                 <span className="text-4xl font-bold">{price} zł</span>

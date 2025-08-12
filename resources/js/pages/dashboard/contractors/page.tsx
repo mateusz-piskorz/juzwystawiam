@@ -1,10 +1,8 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
 import { DashboardHeading } from '@/components/common/dashboard-heading';
-
 import { TableContractor } from '@/features/table-contractor';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
-import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Head } from '@inertiajs/react';
 
@@ -25,10 +23,10 @@ const ContractorsPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={locale.Contractors} />
-            <MainContentLayout>
+            <div className="px-4 py-4 md:px-8">
                 <DashboardHeading title={locale.Contractors} description={locale['Manage your contractors and their details.']} />
                 <TableContractor />
-            </MainContentLayout>
+            </div>
         </AppLayout>
     );
 };

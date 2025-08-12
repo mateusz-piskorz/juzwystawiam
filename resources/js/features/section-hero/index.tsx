@@ -23,7 +23,7 @@ export const SectionHero = () => {
                         }
                     </p>
                 </div>
-                <Button variant="secondary" className="xl:px-4 xl:py-5 xl:text-lg">
+                <Button variant="accent" className="xl:px-4 xl:py-5 xl:text-lg">
                     <Link href={route(auth.user ? 'dashboard' : 'login')} className="flex items-center gap-2 xl:gap-4">
                         {locale['Start Now']}
                         <ChevronRight />

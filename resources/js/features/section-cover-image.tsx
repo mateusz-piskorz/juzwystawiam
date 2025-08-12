@@ -18,8 +18,8 @@ export const SectionCoverImage = ({ className }: Props) => {
             <div
                 className={cn(
                     'absolute h-full w-full',
-                    'dark:bg-[linear-gradient(to_bottom,_#0A0A0A,_rgba(10,10,10,.12)_35%,_rgba(10,10,10,.28)_75%,_rgba(10,10,10,.66))]',
-                    'bg-[linear-gradient(to_bottom,_#f3f3f6,_rgba(243,243,246,.01)_15%,_rgba(243,243,246,.08)_75%,_rgba(243,243,246,.56))]',
+                    'dark:bg-[linear-gradient(to_bottom,_rgba(16,16,18,1),_rgba(16,16,18,.12)_35%,_rgba(16,16,18,.28)_75%,_rgba(16,16,18,.66))]',
+                    'bg-[linear-gradient(to_bottom,_rgba(245,245,245,1),_rgba(245,245,245,0.1)_15%,_rgba(245,245,245,0.28)_75%,_rgba(245,245,245,0.56))]',
                 )}
             >
                 <p

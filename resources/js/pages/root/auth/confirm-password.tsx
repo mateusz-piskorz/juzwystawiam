@@ -9,7 +9,7 @@ import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
 export default function ConfirmPassword() {
-    const locale = useLocale().locale.auth;
+    const locale = useLocale().locale['root/auth'];
     const { data, setData, post, processing, errors, reset } = useForm<Required<{ password: string }>>({
         password: '',
     });

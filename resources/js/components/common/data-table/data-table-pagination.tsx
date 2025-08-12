@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
-import { cn } from '@/lib/utils/cn';
 
 interface DataTablePaginationProps<TData> {
     table: Table<TData>;
@@ -23,13 +22,7 @@ export function DataTablePagination<TData>({ table, totalPages }: DataTablePagin
     };
 
     return (
-        <div className="mt-2 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-            <div
-                className={cn('text-muted-foreground hidden flex-1 text-sm sm:block', table.getFilteredSelectedRowModel().rows.length > 0 && 'block')}
-            >
-                {table.getFilteredSelectedRowModel().rows.length} {locale.of} {table.getFilteredRowModel().rows.length} {locale['row(s) selected.']}
-            </div>
-
+        <div className="mt-2 flex flex-col justify-end gap-4 sm:flex-row sm:items-center">
             <div className="flex justify-between gap-4 sm:gap-0">
                 <div className="flex items-center space-x-2">
                     <p className="hidden text-sm font-medium sm:inline-block">{locale['Rows per page']}</p>
