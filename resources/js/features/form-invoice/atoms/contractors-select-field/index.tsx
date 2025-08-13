@@ -23,6 +23,7 @@ type Props<T extends InvoiceSchema> = {
 };
 
 export const ContractorsSelectField = <T extends InvoiceSchema>({ form: formProps, role, label, idx }: Props<T>) => {
+    const [menuIsOpen, setMenuIsOpen] = useState(false);
     const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
     const name = `invoice_contractors.${idx}.contractor_id` as const;
     const { control, watch, setValue } = form;
@@ -46,10 +47,12 @@ export const ContractorsSelectField = <T extends InvoiceSchema>({ form: formProp
         debounce((q) => setQ(q), 400),
         [],
     );
+    const hasOptions = !!data && data.length > 0;
 
     return (
         <>
             <UpsertContractorDialog
+                disableIsOwnCompany
                 defaultValues={defaultValues}
                 open={open}
                 setOpen={setOpen}
@@ -68,8 +71,17 @@ export const ContractorsSelectField = <T extends InvoiceSchema>({ form: formProp
                         <FormItem className="flex-1">
                             <FormControl>
                                 <ReactCreatableSelect
+                                    openMenuOnClick={hasOptions}
+                                    openMenuOnFocus={hasOptions}
+                                    menuIsOpen={menuIsOpen}
+                                    onMenuOpen={() => setMenuIsOpen(true)}
+                                    onMenuClose={() => {
+                                        setQ('');
+                                        setMenuIsOpen(false);
+                                    }}
                                     label={label}
                                     components={{
+                                        NoOptionsMessage: () => null,
                                         Option: (optionProps) =>
                                             CustomOption({
                                                 props: optionProps,
@@ -96,7 +108,7 @@ export const ContractorsSelectField = <T extends InvoiceSchema>({ form: formProp
                                     value={data?.find((contractor) => contractor.id === selectedContractorId)}
                                     filterOption={() => true}
                                     onCreateOption={(value) => {
-                                        setDefaultValues({ company_name: value });
+                                        setDefaultValues({ company_name: value, is_own_company: role === CONTRACTOR_ROLE.SELLER });
                                         setOpen(true);
                                     }}
                                 />

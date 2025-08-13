@@ -31,7 +31,7 @@ export const ProductItemDesktop = <T extends InvoiceSchema>({ form: formProps, i
         <div className="m-[2px] flex items-center gap-4">
             <ProductSelectField form={form} idx={idx} />
 
-            <div className="flex h-[60px] rounded border xl:min-w-[700px]">
+            <div className="flex h-[61px] rounded-sm border xl:min-w-[700px]">
                 <CurrencyField
                     form={form}
                     name={`invoice_products.${idx}.price`}
@@ -64,7 +64,7 @@ export const ProductItemDesktop = <T extends InvoiceSchema>({ form: formProps, i
                     label={`${locale.Discount} %`}
                     type="number"
                     inputMode="numeric"
-                    className="rounded-none rounded-se rounded-ee border-none"
+                    className="rounded-none border-none"
                 />
                 <Separator orientation="vertical" />
                 <SelectField
@@ -72,7 +72,7 @@ export const ProductItemDesktop = <T extends InvoiceSchema>({ form: formProps, i
                     name={`invoice_products.${idx}.measure_unit`}
                     label={locale.common['Measure Unit']}
                     selectOptions={Object.values(MEASURE_UNIT).map((val) => ({ label: locale.enum.MEASURE_UNIT[val], value: val }))}
-                    className="rounded-none border-none"
+                    className="rounded-none rounded-se rounded-ee border-none"
                 />
             </div>
             <RemoveItemButton disabled={fieldsLength <= 1} onRemove={() => remove(idx)} total={total} />

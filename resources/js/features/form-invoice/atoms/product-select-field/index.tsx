@@ -20,6 +20,7 @@ type Props<T extends InvoiceSchema> = {
 };
 
 export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, idx }: Props<T>) => {
+    const [menuIsOpen, setMenuIsOpen] = useState(false);
     const locale = useLocale().locale['dashboard/invoices']['invoice-form'];
     const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
     const invoiceType = form.watch('type');
@@ -51,6 +52,8 @@ export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, i
         [],
     );
 
+    const hasOptions = !!data && data.length > 0;
+
     return (
         <>
             <FormField
@@ -61,6 +64,9 @@ export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, i
                         <FormItem className="w-full min-w-[160px]">
                             <FormControl>
                                 <ReactSelect
+                                    menuIsOpen={hasOptions ? menuIsOpen : false}
+                                    onMenuOpen={() => hasOptions && setMenuIsOpen(true)}
+                                    onMenuClose={() => setMenuIsOpen(false)}
                                     filterOption={() => true}
                                     name={field.name}
                                     onInputChange={(value, { action }) => {
