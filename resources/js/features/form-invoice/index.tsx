@@ -9,6 +9,7 @@ import { useLocale } from '@/lib/hooks/use-locale';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from '@inertiajs/react';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -28,7 +29,7 @@ export const FormInvoice = ({ defaultValues, invoiceId, type }: Props) => {
     const locale = { ...l['dashboard/invoices']['invoice-form'], common: l.common, base: l['dashboard/invoices'] };
     const form = useForm<InvoiceSchema>({
         resolver: zodResolver(invoiceSchema),
-        defaultValues,
+        defaultValues: { ...defaultValues, issue_date: new Date(), number: `FR ${dayjs().format('DD/MM/YYYY')}` },
     });
 
     async function onSubmit(body: InvoiceSchema) {

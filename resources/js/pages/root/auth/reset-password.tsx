@@ -22,7 +22,7 @@ type ResetPasswordForm = {
 };
 
 export default function ResetPassword({ token, email }: ResetPasswordProps) {
-    const locale = useLocale().locale.auth;
+    const locale = useLocale().locale['root/auth'];
     const { data, setData, post, processing, errors, reset } = useForm<Required<ResetPasswordForm>>({
         token: token,
         email: email,

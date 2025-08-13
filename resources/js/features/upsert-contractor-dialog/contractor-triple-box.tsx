@@ -8,9 +8,10 @@ import { UseFormReturn } from 'react-hook-form';
 
 type Props = {
     form: UseFormReturn<CreateContractorDTO>;
+    disableIsOwnCompany?: boolean;
 };
 
-export const ContractorTripleBox = ({ form }: Props) => {
+export const ContractorTripleBox = ({ form, disableIsOwnCompany }: Props) => {
     const locale = useLocale().locale['dashboard/contractors'];
     const isPrivatePerson = form.watch('type_of_business') === TYPE_OF_BUSINESS.PRIVATE_PERSON;
 
@@ -41,6 +42,7 @@ export const ContractorTripleBox = ({ form }: Props) => {
                 className="rounded-ee rounded-es"
                 label={locale['Is own company']}
                 description={locale['indicates whether the company is owned by the user']}
+                disabled={disableIsOwnCompany}
             />
         </div>
     );

@@ -25,9 +25,10 @@ type Props = {
     defaultValues?: Partial<CreateContractorDTO>;
     contractorId?: number;
     onSuccess?: (contractor: Contractor) => void;
+    disableIsOwnCompany?: boolean;
 };
 
-export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contractorId, onSuccess }: Props) => {
+export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contractorId, onSuccess, disableIsOwnCompany }: Props) => {
     const l = useLocale().locale;
     const locale = { ...l['dashboard/contractors'], common: l.common, enum: l.enum };
 
@@ -82,7 +83,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                             selectOptions={Object.values(TYPE_OF_BUSINESS).map((val) => ({ label: locale.enum.TYPE_OF_BUSINESS[val], value: val }))}
                         />
 
-                        <ContractorTripleBox form={form} />
+                        <ContractorTripleBox form={form} disableIsOwnCompany={disableIsOwnCompany} />
 
                         <div className="rounded border">
                             <div className="flex h-[60px]">

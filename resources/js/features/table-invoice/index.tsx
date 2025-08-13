@@ -11,9 +11,17 @@ type Props = {
     displayDataTableToolbar?: boolean;
     withFilters?: boolean;
     displayPagination?: boolean;
+    displaySearchBar?: boolean;
+    displayEmailStatusColumn?: boolean;
 };
 
-export const TableInvoice = ({ displayDataTableToolbar = true, withFilters = true, displayPagination = true }: Props) => {
+export const TableInvoice = ({
+    displayDataTableToolbar = true,
+    withFilters = true,
+    displayPagination = true,
+    displaySearchBar = true,
+    displayEmailStatusColumn = true,
+}: Props) => {
     const l = useLocale().locale;
     const locale = { ...l['dashboard/invoices'], common: l.common, enum: l.enum };
     const searchParams = useSearchParams();
@@ -31,10 +39,11 @@ export const TableInvoice = ({ displayDataTableToolbar = true, withFilters = tru
         queryFn: () => getInvoices(withFilters ? { page, limit, q, order_column, order_direction, type, is_already_paid } : { limit: '20' }),
     });
 
-    const columns = getInvoiceColumns({ locale });
+    const columns = getInvoiceColumns({ locale, displayEmailStatusColumn });
 
     return (
         <DataTable
+            displaySearchBar={displaySearchBar}
             displayDataTableToolbar={displayDataTableToolbar}
             totalPages={displayPagination ? String(data?.last_page) : undefined}
             data={data?.data ?? []}

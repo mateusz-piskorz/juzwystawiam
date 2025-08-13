@@ -6,7 +6,6 @@ import { SectionDashboardInvoiceActions } from '@/features/section-dashboard-inv
 import { TableInvoiceEmail } from '@/features/table-invoice-email';
 import { TableInvoiceProduct } from '@/features/table-invoice-product';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
-import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { CONTRACTOR_ROLE } from '@/lib/constants/enums/contractor-role';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { usePage } from '@/lib/hooks/use-page';
@@ -44,7 +43,7 @@ const InvoicePage = () => {
         <>
             <AppLayout breadcrumbs={breadcrumbs}>
                 <Head title={locale.common.Invoices} />
-                <MainContentLayout className="flex flex-col gap-5 md:gap-10 md:bg-transparent md:p-0">
+                <div className="px-4 py-4 md:px-8">
                     <div className="md:bg-sidebar space-y-12 md:space-y-8 md:rounded md:p-6">
                         <div>
                             <h1 className="mb-2 text-xl font-medium">{invoice.number}</h1>
@@ -91,7 +90,7 @@ const InvoicePage = () => {
                         <DashboardHeading title={locale['Invoice Emails']} />
                         <TableInvoiceEmail data={invoice.invoice_emails} />
                     </div>
-                </MainContentLayout>
+                </div>
             </AppLayout>
         </>
     );

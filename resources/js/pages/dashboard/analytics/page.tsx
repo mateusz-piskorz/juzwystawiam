@@ -1,9 +1,8 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
 import { DashboardHeading } from '@/components/common/dashboard-heading';
-import { MainAnalyticChart } from '@/features/main-analytic-chart';
+import { InvoicesAnalyticsChart } from '@/features/invoices-analytics-chart';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
-import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Head } from '@inertiajs/react';
 
@@ -25,10 +24,10 @@ const AnalyticsPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={locale.Analytics} />
-            <MainContentLayout>
+            <div className="px-4 py-4 md:px-8">
                 <DashboardHeading title={locale.common.Invoices} description={locale['Analytics and statistics for your invoices']} />
-                <MainAnalyticChart />
-            </MainContentLayout>
+                <InvoicesAnalyticsChart />
+            </div>
         </AppLayout>
     );
 };

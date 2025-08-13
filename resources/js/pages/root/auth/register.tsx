@@ -18,7 +18,7 @@ type RegisterForm = {
 };
 
 export default function Register() {
-    const locale = useLocale().locale.auth;
+    const locale = useLocale().locale['root/auth'];
 
     const { data, setData, post, processing, errors, reset } = useForm<Required<RegisterForm>>({
         name: '',

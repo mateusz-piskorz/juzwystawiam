@@ -20,6 +20,10 @@ type Props = {
     singleChoice?: boolean;
 };
 
+// todo: this component is used in data-table and analytics chart,
+// in analytics there is no clear-all filters button
+// we should change this component into MultiOptionsFilterList
+// /resources/js/components/common/data-table/data-table-toolbar.tsx 42
 export function MultiOptionsFilter({ filterKey, title, options, singleChoice }: Props) {
     const searchParams = useSearchParams();
     const values = searchParams.getAll(filterKey);
@@ -31,25 +35,25 @@ export function MultiOptionsFilter({ filterKey, title, options, singleChoice }: 
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button variant="outline" size="sm" className="h-9 border-dashed">
+                <Button variant="outline" size="sm" className="group h-9 bg-transparent">
                     <PlusCircle />
                     {title}
                     {values.length > 0 && (
                         <>
-                            <Separator orientation="vertical" className="mx-2 h-4" />
-                            <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
+                            <Separator orientation="vertical" className="group-hover:bg-card mx-2 h-4" />
+                            <Badge variant="secondary" className="group-hover:bg-card rounded-xs px-1 font-normal lg:hidden">
                                 {values.length}
                             </Badge>
                             <div className="hidden gap-1 lg:flex">
                                 {values.length > 2 ? (
-                                    <Badge variant="secondary" className="rounded-sm px-1 font-normal">
+                                    <Badge variant="secondary" className="group-hover:bg-card rounded-xs px-1 font-normal">
                                         {values.length} selected
                                     </Badge>
                                 ) : (
                                     options
                                         .filter((option) => values.includes(option.value))
                                         .map((option) => (
-                                            <Badge variant="secondary" key={option.value} className="rounded-sm px-1 font-normal">
+                                            <Badge variant="secondary" key={option.value} className="group-hover:bg-card rounded-xs px-1 font-normal">
                                                 {option.label}
                                             </Badge>
                                         ))
@@ -63,6 +67,7 @@ export function MultiOptionsFilter({ filterKey, title, options, singleChoice }: 
                 <Command>
                     <CommandInput placeholder={title} />
                     <CommandList>
+                        {/* todo: translations */}
                         <CommandEmpty>No results found.</CommandEmpty>
                         <CommandGroup>
                             {options.map((option) => {
@@ -99,6 +104,7 @@ export function MultiOptionsFilter({ filterKey, title, options, singleChoice }: 
                                 <CommandSeparator />
                                 <CommandGroup>
                                     <CommandItem onSelect={() => setValues(null)} className="justify-center text-center">
+                                        {/* todo: translations */}
                                         Clear filters
                                     </CommandItem>
                                 </CommandGroup>

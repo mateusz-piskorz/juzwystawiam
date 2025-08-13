@@ -6,7 +6,7 @@ export const ContactUsDirectly = () => {
     const locale = useLocale().locale.root;
     return (
         <div className="flex w-full flex-col items-center gap-8 md:flex-row">
-            <div className="flex w-full max-w-[400px] flex-col items-center rounded border-2 py-8">
+            <div className="flex w-full max-w-[400px] flex-col items-center rounded border py-8">
                 <Phone />
                 <p className="text-muted-foreground mt-2 text-lg">{locale.Phone}</p>
                 <Button variant="link">
@@ -15,7 +15,7 @@ export const ContactUsDirectly = () => {
                     </a>
                 </Button>
             </div>
-            <div className="flex w-full max-w-[400px] flex-col items-center rounded border-2 py-8">
+            <div className="flex w-full max-w-[400px] flex-col items-center rounded border py-8">
                 <Mail />
                 <p className="text-muted-foreground mt-2 text-lg">E-mail</p>
                 <Button variant="link">

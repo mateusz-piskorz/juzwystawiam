@@ -13,7 +13,7 @@ export function DataTableViewOptions<TData>({ table }: { table: Table<TData> }) 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="flex">
+                <Button variant="outline" className="flex bg-transparent">
                     <Settings2 />
                     {locale.View}
                 </Button>

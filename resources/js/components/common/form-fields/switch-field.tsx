@@ -13,9 +13,10 @@ type Props<T extends FieldValues> = {
     className?: React.HTMLAttributes<'div'>['className'];
     description: string;
     resetBorder?: boolean;
+    disabled?: boolean;
 };
 
-export const SwitchField = <T extends FieldValues>({ form, label, name: propsName, description, className, resetBorder }: Props<T>) => {
+export const SwitchField = <T extends FieldValues>({ form, label, name: propsName, description, className, resetBorder, disabled }: Props<T>) => {
     const name = propsName as string;
     const { control } = form as unknown as UseFormReturn<{ [x: string]: FieldType }>;
 
@@ -43,6 +44,7 @@ export const SwitchField = <T extends FieldValues>({ form, label, name: propsNam
                                 className="dark:group-hover:data-[state=unchecked]:bg-background w-[32px] cursor-pointer focus-visible:ring-0"
                                 checked={field.value}
                                 onCheckedChange={field.onChange}
+                                disabled={disabled}
                             />
                         </FormControl>
                     </div>

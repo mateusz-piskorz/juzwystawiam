@@ -2,7 +2,6 @@
 
 import { DataTableColumnHeader } from '@/components/common/data-table/data-table-column-header';
 import { DataTableRowActions } from '@/components/common/data-table/data-table-row-actions';
-import { Checkbox } from '@/components/ui/checkbox';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Invoice } from '@/lib/types/invoice';
 import { router } from '@inertiajs/react';
@@ -14,31 +13,11 @@ type Props = {
         common: ReturnType<typeof useLocale>['locale']['common'];
         enum: ReturnType<typeof useLocale>['locale']['enum'];
     };
+    displayEmailStatusColumn?: boolean;
 };
 
-export function getInvoiceColumns({ locale }: Props): ColumnDef<Invoice>[] {
+export function getInvoiceColumns({ locale, displayEmailStatusColumn }: Props): ColumnDef<Invoice>[] {
     return [
-        {
-            id: 'select',
-            header: ({ table }) => (
-                <Checkbox
-                    checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
-                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                    aria-label="Select all"
-                    className="translate-y-[2px]"
-                />
-            ),
-            cell: ({ row }) => (
-                <Checkbox
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
-                    aria-label="Select row"
-                    className="translate-y-[2px]"
-                />
-            ),
-            enableSorting: false,
-            enableHiding: false,
-        },
         {
             accessorKey: 'number',
             meta: { title: locale.Number },
@@ -73,7 +52,7 @@ export function getInvoiceColumns({ locale }: Props): ColumnDef<Invoice>[] {
             cell: ({ row }) => (row.original.is_already_paid ? locale.common.true : locale.common.false),
         },
         {
-            meta: { title: locale['Email status'] },
+            meta: { title: locale['Email status'], ...(!displayEmailStatusColumn && { initialVisibility: 'hidden' }) },
             accessorKey: 'latest_invoice_email.status',
             header: ({ column }) => <DataTableColumnHeader column={column} />,
             cell: ({ row }) => (row.original.latest_invoice_email ? locale.enum.EMAIL_STATUS[row.original.latest_invoice_email?.status] : ''),

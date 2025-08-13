@@ -10,9 +10,9 @@ export const CardBuyPremium = ({ days }: Props) => {
 
     const text = days !== 1 ? locale.days : locale.day;
     return (
-        <div className="bg-secondary flex flex-col gap-2 rounded border p-4 py-6 text-center sm:max-w-[250px]">
+        <div className="bg-card flex flex-col gap-2 rounded border p-4 py-6 text-center sm:max-w-[250px]">
             <a href={`/dashboard/premium-account/buy?days=${days}`}>
-                <Button>
+                <Button variant="accent">
                     {days} {text} {locale['of Premium']}
                 </Button>
             </a>

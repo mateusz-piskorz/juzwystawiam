@@ -23,7 +23,7 @@ interface LoginProps {
 }
 
 export default function Login({ status, canResetPassword }: LoginProps) {
-    const locale = useLocale().locale.auth;
+    const locale = useLocale().locale['root/auth'];
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
         email: '',
         password: '',

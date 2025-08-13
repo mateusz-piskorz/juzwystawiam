@@ -16,9 +16,9 @@ export const TablePayments = () => {
     const columns = getPaymentsColumns({ locale });
 
     return (
-        <>
+        <div className="px-4 md:px-8">
             <DashboardHeading title={locale['Payments History']} />
             <DataTable displayDataTableToolbar={false} data={data ?? []} columns={columns} filters={[]} />
-        </>
+        </div>
     );
 };

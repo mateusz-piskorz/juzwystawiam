@@ -7,7 +7,7 @@ test('profile page is displayed', function () {
 
     $response = $this
         ->actingAs($user)
-        ->get('/dashboard/settings/profile');
+        ->get('/dashboard/settings');
 
     $response->assertOk();
 });
@@ -24,7 +24,7 @@ test('profile information can be updated', function () {
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/dashboard/settings/profile');
+        ->assertRedirect('/dashboard/settings');
 
     $user->refresh();
 
@@ -45,7 +45,7 @@ test('email verification status is unchanged when the email address is unchanged
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/dashboard/settings/profile');
+        ->assertRedirect('/dashboard/settings');
 
     expect($user->refresh()->email_verified_at)->not->toBeNull();
 });

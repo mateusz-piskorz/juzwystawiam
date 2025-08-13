@@ -14,7 +14,8 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    Route::get('/invoices/invoices-chart-data', [InvoiceChartDataController::class, 'invoiceChartData']);
+    Route::get('/invoices/charts/status-yearly-distribution', [InvoiceChartDataController::class, 'statusDistributionByYear']);
+    Route::get('/invoices/charts/status-monthly-distribution', [InvoiceChartDataController::class, 'statusMonthlySeries']);
     Route::apiResource('invoices', InvoiceController::class);
     Route::post('/invoices/{invoice}/send-email-issuing-invoice', [InvoiceEmailController::class, 'sendEmailIssuingInvoice']);
     Route::apiResource('contractors', ContractorController::class);

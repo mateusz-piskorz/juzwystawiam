@@ -50,8 +50,20 @@ type GetChartData = {
     product?: QueryValue;
 };
 
-export const getChartData = async (args?: GetChartData) => {
-    return await apiFetch<{ month: string; paid: number; unpaid: number }[]>(`${BASE_URL}/invoices-chart-data?${args ? buildURLParams(args) : ''}`, {
-        method: 'GET',
-    });
+export const getStatusMonthlyDistribution = async (args?: GetChartData) => {
+    return await apiFetch<{ months: { month: string; paid: number; unpaid: number }[]; overall: { total: number; paid: number; unpaid: number } }>(
+        `${BASE_URL}/charts/status-monthly-distribution?${args ? buildURLParams(args) : ''}`,
+        {
+            method: 'GET',
+        },
+    );
+};
+
+export const getStatusYearlyDistribution = async () => {
+    return await apiFetch<{ prev_year: { paid: number; unpaid: number }; this_year: { paid: number; unpaid: number } }>(
+        `${BASE_URL}/charts/status-yearly-distribution`,
+        {
+            method: 'GET',
+        },
+    );
 };

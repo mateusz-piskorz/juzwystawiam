@@ -30,7 +30,7 @@ export const ProductItemMobile = <T extends InvoiceSchema>({ form: formProps, id
         <div className="m-[1px] flex flex-col gap-4 px-4 pt-4 md:px-0">
             <ProductSelectField form={form} idx={idx} />
 
-            <div className="flex flex-col rounded border">
+            <div className="flex flex-col rounded-sm border">
                 <div className="flex h-[60px]">
                     <CurrencyField
                         form={form}

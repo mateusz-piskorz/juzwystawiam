@@ -17,7 +17,7 @@ class ProfileController
      */
     public function edit(Request $request): Response
     {
-        return Inertia::render('dashboard/settings/profile', [
+        return Inertia::render('dashboard/settings/page', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status'          => $request->session()->get('status')
         ]);

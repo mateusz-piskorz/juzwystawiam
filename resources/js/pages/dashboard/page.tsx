@@ -1,14 +1,12 @@
 import { DashboardHeading } from '@/components/common/dashboard-heading';
-import { PremiumStatusHeading } from '@/components/common/premium-status-heading';
+import { InvoiceStatusDonutChart } from '@/features/invoice-status-donut-chart';
 
-import { Button } from '@/components/ui/button';
-import { MainAnalyticChart } from '@/features/main-analytic-chart';
+import { InvoicesAnalyticsChart } from '@/features/invoices-analytics-chart';
 import { TableInvoice } from '@/features/table-invoice';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
-import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { useLocale } from '@/lib/hooks/use-locale';
 import type { BreadcrumbItem } from '@/lib/types';
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 
 export default function DashboardPage() {
     const { locale } = useLocale();
@@ -24,26 +22,19 @@ export default function DashboardPage() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={locale.common.Dashboard} />
 
-            <MainContentLayout className="flex flex-col gap-14 md:gap-4 md:bg-transparent md:p-0">
-                <div className="flex flex-col gap-14 md:h-[300px] md:flex-row md:gap-4">
-                    <div className="md:bg-sidebar flex-2/3 space-y-12 md:space-y-8 md:overflow-y-auto md:rounded md:p-6">
-                        <DashboardHeading title={locale.dashboard['Latest invoices']} />
-                        <TableInvoice displayDataTableToolbar={false} withFilters={false} displayPagination={false} />
-                    </div>
+            <div className="px-4 py-8 md:px-8">
+                <DashboardHeading title={locale.common.Invoices} />
+                <InvoicesAnalyticsChart withFilters={false} className="" />
+            </div>
 
-                    <div className="md:bg-sidebar flex-1/3 space-y-2 md:rounded md:p-6">
-                        <PremiumStatusHeading />
-                        <Link href="/dashboard/premium-account">
-                            <Button variant="secondary">{locale.common.Manage}</Button>
-                        </Link>
-                    </div>
+            <div className="flex flex-col gap-8 p-4 md:flex-row md:p-8">
+                <div className="flex-4/5">
+                    <TableInvoice displaySearchBar={false} displayEmailStatusColumn={false} />
                 </div>
-
-                <div className="md:bg-sidebar md:rounded md:p-6">
-                    <DashboardHeading title={locale.common.Invoices} />
-                    <MainAnalyticChart withFilters={false} className="" />
+                <div className="flex-1/5">
+                    <InvoiceStatusDonutChart />
                 </div>
-            </MainContentLayout>
+            </div>
         </AppLayout>
     );
 }

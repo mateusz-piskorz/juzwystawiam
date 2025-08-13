@@ -4,7 +4,6 @@ import { DashboardHeading } from '@/components/common/dashboard-heading';
 
 import { TableInvoice } from '@/features/table-invoice';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
-import { MainContentLayout } from '@/layouts/dashboard/main-content-layout';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Head } from '@inertiajs/react';
 
@@ -25,10 +24,10 @@ const InvoiceListPage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={locale.common.Invoices} />
-            <MainContentLayout>
+            <div className="p-4 md:px-8">
                 <DashboardHeading title={locale.common.Invoices} description={locale['Manage your invoices and see details.']} />
                 <TableInvoice />
-            </MainContentLayout>
+            </div>
         </AppLayout>
     );
 };
