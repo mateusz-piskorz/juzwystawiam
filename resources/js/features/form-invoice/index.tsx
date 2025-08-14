@@ -82,8 +82,6 @@ export const FormInvoice = ({ defaultValues, invoiceId, type }: Props) => {
         return () => unsubscribe();
     }, [watch, getValues]);
 
-    // todo: some inputs here has broken styles (borders)
-    // also care how it looks in light mode
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -94,7 +92,7 @@ export const FormInvoice = ({ defaultValues, invoiceId, type }: Props) => {
                     <ContractorsSection form={form} />
                     <ProductsSection form={form} />
                 </div>
-                <div className="flex items-center justify-between px-4 pt-6 md:p-6">
+                <div className="flex items-center justify-between px-4 py-6 md:p-6">
                     <span>
                         {/* todo: static currency */}
                         {locale['Grand Total']}: {total} PLN

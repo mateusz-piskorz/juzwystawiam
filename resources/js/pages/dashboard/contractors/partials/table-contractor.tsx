@@ -1,5 +1,6 @@
 import ConfirmDialog from '@/components/common/confirm-dialog';
 import { DataTable } from '@/components/common/data-table';
+import { UpsertContractorDialog } from '@/features/upsert-contractor-dialog';
 import { TYPE_OF_BUSINESS } from '@/lib/constants/enums/type-of-business';
 import { deleteContractor, getContractors } from '@/lib/data/contractors';
 import { useLocale } from '@/lib/hooks/use-locale';
@@ -8,7 +9,6 @@ import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { UpsertContractorDialog } from '../upsert-contractor-dialog';
 import { getContractorColumns } from './contractor-columns';
 
 export const TableContractor = () => {

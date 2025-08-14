@@ -37,15 +37,15 @@ type NavProps = {
 
 const Navigation = ({ closeSidebar }: NavProps) => {
     const { auth } = usePage().props;
-    const { languageCode, locale } = useLocale();
+    const { locale } = useLocale();
 
     return (
         <div className="space-y-5">
             <nav>
                 <ul className="flex list-none flex-col gap-5">
                     {NAV_LIST.map((item) => (
-                        <li onClick={closeSidebar} key={item.label[languageCode]} className="flex cursor-pointer items-center gap-4 text-xl">
-                            <Link href={item.href}>{item.label[languageCode]}</Link>
+                        <li onClick={closeSidebar} key={item.label} className="flex cursor-pointer items-center gap-4 text-xl">
+                            <Link href={item.href}>{locale.enum.NAV_LIST[item.label]}</Link>
                         </li>
                     ))}
                     <li>

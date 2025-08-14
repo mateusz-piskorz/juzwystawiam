@@ -22,6 +22,8 @@ interface LoginProps {
     canResetPassword: boolean;
 }
 
+// todo: login and register - logo looks bad on mobile
+
 export default function Login({ status, canResetPassword }: LoginProps) {
     const locale = useLocale().locale['root/auth'];
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({

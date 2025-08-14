@@ -11,5 +11,5 @@ export const TableInvoiceEmail = ({ data }: Props) => {
     const l = useLocale().locale;
     const locale = { ...l['dashboard/invoices'], enum: l.enum };
     const columns = getInvoiceEmailColumns({ locale });
-    return <DataTable displayDataTableToolbar={false} data={data ?? []} columns={columns} filters={[]} />;
+    return <DataTable data={data ?? []} columns={columns} filters={[]} />;
 };

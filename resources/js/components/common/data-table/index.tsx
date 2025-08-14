@@ -113,7 +113,7 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            {totalPages && <DataTablePagination table={table} totalPages={totalPages} />}
+            <DataTablePagination table={table} totalPages={totalPages ?? '1'} />
         </div>
     );
 }

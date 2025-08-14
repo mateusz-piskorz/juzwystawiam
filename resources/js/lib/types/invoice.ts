@@ -7,7 +7,7 @@ import { PAYMENT_METHOD } from '../constants/enums/payment-method';
 import { VAT_RATE } from '../constants/enums/vat-rate';
 import { Contractor } from './contractor';
 
-type InvoiceContractor = Contractor & {
+export type InvoiceContractor = Contractor & {
     role: CONTRACTOR_ROLE;
 };
 

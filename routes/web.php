@@ -15,7 +15,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
-        return Inertia::render('dashboard/page');
+        return Inertia::render('dashboard/page/index');
     })->name('dashboard');
 
     Route::resource('/dashboard/invoices', InvoiceController::class);

@@ -2,9 +2,9 @@ import { useLocale } from '@/lib/hooks/use-locale';
 import { usePage } from '@/lib/hooks/use-page';
 import { Link } from '@inertiajs/react';
 
-type Feature = { en: string; pl: string; grayed?: boolean };
+type Feature = { text: string; grayed?: boolean };
 type Props = {
-    name: { en: string; pl: string };
+    name: string;
     price: number;
     forever?: boolean;
     features: Feature[];
@@ -12,10 +12,10 @@ type Props = {
 
 export const PricingItem = ({ name, price, forever, features }: Props) => {
     const { auth } = usePage().props;
-    const { languageCode, locale } = useLocale();
+    const { locale } = useLocale();
     return (
         <Link className="w-full max-w-[400px] rounded-lg border p-6 hover:ring-1" href={auth.user ? route('premium-account') : route('login')}>
-            <h3 className="mb-4 text-2xl">{name[languageCode]}</h3>
+            <h3 className="mb-4 text-2xl">{name}</h3>
             <div className="mb-4 flex items-end gap-1">
                 <span className="text-4xl font-bold">{price} zł</span>
                 <span className="py-1 text-sm text-green-700">{forever ? locale.root.Forever : `/${locale.root.month}`}</span>
@@ -25,7 +25,7 @@ export const PricingItem = ({ name, price, forever, features }: Props) => {
                     <li key={idx} className="">
                         <span className="mr-2 inline-block h-2 w-2 rounded-full bg-green-700"></span>
 
-                        <span className={feature.grayed ? 'text-muted-foreground' : ''}>{feature[languageCode]}</span>
+                        <span className={feature.grayed ? 'text-muted-foreground' : ''}>{feature.text}</span>
                     </li>
                 ))}
             </ul>

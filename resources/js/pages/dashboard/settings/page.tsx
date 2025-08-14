@@ -1,15 +1,13 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
-import { AppearanceToggle } from '@/components/common/appearance-toggle';
-import { DashboardHeading } from '@/components/common/dashboard-heading';
-import { LocaleSelectInput } from '@/components/common/locale-select-input';
 import { Separator } from '@/components/ui/separator';
-import { SectionDeleteUser } from '@/features/section-delete-user';
-import { SectionPassword } from '@/features/section-password';
-import { SectionProfileSettings } from '@/features/section-profile-settings';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Head } from '@inertiajs/react';
+import { SectionAppearance } from './partials/section-appearance';
+import { SectionDeleteUser } from './partials/section-delete-user';
+import { SectionPassword } from './partials/section-password';
+import { SectionProfileSettings } from './partials/section-profile-settings';
 
 const SettingsPage = () => {
     const l = useLocale().locale;
@@ -30,23 +28,7 @@ const SettingsPage = () => {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={locale.index['Settings']} />
             <div className="space-y-8 py-8">
-                <div className="space-y-8 px-4 md:px-8">
-                    <DashboardHeading
-                        className="mb-8"
-                        title={locale.appearance['Appearance settings']}
-                        description={locale.appearance["Update your account's appearance settings"]}
-                    />
-                    <div className="flex gap-8">
-                        <div>
-                            <h4 className="mb-2">{locale.appearance.Theme}</h4>
-                            <AppearanceToggle />
-                        </div>
-                        <div>
-                            <h4 className="mb-2">{locale.appearance.Language}</h4>
-                            <LocaleSelectInput />
-                        </div>
-                    </div>
-                </div>
+                <SectionAppearance />
                 <Separator orientation="horizontal" />
                 <SectionProfileSettings />
                 <Separator orientation="horizontal" />

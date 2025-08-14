@@ -1,10 +1,10 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
 import { DashboardHeading } from '@/components/common/dashboard-heading';
-import { TableContractor } from '@/features/table-contractor';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Head } from '@inertiajs/react';
+import { TableContractor } from './partials/table-contractor';
 
 const ContractorsPage = () => {
     const l = useLocale().locale;

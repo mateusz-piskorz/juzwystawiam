@@ -9,8 +9,8 @@ import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { UpsertProductDialog } from '../upsert-product-dialog';
 import { getProductColumns } from './product-columns';
+import { UpsertProductDialog } from './upsert-product-dialog';
 
 export const TableProduct = () => {
     const l = useLocale().locale;
