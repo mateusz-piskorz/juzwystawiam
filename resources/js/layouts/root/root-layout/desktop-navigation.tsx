@@ -9,15 +9,15 @@ import { Link } from '@inertiajs/react';
 
 export const DesktopNavigation = () => {
     const { auth } = usePage().props;
-    const { languageCode, locale } = useLocale();
+    const { locale } = useLocale();
 
     return (
         <div className="flex gap-8">
             <nav>
                 <ul className="flex list-none flex-row items-center gap-8">
                     {NAV_LIST.map((item) => (
-                        <li className="cursor-pointer" key={item.label[languageCode]}>
-                            <Link href={item.href}>{item.label[languageCode]}</Link>
+                        <li className="cursor-pointer" key={item.label}>
+                            <Link href={item.href}>{locale.enum.NAV_LIST[item.label]}</Link>
                         </li>
                     ))}
                     <li>

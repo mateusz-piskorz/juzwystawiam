@@ -1,12 +1,12 @@
-import KSeF from '../../../../public/brand-logos/KSeF.png';
-import NBP from '../../../../public/brand-logos/NBP.svg';
-import PAYU from '../../../../public/brand-logos/PAYU GPO.svg';
-import Woo from '../../../../public/brand-logos/Woo.svg';
-import allegro from '../../../../public/brand-logos/allegro.svg';
-import insert from '../../../../public/brand-logos/insert.png';
-import mBank from '../../../../public/brand-logos/mBank.svg';
-import selgros from '../../../../public/brand-logos/selgros.svg';
-import shoper from '../../../../public/brand-logos/shoper.svg';
+import KSeF from '../../../../../../../public/brand-logos/KSeF.png';
+import NBP from '../../../../../../../public/brand-logos/NBP.svg';
+import PAYU from '../../../../../../../public/brand-logos/PAYU GPO.svg';
+import Woo from '../../../../../../../public/brand-logos/Woo.svg';
+import allegro from '../../../../../../../public/brand-logos/allegro.svg';
+import insert from '../../../../../../../public/brand-logos/insert.png';
+import mBank from '../../../../../../../public/brand-logos/mBank.svg';
+import selgros from '../../../../../../../public/brand-logos/selgros.svg';
+import shoper from '../../../../../../../public/brand-logos/shoper.svg';
 
 const brands = [
     { src: KSeF, alt: 'KSeF' },

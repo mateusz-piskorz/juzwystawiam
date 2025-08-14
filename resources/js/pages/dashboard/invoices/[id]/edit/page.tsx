@@ -42,30 +42,29 @@ const EditInvoicePage = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={`${locale['Edit invoice']} ${invoice.id}`} />
-            <div className="px-4 py-4 md:px-8">
-                <div className="flex items-center gap-2 px-4 pt-4 md:px-6 md:pt-6">
-                    <h1>
-                        <span className="text-muted-foreground">{locale['Edit invoice']} </span> {invoice.number}
-                    </h1>
-                    <Select
-                        defaultValue={invoiceType}
-                        label={locale['Invoice type']}
-                        onValueChange={(val) => setInvoiceType(val as INVOICE_TYPE)}
-                        options={Object.values(INVOICE_TYPE).map((val) => ({ label: locale.enum.INVOICE_TYPE[val], value: val }))}
-                    />
-                </div>
-                <FormInvoice
-                    type={invoiceType}
-                    // @ts-ignore Warning: This is a TypeScript quirk! Don't look.
-                    defaultValues={{
-                        ...invoice,
-                        issue_date: new Date(invoice.issue_date),
-                        sale_date: new Date(invoice.sale_date),
-                        due_date: new Date(invoice.due_date),
-                    }}
-                    invoiceId={invoice.id}
+
+            <div className="flex items-center gap-2 px-4 pt-4 md:px-6 md:pt-6">
+                <h1>
+                    <span className="text-muted-foreground">{locale['Edit invoice']} </span> {invoice.number}
+                </h1>
+                <Select
+                    defaultValue={invoiceType}
+                    label={locale['Invoice type']}
+                    onValueChange={(val) => setInvoiceType(val as INVOICE_TYPE)}
+                    options={Object.values(INVOICE_TYPE).map((val) => ({ label: locale.enum.INVOICE_TYPE[val], value: val }))}
                 />
             </div>
+            <FormInvoice
+                type={invoiceType}
+                // @ts-ignore Warning: This is a TypeScript quirk! Don't look.
+                defaultValues={{
+                    ...invoice,
+                    issue_date: new Date(invoice.issue_date),
+                    sale_date: new Date(invoice.sale_date),
+                    due_date: new Date(invoice.due_date),
+                }}
+                invoiceId={invoice.id}
+            />
         </AppLayout>
     );
 };

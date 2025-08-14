@@ -41,6 +41,7 @@ export const STYLES: ComponentProps<typeof ReactSelect>['styles'] = {
     }),
     control: (base, { isFocused }) => ({
         ...base,
+        borderColor: 'var(--color-border)',
         height: '60px',
         cursor: 'pointer',
         '&:hover': {

@@ -51,6 +51,12 @@
             "PRIVATE_PERSON": "Osoba prywatna",
             "SELF_EMPLOYED": "Samozatrudniony",
             "OTHER_BUSINESS": "Inna działalność"
+        },
+        "NAV_LIST": {
+            "About": "O nas",
+            "Services": "Usługi",
+            "Pricing": "Cennik",
+            "Contact": "Kontakt"
         }
     },
 
@@ -119,6 +125,10 @@
         "Showing total invoices for this year": "Wyświetlanie wszystkich faktur za ten rok"
     },
     "dashboard/invoices": {
+        "Review and manage invoice details": "Przeglądaj i zarządzaj szczegółami faktury",
+        "Perform key actions for this invoice": "Wykonaj kluczowe działania dla tej faktury",
+        "Manage your invoice products and see details": "Zarządzaj produktami faktury i zobacz szczegóły",
+        "View and manage invoice emails and delivery status": "Przeglądaj i zarządzaj e-mailami do faktury oraz statusem dostarczenia",
         "Manage your invoices and see details.": "Zarządzaj swoimi fakturami i zobacz szczegóły.",
         "Add new invoice": "Dodaj nową fakturę",
         "Number": "Numer",
@@ -129,7 +139,6 @@
         "Show": "Pokaż",
         "Total": "Suma",
         "Invoice": "Faktura",
-        "Here you can check details about your invoice.": "Tutaj możesz sprawdzić szczegóły swojej faktury.",
         "Details": "Szczegóły",
         "Seller": "Sprzedawca",
         "Buyer": "Kupujący",
@@ -330,7 +339,19 @@
         "First name": "Imię",
         "Message": "Wiadomość",
         "Forever": "Na zawsze",
-        "month": "miesiąc"
+        "month": "miesiąc",
+        "services": {
+            "Issue all types of invoices: VAT, proforma, advance, final.": "Wystawiaj wszystkie rodzaje faktur: VAT, proforma, zaliczkowa, końcowa.",
+            "Manage clients and products. Fast search and editing.": "Zarządzaj klientami i produktami. Szybkie wyszukiwanie i edycja.",
+            "Clear financial reports and automatic accounting summaries.": "Przejrzyste raporty finansowe i automatyczne podsumowania księgowe.",
+            "Control costs, archive invoices, and monitor liabilities.": "Kontroluj koszty, archiwizuj faktury i monitoruj zobowiązania.",
+            "Print, save as PDF, or archive invoices in the cloud.": "Drukuj, zapisuj jako PDF lub archiwizuj faktury w chmurze.",
+            "Send invoices by email directly from the app.": "Wysyłaj faktury e-mailem bezpośrednio z aplikacji.",
+            "Access for employees with different permission levels.": "Dostęp dla pracowników z różnymi poziomami uprawnień.",
+            "Data protected by encryption and regular backups.": "Dane chronione szyfrowaniem i regularnymi kopiami zapasowymi.",
+            "Use on computer, tablet, or smartphone.": "Korzystaj na komputerze, tablecie lub smartfonie.",
+            "Technical support via chat, email, and phone.": "Wsparcie techniczne przez czat, e-mail i telefon."
+        }
     },
     "root/auth": {
         "Create an account": "Utwórz konto",

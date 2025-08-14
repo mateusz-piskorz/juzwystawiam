@@ -51,6 +51,12 @@
             "PRIVATE_PERSON": "Private person",
             "SELF_EMPLOYED": "Self-employed",
             "OTHER_BUSINESS": "Other business"
+        },
+        "NAV_LIST": {
+            "About": "About",
+            "Services": "Services",
+            "Pricing": "Pricing",
+            "Contact": "Contact"
         }
     },
 
@@ -120,6 +126,10 @@
     },
 
     "dashboard/invoices": {
+        "Review and manage invoice details": "Review and manage invoice details",
+        "Perform key actions for this invoice": "Perform key actions for this invoice",
+        "Manage your invoice products and see details": "Manage your invoice products and see details",
+        "View and manage invoice emails and delivery status": "View and manage invoice emails and delivery status",
         "Manage your invoices and see details.": "Manage your invoices and see details.",
         "Add new invoice": "Add new invoice",
         "Number": "Number",
@@ -130,7 +140,6 @@
         "Show": "Show",
         "Total": "Total",
         "Invoice": "Invoice",
-        "Here you can check details about your invoice.": "Here you can check details about your invoice.",
         "Details": "Details",
         "Seller": "Seller",
         "Buyer": "Buyer",
@@ -139,7 +148,6 @@
         "Invoice Products": "Invoice Products",
         "Invoice Emails": "Invoice Emails",
         "Name": "Name",
-
         "Date": "Date",
         "Recipient": "Recipient",
         "Status": "Status",
@@ -331,7 +339,40 @@
         "First name": "First name",
         "Message": "Message",
         "Forever": "Forever",
-        "month": "month"
+        "month": "month",
+        "services": {
+            "Issue all types of invoices: VAT, proforma, advance, final.": "Issue all types of invoices: VAT, proforma, advance, final.",
+            "Manage clients and products. Fast search and editing.": "Manage clients and products. Fast search and editing.",
+            "Clear financial reports and automatic accounting summaries.": "Clear financial reports and automatic accounting summaries.",
+            "Control costs, archive invoices, and monitor liabilities.": "Control costs, archive invoices, and monitor liabilities.",
+            "Print, save as PDF, or archive invoices in the cloud.": "Print, save as PDF, or archive invoices in the cloud.",
+            "Send invoices by email directly from the app.": "Send invoices by email directly from the app.",
+            "Access for employees with different permission levels.": "Access for employees with different permission levels.",
+            "Data protected by encryption and regular backups.": "Data protected by encryption and regular backups.",
+            "Use on computer, tablet, or smartphone.": "Use on computer, tablet, or smartphone.",
+            "Technical support via chat, email, and phone.": "Technical support via chat, email, and phone."
+        },
+        "pricing": {
+            "Basic": "Basic",
+            "Premium": "Premium",
+            "Premium Plus": "Premium Plus",
+            "features": {
+                "10 invoices": "10 invoices",
+                "10 emails issuing": "10 emails issuing",
+                "Unlimited products": "Unlimited products",
+                "Unlimited contractors": "Unlimited contractors",
+                "Export to PDF": "Export to PDF",
+                "Unlimited invoices": "Unlimited invoices",
+                "Unlimited emails issuing": "Unlimited emails issuing",
+                "Basic support": "Basic support",
+                "Advanced analytics": "Advanced analytics",
+                "Priority support": "Priority support",
+                "Custom branding": "Custom branding",
+                "Team collaboration": "Team collaboration",
+                "API access": "API access",
+                "White-label solutions": "White-label solutions"
+            }
+        }
     },
 
     "root/auth": {

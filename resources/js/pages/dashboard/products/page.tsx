@@ -1,9 +1,9 @@
 import { DashboardHeading } from '@/components/common/dashboard-heading';
-import { TableProduct } from '@/features/table-product';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { BreadcrumbItem } from '@/lib/types';
 import { Head } from '@inertiajs/react';
+import { TableProduct } from './partials/table-product';
 
 const ProductsPage = () => {
     const l = useLocale().locale;

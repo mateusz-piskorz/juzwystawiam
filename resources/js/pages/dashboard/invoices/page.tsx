@@ -1,7 +1,6 @@
 import type { BreadcrumbItem } from '@/lib/types';
 
 import { DashboardHeading } from '@/components/common/dashboard-heading';
-
 import { TableInvoice } from '@/features/table-invoice';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { useLocale } from '@/lib/hooks/use-locale';

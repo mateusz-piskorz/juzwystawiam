@@ -7,7 +7,7 @@ type Props = {
     className?: string;
 };
 
-// refactor it (we don't need size big)
+// todo: (we don't need size big)
 
 export function DashboardHeading({ title, description, size = 'normal', className }: Props) {
     return (

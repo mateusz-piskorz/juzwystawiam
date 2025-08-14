@@ -32,7 +32,7 @@ class InvoiceController
     {
         Gate::authorize('view', $invoice);
         $invoice->load(['invoice_products', 'invoice_contractors', 'invoice_emails']);
-        return Inertia::render('dashboard/invoices/[id]/page', [
+        return Inertia::render('dashboard/invoices/[id]/page/index', [
             'invoice' => $invoice
         ]);
     }

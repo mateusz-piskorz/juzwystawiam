@@ -1,6 +1,6 @@
 import { useLocale } from '@/lib/hooks/use-locale';
 import { cn } from '@/lib/utils/cn';
-import overlay from '../../../public/overlays/overlay1.jpg';
+import overlay from '../../../../../../public/overlays/overlay1.jpg';
 
 type Props = {
     className?: string;

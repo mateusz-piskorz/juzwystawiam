@@ -1,4 +1,5 @@
 import ConfirmDialog from '@/components/common/confirm-dialog';
+import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { Button } from '@/components/ui/button';
 import { deleteInvoice } from '@/lib/data/invoices';
 import { useLocale } from '@/lib/hooks/use-locale';
@@ -14,7 +15,7 @@ type Props = {
     buyerEmail: Nullable<string>;
 };
 
-export const SectionDashboardInvoiceActions = ({ invoiceId, buyerEmail }: Props) => {
+export const SectionInvoiceActions = ({ invoiceId, buyerEmail }: Props) => {
     const l = useLocale().locale;
     const locale = { ...l['dashboard/invoices'], common: l.common };
     const [openRemoveConfirm, setOpenRemoveConfirm] = useState(false);
@@ -35,8 +36,8 @@ export const SectionDashboardInvoiceActions = ({ invoiceId, buyerEmail }: Props)
 
     return (
         <>
-            <div>
-                <h1 className="mb-2 text-xl font-medium">{locale.Actions}</h1>
+            <div className="px-4 md:px-8">
+                <DashboardHeading title={locale.Actions} description={locale['Perform key actions for this invoice']} />
                 <div className="space-y-4 space-x-4">
                     <Button variant="secondary">
                         <a href={`/dashboard/invoices/${invoiceId}/pdf-preview`} target="_blank">

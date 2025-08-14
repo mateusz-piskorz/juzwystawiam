@@ -10,7 +10,6 @@ import { Head } from '@inertiajs/react';
 
 export default function DashboardPage() {
     const { locale } = useLocale();
-    console.log('locale', locale);
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
