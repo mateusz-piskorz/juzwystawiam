@@ -14,7 +14,7 @@
 
 3. build docker-compose.yml
 
-- docker-compose --file docker-compose.yml up-d
+- docker-compose --file docker-compose.yml up -d
 
 4. go to localhost without any port
 
