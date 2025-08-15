@@ -351,6 +351,27 @@
             "Data protected by encryption and regular backups.": "Dane chronione szyfrowaniem i regularnymi kopiami zapasowymi.",
             "Use on computer, tablet, or smartphone.": "Korzystaj na komputerze, tablecie lub smartfonie.",
             "Technical support via chat, email, and phone.": "Wsparcie techniczne przez czat, e-mail i telefon."
+        },
+        "pricing": {
+            "Basic": "Basic",
+            "Premium": "Premium",
+            "Premium Plus": "Premium Plus",
+            "features": {
+                "10 invoices": "10 invoices",
+                "10 emails issuing": "10 emails issuing",
+                "Unlimited products": "Unlimited products",
+                "Unlimited contractors": "Unlimited contractors",
+                "Export to PDF": "Export to PDF",
+                "Unlimited invoices": "Unlimited invoices",
+                "Unlimited emails issuing": "Unlimited emails issuing",
+                "Basic support": "Basic support",
+                "Advanced analytics": "Advanced analytics",
+                "Priority support": "Priority support",
+                "Custom branding": "Custom branding",
+                "Team collaboration": "Team collaboration",
+                "API access": "API access",
+                "White-label solutions": "White-label solutions"
+            }
         }
     },
     "root/auth": {
