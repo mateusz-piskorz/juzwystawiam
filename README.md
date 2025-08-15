@@ -4,6 +4,8 @@
 
 - DB_HOST=db
 - REDIS_HOST=redis
+- ASSET_URL=http://localhost
+- APP_URL=http://localhost
 
 2. make sure ports are not commented-out in docker-compose.yml
 
