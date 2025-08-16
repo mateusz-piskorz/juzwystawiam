@@ -25,6 +25,7 @@ const SettingsPage = () => {
     ];
 
     return (
+        // todo: add logout button if missing
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={locale.index['Settings']} />
             <div className="space-y-8 py-8">

@@ -106,7 +106,7 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
                             <SelectField
                                 form={form}
                                 name="measure_unit"
-                                label="Jednostka miary"
+                                label={locale.common['Measure Unit']}
                                 selectOptions={Object.values(MEASURE_UNIT).map((val) => ({ label: locale.enum.MEASURE_UNIT[val], value: val }))}
                             />
                         </div>

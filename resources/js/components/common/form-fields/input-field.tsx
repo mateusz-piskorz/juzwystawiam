@@ -7,7 +7,7 @@ import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { Input } from '../../ui/input';
 
 type FieldType = Nullable<string | number>;
-type InputType = 'text' | 'number' | 'email' | 'tel';
+type InputType = 'text' | 'number' | 'email' | 'tel' | 'password';
 
 type Props<T extends FieldValues, IT extends InputType> = {
     type?: IT;
