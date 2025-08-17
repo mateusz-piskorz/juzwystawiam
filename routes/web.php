@@ -56,7 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard/premium-account', fn() => Inertia::render('dashboard/premium-account/page'))->name('premium-account');
 
-    Route::get('/dashboard/premium-account/buy', [PremiumAccountController::class, 'buy']);
+    Route::get('/dashboard/premium-account/buy', [PremiumAccountController::class, 'buy'])->name('premium-account.buy');
 
 });
 
