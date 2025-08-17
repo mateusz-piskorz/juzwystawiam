@@ -25,23 +25,17 @@ class ProductController
         return response()->json($query);
     }
 
-    public function show(Product $product)
-    {
-        Gate::authorize('view', $product);
-        return $product->toJson();
-    }
-
     public function store(UpsertProductRequest $request)
     {
         $product = Product::create([ ...$request->validated(), 'user_id' => $request->user()->id]);
-        return response()->json($product);
+        return response()->json($product, 201);
     }
 
     public function update(UpsertProductRequest $request, Product $product)
     {
         Gate::authorize('update', $product);
         $product->update([ ...$request->validated(), 'user_id' => $request->user()->id]);
-        return response()->json($product);
+        return response()->json($product, 201);
     }
 
     public function destroy(Product $product)

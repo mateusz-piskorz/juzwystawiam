@@ -23,7 +23,6 @@ Route::middleware('auth:sanctum')->name('api.')->prefix('v1')->group(function ()
 
     Route::name('invoices.')->group(function () {
         Route::get('/invoices', [InvoiceController::class, 'index'])->name('index');
-        Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->name('show');
         Route::post('/invoices', [InvoiceController::class, 'store'])->name('store');
         Route::put('/invoices/{invoice}', [InvoiceController::class, 'update'])->name('update');
         Route::delete('/invoices/{invoice}', [InvoiceController::class, 'destroy'])->name('destroy');
