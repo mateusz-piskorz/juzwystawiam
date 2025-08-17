@@ -24,7 +24,7 @@ export const NoInvoicesMessage = ({ className }: Props) => {
         <div className={cn('flex h-full w-full flex-col justify-center text-center', className)}>
             <h2 className="text-xl font-bold">{locale[languageCode]['No invoices this year']}</h2>
             <Button variant="link">
-                <Link prefetch href="/dashboard/invoices/create">
+                <Link prefetch href={route('invoices.create')}>
                     {locale[languageCode]['Issue an invoice']}
                 </Link>
             </Button>

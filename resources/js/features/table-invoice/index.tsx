@@ -50,7 +50,7 @@ export const TableInvoice = ({
             columns={columns}
             addNewRecord={{
                 label: locale['Add new invoice'],
-                href: '/dashboard/invoices/create',
+                href: route('invoices.create'),
             }}
             filters={
                 withFilters

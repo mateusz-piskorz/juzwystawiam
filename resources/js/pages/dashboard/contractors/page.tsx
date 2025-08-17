@@ -13,11 +13,11 @@ const ContractorsPage = () => {
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: locale.common.Dashboard,
-            href: '/dashboard',
+            href: route('dashboard'),
         },
         {
             title: locale.Contractors,
-            href: '/dashboard/contractors',
+            href: route('contractors'),
         },
     ];
     return (

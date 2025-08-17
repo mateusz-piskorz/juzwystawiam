@@ -14,13 +14,6 @@ declare module 'ziggy-js' {
     "api.profile.update-password": [],
     "api.profile.delete-account": [],
     "api.invoices.index": [],
-    "api.invoices.show": [
-        {
-            "name": "invoice",
-            "required": true,
-            "binding": "id"
-        }
-    ],
     "api.invoices.store": [],
     "api.invoices.update": [
         {
@@ -115,6 +108,7 @@ declare module 'ziggy-js' {
     "products": [],
     "analytics": [],
     "premium-account": [],
+    "premium-account.buy": [],
     "register": [],
     "login": [],
     "password.request": [],

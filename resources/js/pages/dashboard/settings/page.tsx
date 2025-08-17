@@ -16,11 +16,11 @@ const SettingsPage = () => {
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: locale.common.Dashboard,
-            href: '/dashboard',
+            href: route('dashboard'),
         },
         {
             title: locale.index['Settings'],
-            href: '/dashboard/settings',
+            href: route('settings'),
         },
     ];
 

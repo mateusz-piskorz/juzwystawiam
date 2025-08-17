@@ -40,12 +40,12 @@ export const SectionInvoiceActions = ({ invoiceId, buyerEmail }: Props) => {
                 <DashboardHeading title={locale.Actions} description={locale['Perform key actions for this invoice']} />
                 <div className="space-y-4 space-x-4">
                     <Button variant="secondary">
-                        <a href={`/dashboard/invoices/${invoiceId}/pdf-preview`} target="_blank">
+                        <a href={route('invoices.pdf-preview', invoiceId)} target="_blank">
                             {locale.Preview}
                         </a>
                     </Button>
                     <Button variant="secondary">
-                        <a href={`/dashboard/invoices/${invoiceId}/pdf-download`} target="_blank">
+                        <a href={route('invoices.pdf-download', invoiceId)} target="_blank">
                             {locale.Download}
                         </a>
                     </Button>
@@ -53,7 +53,7 @@ export const SectionInvoiceActions = ({ invoiceId, buyerEmail }: Props) => {
                         {locale['Send email']}
                     </Button>
                     <Button variant="secondary">
-                        <Link href={`/dashboard/invoices/${invoiceId}/edit`}>{locale['Edit invoice']}</Link>
+                        <Link href={route('invoices.edit', invoiceId)}>{locale['Edit invoice']}</Link>
                     </Button>
                     <Button variant="destructive" onClick={() => setOpenRemoveConfirm(true)}>
                         {locale['Delete invoice']}
