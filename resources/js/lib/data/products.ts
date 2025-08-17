@@ -6,8 +6,6 @@ import { QueryValue } from '../types/query-value';
 import { SharedQueryArgs } from '../types/shared-query-args';
 import { buildURLParams } from '../utils/build-url-params';
 
-const BASE_URL = '/api/products';
-
 type GetProducts = SharedQueryArgs & {
     vat_rate?: QueryValue;
     measure_unit?: QueryValue;
@@ -17,17 +15,17 @@ type DeleteProduct = {
 };
 
 export const getProducts = async (args?: GetProducts) => {
-    return await apiFetch<Pagination<Product>>(`${BASE_URL}?${args ? buildURLParams(args) : ''}`);
+    return await apiFetch<Pagination<Product>>(`${route('api.products.index')}?${args ? buildURLParams(args) : ''}`);
 };
 
 export const deleteProduct = async ({ productId }: DeleteProduct) => {
-    return await apiFetch<{ message: 'Contractor deleted' }>(`${BASE_URL}/${productId}`, {
+    return await apiFetch<{ message: 'Contractor deleted' }>(route('api.products.destroy', productId), {
         method: 'DELETE',
     });
 };
 
 export const upsertProduct = async ({ body, productId }: { body: CreateProductDTO; productId?: number }) => {
-    const url = productId ? `${BASE_URL}/${productId}` : BASE_URL;
+    const url = productId ? route('api.products.update', productId) : route('api.products.store');
     const method = productId ? 'PUT' : 'POST';
 
     return await apiFetch<Product>(url, { method, body: JSON.stringify(body) });

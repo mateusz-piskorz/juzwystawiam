@@ -6,8 +6,6 @@ import { QueryValue } from '../types/query-value';
 import { SharedQueryArgs } from '../types/shared-query-args';
 import { buildURLParams } from '../utils/build-url-params';
 
-const BASE_URL = '/api/invoices';
-
 type DeleteProduct = {
     invoiceId: number;
 };
@@ -18,17 +16,17 @@ type GetInvoices = SharedQueryArgs & {
 };
 
 export const getInvoices = async (args?: GetInvoices) => {
-    return await apiFetch<Pagination<Invoice>>(`${BASE_URL}?${args ? buildURLParams(args) : ''}`);
+    return await apiFetch<Pagination<Invoice>>(`${route('api.invoices.index')}?${args ? buildURLParams(args) : ''}`);
 };
 
 export const deleteInvoice = async ({ invoiceId }: DeleteProduct) => {
-    return await apiFetch<{ message: 'Invoice deleted' }>(`${BASE_URL}/${invoiceId}`, {
+    return await apiFetch<{ message: 'Invoice deleted' }>(route('api.invoices.destroy', invoiceId), {
         method: 'DELETE',
     });
 };
 
 export const upsertInvoice = async ({ body, invoiceId }: { body: InvoiceSchema; invoiceId?: number }) => {
-    const url = invoiceId ? `${BASE_URL}/${invoiceId}` : BASE_URL;
+    const url = invoiceId ? route('api.invoices.update', invoiceId) : route('api.invoices.store');
     const method = invoiceId ? 'PUT' : 'POST';
 
     return await apiFetch<Invoice>(url, { method, body: JSON.stringify(body) });
@@ -39,7 +37,7 @@ type SendEmailIssuingInvoiceDTO = {
 };
 
 export const sendEmailIssuingInvoice = async ({ body, invoiceId }: { body: SendEmailIssuingInvoiceDTO; invoiceId?: number }) => {
-    return await apiFetch<{ message: 'Invoice sent' }>(`${BASE_URL}/${invoiceId}/send-email-issuing-invoice`, {
+    return await apiFetch<{ message: 'Invoice sent' }>(route('api.invoices.send-email', invoiceId), {
         method: 'POST',
         body: JSON.stringify(body),
     });
@@ -52,7 +50,7 @@ type GetChartData = {
 
 export const getStatusMonthlyDistribution = async (args?: GetChartData) => {
     return await apiFetch<{ months: { month: string; paid: number; unpaid: number }[]; overall: { total: number; paid: number; unpaid: number } }>(
-        `${BASE_URL}/charts/status-monthly-distribution?${args ? buildURLParams(args) : ''}`,
+        `${route('api.invoices.status-monthly-series')}?${args ? buildURLParams(args) : ''}`,
         {
             method: 'GET',
         },
@@ -61,7 +59,7 @@ export const getStatusMonthlyDistribution = async (args?: GetChartData) => {
 
 export const getStatusYearlyDistribution = async () => {
     return await apiFetch<{ prev_year: { paid: number; unpaid: number }; this_year: { paid: number; unpaid: number } }>(
-        `${BASE_URL}/charts/status-yearly-distribution`,
+        route('api.invoices.status-distribution-by-year'),
         {
             method: 'GET',
         },
