@@ -189,6 +189,7 @@
     },
 
     "dashboard/contractors": {
+        "Contractor": "Contractor",
         "Contractors": "Kontrahenci",
         "Manage your contractors and their details.": "Zarządzaj swoimi kontrahentami i ich danymi.",
         "Add new contractor": "Dodaj nowego kontrahenta",
