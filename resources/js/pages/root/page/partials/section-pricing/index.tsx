@@ -55,7 +55,7 @@ export const SectionPricing = () => {
     });
 
     return (
-        <section className="mx-auto max-w-[1640px] p-4 md:px-8 xl:px-12">
+        <section className="mx-auto max-w-[1640px] p-4 md:px-8 xl:px-12" id="pricing">
             <RootHeading
                 title={locale.Pricing}
                 description={locale['Explore our transparent pricing options and find a plan that fits your needs and budget']}
