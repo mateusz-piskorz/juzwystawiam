@@ -9,7 +9,7 @@
         "format:check": "prettier --check resources/",
         "lint": "eslint . --fix",
         "types": "tsc --noEmit",
-        "ziggy": "php artisan ziggy:generate --types-only && mv resources/js/ziggy.d.ts resources/js/lib/types/ziggy.d.ts"
+        "ziggy": "php artisan ziggy"
     },
     "devDependencies": {
         "@eslint/js": "^9.19.0",
