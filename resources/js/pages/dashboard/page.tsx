@@ -14,7 +14,7 @@ export default function DashboardPage() {
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: locale.common.Dashboard,
-            href: '/dashboard',
+            href: route('dashboard'),
         },
     ];
     return (

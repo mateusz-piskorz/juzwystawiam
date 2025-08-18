@@ -1,35 +1,36 @@
-import InputError from '@/components/common/input-error';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useForm } from '@inertiajs/react';
-import { FormEventHandler, useRef } from 'react';
 
 import { DashboardHeading } from '@/components/common/dashboard-heading';
+import { InputField } from '@/components/common/form-fields/input-field';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Form } from '@/components/ui/form';
+import { DeleteAccountDTO, deleteAccountDTO } from '@/lib/constants/zod/profile';
+import { deleteAccount } from '@/lib/data/profile';
 import { useLocale } from '@/lib/hooks/use-locale';
+import { getErrorMessage } from '@/lib/utils/get-error-message';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { router } from '@inertiajs/react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 export function SectionDeleteUser() {
     const l = useLocale().locale;
     const locale = { ...l['dashboard/settings'].profile, common: l.common };
 
-    const passwordInput = useRef<HTMLInputElement>(null);
-    const { data, setData, delete: destroy, processing, reset, errors, clearErrors } = useForm<Required<{ password: string }>>({ password: '' });
+    const form = useForm<DeleteAccountDTO>({
+        resolver: zodResolver(deleteAccountDTO),
+    });
 
-    const deleteUser: FormEventHandler = (e) => {
-        e.preventDefault();
-
-        destroy(route('profile.destroy'), {
-            preserveScroll: true,
-            onSuccess: () => closeModal(),
-            onError: () => passwordInput.current?.focus(),
-            onFinish: () => reset(),
-        });
-    };
-
-    const closeModal = () => {
-        clearErrors();
-        reset();
+    const submitHandler = async (data: DeleteAccountDTO) => {
+        try {
+            await deleteAccount(data);
+            toast.success(locale.common.Saved);
+            router.visit('/');
+        } catch (error) {
+            const errorMessage = getErrorMessage(error);
+            console.error(errorMessage);
+            toast.error(errorMessage || locale.common['something went wrong']);
+        }
     };
 
     return (
@@ -59,38 +60,27 @@ export function SectionDeleteUser() {
                                 ]
                             }
                         </DialogDescription>
-                        <form className="space-y-6" onSubmit={deleteUser}>
-                            <div className="grid gap-2">
-                                <Label htmlFor="password" className="sr-only">
-                                    {locale['delete-user-dialog'].Password}
-                                </Label>
+                        <Form {...form}>
+                            <form
+                                className="space-y-6"
+                                onSubmit={(event) => {
+                                    event.stopPropagation();
+                                    form.handleSubmit(submitHandler)(event);
+                                }}
+                            >
+                                <InputField form={form} name="password" label={locale['delete-user-dialog'].Password} type="password" />
 
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    name="password"
-                                    ref={passwordInput}
-                                    value={data.password}
-                                    onChange={(e) => setData('password', e.target.value)}
-                                    placeholder={locale['delete-user-dialog'].Password}
-                                    autoComplete="current-password"
-                                />
+                                <DialogFooter className="gap-2">
+                                    <DialogClose asChild>
+                                        <Button variant="secondary">{locale.common.Cancel}</Button>
+                                    </DialogClose>
 
-                                <InputError message={errors.password} />
-                            </div>
-
-                            <DialogFooter className="gap-2">
-                                <DialogClose asChild>
-                                    <Button variant="secondary" onClick={closeModal}>
-                                        {locale.common.Cancel}
+                                    <Button variant="destructive" disabled={form.formState.isSubmitting} type="submit">
+                                        {locale['Delete account']}
                                     </Button>
-                                </DialogClose>
-
-                                <Button variant="destructive" disabled={processing} asChild>
-                                    <button type="submit">{locale['Delete account']}</button>
-                                </Button>
-                            </DialogFooter>
-                        </form>
+                                </DialogFooter>
+                            </form>
+                        </Form>
                     </DialogContent>
                 </Dialog>
             </div>

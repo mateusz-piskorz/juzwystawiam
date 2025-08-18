@@ -12,11 +12,11 @@ const ProductsPage = () => {
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: locale.common.Dashboard,
-            href: '/dashboard',
+            href: route('dashboard'),
         },
         {
             title: locale.Products,
-            href: '/dashboard/products',
+            href: route('products'),
         },
     ];
     return (

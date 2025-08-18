@@ -24,15 +24,15 @@ const InvoicePage = () => {
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: locale.common.Dashboard,
-            href: '/dashboard',
+            href: route('dashboard'),
         },
         {
             title: locale.common.Invoices,
-            href: '/dashboard/invoices',
+            href: route('invoices'),
         },
         {
             title: `${locale.Invoice} ${invoice.id}`,
-            href: `/dashboard/invoices/${invoice.id}`,
+            href: route('invoices.show', invoice.id),
         },
     ];
 

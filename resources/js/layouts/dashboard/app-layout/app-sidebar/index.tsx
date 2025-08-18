@@ -12,32 +12,32 @@ export function AppSidebar() {
     const mainNavItems: NavItem[] = [
         {
             title: locale.Dashboard,
-            href: '/dashboard',
+            href: route('dashboard'),
             icon: LayoutGrid,
         },
         {
             title: locale.Invoices,
-            href: '/dashboard/invoices',
+            href: route('invoices'),
             icon: RadioReceiver,
         },
         {
             title: locale.Contractors,
-            href: '/dashboard/contractors',
+            href: route('contractors'),
             icon: Users2,
         },
         {
             title: locale.Products,
-            href: '/dashboard/products',
+            href: route('products'),
             icon: AirVentIcon,
         },
         {
             title: locale.Analytics,
-            href: '/dashboard/analytics',
+            href: route('analytics'),
             icon: ChartNoAxesCombined,
         },
         {
             title: locale['Premium Account'],
-            href: '/dashboard/premium-account',
+            href: route('premium-account'),
             icon: Crown,
         },
     ];

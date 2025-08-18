@@ -3,7 +3,9 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
+// moved to api
 test('password can be updated', function () {
+
     $user = User::factory()->create();
 
     $response = $this
@@ -20,8 +22,9 @@ test('password can be updated', function () {
         ->assertRedirect('/dashboard/settings/password');
 
     expect(Hash::check('new-password', $user->refresh()->password))->toBeTrue();
-});
+})->skip();
 
+// moved to api
 test('correct password must be provided to update password', function () {
     $user = User::factory()->create();
 
@@ -37,4 +40,4 @@ test('correct password must be provided to update password', function () {
     $response
         ->assertSessionHasErrors('current_password')
         ->assertRedirect('/dashboard/settings/password');
-});
+})->skip();

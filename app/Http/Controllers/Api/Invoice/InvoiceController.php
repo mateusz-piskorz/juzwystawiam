@@ -30,12 +30,6 @@ class InvoiceController
         return response()->json($query);
     }
 
-    public function show(Invoice $invoice)
-    {
-        Gate::authorize('view', $invoice);
-        return $invoice->toJson();
-    }
-
     public function store(UpsertInvoiceRequest $request)
     {
         Gate::authorize('create', Invoice::class);

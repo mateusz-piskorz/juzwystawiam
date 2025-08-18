@@ -3,16 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Inertia\Response;
 
 class PremiumAccountController
 {
-
-    public function index(): Response
-    {
-        return Inertia::render('dashboard/premium-account/page');
-    }
 
     public function buy(Request $request)
     {

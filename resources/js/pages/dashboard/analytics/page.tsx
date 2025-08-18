@@ -13,11 +13,11 @@ const AnalyticsPage = () => {
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: locale.common.Dashboard,
-            href: '/dashboard',
+            href: route('dashboard'),
         },
         {
             title: locale.Analytics,
-            href: '/dashboard/analytics',
+            href: route('analytics'),
         },
     ];
 

@@ -26,19 +26,13 @@ class ContractorController
         return response()->json($query);
     }
 
-    public function show(Contractor $contractor)
-    {
-        Gate::authorize('view', $contractor);
-        return $contractor->toJson();
-    }
-
     public function store(UpsertContractorRequest $request)
     {
         $validated = $request->validated();
         $companyName = $validated['company_name'] ?? $validated['first_name'] . ' ' . $validated['surname'];
         $contractor = Contractor::create([ ...$validated, 'company_name' => $companyName, 'user_id' => $request->user()->id]);
 
-        return response()->json($contractor);
+        return response()->json($contractor, 201);
     }
 
     public function update(UpsertContractorRequest $request, Contractor $contractor)
@@ -48,7 +42,7 @@ class ContractorController
         $companyName = $validated['company_name'] ?? $validated['first_name'] . ' ' . $validated['surname'];
         $contractor->update([ ...$validated, 'company_name' => $companyName, 'user_id' => $request->user()->id]);
 
-        return response()->json($contractor);
+        return response()->json($contractor, 201);
     }
 
     public function destroy(Contractor $contractor)

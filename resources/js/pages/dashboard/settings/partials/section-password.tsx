@@ -1,43 +1,33 @@
 import { DashboardHeading } from '@/components/common/dashboard-heading';
-import InputError from '@/components/common/input-error';
+import { InputField } from '@/components/common/form-fields/input-field';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Form } from '@/components/ui/form';
+import { UpdatePasswordDTO, updatePasswordDTO } from '@/lib/constants/zod/profile';
+import { updatePassword } from '@/lib/data/profile';
 import { useLocale } from '@/lib/hooks/use-locale';
-import { Transition } from '@headlessui/react';
-import { useForm } from '@inertiajs/react';
-import { FormEventHandler, useRef } from 'react';
+import { getErrorMessage } from '@/lib/utils/get-error-message';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 export function SectionPassword() {
     const l = useLocale().locale;
     const locale = { ...l['dashboard/settings'].password, common: l.common };
-    const passwordInput = useRef<HTMLInputElement>(null);
-    const currentPasswordInput = useRef<HTMLInputElement>(null);
 
-    const { data, setData, errors, put, reset, processing, recentlySuccessful } = useForm({
-        current_password: '',
-        password: '',
-        password_confirmation: '',
+    const form = useForm<UpdatePasswordDTO>({
+        resolver: zodResolver(updatePasswordDTO),
     });
 
-    const updatePassword: FormEventHandler = (e) => {
-        e.preventDefault();
-
-        put(route('password.update'), {
-            preserveScroll: true,
-            onSuccess: () => reset(),
-            onError: (errors) => {
-                if (errors.password) {
-                    reset('password', 'password_confirmation');
-                    passwordInput.current?.focus();
-                }
-
-                if (errors.current_password) {
-                    reset('current_password');
-                    currentPasswordInput.current?.focus();
-                }
-            },
-        });
+    const submitHandler = async (data: UpdatePasswordDTO) => {
+        try {
+            await updatePassword(data);
+            toast.success(locale.common.Saved);
+            form.reset();
+        } catch (error) {
+            const errorMessage = getErrorMessage(error);
+            console.error(errorMessage);
+            toast.error(errorMessage || locale.common['something went wrong']);
+        }
     };
 
     return (
@@ -47,72 +37,15 @@ export function SectionPassword() {
                 title={locale['Update password']}
                 description={locale['Ensure your account is using a long, random password to stay secure']}
             />
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-6">
+                    <InputField form={form} name="current_password" label={locale['Current password']} type="password" />
+                    <InputField form={form} name="password" label={locale['New password']} type="password" />
+                    <InputField form={form} name="password_confirmation" label={locale['Confirm password']} type="password" />
 
-            <form onSubmit={updatePassword} className="space-y-6">
-                <div className="grid gap-2">
-                    <Label htmlFor="current_password">{locale['Current password']}</Label>
-
-                    <Input
-                        id="current_password"
-                        ref={currentPasswordInput}
-                        value={data.current_password}
-                        onChange={(e) => setData('current_password', e.target.value)}
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        placeholder={locale['Current password']}
-                    />
-
-                    <InputError message={errors.current_password} />
-                </div>
-
-                <div className="grid gap-2">
-                    <Label htmlFor="password">{locale['New password']}</Label>
-
-                    <Input
-                        id="password"
-                        ref={passwordInput}
-                        value={data.password}
-                        onChange={(e) => setData('password', e.target.value)}
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        placeholder={locale['New password']}
-                    />
-
-                    <InputError message={errors.password} />
-                </div>
-
-                <div className="grid gap-2">
-                    <Label htmlFor="password_confirmation">{locale['Confirm password']}</Label>
-
-                    <Input
-                        id="password_confirmation"
-                        value={data.password_confirmation}
-                        onChange={(e) => setData('password_confirmation', e.target.value)}
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        placeholder={locale['Confirm password']}
-                    />
-
-                    <InputError message={errors.password_confirmation} />
-                </div>
-
-                <div className="flex items-center gap-4">
-                    <Button disabled={processing}>{locale['Save password']}</Button>
-
-                    <Transition
-                        show={recentlySuccessful}
-                        enter="transition ease-in-out"
-                        enterFrom="opacity-0"
-                        leave="transition ease-in-out"
-                        leaveTo="opacity-0"
-                    >
-                        <p className="text-sm text-neutral-600">{locale.common.Saved}</p>
-                    </Transition>
-                </div>
-            </form>
+                    <Button disabled={form.formState.isSubmitting}>{locale['Save password']}</Button>
+                </form>
+            </Form>
         </div>
     );
 }

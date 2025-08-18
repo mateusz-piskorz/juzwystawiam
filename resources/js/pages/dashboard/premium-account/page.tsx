@@ -30,11 +30,11 @@ const PremiumAccountPage = () => {
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: locale.common.Dashboard,
-            href: '/dashboard',
+            href: route('dashboard'),
         },
         {
             title: locale['Premium Account'],
-            href: '/dashboard/premium-account',
+            href: route('premium-account'),
         },
     ];
 

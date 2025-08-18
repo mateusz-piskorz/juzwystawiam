@@ -6,6 +6,7 @@ use App\Enums\ContractorRole;
 use App\Enums\EmailStatus;
 use App\Mail\IssueAnInvoice;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,11 +14,12 @@ use Illuminate\Support\Facades\Mail;
 
 class Invoice extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'user_id',
         'type',
         'number',
-        'total',
         'issue_date',
         'payment_method',
         'currency',
@@ -102,10 +104,12 @@ class Invoice extends Model
     public function getContractors()
     {
         $this->loadMissing(["invoice_products", "invoice_contractors"]);
+        $emptyContractor = ['company_name' => '', 'street_name' => '', 'postal_code' => '', 'bank_account' => '', 'city' => ''];
 
         return [
-            collect($this['invoice_contractors'])->firstWhere('role', ContractorRole::BUYER) ?? null,
-            collect($this['invoice_contractors'])->firstWhere('role', ContractorRole::SELLER) ?? null
+
+            collect($this['invoice_contractors'])->firstWhere('role', ContractorRole::BUYER) ?? $emptyContractor,
+            collect($this['invoice_contractors'])->firstWhere('role', ContractorRole::SELLER) ?? $emptyContractor
         ];
     }
 
