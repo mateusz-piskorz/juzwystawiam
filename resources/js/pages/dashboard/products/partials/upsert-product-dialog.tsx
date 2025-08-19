@@ -6,9 +6,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
-import { schemas } from '@/lib/constants/zod/openapi.json.client';
+import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
 import { createProductDTO, CreateProductDTO } from '@/lib/constants/zod/product';
-import { upsertProduct } from '@/lib/data/products';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -45,7 +44,8 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
 
     async function onSubmit(body: CreateProductDTO) {
         try {
-            await upsertProduct({ body, productId });
+            if (productId) await api['products.update'](body, { params: { product: productId } });
+            else await api['products.store'](body);
             toast.success(`${locale.Product} ${productId ? locale.common.Updated : locale.common.Created} ${locale.common.Successfully}`);
             onSuccess?.();
             setOpen(false);

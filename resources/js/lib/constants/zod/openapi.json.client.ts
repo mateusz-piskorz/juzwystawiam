@@ -440,6 +440,11 @@ const endpoints = makeApi([
 				type: "Query",
 				schema: limit
 			},
+			{
+				name: "page",
+				type: "Query",
+				schema: limit
+			},
 		],
 		response: z.object({ data: z.array(ProductResource), meta: z.object({ current_page: z.number().int(), from: z.union([z.number(), z.null()]), last_page: z.number().int(), links: z.array(z.object({ url: z.union([z.string(), z.null()]), label: z.string(), active: z.boolean() }).passthrough()), path: z.union([z.string(), z.null()]), per_page: z.number().int(), to: z.union([z.number(), z.null()]), total: z.number().int() }).passthrough(), links: z.object({ first: z.union([z.string(), z.null()]), last: z.union([z.string(), z.null()]), prev: z.union([z.string(), z.null()]), next: z.union([z.string(), z.null()]) }).passthrough() }).passthrough(),
 		errors: [

@@ -2,8 +2,8 @@ import { MultiOptionsFilter } from '@/components/common/multi-options-filter';
 import { NoInvoicesMessage } from '@/components/common/no-invoices-message';
 import { Card, CardContent } from '@/components/ui/card';
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, type ChartConfig } from '@/components/ui/chart';
+import { api } from '@/lib/constants/zod/openapi.json.client';
 import { getStatusMonthlyDistribution } from '@/lib/data/invoices';
-import { getProducts } from '@/lib/data/products';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
 import { cn } from '@/lib/utils/cn';
@@ -29,8 +29,8 @@ export const InvoicesAnalyticsChart = ({ className, withFilters = true }: Props)
 
     const products = useQuery({
         queryKey: ['products'],
-        // todo: create getAllProducts
-        queryFn: () => getProducts({ limit: 100 }),
+        // todo: add q - searchQuery (refactor MultiOptionsFilter)
+        queryFn: () => api['products.index']({ queries: { limit: 100 } }),
         enabled: withFilters,
     });
 

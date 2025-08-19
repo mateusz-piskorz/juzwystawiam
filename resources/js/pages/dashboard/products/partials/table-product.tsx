@@ -4,7 +4,7 @@ import ConfirmDialog from '@/components/common/confirm-dialog';
 import { DataTable } from '@/components/common/data-table';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
-import { deleteProduct, getProducts } from '@/lib/data/products';
+import { api } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
 import { OrderDirection } from '@/lib/types/order-direction';
@@ -34,20 +34,23 @@ export const TableProduct = () => {
     const { data, refetch } = useQuery({
         queryKey: ['product-list', page, limit, q, order_column, order_direction, vat_rate, measure_unit],
         queryFn: () =>
-            getProducts({
-                page,
-                limit: limit as unknown as number,
-                q,
-                sort: order_column as any,
-                sort_direction: order_direction,
-                vat_rate,
-                measure_unit,
+            api['products.index']({
+                queries: {
+                    limit: limit ? Number(limit) : undefined,
+                    q,
+                    // todo: any type
+                    sort: order_column as any,
+                    sort_direction: order_direction,
+                    vat_rate,
+                    measure_unit,
+                    page: page ? Number(page) : undefined,
+                },
             }),
     });
 
     const handleDeleteProduct = async (productId: number) => {
         try {
-            await deleteProduct({ productId });
+            await api['products.destroy'](undefined, { params: { product: productId } });
             toast.success(locale['Product deleted successfully']);
             refetch();
             setOpenConfirm(false);

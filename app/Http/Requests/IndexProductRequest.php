@@ -22,7 +22,8 @@ class IndexProductRequest extends FormRequest
             'vat_rate'       => [new StringOrArray(), 'nullable'],
             'sort'           => ['in:price,measure_unit,vat_rate', 'nullable'],
             'sort_direction' => ['in:asc,desc', 'nullable'],
-            'limit'          => 'nullable|integer|min:1|max:100'
+            'limit'          => 'nullable|integer|min:1|max:100',
+            'page'           => 'nullable|integer|min:1'
         ];
     }
 }

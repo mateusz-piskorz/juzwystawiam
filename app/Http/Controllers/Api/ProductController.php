@@ -22,14 +22,7 @@ class ProductController
 
         $limit = $validated['limit'] ?? 25;
 
-        $keys = ['measure_unit', 'vat_rate'];
-
-        $result = array_values(array_filter(
-            array_map(fn($key) => $validated[$key] ?? null, $keys),
-            fn($v) => $v !== null
-        ));
-
-        [$arrays, $strings] = Arr::partition($result, fn($v) => is_array($v));
+        [$arrays, $strings] = Arr::partition(Arr::only($validated, ['measure_unit', 'vat_rate']), fn($v) => is_array($v));
 
         // Apply filters
         $query->where($strings)->where(function ($q) use ($arrays) {
@@ -50,15 +43,6 @@ class ProductController
             $query->latest();
         }
 
-        // $query = $this->applyQueryFilters(
-        //     $request,
-        //     $query,
-        //     'name',
-        //     sortable: ['price', 'measure_unit', 'vat_rate'],
-        //     filterable: ['measure_unit', 'vat_rate']
-        // );
-        // var_dump($query)
-        // \Log::info('Product query SQL:', ['sql' => $query->toSql(), 'bindings' => $query->getBindings()]);
         return ProductResource::collection($query->paginate($limit));
     }
 
