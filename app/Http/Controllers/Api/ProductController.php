@@ -2,40 +2,77 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\IndexProductRequest;
 use App\Http\Requests\UpsertProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Traits\AppliesQueryFilters;
-use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
 
 class ProductController
 {
     use AppliesQueryFilters;
 
-    public function index(Request $request)
+    public function index(IndexProductRequest $request)
     {
         $query = $request->user()->products();
-        $query = $this->applyQueryFilters(
-            $request,
-            $query,
-            'name',
-            sortable: ['price', 'measure_unit', 'vat_rate'],
-            filterable: ['measure_unit', 'vat_rate']
-        );
-        return response()->json($query);
+
+        $validated = $request->validated();
+
+        $limit = $validated['limit'] ?? 25;
+
+        $keys = ['measure_unit', 'vat_rate'];
+
+        $result = array_values(array_filter(
+            array_map(fn($key) => $validated[$key] ?? null, $keys),
+            fn($v) => $v !== null
+        ));
+
+        [$arrays, $strings] = Arr::partition($result, fn($v) => is_array($v));
+
+        // Apply filters
+        $query->where($strings)->where(function ($q) use ($arrays) {
+            foreach ($arrays as $key => $values) {
+                $q->whereIn($key, $values);
+            }
+        });
+        // Apply search
+        if ($q = $validated['q'] ?? null) {
+            $query->where('name', 'ilike', "%{$q}%");
+        }
+
+        // Apply sorting
+        $sortDirection = $validated['sort_direction'] ?? 'desc';
+        if ($sort = $validated['sort'] ?? null) {
+            $query->orderBy($sort, $sortDirection);
+        } else {
+            $query->latest();
+        }
+
+        // $query = $this->applyQueryFilters(
+        //     $request,
+        //     $query,
+        //     'name',
+        //     sortable: ['price', 'measure_unit', 'vat_rate'],
+        //     filterable: ['measure_unit', 'vat_rate']
+        // );
+        // var_dump($query)
+        // \Log::info('Product query SQL:', ['sql' => $query->toSql(), 'bindings' => $query->getBindings()]);
+        return ProductResource::collection($query->paginate($limit));
     }
 
     public function store(UpsertProductRequest $request)
     {
-        $product = Product::create([ ...$request->validated(), 'user_id' => $request->user()->id]);
-        return response()->json($product, 201);
+        $product = Product::query()->create([ ...$request->validated(), 'user_id' => $request->user()->id]);
+        return (new ProductResource($product))->response()->setStatusCode(201);
     }
 
     public function update(UpsertProductRequest $request, Product $product)
     {
         Gate::authorize('update', $product);
         $product->update([ ...$request->validated(), 'user_id' => $request->user()->id]);
-        return response()->json($product, 201);
+        return (new ProductResource($product))->response()->setStatusCode(201);
     }
 
     public function destroy(Product $product)

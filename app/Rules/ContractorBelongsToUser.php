@@ -2,8 +2,11 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use App\Models\Contractor;
+use Illuminate\Contracts\Validation\Rule;
+
+//todo: validation rules refactor
+//https://laravel.com/docs/12.x/validation#custom-validation-rules
 
 class ContractorBelongsToUser implements Rule
 {

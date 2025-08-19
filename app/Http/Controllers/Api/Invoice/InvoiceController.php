@@ -18,6 +18,7 @@ class InvoiceController
 
     public function index(Request $request)
     {
+        $limit = $request->validate(['limit' => 'nullable|integer|min:1|max:100'])['limit'] ?? 25;
         $query = $request->user()->invoices()->with(['invoice_products', 'invoice_contractors', 'latest_invoice_email']);
         $query = $this->applyQueryFilters(
             $request,
@@ -27,7 +28,7 @@ class InvoiceController
             filterable: ['type', 'is_already_paid']
         );
 
-        return response()->json($query);
+        return response()->json($query->paginate($limit));
     }
 
     public function store(UpsertInvoiceRequest $request)

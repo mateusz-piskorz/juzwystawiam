@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import ConfirmDialog from '@/components/common/confirm-dialog';
 import { DataTable } from '@/components/common/data-table';
 import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
@@ -31,7 +33,16 @@ export const TableProduct = () => {
 
     const { data, refetch } = useQuery({
         queryKey: ['product-list', page, limit, q, order_column, order_direction, vat_rate, measure_unit],
-        queryFn: () => getProducts({ page, limit, q, order_column, order_direction, vat_rate, measure_unit }),
+        queryFn: () =>
+            getProducts({
+                page,
+                limit: limit as unknown as number,
+                q,
+                sort: order_column as any,
+                sort_direction: order_direction,
+                vat_rate,
+                measure_unit,
+            }),
     });
 
     const handleDeleteProduct = async (productId: number) => {
@@ -83,7 +94,7 @@ export const TableProduct = () => {
             />
 
             <DataTable
-                totalPages={String(data?.last_page)}
+                totalPages={String(data?.meta.last_page)}
                 data={data?.data ?? []}
                 columns={columns}
                 addNewRecord={{

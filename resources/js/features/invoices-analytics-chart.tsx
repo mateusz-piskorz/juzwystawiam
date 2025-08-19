@@ -29,7 +29,8 @@ export const InvoicesAnalyticsChart = ({ className, withFilters = true }: Props)
 
     const products = useQuery({
         queryKey: ['products'],
-        queryFn: () => getProducts({ limit: '100' }),
+        // todo: create getAllProducts
+        queryFn: () => getProducts({ limit: 100 }),
         enabled: withFilters,
     });
 

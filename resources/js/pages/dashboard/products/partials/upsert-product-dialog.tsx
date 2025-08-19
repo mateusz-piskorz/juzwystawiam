@@ -5,12 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
-import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
+import { schemas } from '@/lib/constants/zod/openapi.json.client';
 import { createProductDTO, CreateProductDTO } from '@/lib/constants/zod/product';
 import { upsertProduct } from '@/lib/data/products';
 import { useLocale } from '@/lib/hooks/use-locale';
-import { Product } from '@/lib/types/product';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
@@ -22,7 +21,7 @@ type Props = {
     setOpen: (val: boolean) => void;
     defaultValues?: Partial<CreateProductDTO>;
     productId?: number;
-    onSuccess?: (product: Product) => void;
+    onSuccess?: () => void;
 };
 
 const initialDefaultValue = {
@@ -46,12 +45,13 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
 
     async function onSubmit(body: CreateProductDTO) {
         try {
-            const product = await upsertProduct({ body, productId });
+            await upsertProduct({ body, productId });
             toast.success(`${locale.Product} ${productId ? locale.common.Updated : locale.common.Created} ${locale.common.Successfully}`);
-            onSuccess?.(product);
+            onSuccess?.();
             setOpen(false);
         } catch (error: unknown) {
             const errorMessage = getErrorMessage(error);
+            console.log(errorMessage);
             console.error(errorMessage);
             toast.error(errorMessage || locale.common['something went wrong']);
         }
@@ -101,13 +101,13 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
                                 form={form}
                                 name="vat_rate"
                                 label="VAT"
-                                selectOptions={Object.values(VAT_RATE).map((val) => ({ label: `${val}%`, value: val }))}
+                                selectOptions={schemas.VatRate.options.map((val) => ({ label: `${val}%`, value: val }))}
                             />
                             <SelectField
                                 form={form}
                                 name="measure_unit"
                                 label={locale.common['Measure Unit']}
-                                selectOptions={Object.values(MEASURE_UNIT).map((val) => ({ label: locale.enum.MEASURE_UNIT[val], value: val }))}
+                                selectOptions={schemas.MeasureUnit.options.map((val) => ({ label: locale.enum.MEASURE_UNIT[val], value: val }))}
                             />
                         </div>
 

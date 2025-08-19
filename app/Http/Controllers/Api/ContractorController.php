@@ -14,6 +14,7 @@ class ContractorController
 
     public function index(Request $request)
     {
+        $limit = $request->validate(['limit' => 'nullable|integer|min:1|max:100'])['limit'] ?? 25;
         $query = $request->user()->contractors();
         $query = $this->applyQueryFilters(
             $request,
@@ -23,7 +24,7 @@ class ContractorController
             filterable: ['type_of_business', 'is_own_company']
         );
 
-        return response()->json($query);
+        return response()->json($query->paginate($limit));
     }
 
     public function store(UpsertContractorRequest $request)

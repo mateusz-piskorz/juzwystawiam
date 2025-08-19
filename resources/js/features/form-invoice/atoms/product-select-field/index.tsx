@@ -30,7 +30,8 @@ export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, i
         queryKey: ['product-list', q],
         queryFn: () =>
             getProducts({
-                limit: '100',
+                // todo: create getAllProducts
+                limit: 100,
                 q,
             }).then((res) => res.data.map((p) => ({ ...p, label: p.name, value: p.id }))),
     });

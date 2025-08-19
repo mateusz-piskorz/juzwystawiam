@@ -9,14 +9,12 @@ trait AppliesQueryFilters
 {
     public function applyQueryFilters(Request $request, mixed $query, string $searchColumn, array $sortable = [], array $filterable = []): mixed
     {
-
         $validated = $request->validate([
             'limit'           => 'nullable|integer|min:1|max:100',
             'order_direction' => 'nullable|in:asc,desc'
         ]);
 
         $orderDirection = $validated['order_direction'] ?? 'desc';
-        $limit = $validated['limit'] ?? 25;
 
         $stringOrArray = ['nullable', function ($attribute, $value, $fail) {
             if (!is_string($value) && !is_array($value)) {
@@ -51,6 +49,6 @@ trait AppliesQueryFilters
             $query->latest();
         }
 
-        return $query->paginate($limit);
+        return $query;
     }
 }
