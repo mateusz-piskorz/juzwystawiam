@@ -6,10 +6,10 @@ import { UpsertContractorDialog } from '@/features/upsert-contractor-dialog';
 import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
-import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { z } from 'zod';
 import { getContractorColumns } from './contractor-columns';
 
 export const TableContractor = () => {
@@ -25,7 +25,7 @@ export const TableContractor = () => {
     const limit = searchParams.get('limit');
     const q = searchParams.get('q');
     const order_column = searchParams.get('order_column');
-    const order_direction = searchParams.get('order_direction') as OrderDirection;
+    const order_direction = searchParams.get('order_direction') as z.infer<typeof schemas.sort_direction>;
     const is_own_company = searchParams.getAll('is_own_company');
     const type_of_business = searchParams.getAll('type_of_business');
 

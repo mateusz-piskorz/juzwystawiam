@@ -3,8 +3,8 @@ import { DataTable } from '@/components/common/data-table';
 import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
-import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
+import { z } from 'zod';
 import { getInvoiceColumns } from './columns-invoice';
 
 type Props = {
@@ -30,11 +30,11 @@ export const TableInvoice = ({
     const limit = searchParams.get('limit');
     const q = searchParams.get('q');
     const order_column = searchParams.get('order_column');
-    const order_direction = searchParams.get('order_direction') as OrderDirection;
+    const order_direction = searchParams.get('order_direction') as z.infer<typeof schemas.sort_direction>;
     const type = searchParams.getAll('type');
     const is_already_paid = searchParams.getAll('is_already_paid');
 
-    const { data, error } = useQuery({
+    const { data } = useQuery({
         queryKey: ['invoice-list', page, limit, q, order_column, order_direction, type, is_already_paid],
         queryFn: () =>
             api['invoices.index']({
@@ -51,7 +51,7 @@ export const TableInvoice = ({
                     : { limit: 20 },
             }),
     });
-    console.log(error);
+
     const columns = getInvoiceColumns({ locale, displayEmailStatusColumn });
 
     return (

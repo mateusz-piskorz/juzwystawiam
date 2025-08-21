@@ -1,6 +1,4 @@
-// todo: check if we are using it
-
-import { QueryValue } from '../types/query-value';
+type QueryValue = string | number | string[] | number[] | undefined | undefined[];
 
 type Args = {
     [key: string]: QueryValue;

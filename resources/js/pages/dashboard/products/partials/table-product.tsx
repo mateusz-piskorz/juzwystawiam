@@ -5,10 +5,10 @@ import { DataTable } from '@/components/common/data-table';
 import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
-import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { z } from 'zod';
 import { getProductColumns } from './product-columns';
 import { UpsertProductDialog } from './upsert-product-dialog';
 
@@ -25,7 +25,7 @@ export const TableProduct = () => {
     const limit = searchParams.get('limit');
     const q = searchParams.get('q');
     const order_column = searchParams.get('order_column');
-    const order_direction = searchParams.get('order_direction') as OrderDirection;
+    const order_direction = searchParams.get('order_direction') as z.infer<typeof schemas.sort_direction>;
     const vat_rate = searchParams.getAll('vat_rate');
     const measure_unit = searchParams.getAll('measure_unit');
 

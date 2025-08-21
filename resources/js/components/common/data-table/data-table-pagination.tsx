@@ -15,7 +15,7 @@ export function DataTablePagination<TData>({ table, totalPages }: DataTablePagin
     const locale = useLocale().locale.common['data-table'];
     const searchParams = useSearchParams();
     const limit = searchParams.get('limit');
-    const page = (searchParams.get('page') as unknown as number) ?? 1;
+    const page = searchParams.get('page') ?? 1;
 
     const handlePageChange = (action: 'prev' | 'next') => {
         searchParams.set({ page: String(Number(page) + (action === 'next' ? 1 : -1)) });

@@ -50,7 +50,6 @@ export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, o
             setOpen(false);
         } catch (error: unknown) {
             const errorMessage = getErrorMessage(error);
-            console.log(errorMessage);
             console.error(errorMessage);
             toast.error(errorMessage || locale.common['something went wrong']);
         }

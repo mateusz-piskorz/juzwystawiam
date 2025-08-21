@@ -13,7 +13,6 @@ declare module 'ziggy-js' {
     ],
     "cashier.webhook": [],
     "sanctum.csrf-cookie": [],
-    "api.": [],
     "api.profile.update-profile": [],
     "api.profile.update-password": [],
     "api.profile.delete-account": [],
@@ -143,7 +142,9 @@ declare module 'ziggy-js' {
             "name": "path",
             "required": true
         }
-    ]
+    ],
+    "scramble.docs.ui": [],
+    "scramble.docs.document": []
 }
 }
 export {};

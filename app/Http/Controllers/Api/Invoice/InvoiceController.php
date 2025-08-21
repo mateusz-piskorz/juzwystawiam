@@ -78,8 +78,8 @@ class InvoiceController
 
         return response()->json([
             /** @var int */
-            'id' => $invoice['id'
-            ]], 201);
+            'id' => $invoice['id']
+        ], 201);
     }
 
     public function destroy(Invoice $invoice)
