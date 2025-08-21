@@ -5,11 +5,10 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Form } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import { COUNTRIES } from '@/lib/constants/countries';
-import { TYPE_OF_BUSINESS } from '@/lib/constants/enums/type-of-business';
+
 import { CreateContractorDTO, createContractorDTO } from '@/lib/constants/zod/contractor';
-import { upsertContractor } from '@/lib/data/contractors';
+import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
-import { Contractor } from '@/lib/types/contractor';
 import { cn } from '@/lib/utils/cn';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,7 +23,7 @@ type Props = {
     setOpen: (val: boolean) => void;
     defaultValues?: Partial<CreateContractorDTO>;
     contractorId?: number;
-    onSuccess?: (contractor: Contractor) => void;
+    onSuccess?: (contractorId: number) => void;
     disableIsOwnCompany?: boolean;
 };
 
@@ -36,7 +35,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
         resolver: zodResolver(createContractorDTO),
         defaultValues,
     });
-    const isSelfEmployed = form.watch('type_of_business') === TYPE_OF_BUSINESS.SELF_EMPLOYED;
+    const isSelfEmployed = form.watch('type_of_business') === 'SELF_EMPLOYED';
 
     useEffect(() => {
         form.reset(defaultValues ?? { is_own_company: false });
@@ -45,15 +44,21 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
 
     async function onSubmit(body: z.infer<typeof createContractorDTO>) {
         try {
-            const contractor = await upsertContractor({ body, contractorId });
+            if (contractorId) {
+                const res = await api['contractors.update'](body, { params: { contractor: contractorId } });
+                onSuccess?.(res.id);
+            } else {
+                const res = await api['contractors.store'](body);
+                onSuccess?.(res.id);
+            }
+
             toast.success(`${locale.Contractor} ${contractorId ? locale.common.Updated : locale.common.Created} ${locale.common.Successfully}!`);
-            onSuccess?.(contractor);
+            setOpen(false);
         } catch (error: unknown) {
             const errorMessage = getErrorMessage(error);
             console.error(errorMessage);
             toast.error(errorMessage || locale.common['something went wrong']);
         }
-        setOpen(false);
     }
 
     return (
@@ -80,7 +85,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                             form={form}
                             name="type_of_business"
                             label={locale['Type of business']}
-                            selectOptions={Object.values(TYPE_OF_BUSINESS).map((val) => ({ label: locale.enum.TYPE_OF_BUSINESS[val], value: val }))}
+                            selectOptions={schemas.TypeOfBusiness.options.map((val) => ({ label: locale.enum.TYPE_OF_BUSINESS[val], value: val }))}
                         />
 
                         <ContractorTripleBox form={form} disableIsOwnCompany={disableIsOwnCompany} />

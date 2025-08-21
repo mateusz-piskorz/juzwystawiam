@@ -1,11 +1,10 @@
-import { Button } from '@/components/ui/button';
-
 import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { InputField } from '@/components/common/form-fields/input-field';
+import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
+import { api } from '@/lib/constants/zod/openapi.json.client';
 import { DeleteAccountDTO, deleteAccountDTO } from '@/lib/constants/zod/profile';
-import { deleteAccount } from '@/lib/data/profile';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,7 +22,7 @@ export function SectionDeleteUser() {
 
     const submitHandler = async (data: DeleteAccountDTO) => {
         try {
-            await deleteAccount(data);
+            await api['profile.delete-account'](undefined, { queries: data });
             toast.success(locale.common.Saved);
             router.visit('/');
         } catch (error) {

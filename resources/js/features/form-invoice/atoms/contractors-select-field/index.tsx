@@ -4,20 +4,19 @@ import { ReactCreatableSelect } from '@/components/common/react-select';
 
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { UpsertContractorDialog } from '@/features/upsert-contractor-dialog';
-import { CONTRACTOR_ROLE } from '@/lib/constants/enums/contractor-role';
 import { InvoiceSchema } from '@/lib/constants/zod/invoice';
-import { getContractors } from '@/lib/data/contractors';
-import { Contractor } from '@/lib/types/contractor';
+import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useQuery } from '@tanstack/react-query';
 import { debounce } from 'lodash';
 import { useCallback, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
+import { z } from 'zod';
 import { CustomOption } from './custom-option';
 import { Option } from './types';
 
 type Props<T extends InvoiceSchema> = {
     form: UseFormReturn<T>;
-    role: CONTRACTOR_ROLE;
+    role: z.infer<typeof schemas.ContractorRole>;
     label: string;
     idx: number;
 };
@@ -30,17 +29,15 @@ export const ContractorsSelectField = <T extends InvoiceSchema>({ form: formProp
     const selectedContractorId = watch(name);
     const [q, setQ] = useState('');
 
-    const [defaultValues, setDefaultValues] = useState<Partial<Contractor> | undefined>(undefined);
+    const [defaultValues, setDefaultValues] = useState<Partial<z.infer<typeof schemas.ContractorResource>> | undefined>(undefined);
     const [open, setOpen] = useState(false);
 
     const { data, isLoading, refetch } = useQuery({
         queryKey: ['contractor-list', role, q],
         queryFn: () =>
-            getContractors({
-                limit: '100',
-                q,
-                is_own_company: role === CONTRACTOR_ROLE.SELLER ? 'true' : 'false',
-            }).then((res) => res.data.map((c) => ({ ...c, label: c.company_name || `${c.first_name} ${c.surname}`, value: c.id }))),
+            api['contractors.index']({ queries: { limit: 100, q, is_own_company: role === 'SELLER' ? 'true' : 'false' } }).then((res) =>
+                res.data.map((c) => ({ ...c, label: c.company_name, value: c.id })),
+            ),
     });
 
     const debouncedSetQ = useCallback(
@@ -56,7 +53,7 @@ export const ContractorsSelectField = <T extends InvoiceSchema>({ form: formProp
                 defaultValues={defaultValues}
                 open={open}
                 setOpen={setOpen}
-                onSuccess={({ id }) => {
+                onSuccess={(id) => {
                     setValue(name, id);
                     refetch();
                 }}
@@ -108,7 +105,7 @@ export const ContractorsSelectField = <T extends InvoiceSchema>({ form: formProp
                                     value={data?.find((contractor) => contractor.id === selectedContractorId)}
                                     filterOption={() => true}
                                     onCreateOption={(value) => {
-                                        setDefaultValues({ company_name: value, is_own_company: role === CONTRACTOR_ROLE.SELLER });
+                                        setDefaultValues({ company_name: value, is_own_company: role === 'SELLER' });
                                         setOpen(true);
                                     }}
                                 />

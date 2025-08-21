@@ -147,7 +147,6 @@
         "Invoice Products": "Produkty na fakturze",
         "Invoice Emails": "E-maile do faktury",
         "Name": "Nazwa",
-
         "Date": "Data",
         "Recipient": "Odbiorca",
         "Status": "Status",
@@ -155,6 +154,8 @@
         "Download": "Pobierz",
         "Edit invoice": "Edytuj fakturę",
         "Delete invoice": "Usuń fakturę",
+        "Invoice deleted successfully": "Faktura została pomyślnie usunięta",
+        "Email was sent successfully": "E-mail został wysłany pomyślnie",
         "Actions": "Akcje",
         "Send email": "Wyślij e-mail",
         "Create invoice": "Utwórz fakturę",

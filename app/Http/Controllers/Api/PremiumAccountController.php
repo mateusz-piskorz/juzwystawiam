@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\StripePaymentIntentResource;
 use Illuminate\Http\Request;
 use Stripe\PaymentIntent;
 use Stripe\Stripe;
@@ -15,7 +16,7 @@ class PremiumAccountController
 
         $stripeId = $request->user()->stripe_id;
         if (!$stripeId) {
-            return response()->json([]);
+            return StripePaymentIntentResource::collection([]);
         }
 
         $allIntents = [];
@@ -32,7 +33,7 @@ class PremiumAccountController
             }
         } while ($response->has_more);
 
-        return response()->json($allIntents);
+        return StripePaymentIntentResource::collection($allIntents);
     }
 
 }

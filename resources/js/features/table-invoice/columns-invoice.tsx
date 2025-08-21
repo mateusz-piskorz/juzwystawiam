@@ -2,11 +2,12 @@
 
 import { DataTableColumnHeader } from '@/components/common/data-table/data-table-column-header';
 import { DataTableRowActions } from '@/components/common/data-table/data-table-row-actions';
+import { schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
-import { Invoice } from '@/lib/types/invoice';
 import { router } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
+import { z } from 'zod';
 
 type Props = {
     locale: ReturnType<typeof useLocale>['locale']['dashboard/invoices'] & {
@@ -16,7 +17,7 @@ type Props = {
     displayEmailStatusColumn?: boolean;
 };
 
-export function getInvoiceColumns({ locale, displayEmailStatusColumn }: Props): ColumnDef<Invoice>[] {
+export function getInvoiceColumns({ locale, displayEmailStatusColumn }: Props): ColumnDef<z.infer<typeof schemas.InvoiceResourceCollection>>[] {
     return [
         {
             accessorKey: 'number',

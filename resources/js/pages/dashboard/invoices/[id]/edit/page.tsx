@@ -5,7 +5,7 @@ import type { BreadcrumbItem } from '@/lib/types';
 import { Select } from '@/components/common/select';
 import { FormInvoice } from '@/features/form-invoice';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
-import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
+import { schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Invoice } from '@/lib/types/invoice';
 import { Head, usePage } from '@inertiajs/react';
@@ -50,8 +50,8 @@ const EditInvoicePage = () => {
                 <Select
                     defaultValue={invoiceType}
                     label={locale['Invoice type']}
-                    onValueChange={(val) => setInvoiceType(val as INVOICE_TYPE)}
-                    options={Object.values(INVOICE_TYPE).map((val) => ({ label: locale.enum.INVOICE_TYPE[val], value: val }))}
+                    onValueChange={(val) => setInvoiceType(val)}
+                    options={schemas.InvoiceType.options.map((val) => ({ label: locale.enum.INVOICE_TYPE[val], value: val }))}
                 />
             </div>
             <FormInvoice

@@ -1,9 +1,8 @@
 import { SelectField } from '@/components/common/form-fields/select-field';
 import { SwitchField } from '@/components/common/form-fields/switch-field';
 import { Separator } from '@/components/ui/separator';
-import { CURRENCIES } from '@/lib/constants/currencies';
-import { PAYMENT_METHOD } from '@/lib/constants/enums/payment-method';
 import { InvoiceSchema } from '@/lib/constants/zod/invoice';
+import { schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { cn } from '@/lib/utils/cn';
 import { UseFormReturn } from 'react-hook-form';
@@ -23,7 +22,7 @@ export const PaymentTripleBox = ({ form, className }: Props) => {
                     form={form}
                     name="payment_method"
                     label={locale['Payment method']}
-                    selectOptions={Object.values(PAYMENT_METHOD).map((val) => ({ label: val, value: val }))}
+                    selectOptions={schemas.PaymentMethod.options.map((val) => ({ label: val, value: val }))}
                     className="flex-2/3 rounded-none rounded-ss border-none"
                 />
 
@@ -33,7 +32,7 @@ export const PaymentTripleBox = ({ form, className }: Props) => {
                     form={form}
                     name="currency"
                     label={locale.Currency}
-                    selectOptions={CURRENCIES.map((val) => ({ label: val, value: val }))}
+                    selectOptions={schemas.Currency.options.map((val) => ({ label: val, value: val }))}
                     className="flex-1/3 rounded-none rounded-se border-none"
                 />
             </div>

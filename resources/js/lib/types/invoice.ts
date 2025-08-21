@@ -1,20 +1,15 @@
-import { CONTRACTOR_ROLE } from '../constants/enums/contractor-role';
-import { CURRENCY } from '../constants/enums/currency';
-import { EMAIL_STATUS } from '../constants/enums/email-status';
-import { INVOICE_TYPE } from '../constants/enums/invoice-type';
-import { MEASURE_UNIT } from '../constants/enums/measure-unit';
-import { PAYMENT_METHOD } from '../constants/enums/payment-method';
-import { VAT_RATE } from '../constants/enums/vat-rate';
+import { z } from 'zod';
+import { schemas } from '../constants/zod/openapi.json.client';
 import { Contractor } from './contractor';
 
 export type InvoiceContractor = Contractor & {
-    role: CONTRACTOR_ROLE;
+    role: z.infer<typeof schemas.ContractorRole>;
 };
 
 export type InvoiceEmail = {
     id: number;
     invoice_id: number;
-    status: EMAIL_STATUS;
+    status: z.infer<typeof schemas.EmailStatus>;
     recipient: string;
     created_at: string;
     updated_at: string;
@@ -25,13 +20,13 @@ export type InvoiceProduct = {
     discount: number | null;
     id: number;
     invoice_id: number;
-    measure_unit: MEASURE_UNIT;
+    measure_unit: z.infer<typeof schemas.MeasureUnit>;
     name: string;
     price: number;
     product_id: number | null;
     quantity: number;
     updated_at: string;
-    vat_rate: VAT_RATE;
+    vat_rate: z.infer<typeof schemas.VatRate>;
     total: number;
     total_vat_amount: number;
     total_discount_amount: number;
@@ -39,17 +34,17 @@ export type InvoiceProduct = {
 };
 
 export type Invoice = {
-    type: INVOICE_TYPE;
+    type: z.infer<typeof schemas.InvoiceType>;
     id: number;
     created_at: string;
-    currency: CURRENCY;
+    currency: z.infer<typeof schemas.Currency>;
     due_date: string;
     invoice_contractors: InvoiceContractor[];
     invoice_products: InvoiceProduct[];
     is_already_paid: boolean;
     issue_date: string;
     number: string;
-    payment_method: PAYMENT_METHOD;
+    payment_method: z.infer<typeof schemas.PaymentMethod>;
     sale_date: string;
     secret_note: string | null;
     updated_at: string;

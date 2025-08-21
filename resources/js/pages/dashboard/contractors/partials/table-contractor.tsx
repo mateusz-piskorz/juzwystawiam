@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import ConfirmDialog from '@/components/common/confirm-dialog';
 import { DataTable } from '@/components/common/data-table';
 import { UpsertContractorDialog } from '@/features/upsert-contractor-dialog';
-import { TYPE_OF_BUSINESS } from '@/lib/constants/enums/type-of-business';
-import { deleteContractor, getContractors } from '@/lib/data/contractors';
+import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
-import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { z } from 'zod';
 import { getContractorColumns } from './contractor-columns';
 
 export const TableContractor = () => {
@@ -24,18 +25,30 @@ export const TableContractor = () => {
     const limit = searchParams.get('limit');
     const q = searchParams.get('q');
     const order_column = searchParams.get('order_column');
-    const order_direction = searchParams.get('order_direction') as OrderDirection;
+    const order_direction = searchParams.get('order_direction') as z.infer<typeof schemas.sort_direction>;
     const is_own_company = searchParams.getAll('is_own_company');
     const type_of_business = searchParams.getAll('type_of_business');
 
     const { data, refetch } = useQuery({
         queryKey: ['contractor-list', page, limit, q, order_column, order_direction, is_own_company, type_of_business],
-        queryFn: () => getContractors({ page, limit, q, order_column, order_direction, is_own_company, type_of_business }),
+        queryFn: () =>
+            api['contractors.index']({
+                queries: {
+                    page: page ? Number(page) : undefined,
+                    limit: limit ? Number(limit) : undefined,
+                    q,
+                    // todo: any type
+                    sort: order_column as any,
+                    sort_direction: order_direction,
+                    is_own_company,
+                    type_of_business,
+                },
+            }),
     });
 
     const handleDeleteContractor = async (contractorId: number) => {
         try {
-            await deleteContractor({ contractorId });
+            await api['contractors.destroy'](undefined, { params: { contractor: contractorId } });
             toast.success(locale['Contractor deleted successfully']);
             refetch();
             setOpenConfirm(false);
@@ -82,7 +95,7 @@ export const TableContractor = () => {
             />
 
             <DataTable
-                totalPages={String(data?.last_page)}
+                totalPages={data?.meta.last_page}
                 data={data?.data ?? []}
                 columns={columns}
                 addNewRecord={{
@@ -104,7 +117,7 @@ export const TableContractor = () => {
                     {
                         filterKey: 'type_of_business',
                         title: locale['Type of business'],
-                        options: Object.values(TYPE_OF_BUSINESS).map((val) => ({ label: locale.enum.TYPE_OF_BUSINESS[val], value: val })),
+                        options: schemas.TypeOfBusiness.options.map((val) => ({ label: locale.enum.TYPE_OF_BUSINESS[val], value: val })),
                     },
                 ]}
             />

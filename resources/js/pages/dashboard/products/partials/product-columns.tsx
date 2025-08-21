@@ -2,9 +2,10 @@
 
 import { DataTableColumnHeader } from '@/components/common/data-table/data-table-column-header';
 import { DataTableRowActions } from '@/components/common/data-table/data-table-row-actions';
+import { schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
-import { Product } from '@/lib/types/product';
 import { ColumnDef } from '@tanstack/react-table';
+import { z } from 'zod';
 
 export const getProductColumns = ({
     handleEditProduct,
@@ -17,7 +18,7 @@ export const getProductColumns = ({
         common: ReturnType<typeof useLocale>['locale']['common'];
         enum: ReturnType<typeof useLocale>['locale']['enum'];
     };
-}): ColumnDef<Product>[] => [
+}): ColumnDef<z.infer<typeof schemas.ProductResource>>[] => [
     {
         accessorKey: 'name',
         meta: { title: locale['Product name'] },

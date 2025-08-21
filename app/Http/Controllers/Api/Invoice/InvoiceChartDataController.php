@@ -36,6 +36,7 @@ class InvoiceChartDataController
             ];
         }
 
+        /** @var array{prev_year: array{paid: int, unpaid: int}, this_year: array{paid: int, unpaid: int}} */
         return $result;
     }
 
@@ -100,7 +101,9 @@ class InvoiceChartDataController
         ];
 
         return [
-            'months'  => $months->values()->toArray(),
+            /** @var \Illuminate\Support\Collection<string|int, array{month: string, paid: int, unpaid: int, total: int}> */
+            'months'  => $months,
+            /** @var array{paid: int, unpaid: int, total: int} */
             'overall' => $overall
         ];
     }

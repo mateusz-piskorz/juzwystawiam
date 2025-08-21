@@ -2,9 +2,8 @@
 
 import { ReactSelect } from '@/components/common/react-select';
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
-import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { InvoiceSchema } from '@/lib/constants/zod/invoice';
-import { getProducts } from '@/lib/data/products';
+import { api } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Product } from '@/lib/types/product';
 import { useQuery } from '@tanstack/react-query';
@@ -29,10 +28,7 @@ export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, i
     const { data, isLoading } = useQuery({
         queryKey: ['product-list', q],
         queryFn: () =>
-            getProducts({
-                limit: '100',
-                q,
-            }).then((res) => res.data.map((p) => ({ ...p, label: p.name, value: p.id }))),
+            api['products.index']({ queries: { limit: 100, q } }).then((res) => res.data.map((p) => ({ ...p, label: p.name, value: p.id }))),
     });
 
     const selectedProductId = form.watch(`invoice_products.${idx}.product_id`);
@@ -42,7 +38,7 @@ export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, i
         form.setValue(`invoice_products.${idx}.price`, p.price);
         form.setValue(`invoice_products.${idx}.quantity`, 1);
         form.setValue(`invoice_products.${idx}.measure_unit`, p.measure_unit);
-        if (invoiceType === INVOICE_TYPE.VAT) {
+        if (invoiceType === 'VAT') {
             form.setValue(`invoice_products.${idx}.vat_rate`, p.vat_rate);
         }
     };

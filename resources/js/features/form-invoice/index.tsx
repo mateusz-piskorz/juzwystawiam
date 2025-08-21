@@ -2,9 +2,8 @@
 
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { InvoiceSchema, invoiceSchema } from '@/lib/constants/zod/invoice';
-import { upsertInvoice } from '@/lib/data/invoices';
+import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,6 +12,7 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import { z } from 'zod';
 import { ContractorsSection } from './sections/contractors-section';
 import { HeaderSection } from './sections/header-section';
 import { ProductsSection } from './sections/products-section';
@@ -21,7 +21,7 @@ import { TopSection } from './sections/top-section';
 type Props = {
     defaultValues?: Partial<InvoiceSchema>;
     invoiceId?: number;
-    type: INVOICE_TYPE;
+    type: z.infer<typeof schemas.InvoiceType>;
 };
 
 export const FormInvoice = ({ defaultValues, invoiceId, type }: Props) => {
@@ -33,8 +33,21 @@ export const FormInvoice = ({ defaultValues, invoiceId, type }: Props) => {
     });
 
     async function onSubmit(body: InvoiceSchema) {
+        const data = {
+            ...body,
+            issue_date: String(body.issue_date.toISOString()),
+            sale_date: String(body.sale_date.toISOString()),
+            due_date: String(body.due_date.toISOString()),
+        };
+
         try {
-            const response = await upsertInvoice({ body, invoiceId });
+            let response;
+            if (invoiceId) {
+                response = await api['invoices.update'](data, { params: { invoice: invoiceId } });
+            } else {
+                response = await api['invoices.store'](data);
+            }
+
             toast.success(`${locale.base.Invoice} ${invoiceId ? locale['common'].Updated : locale['common'].Created} ${locale.common.Successfully}!`);
             router.visit(`/dashboard/invoices/${response.id}`);
         } catch (error: unknown) {

@@ -2,7 +2,8 @@ import { InputField } from '@/components/common/form-fields/input-field';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
-import { sendEmailIssuingInvoice } from '@/lib/data/invoices';
+import { api } from '@/lib/constants/zod/openapi.json.client';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -22,6 +23,7 @@ type Props = {
 };
 
 export const SendEmailDialog = ({ invoiceId, defaultValues, open, setOpen }: Props) => {
+    const locale = useLocale().locale['dashboard/invoices'];
     const form = useForm<FormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues,
@@ -29,8 +31,8 @@ export const SendEmailDialog = ({ invoiceId, defaultValues, open, setOpen }: Pro
 
     const onSubmit = async ({ recipient }: FormSchema) => {
         try {
-            const response = await sendEmailIssuingInvoice({ invoiceId, body: { recipient } });
-            toast.success(response.message);
+            await api['invoices.send-email']({ recipient }, { params: { invoice: invoiceId } });
+            toast.success(locale['Email was sent successfully']);
         } catch (error: unknown) {
             const errorMessage = getErrorMessage(error);
             toast.error(errorMessage || 'something went wrong');

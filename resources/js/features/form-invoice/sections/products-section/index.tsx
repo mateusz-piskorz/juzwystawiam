@@ -1,8 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
-import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
-import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
 import { InvoiceSchema } from '@/lib/constants/zod/invoice';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useIsMobile } from '@/lib/hooks/use-mobile';
@@ -71,8 +68,8 @@ export const ProductsSection = <T extends InvoiceSchema>({ form: formProps }: Pr
                                     name: '',
                                     price: 0,
                                     quantity: 1,
-                                    measure_unit: MEASURE_UNIT.PCS,
-                                    ...(formType === INVOICE_TYPE.VAT && { vat_rate: VAT_RATE.CASE23 }),
+                                    measure_unit: 'PCS',
+                                    ...(formType === 'VAT' && { vat_rate: '23' }),
                                 },
                                 { shouldFocus: false },
                             )

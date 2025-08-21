@@ -1,15 +1,14 @@
 import { z } from 'zod';
-import { INVOICE_TYPE } from '../../../enums/invoice-type';
-import { VAT_RATE } from '../../../enums/vat-rate';
+import { schemas } from '../../openapi.json.client';
 import { invoiceProductBase, invoiceSchemaBase } from '../base';
 
 const invoiceProductVat = z.object({
     ...invoiceProductBase.shape,
-    vat_rate: z.nativeEnum(VAT_RATE),
+    vat_rate: schemas.VatRate,
 });
 
 export const invoiceSchemaVat = z.object({
     ...invoiceSchemaBase.shape,
-    type: z.literal(INVOICE_TYPE.VAT),
+    type: z.literal('VAT'),
     invoice_products: z.array(invoiceProductVat).min(1),
 });

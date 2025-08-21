@@ -1,7 +1,6 @@
 import { InputField } from '@/components/common/form-fields/input-field';
 import { SwitchField } from '@/components/common/form-fields/switch-field';
 import { Separator } from '@/components/ui/separator';
-import { TYPE_OF_BUSINESS } from '@/lib/constants/enums/type-of-business';
 import { CreateContractorDTO } from '@/lib/constants/zod/contractor';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { UseFormReturn } from 'react-hook-form';
@@ -13,7 +12,7 @@ type Props = {
 
 export const ContractorTripleBox = ({ form, disableIsOwnCompany }: Props) => {
     const locale = useLocale().locale['dashboard/contractors'];
-    const isPrivatePerson = form.watch('type_of_business') === TYPE_OF_BUSINESS.PRIVATE_PERSON;
+    const isPrivatePerson = form.watch('type_of_business') === 'PRIVATE_PERSON';
 
     return (
         <div className="w-full min-w-[200px] rounded border">

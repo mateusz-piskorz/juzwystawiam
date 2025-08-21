@@ -1,14 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import ConfirmDialog from '@/components/common/confirm-dialog';
 import { DataTable } from '@/components/common/data-table';
-import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
-import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
-import { deleteProduct, getProducts } from '@/lib/data/products';
+import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
-import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { z } from 'zod';
 import { getProductColumns } from './product-columns';
 import { UpsertProductDialog } from './upsert-product-dialog';
 
@@ -25,18 +25,30 @@ export const TableProduct = () => {
     const limit = searchParams.get('limit');
     const q = searchParams.get('q');
     const order_column = searchParams.get('order_column');
-    const order_direction = searchParams.get('order_direction') as OrderDirection;
+    const order_direction = searchParams.get('order_direction') as z.infer<typeof schemas.sort_direction>;
     const vat_rate = searchParams.getAll('vat_rate');
     const measure_unit = searchParams.getAll('measure_unit');
 
     const { data, refetch } = useQuery({
         queryKey: ['product-list', page, limit, q, order_column, order_direction, vat_rate, measure_unit],
-        queryFn: () => getProducts({ page, limit, q, order_column, order_direction, vat_rate, measure_unit }),
+        queryFn: () =>
+            api['products.index']({
+                queries: {
+                    limit: limit ? Number(limit) : undefined,
+                    q,
+                    // todo: any type
+                    sort: order_column as any,
+                    sort_direction: order_direction,
+                    vat_rate,
+                    measure_unit,
+                    page: page ? Number(page) : undefined,
+                },
+            }),
     });
 
     const handleDeleteProduct = async (productId: number) => {
         try {
-            await deleteProduct({ productId });
+            await api['products.destroy'](undefined, { params: { product: productId } });
             toast.success(locale['Product deleted successfully']);
             refetch();
             setOpenConfirm(false);
@@ -83,7 +95,7 @@ export const TableProduct = () => {
             />
 
             <DataTable
-                totalPages={String(data?.last_page)}
+                totalPages={data?.meta.last_page}
                 data={data?.data ?? []}
                 columns={columns}
                 addNewRecord={{
@@ -97,12 +109,12 @@ export const TableProduct = () => {
                     {
                         filterKey: 'vat_rate',
                         title: locale.common['Vat rate'],
-                        options: Object.values(VAT_RATE).map((e) => ({ label: e, value: e })),
+                        options: schemas.VatRate.options.map((e) => ({ label: e, value: e })),
                     },
                     {
                         filterKey: 'measure_unit',
                         title: locale.common['Measure Unit'],
-                        options: Object.values(MEASURE_UNIT).map((e) => ({ label: locale.enum.MEASURE_UNIT[e], value: e })),
+                        options: schemas.MeasureUnit.options.map((e) => ({ label: locale.enum.MEASURE_UNIT[e], value: e })),
                     },
                 ]}
             />

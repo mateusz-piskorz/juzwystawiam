@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api\Invoice;
 
+use App\Http\Requests\IndexInvoiceRequest;
 use App\Http\Requests\UpsertInvoiceRequest;
+use App\Http\Resources\InvoiceResourceCollection;
 use App\Models\Contractor;
 use App\Models\Invoice;
 use App\Traits\AppliesQueryFilters;
 use App\Traits\CalculatesProductTotals;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
@@ -16,18 +17,14 @@ class InvoiceController
     use AppliesQueryFilters;
     use CalculatesProductTotals;
 
-    public function index(Request $request)
+    public function index(IndexInvoiceRequest $request)
     {
-        $query = $request->user()->invoices()->with(['invoice_products', 'invoice_contractors', 'latest_invoice_email']);
-        $query = $this->applyQueryFilters(
-            $request,
-            $query,
-            'number',
-            sortable: ['number', 'type', 'sale_date', 'total', 'is_already_paid'],
-            filterable: ['type', 'is_already_paid']
-        );
+        $query = $request->user()->invoices()->with(['latest_invoice_email']);
+        $validated = $request->validated();
+        $limit = $validated['limit'] ?? 25;
+        $query = $this->applyQueryFilters($query, $validated, 'number', ['type', 'is_already_paid']);
 
-        return response()->json($query);
+        return InvoiceResourceCollection::collection($query->paginate($limit));
     }
 
     public function store(UpsertInvoiceRequest $request)
@@ -51,7 +48,10 @@ class InvoiceController
             }
         });
 
-        return response()->json($invoice, 201);
+        return response()->json([
+            /** @var int */
+            'id' => $invoice['id']
+        ], 201);
     }
 
     public function update(UpsertInvoiceRequest $request, Invoice $invoice)
@@ -76,7 +76,10 @@ class InvoiceController
             }
         });
 
-        return response()->json($invoice, 201);
+        return response()->json([
+            /** @var int */
+            'id' => $invoice['id']
+        ], 201);
     }
 
     public function destroy(Invoice $invoice)

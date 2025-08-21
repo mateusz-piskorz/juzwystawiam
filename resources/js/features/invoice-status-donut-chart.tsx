@@ -3,7 +3,7 @@ import { InvoiceStatusChartLegend } from '@/components/common/invoice-status-cha
 import { NoInvoicesMessage } from '@/components/common/no-invoices-message';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { getStatusYearlyDistribution } from '@/lib/data/invoices';
+import { api } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useQuery } from '@tanstack/react-query';
 import { TrendingDown, TrendingUp } from 'lucide-react';
@@ -26,7 +26,7 @@ export function InvoiceStatusDonutChart() {
 
     const { data } = useQuery({
         queryKey: ['invoice-status-donut-chart-data'],
-        queryFn: getStatusYearlyDistribution,
+        queryFn: api['invoices.status-distribution-by-year'],
     });
 
     const chartData = [

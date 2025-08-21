@@ -3,7 +3,6 @@ import type { BreadcrumbItem } from '@/lib/types';
 import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { Separator } from '@/components/ui/separator';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
-import { CONTRACTOR_ROLE } from '@/lib/constants/enums/contractor-role';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { usePage } from '@/lib/hooks/use-page';
 import { Invoice } from '@/lib/types/invoice';
@@ -36,8 +35,8 @@ const InvoicePage = () => {
         },
     ];
 
-    const seller = invoice.invoice_contractors.find((e) => e.role === CONTRACTOR_ROLE.SELLER);
-    const buyer = invoice.invoice_contractors.find((e) => e.role === CONTRACTOR_ROLE.BUYER);
+    const seller = invoice.invoice_contractors.find((e) => e.role === 'SELLER');
+    const buyer = invoice.invoice_contractors.find((e) => e.role === 'BUYER');
 
     return (
         <>

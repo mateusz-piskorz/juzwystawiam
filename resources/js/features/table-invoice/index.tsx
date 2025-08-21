@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DataTable } from '@/components/common/data-table';
-import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
-import { getInvoices } from '@/lib/data/invoices';
+import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
-import { OrderDirection } from '@/lib/types/order-direction';
 import { useQuery } from '@tanstack/react-query';
+import { z } from 'zod';
 import { getInvoiceColumns } from './columns-invoice';
 
 type Props = {
@@ -30,13 +30,26 @@ export const TableInvoice = ({
     const limit = searchParams.get('limit');
     const q = searchParams.get('q');
     const order_column = searchParams.get('order_column');
-    const order_direction = searchParams.get('order_direction') as OrderDirection;
+    const order_direction = searchParams.get('order_direction') as z.infer<typeof schemas.sort_direction>;
     const type = searchParams.getAll('type');
     const is_already_paid = searchParams.getAll('is_already_paid');
 
     const { data } = useQuery({
         queryKey: ['invoice-list', page, limit, q, order_column, order_direction, type, is_already_paid],
-        queryFn: () => getInvoices(withFilters ? { page, limit, q, order_column, order_direction, type, is_already_paid } : { limit: '20' }),
+        queryFn: () =>
+            api['invoices.index']({
+                queries: withFilters
+                    ? {
+                          page: page ? Number(page) : undefined,
+                          limit: limit ? Number(limit) : undefined,
+                          q,
+                          sort: order_column as any,
+                          sort_direction: order_direction,
+                          type,
+                          is_already_paid,
+                      }
+                    : { limit: 20 },
+            }),
     });
 
     const columns = getInvoiceColumns({ locale, displayEmailStatusColumn });
@@ -45,7 +58,7 @@ export const TableInvoice = ({
         <DataTable
             displaySearchBar={displaySearchBar}
             displayDataTableToolbar={displayDataTableToolbar}
-            totalPages={displayPagination ? String(data?.last_page) : undefined}
+            totalPages={displayPagination ? data?.meta.last_page : undefined}
             data={data?.data ?? []}
             columns={columns}
             addNewRecord={{
@@ -66,7 +79,7 @@ export const TableInvoice = ({
                           {
                               filterKey: 'type',
                               title: locale.Type,
-                              options: Object.values(INVOICE_TYPE).map((e) => ({ label: locale.enum.INVOICE_TYPE[e], value: e })),
+                              options: schemas.InvoiceType.options.map((e) => ({ label: locale.enum.INVOICE_TYPE[e], value: e })),
                           },
                       ]
                     : []

@@ -3,17 +3,16 @@ import type { BreadcrumbItem } from '@/lib/types';
 import { Select } from '@/components/common/select';
 import { FormInvoice } from '@/features/form-invoice';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
-import { CONTRACTOR_ROLE } from '@/lib/constants/enums/contractor-role';
-import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
-import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
+import { schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
+import { z } from 'zod';
 
 const CreateInvoicePage = () => {
     const l = useLocale().locale;
     const locale = { ...l['dashboard/invoices'], common: l.common, enum: l.enum };
-    const [invoiceType, setInvoiceType] = useState(INVOICE_TYPE.VAT);
+    const [invoiceType, setInvoiceType] = useState<z.infer<typeof schemas.InvoiceType>>('VAT');
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -41,7 +40,7 @@ const CreateInvoicePage = () => {
                     defaultValue={invoiceType}
                     label={locale['Invoice type']}
                     onValueChange={(val) => setInvoiceType(val)}
-                    options={Object.values(INVOICE_TYPE).map((val) => ({ label: locale.enum.INVOICE_TYPE[val], value: val }))}
+                    options={schemas.InvoiceType.options.map((val) => ({ label: locale.enum.INVOICE_TYPE[val], value: val }))}
                 />
             </div>
 
@@ -51,10 +50,10 @@ const CreateInvoicePage = () => {
                     type: invoiceType,
                     is_already_paid: true,
                     number: '2/07/2025',
-                    invoice_products: [{ name: '', measure_unit: MEASURE_UNIT.PCS, quantity: 1, price: 0 }],
+                    invoice_products: [{ name: '', measure_unit: 'PCS', quantity: 1, price: 0 }],
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
-                    invoice_contractors: [{ role: CONTRACTOR_ROLE.SELLER }, { role: CONTRACTOR_ROLE.BUYER }],
+                    invoice_contractors: [{ role: 'SELLER' }, { role: 'BUYER' }],
                 }}
             />
         </AppLayout>

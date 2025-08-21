@@ -1,13 +1,13 @@
-import { MEASURE_UNIT } from '../constants/enums/measure-unit';
-import { VAT_RATE } from '../constants/enums/vat-rate';
+import { z } from 'zod';
+import { schemas } from '../constants/zod/openapi.json.client';
 
 export type Product = {
     id: number;
     user_id: number;
     name: string;
     price: number;
-    measure_unit: MEASURE_UNIT;
-    vat_rate: VAT_RATE;
+    measure_unit: z.infer<typeof schemas.MeasureUnit>;
+    vat_rate: z.infer<typeof schemas.VatRate>;
     description?: string | undefined;
     updated_at: string; // Date
     created_at: string; // Date

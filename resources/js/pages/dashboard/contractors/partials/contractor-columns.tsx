@@ -1,8 +1,9 @@
 import { DataTableColumnHeader } from '@/components/common/data-table/data-table-column-header';
 import { DataTableRowActions } from '@/components/common/data-table/data-table-row-actions';
+import { schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
-import { Contractor } from '@/lib/types/contractor';
 import { ColumnDef } from '@tanstack/react-table';
+import { z } from 'zod';
 
 export const getContractorColumns = ({
     handleEditContractor,
@@ -15,7 +16,7 @@ export const getContractorColumns = ({
         common: ReturnType<typeof useLocale>['locale']['common'];
         enum: ReturnType<typeof useLocale>['locale']['enum'];
     };
-}): ColumnDef<Contractor>[] => [
+}): ColumnDef<z.infer<typeof schemas.ContractorResource>>[] => [
     {
         accessorKey: 'company_name',
         meta: { title: locale['Company name'] },
