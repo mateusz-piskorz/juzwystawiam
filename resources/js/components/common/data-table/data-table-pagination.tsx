@@ -8,14 +8,14 @@ import { useSearchParams } from '@/lib/hooks/use-search-params';
 
 interface DataTablePaginationProps<TData> {
     table: Table<TData>;
-    totalPages: string;
+    totalPages: number;
 }
 
 export function DataTablePagination<TData>({ table, totalPages }: DataTablePaginationProps<TData>) {
     const locale = useLocale().locale.common['data-table'];
     const searchParams = useSearchParams();
     const limit = searchParams.get('limit');
-    const page = searchParams.get('page') ?? '1';
+    const page = (searchParams.get('page') as unknown as number) ?? 1;
 
     const handlePageChange = (action: 'prev' | 'next') => {
         searchParams.set({ page: String(Number(page) + (action === 'next' ? 1 : -1)) });
@@ -54,12 +54,12 @@ export function DataTablePagination<TData>({ table, totalPages }: DataTablePagin
                             size="icon"
                             className="hidden size-8 md:flex"
                             onClick={() => searchParams.set({ page: '1' })}
-                            disabled={page === '1'}
+                            disabled={page === 1}
                         >
                             <span className="sr-only">Go to first page</span>
                             <ChevronsLeft />
                         </Button>
-                        <Button variant="outline" size="icon" className="size-8" onClick={() => handlePageChange('prev')} disabled={page === '1'}>
+                        <Button variant="outline" size="icon" className="size-8" onClick={() => handlePageChange('prev')} disabled={page === 1}>
                             <span className="sr-only">Go to previous page</span>
                             <ChevronLeft />
                         </Button>
@@ -80,7 +80,7 @@ export function DataTablePagination<TData>({ table, totalPages }: DataTablePagin
                             variant="outline"
                             size="icon"
                             className="hidden size-8 md:flex"
-                            onClick={() => searchParams.set({ page: totalPages })}
+                            onClick={() => searchParams.set({ page: String(totalPages) })}
                             disabled={page === totalPages}
                         >
                             <span className="sr-only">Go to last page</span>

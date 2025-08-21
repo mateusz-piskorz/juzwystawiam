@@ -24,7 +24,6 @@ class InvoiceContractor extends Model
         'phone',
         'first_name',
         'surname'
-
     ];
 
     public function invoice(): BelongsTo

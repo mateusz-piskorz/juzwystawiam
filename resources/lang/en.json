@@ -155,6 +155,8 @@
         "Download": "Download",
         "Edit invoice": "Edit invoice",
         "Delete invoice": "Delete invoice",
+        "Invoice deleted successfully": "Invoice deleted successfully",
+        "Email was sent successfully": "Email was sent successfully",
         "Actions": "Actions",
         "Send email": "Send email",
         "Create invoice": "Create invoice",

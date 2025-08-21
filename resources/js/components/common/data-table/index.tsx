@@ -23,7 +23,7 @@ interface DataTableProps<TData, TValue> {
     data: TData[];
     filters: ComponentProps<typeof DataTableToolbar>['filters'];
     addNewRecord?: ComponentProps<typeof DataTableToolbar>['addNewRecord'];
-    totalPages?: string;
+    totalPages?: number;
     displayDataTableToolbar?: boolean;
     className?: string;
     displaySearchBar?: boolean;
@@ -113,7 +113,7 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            <DataTablePagination table={table} totalPages={totalPages ?? '1'} />
+            <DataTablePagination table={table} totalPages={totalPages ?? 1} />
         </div>
     );
 }

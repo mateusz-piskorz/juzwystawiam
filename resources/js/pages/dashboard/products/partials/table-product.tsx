@@ -2,9 +2,7 @@
 
 import ConfirmDialog from '@/components/common/confirm-dialog';
 import { DataTable } from '@/components/common/data-table';
-import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
-import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
-import { api } from '@/lib/constants/zod/openapi.json.client';
+import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
 import { OrderDirection } from '@/lib/types/order-direction';
@@ -97,7 +95,7 @@ export const TableProduct = () => {
             />
 
             <DataTable
-                totalPages={String(data?.meta.last_page)}
+                totalPages={data?.meta.last_page}
                 data={data?.data ?? []}
                 columns={columns}
                 addNewRecord={{
@@ -111,12 +109,12 @@ export const TableProduct = () => {
                     {
                         filterKey: 'vat_rate',
                         title: locale.common['Vat rate'],
-                        options: Object.values(VAT_RATE).map((e) => ({ label: e, value: e })),
+                        options: schemas.VatRate.options.map((e) => ({ label: e, value: e })),
                     },
                     {
                         filterKey: 'measure_unit',
                         title: locale.common['Measure Unit'],
-                        options: Object.values(MEASURE_UNIT).map((e) => ({ label: locale.enum.MEASURE_UNIT[e], value: e })),
+                        options: schemas.MeasureUnit.options.map((e) => ({ label: locale.enum.MEASURE_UNIT[e], value: e })),
                     },
                 ]}
             />

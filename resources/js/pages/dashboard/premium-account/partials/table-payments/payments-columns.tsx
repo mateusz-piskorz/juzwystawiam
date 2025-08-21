@@ -2,16 +2,17 @@
 
 import { DataTableColumnHeader } from '@/components/common/data-table/data-table-column-header';
 import { DataTableRowActions } from '@/components/common/data-table/data-table-row-actions';
+import { schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
-import { PremiumAccountPayment } from '@/lib/types/premium-account-payments';
 import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
+import { z } from 'zod';
 
 type Props = {
     locale: ReturnType<typeof useLocale>['locale']['dashboard/premium-account']['payments-history'];
 };
 
-export function getPaymentsColumns({ locale }: Props): ColumnDef<PremiumAccountPayment>[] {
+export function getPaymentsColumns({ locale }: Props): ColumnDef<z.infer<typeof schemas.StripePaymentIntentResource>>[] {
     return [
         {
             meta: {

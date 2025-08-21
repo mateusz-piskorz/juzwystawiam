@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MultiOptionsFilter } from '@/components/common/multi-options-filter';
 import { NoInvoicesMessage } from '@/components/common/no-invoices-message';
 import { Card, CardContent } from '@/components/ui/card';
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, type ChartConfig } from '@/components/ui/chart';
 import { api } from '@/lib/constants/zod/openapi.json.client';
-import { getStatusMonthlyDistribution } from '@/lib/data/invoices';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
 import { cn } from '@/lib/utils/cn';
@@ -24,7 +24,10 @@ export const InvoicesAnalyticsChart = ({ className, withFilters = true }: Props)
 
     const { data } = useQuery({
         queryKey: ['chart-data', period, product],
-        queryFn: () => getStatusMonthlyDistribution(withFilters ? { period, product } : undefined),
+        queryFn: () =>
+            api['invoices.status-monthly-series'](
+                withFilters ? { queries: { period: period as any, 'product[]': product as unknown as number[] } } : undefined,
+            ),
     });
 
     const products = useQuery({

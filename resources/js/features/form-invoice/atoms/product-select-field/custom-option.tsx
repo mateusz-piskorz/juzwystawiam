@@ -1,4 +1,3 @@
-import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
 import { cn } from '@/lib/utils/cn';
 import { Package, Timer, Wrench } from 'lucide-react';
 import { OptionProps } from 'react-select';
@@ -9,9 +8,9 @@ type Props = {
 };
 
 const icons = {
-    [MEASURE_UNIT.PCS]: <Package size={16} />,
-    [MEASURE_UNIT.HOUR]: <Timer size={16} />,
-    [MEASURE_UNIT.SERVICE]: <Wrench size={16} />,
+    PCS: <Package size={16} />,
+    HOUR: <Timer size={16} />,
+    SERVICE: <Wrench size={16} />,
 };
 
 export const CustomOption = ({ props }: Props) => {

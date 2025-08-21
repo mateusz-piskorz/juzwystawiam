@@ -16,6 +16,7 @@ class UpsertContractorRequest extends FormRequest
             'type_of_business' => ['required', Rule::enum(TypeOfBusiness::class)],
             'is_own_company'   => ['required', 'boolean'],
             'nip'              => [
+                'nullable',
                 'required_if:type_of_business,SELF_EMPLOYED,OTHER_BUSINESS',
                 'exclude_unless:type_of_business,SELF_EMPLOYED,OTHER_BUSINESS',
                 'string',
@@ -30,6 +31,7 @@ class UpsertContractorRequest extends FormRequest
             'city'             => ['required', 'string'],
             'country'          => ['required', 'string'],
             'company_name'     => [
+                'nullable',
                 'required_if:type_of_business,SELF_EMPLOYED,OTHER_BUSINESS',
                 'exclude_unless:type_of_business,SELF_EMPLOYED,OTHER_BUSINESS',
                 'string'
@@ -37,13 +39,15 @@ class UpsertContractorRequest extends FormRequest
             'street_name'      => ['required', 'string'],
             'email'            => ['nullable', 'email'],
             'phone'            => ['nullable', 'string'],
-            'bank_account'     => ['nullable', 'integer', 'digits_between:5,17'],
+            'bank_account'     => ['nullable', 'string', 'digits_between:5,17'],
             'first_name'       => [
+                'nullable',
                 'required_if:type_of_business,PRIVATE_PERSON,SELF_EMPLOYED',
                 'exclude_unless:type_of_business,PRIVATE_PERSON,SELF_EMPLOYED',
                 'string'
             ],
             'surname'          => [
+                'nullable',
                 'required_if:type_of_business,PRIVATE_PERSON,SELF_EMPLOYED',
                 'exclude_unless:type_of_business,PRIVATE_PERSON,SELF_EMPLOYED',
                 'string'

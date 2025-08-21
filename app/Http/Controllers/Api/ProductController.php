@@ -7,7 +7,6 @@ use App\Http\Requests\UpsertProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Traits\AppliesQueryFilters;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
 
 class ProductController
@@ -17,31 +16,9 @@ class ProductController
     public function index(IndexProductRequest $request)
     {
         $query = $request->user()->products();
-
         $validated = $request->validated();
-
         $limit = $validated['limit'] ?? 25;
-
-        [$arrays, $strings] = Arr::partition(Arr::only($validated, ['measure_unit', 'vat_rate']), fn($v) => is_array($v));
-
-        // Apply filters
-        $query->where($strings)->where(function ($q) use ($arrays) {
-            foreach ($arrays as $key => $values) {
-                $q->whereIn($key, $values);
-            }
-        });
-        // Apply search
-        if ($q = $validated['q'] ?? null) {
-            $query->where('name', 'ilike', "%{$q}%");
-        }
-
-        // Apply sorting
-        $sortDirection = $validated['sort_direction'] ?? 'desc';
-        if ($sort = $validated['sort'] ?? null) {
-            $query->orderBy($sort, $sortDirection);
-        } else {
-            $query->latest();
-        }
+        $query = $this->applyQueryFilters($query, $validated, 'name', ['measure_unit', 'vat_rate']);
 
         return ProductResource::collection($query->paginate($limit));
     }

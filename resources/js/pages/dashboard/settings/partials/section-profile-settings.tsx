@@ -2,8 +2,8 @@ import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { InputField } from '@/components/common/form-fields/input-field';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
+import { api } from '@/lib/constants/zod/openapi.json.client';
 import { updateProfileDTO, UpdateProfileDTO } from '@/lib/constants/zod/profile';
-import { updateProfile } from '@/lib/data/profile';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { usePage } from '@/lib/hooks/use-page';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
@@ -25,7 +25,7 @@ export function SectionProfileSettings() {
 
     const submitHandler = async (data: UpdateProfileDTO) => {
         try {
-            await updateProfile(data);
+            await api['profile.update-profile'](data);
             toast.success(locale.common.Saved);
         } catch (error) {
             const errorMessage = getErrorMessage(error);

@@ -1,15 +1,12 @@
-import { InvoiceSchema } from '@/lib/constants/zod/invoice';
-import { UseFieldArrayRemove, UseFormReturn } from 'react-hook-form';
-import { ProductSelectField } from '../../../atoms/product-select-field';
-
 import { CurrencyField } from '@/components/common/form-fields/currency-field';
 import { InputField } from '@/components/common/form-fields/input-field';
 import { SelectField } from '@/components/common/form-fields/select-field';
 import { Separator } from '@/components/ui/separator';
-import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
-import { MEASURE_UNIT } from '@/lib/constants/enums/measure-unit';
-import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
+import { InvoiceSchema } from '@/lib/constants/zod/invoice';
+import { schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
+import { UseFieldArrayRemove, UseFormReturn } from 'react-hook-form';
+import { ProductSelectField } from '../../../atoms/product-select-field';
 import { RemoveItemButton } from './remove-item-button';
 
 type Props<T extends InvoiceSchema> = {
@@ -48,12 +45,12 @@ export const ProductItemDesktop = <T extends InvoiceSchema>({ form: formProps, i
                     className="rounded-none border-none"
                 />
                 <Separator orientation="vertical" />
-                {formType === INVOICE_TYPE.VAT && (
+                {formType === 'VAT' && (
                     <SelectField
                         form={form}
                         name={`invoice_products.${idx}.vat_rate`}
                         label={locale.common['Vat rate']}
-                        selectOptions={Object.values(VAT_RATE).map((val) => ({ label: `${val}%`, value: val }))}
+                        selectOptions={schemas.VatRate.options.map((val) => ({ label: `${val}%`, value: val }))}
                         className="rounded-none border-none"
                     />
                 )}
@@ -71,7 +68,7 @@ export const ProductItemDesktop = <T extends InvoiceSchema>({ form: formProps, i
                     form={form}
                     name={`invoice_products.${idx}.measure_unit`}
                     label={locale.common['Measure Unit']}
-                    selectOptions={Object.values(MEASURE_UNIT).map((val) => ({ label: locale.enum.MEASURE_UNIT[val], value: val }))}
+                    selectOptions={schemas.MeasureUnit.options.map((val) => ({ label: locale.enum.MEASURE_UNIT[val], value: val }))}
                     className="rounded-none rounded-se rounded-ee border-none"
                 />
             </div>

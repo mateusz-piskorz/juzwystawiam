@@ -2,31 +2,13 @@
 
 namespace App\Traits;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
 trait AppliesQueryFilters
 {
-    public function applyQueryFilters(Request $request, mixed $query, string $searchColumn, array $sortable = [], array $filterable = []): mixed
+    public function applyQueryFilters(mixed $query, mixed $validated, string $searchColumn, array $filterable = []): mixed
     {
-        $validated = $request->validate([
-            'limit'           => 'nullable|integer|min:1|max:100',
-            'order_direction' => 'nullable|in:asc,desc'
-        ]);
-
-        $orderDirection = $validated['order_direction'] ?? 'desc';
-
-        $stringOrArray = ['nullable', function ($attribute, $value, $fail) {
-            if (!is_string($value) && !is_array($value)) {
-                $fail("The $attribute field must be a string or an array.");
-            }
-        }];
-
-        $validatedFilters = $request->validate(
-            array_fill_keys($filterable, $stringOrArray)
-        );
-
-        [$arrays, $strings] = Arr::partition($validatedFilters, fn($v) => is_array($v));
+        [$arrays, $strings] = Arr::partition(Arr::only($validated, $filterable), fn($v) => is_array($v));
 
         // Apply filters
         $query->where($strings)->where(function ($q) use ($arrays) {
@@ -36,15 +18,14 @@ trait AppliesQueryFilters
         });
 
         // Apply search
-        if ($search = $request->input('q')) {
-            $query->where($searchColumn, 'ilike', "%{$search}%");
+        if ($q = $validated['q'] ?? null) {
+            $query->where($searchColumn, 'ilike', "%{$q}%");
         }
 
-        // Apply ordering
-        $orderColumn = $request->input('order_column');
-
-        if ($orderColumn && in_array($orderColumn, $sortable)) {
-            $query->orderBy($orderColumn, $orderDirection);
+        // Apply sorting
+        $sortDirection = $validated['sort_direction'] ?? 'desc';
+        if ($sort = $validated['sort'] ?? null) {
+            $query->orderBy($sort, $sortDirection);
         } else {
             $query->latest();
         }

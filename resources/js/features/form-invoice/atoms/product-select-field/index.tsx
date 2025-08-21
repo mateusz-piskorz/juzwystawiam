@@ -2,7 +2,6 @@
 
 import { ReactSelect } from '@/components/common/react-select';
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
-import { INVOICE_TYPE } from '@/lib/constants/enums/invoice-type';
 import { InvoiceSchema } from '@/lib/constants/zod/invoice';
 import { api } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
@@ -39,7 +38,7 @@ export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, i
         form.setValue(`invoice_products.${idx}.price`, p.price);
         form.setValue(`invoice_products.${idx}.quantity`, 1);
         form.setValue(`invoice_products.${idx}.measure_unit`, p.measure_unit);
-        if (invoiceType === INVOICE_TYPE.VAT) {
+        if (invoiceType === 'VAT') {
             form.setValue(`invoice_products.${idx}.vat_rate`, p.vat_rate);
         }
     };

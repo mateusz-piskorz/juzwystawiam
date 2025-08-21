@@ -1,6 +1,6 @@
 import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { DataTable } from '@/components/common/data-table';
-import { getAllPremiumAccountPayments } from '@/lib/data/premium-account';
+import { api } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useQuery } from '@tanstack/react-query';
 import { getPaymentsColumns } from './payments-columns';
@@ -10,7 +10,7 @@ export const TablePayments = () => {
 
     const { data } = useQuery({
         queryKey: ['getAllPremiumAccountPayments'],
-        queryFn: getAllPremiumAccountPayments,
+        queryFn: api['premium-account.payments'],
     });
 
     const columns = getPaymentsColumns({ locale });

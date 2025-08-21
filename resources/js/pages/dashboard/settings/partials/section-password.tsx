@@ -2,8 +2,8 @@ import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { InputField } from '@/components/common/form-fields/input-field';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
+import { api } from '@/lib/constants/zod/openapi.json.client';
 import { UpdatePasswordDTO, updatePasswordDTO } from '@/lib/constants/zod/profile';
-import { updatePassword } from '@/lib/data/profile';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -20,7 +20,7 @@ export function SectionPassword() {
 
     const submitHandler = async (data: UpdatePasswordDTO) => {
         try {
-            await updatePassword(data);
+            await api['profile.update-password'](data);
             toast.success(locale.common.Saved);
             form.reset();
         } catch (error) {

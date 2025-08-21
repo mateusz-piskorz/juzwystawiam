@@ -1,7 +1,7 @@
 import ConfirmDialog from '@/components/common/confirm-dialog';
 import { DashboardHeading } from '@/components/common/dashboard-heading';
 import { Button } from '@/components/ui/button';
-import { deleteInvoice } from '@/lib/data/invoices';
+import { api } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Nullable } from '@/lib/types/nullable';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
@@ -23,8 +23,8 @@ export const SectionInvoiceActions = ({ invoiceId, buyerEmail }: Props) => {
 
     const handleDelete = async () => {
         try {
-            const response = await deleteInvoice({ invoiceId });
-            toast.success(response.message);
+            await api['invoices.destroy'](undefined, { params: { invoice: invoiceId } });
+            toast.success(locale['Invoice deleted successfully']);
             router.visit(`/dashboard/invoices`);
         } catch (error: unknown) {
             const errorMessage = getErrorMessage(error);

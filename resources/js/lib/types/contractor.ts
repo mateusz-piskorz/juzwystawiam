@@ -1,9 +1,10 @@
-import { TYPE_OF_BUSINESS } from '../constants/enums/type-of-business';
+import { z } from 'zod';
+import { schemas } from '../constants/zod/openapi.json.client';
 
 export type Contractor = {
     id: number;
     user_id: number;
-    type_of_business: TYPE_OF_BUSINESS;
+    type_of_business: z.infer<typeof schemas.TypeOfBusiness>;
     is_own_company: boolean;
     postal_code: string;
     city: string;

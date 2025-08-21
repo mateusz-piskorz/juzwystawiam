@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
-import { VAT_RATE } from '@/lib/constants/enums/vat-rate';
 import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
 import { createProductDTO, CreateProductDTO } from '@/lib/constants/zod/product';
 import { useLocale } from '@/lib/hooks/use-locale';
@@ -24,9 +23,9 @@ type Props = {
 };
 
 const initialDefaultValue = {
-    vat_rate: VAT_RATE.CASE23,
+    vat_rate: '23',
     price: 0,
-};
+} as const;
 
 export const UpsertProductDialog = ({ open, setOpen, defaultValues, productId, onSuccess }: Props) => {
     const l = useLocale().locale;

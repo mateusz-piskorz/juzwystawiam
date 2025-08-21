@@ -59,7 +59,7 @@ export function AppSidebar() {
             <SidebarContent>
                 <NavMain items={mainNavItems} />
             </SidebarContent>
-            {/* todo: here we should display button for settings and profile next to it like on solidtime */}
+            {/* todo: here we should display button for settings and profile next to it */}
             <SidebarFooter>
                 <NavUser />
             </SidebarFooter>
