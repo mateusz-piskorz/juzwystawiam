@@ -116,8 +116,8 @@ jobs:
           docker compose -f docker-compose.stg.yml up -d --build --force-recreate queue-worker
           sleep 5
 
-      - name: export-static
-        run: ./scripts/export-static.sh -c app_stg /var/www/html/stg/
+      # - name: export-static
+      #   run: ./scripts/export-static.sh -c app_stg /var/www/html/stg/
 
       - name: Prune Docker
         run: docker system prune -f
