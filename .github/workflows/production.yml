@@ -76,7 +76,10 @@ jobs:
       DB_DATABASE: db_prod
       DB_USERNAME: db_prod_username
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-
+      RESEND_KEY: ${{ secrets.RESEND_KEY}}
+      STRIPE_KEY: ${{secrets.STRIPE_KEY}}
+      STRIPE_SECRET: ${{secrets.STRIPE_SECRET}}
+      STRIPE_WEBHOOK_SECRET: ${{secrets.STRIPE_WEBHOOK_SECRET}}
     defaults:
       run:
         working-directory: prod

@@ -1,14 +1,28 @@
 services:
   app:
     container_name: app_prod
-    env_file: .env
     environment:
-      APP_KEY: ${APP_KEY}
+      VITE_APP_NAME: JuzWystawiam
       APP_ENV: production
+      APP_KEY: ${APP_KEY}
       APP_DEBUG: false
       APP_URL: https://www.juzwystawiam.pl
       ASSET_URL: https://www.juzwystawiam.pl
+      DB_CONNECTION: pgsql
       DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      MAIL_MAILER: resend
+      MAIL_HOST: 127.0.0.1
+      MAIL_PORT: 2525
+      MAIL_FROM_ADDRESS: invoice@juzwystawiam.pl
+      MAIL_FROM_NAME: JuzWystawiam
+      RESEND_KEY: ${RESEND_KEY}
+      STRIPE_KEY: ${STRIPE_KEY}
+      STRIPE_SECRET: ${STRIPE_SECRET}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
     build:
       dockerfile: Dockerfile
     ports:
@@ -16,19 +30,38 @@ services:
 
   queue-worker:
     container_name: queue_worker_prod
-    env_file: .env
     build:
       dockerfile: Dockerfile
     command: php artisan queue:work
     environment:
-      IS_WORKER: 'true'
+      IS_WORKER: true
+      VITE_APP_NAME: JuzWystawiam
+      APP_ENV: production
+      APP_KEY: ${APP_KEY}
+      APP_DEBUG: false
+      APP_URL: https://www.juzwystawiam.pl
+      ASSET_URL: https://www.juzwystawiam.pl
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      MAIL_MAILER: resend
+      MAIL_HOST: 127.0.0.1
+      MAIL_PORT: 2525
+      MAIL_FROM_ADDRESS: invoice@juzwystawiam.pl
+      MAIL_FROM_NAME: JuzWystawiam
+      RESEND_KEY: ${RESEND_KEY}
+      STRIPE_KEY: ${STRIPE_KEY}
+      STRIPE_SECRET: ${STRIPE_SECRET}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
 
   db:
     image: postgres:17.6
     container_name: db_prod
     volumes:
       - db-data:/postgresql
-    env_file: .env
     environment:
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USERNAME}
