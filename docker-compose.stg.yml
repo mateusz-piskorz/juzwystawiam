@@ -2,7 +2,7 @@ services:
   app:
     container_name: app_stg
     volumes:
-      - /var/www/html/stg:/app
+      - app_stg_data:/app
     environment:
       VITE_APP_NAME: JuzWystawiam
       APP_ENV: production
@@ -75,3 +75,4 @@ services:
 
 volumes:
   db-volume-stg:
+  app_stg_data:
