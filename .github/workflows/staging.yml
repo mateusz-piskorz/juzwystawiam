@@ -1,6 +1,8 @@
-name: Production deploy
+name: Staging deploy
 
 on:
+  push:
+    branches: ['main']
   workflow_dispatch:
 
 jobs:
@@ -69,23 +71,23 @@ jobs:
   deploy:
     needs: quality
     timeout-minutes: 10
-    environment: prod
+    environment: stg
     runs-on: self-hosted
     env:
       APP_KEY: ${{ secrets.APP_KEY }}
-      DB_DATABASE: db_prod
-      DB_USERNAME: db_prod_username
+      DB_DATABASE: db_stg
+      DB_USERNAME: db_stg_username
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
     defaults:
       run:
-        working-directory: prod
+        working-directory: stg
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          path: prod
+          path: stg
 
       - name: Remove stopped containers
         run: |
@@ -99,20 +101,20 @@ jobs:
         run: cp .env.example .env
 
       - name: db
-        run: docker compose -f docker-compose.prod.yml up -d db
+        run: docker compose -f docker-compose.stg.yml up -d db
 
       - name: app
         run: |
-          docker compose -f docker-compose.prod.yml up -d --build --force-recreate app
+          docker compose -f docker-compose.stg.yml up -d --build --force-recreate app
           sleep 5
 
       - name: queue-worker
         run: |
-          docker compose -f docker-compose.prod.yml up -d --build --force-recreate queue-worker
+          docker compose -f docker-compose.stg.yml up -d --build --force-recreate queue-worker
           sleep 5
 
       - name: export-static
-        run: ./scripts/export-static.sh -c app_prod /var/www/html/prod/
+        run: ./scripts/export-static.sh -c app_stg /var/www/html/stg/
 
       - name: Prune Docker
         run: docker system prune -f

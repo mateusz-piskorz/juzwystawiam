@@ -1,6 +1,6 @@
 services:
   app:
-    container_name: app_prod
+    container_name: app_stg
     env_file: .env
     environment:
       APP_KEY: ${APP_KEY}
@@ -15,7 +15,7 @@ services:
       - 9000:9000
 
   queue-worker:
-    container_name: queue_worker_prod
+    container_name: queue_worker_stg
     env_file: .env
     build:
       dockerfile: Dockerfile
@@ -25,7 +25,7 @@ services:
 
   db:
     image: postgres:17.6
-    container_name: db_prod
+    container_name: db_stg
     volumes:
       - db-data:/postgresql
     env_file: .env
