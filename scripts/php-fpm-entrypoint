@@ -6,7 +6,6 @@ main() {
     else
         prepare_file_permissions
         run_npm_build
-        start_interia_ssr
         prepare_storage
         wait_for_db
         run_migrations
@@ -26,29 +25,10 @@ run_npm_build() {
         npm ci
 
         echo "Running NPM build"
-        npm run build:ssr
+        npm run build
     else
         echo "No package.json found, skipping NPM build"
     fi
-}
-
-start_interia_ssr() {
-    echo "starting interia ssr"
-    php artisan inertia:start-ssr &
-}
-
-prepare_storage() {
-    # Create required directories for Laravel
-    mkdir -p /usr/share/nginx/html/storage/framework/cache/data
-    mkdir -p /usr/share/nginx/html/storage/framework/sessions
-    mkdir -p /usr/share/nginx/html/storage/framework/views
-
-    # Set permissions for the storage directory
-    chown -R www-data:www-data /usr/share/nginx/html/storage
-    chmod -R 775 /usr/share/nginx/html/storage
-
-    # Ensure the symlink exists
-    php artisan storage:link
 }
 
 wait_for_db() {
@@ -59,7 +39,7 @@ wait_for_db() {
 }
 
 run_migrations() {
-    ./artisan migrate
+    ./artisan migrate --force
 }
 
 optimize_app() {
