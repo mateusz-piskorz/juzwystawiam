@@ -25,6 +25,7 @@ services:
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
     build:
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - 9001:9000
 
@@ -56,6 +57,7 @@ services:
       STRIPE_KEY: ${STRIPE_KEY}
       STRIPE_SECRET: ${STRIPE_SECRET}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+    restart: unless-stopped
 
   db:
     image: postgres:17.6

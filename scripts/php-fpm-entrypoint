@@ -1,7 +1,7 @@
 #!/bin/bash
 
 main() {
-    if [ "$IS_WORKER" = "true" ]; then
+    if [ "$IS_WORKER" = true ]; then
         exec "$@"
     else
         prepare_file_permissions
