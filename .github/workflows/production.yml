@@ -1,15 +1,11 @@
-name: quality
+name: Production deploy
 
 on:
-  pull_request:
-    branches:
-      - develop
-      - main
+  workflow_dispatch:
 
 jobs:
   pest:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,6 +42,7 @@ jobs:
         run: ./vendor/bin/pest
 
   quality:
+    needs: pest
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -68,3 +65,54 @@ jobs:
 
       - name: Lint Frontend
         run: npm run lint
+
+  deploy:
+    needs: quality
+    timeout-minutes: 10
+    environment: prod
+    runs-on: self-hosted
+    env:
+      APP_KEY: ${{ secrets.APP_KEY }}
+      DB_DATABASE: db_prod
+      DB_USERNAME: db_prod_username
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+    defaults:
+      run:
+        working-directory: prod
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          path: prod
+
+      - name: Remove stopped containers
+        run: |
+          docker ps -a -q --filter status=exited | xargs -r docker rm
+
+      - name: Remove dangling images
+        run: |
+          docker images -f "dangling=true" -q | xargs -r docker rmi
+
+      - name: copy env
+        run: cp .env.example .env
+
+      - name: db
+        run: docker compose -f docker-compose.prod.yml up -d db
+
+      - name: app
+        run: |
+          docker compose -f docker-compose.prod.yml up -d --build --force-recreate app
+          sleep 5
+
+      - name: queue-worker
+        run: |
+          docker compose -f docker-compose.prod.yml up -d --build --force-recreate queue-worker
+          sleep 5
+
+      - name: export-static
+        run: ./scripts/export-static.sh -c app_prod /var/www/html/prod/
+
+      - name: Prune Docker
+        run: docker system prune -f

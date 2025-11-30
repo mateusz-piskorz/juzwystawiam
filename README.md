@@ -5,7 +5,6 @@ https://juzwystawiam.pl/
 1. change .env variables:
 
 - DB_HOST=db
-- REDIS_HOST=redis
 - ASSET_URL=http://localhost
 - APP_URL=http://localhost
 

@@ -1,0 +1,40 @@
+services:
+  app:
+    container_name: app_stg
+    env_file: .env
+    environment:
+      APP_KEY: ${APP_KEY}
+      APP_ENV: production
+      APP_DEBUG: false
+      APP_URL: https://www.juzwystawiam.pl
+      ASSET_URL: https://www.juzwystawiam.pl
+      DB_HOST: db
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - 9000:9000
+
+  queue-worker:
+    container_name: queue_worker_stg
+    env_file: .env
+    build:
+      dockerfile: Dockerfile
+    command: php artisan queue:work
+    environment:
+      IS_WORKER: 'true'
+
+  db:
+    image: postgres:17.6
+    container_name: db_stg
+    volumes:
+      - db-data:/postgresql
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 5432:5432
+
+volumes:
+  db-data:
