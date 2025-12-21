@@ -74,10 +74,11 @@ jobs:
     environment: stg
     runs-on: self-hosted
     env:
-      APP_KEY: ${{ secrets.APP_KEY }}
-      DB_DATABASE: db_stg
-      DB_USERNAME: db_stg_username
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      RESEND_KEY: ${{ secrets.RESEND_KEY }}
+      STRIPE_KEY: ${{ secrets.STRIPE_KEY }}
+      STRIPE_SECRET: ${{ secrets.STRIPE_SECRET }}
+      STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
 
     defaults:
       run:
@@ -110,7 +111,7 @@ jobs:
 
       - name: queue-worker
         run: |
-          docker compose -f docker-compose.stg.yml up -d --build --force-recreate queue-worker
+          docker compose -f docker-compose.stg.yml up -d --build --force-recreate queue_worker
           sleep 5
 
       - name: export-static
