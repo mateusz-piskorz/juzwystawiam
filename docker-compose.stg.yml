@@ -1,38 +1,85 @@
 services:
   app:
     container_name: app_stg
-    env_file: .env
-    environment:
-      APP_KEY: ${APP_KEY}
-      APP_ENV: production
-      APP_DEBUG: false
-      APP_URL: https://www.juzwystawiam.pl
-      ASSET_URL: https://www.juzwystawiam.pl
-      DB_HOST: db
     build:
+      context: .
       dockerfile: Dockerfile
     ports:
-      - 9001:9000
-
-  queue-worker:
-    container_name: queue_worker_stg
-    env_file: .env
-    build:
-      dockerfile: Dockerfile
-    command: php artisan queue:work
+      - '8000:8000'
     environment:
-      IS_WORKER: 'true'
+      APP_URL: https://www.juzwystawiam.pl
+      ASSET_URL: https://www.juzwystawiam.pl
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: db_stg
+      DB_USERNAME: db_stg_user
+      DB_PASSWORD: ${DB_PASSWORD}
+      APP_ENV: production
+      APP_DEBUG: false
+      VITE_APP_NAME: JuzWystawiam
+      APP_NAME: JuzWystawiam
+      MAIL_MAILER: resend
+      MAIL_FROM_ADDRESS: invoice@juzwystawiam.pl
+      MAIL_FROM_NAME: JuzWystawiam
+      MAIL_HOST: https://www.juzwystawiam.pl
+      RESEND_KEY: ${RESEND_KEY}
+      STRIPE_KEY: ${STRIPE_KEY}
+      STRIPE_SECRET: ${STRIPE_SECRET}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+    networks:
+      - app_stg_stg
+    volumes:
+      - type: bind
+        source: /var/www/html/stg/storage
+        target: /var/www/html/storage/app/public
+
+  queue_worker:
+    container_name: queue_worker_stg
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      APP_URL: https://www.juzwystawiam.pl
+      ASSET_URL: https://www.juzwystawiam.pl
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: db_stg
+      DB_USERNAME: db_stg_user
+      DB_PASSWORD: ${DB_PASSWORD}
+      APP_ENV: production
+      APP_DEBUG: false
+      VITE_APP_NAME: JuzWystawiam
+      APP_NAME: JuzWystawiam
+      MAIL_MAILER: resend
+      MAIL_FROM_ADDRESS: invoice@juzwystawiam.pl
+      MAIL_FROM_NAME: JuzWystawiam
+      MAIL_HOST: https://www.juzwystawiam.pl
+      RESEND_KEY: ${RESEND_KEY}
+      STRIPE_KEY: ${STRIPE_KEY}
+      STRIPE_SECRET: ${STRIPE_SECRET}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+    command: >
+      sh -c "php artisan queue:work --sleep=3 --tries=3 --timeout=60"
+    restart: unless-stopped
+    networks:
+      - app_stg_stg
 
   db:
     image: postgres:17.6
     container_name: db_stg
     volumes:
-      - db-data:/postgresql
-    env_file: .env
+      - db_data_stg:/postgresql
     environment:
-      POSTGRES_DB: ${DB_DATABASE}
-      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: db_stg
+      POSTGRES_USER: db_stg_user
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - app_stg_stg
 
 volumes:
-  db-data:
+  db_data_stg:
+
+networks:
+  app_stg_stg:

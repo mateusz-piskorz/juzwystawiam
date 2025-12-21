@@ -1,20 +1,15 @@
-name: 'juzwystawiam-dev'
-
 services:
   db:
-    image: 'postgres:16'
+    image: postgres:17.6
+    container_name: db_dev
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - db_data_dev:/postgresql
     environment:
-      - POSTGRES_USER=dev
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=dev
+      POSTGRES_DB: '${DB_DATABASE}'
+      POSTGRES_USER: '${DB_USERNAME}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD}'
     ports:
-      - 5432:5432
-    
-
+      - '5432:5432'
 
 volumes:
-  postgres:
-    driver: local
-  
+  db_data_dev:
