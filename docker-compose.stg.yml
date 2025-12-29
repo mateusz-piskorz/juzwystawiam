@@ -7,8 +7,8 @@ services:
     ports:
       - '8001:8000'
     environment:
-      APP_URL: https://www.juzwystawiam.pl
-      ASSET_URL: https://www.juzwystawiam.pl
+      APP_URL: https://staging.juzwystawiam.pl
+      ASSET_URL: https://staging.juzwystawiam.pl
       DB_CONNECTION: pgsql
       DB_HOST: db
       DB_PORT: 5432
@@ -22,7 +22,7 @@ services:
       MAIL_MAILER: resend
       MAIL_FROM_ADDRESS: invoice@juzwystawiam.pl
       MAIL_FROM_NAME: JuzWystawiam
-      MAIL_HOST: https://www.juzwystawiam.pl
+      MAIL_HOST: https://staging.juzwystawiam.pl
       RESEND_KEY: ${RESEND_KEY}
       STRIPE_KEY: ${STRIPE_KEY}
       STRIPE_SECRET: ${STRIPE_SECRET}
@@ -40,8 +40,8 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      APP_URL: https://www.juzwystawiam.pl
-      ASSET_URL: https://www.juzwystawiam.pl
+      APP_URL: https://staging.juzwystawiam.pl
+      ASSET_URL: https://staging.juzwystawiam.pl
       DB_CONNECTION: pgsql
       DB_HOST: db
       DB_PORT: 5432
@@ -55,7 +55,7 @@ services:
       MAIL_MAILER: resend
       MAIL_FROM_ADDRESS: invoice@juzwystawiam.pl
       MAIL_FROM_NAME: JuzWystawiam
-      MAIL_HOST: https://www.juzwystawiam.pl
+      MAIL_HOST: https://staging.juzwystawiam.pl
       RESEND_KEY: ${RESEND_KEY}
       STRIPE_KEY: ${STRIPE_KEY}
       STRIPE_SECRET: ${STRIPE_SECRET}
