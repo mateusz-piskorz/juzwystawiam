@@ -28,7 +28,7 @@ services:
       STRIPE_SECRET: ${STRIPE_SECRET}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
     networks:
-      - app_stg_stg
+      - app_stg
     volumes:
       - type: bind
         source: /var/www/html/stg/storage
@@ -64,7 +64,7 @@ services:
       sh -c "php artisan queue:work --sleep=3 --tries=3 --timeout=60"
     restart: unless-stopped
     networks:
-      - app_stg_stg
+      - app_stg
 
   db:
     image: postgres:17.6
@@ -76,10 +76,10 @@ services:
       POSTGRES_USER: db_stg_user
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     networks:
-      - app_stg_stg
+      - app_stg
 
 volumes:
   db_data_stg:
 
 networks:
-  app_stg_stg:
+  app_stg:
