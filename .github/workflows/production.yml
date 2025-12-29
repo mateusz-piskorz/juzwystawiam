@@ -96,12 +96,6 @@ jobs:
         run: |
           docker images -f "dangling=true" -q | xargs -r docker rmi
 
-      - name: create env file
-        run: touch .env
-
-      - name: Generate Application Key
-        run: php artisan key:generate
-
       - name: db
         run: docker compose -f docker-compose.prod.yml up -d db
 
