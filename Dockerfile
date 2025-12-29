@@ -18,11 +18,7 @@ RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoload
 COPY . /app
 
 RUN composer dump-autoload --optimize \
- && php artisan package:discover --ansi || true \
- && if [ ! -f .env ]; then \
-      if [ -f .env.example ]; then cp .env.example .env; fi; \
-    fi \
- && php artisan key:generate --force || true
+ && php artisan package:discover --ansi || true 
 
 # Node builder (builds Vite assets)
 FROM node:24.8.0-slim AS node-builder
