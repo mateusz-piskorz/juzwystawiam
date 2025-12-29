@@ -98,14 +98,8 @@ jobs:
         run: |
           docker images -f "dangling=true" -q | xargs -r docker rmi
 
-      - name: create env file
-        run: touch .env
-
       - name: db
         run: docker compose -f docker-compose.stg.yml up -d db
-
-      - name: Debug Environment Variables
-        run: env | sort
 
       - name: app
         run: |
