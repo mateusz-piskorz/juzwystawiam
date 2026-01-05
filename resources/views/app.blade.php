@@ -34,7 +34,7 @@
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="icon" href="/icon.png" sizes="166x114" type="image/png">
+    <link rel="icon" href="/icon.png" sizes="166x166" type="image/png">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..600&display=swap" rel="stylesheet" />
