@@ -12,11 +12,11 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'         => 'required|string|max:255',
-            'price'        => 'required|decimal:0,2',
+            'name' => 'required|string|max:255',
+            'price' => 'required|decimal:0,2',
             'measure_unit' => ['required', Rule::enum(MeasureUnit::class)],
-            'vat_rate'     => ['required', Rule::enum(VatRate::class)],
-            'description'  => 'string|nullable'
+            'vat_rate' => ['required', Rule::enum(VatRate::class)],
+            'description' => 'string|nullable',
         ];
     }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Enums;
 
-enum ContractorRole: string {
+enum ContractorRole: string
+{
     case SELLER = 'SELLER';
     case BUYER = 'BUYER';
 }

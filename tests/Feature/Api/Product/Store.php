@@ -2,6 +2,7 @@
 
 use App\Models\Product;
 use App\Models\User;
+
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseEmpty;
 use function Pest\Laravel\assertDatabaseHas;

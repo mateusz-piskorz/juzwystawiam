@@ -22,12 +22,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'premium_access_expires_at'
+        'premium_access_expires_at',
     ];
 
     protected $hidden = [
         'password',
-        'remember_token'
+        'remember_token',
     ];
 
     protected $appends = ['premium_days'];
@@ -35,16 +35,16 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at'         => 'datetime',
+            'email_verified_at' => 'datetime',
             'premium_access_expires_at' => 'datetime',
-            'password'                  => 'hashed'
+            'password' => 'hashed',
         ];
     }
 
     protected function premiumDays(): Attribute
     {
         return Attribute::make(
-            get: fn(mixed $value, array $attributes) => PremiumDays::daysLeft($attributes['premium_access_expires_at'] ?? null),
+            get: fn (mixed $value, array $attributes) => PremiumDays::daysLeft($attributes['premium_access_expires_at'] ?? null),
         );
     }
 

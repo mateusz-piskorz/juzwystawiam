@@ -26,7 +26,7 @@ class ProductController
 
     public function store(StoreProductRequest $request)
     {
-        $product = Product::query()->create([ ...$request->validated(), 'user_id' => $request->user()->id]);
+        $product = Product::query()->create([...$request->validated(), 'user_id' => $request->user()->id]);
 
         return (new ProductResource($product))->response();
     }
@@ -34,7 +34,7 @@ class ProductController
     public function update(UpdateProductRequest $request, Product $product)
     {
         Gate::authorize('update', $product);
-        $product->update([ ...$request->validated(), 'user_id' => $request->user()->id]);
+        $product->update([...$request->validated(), 'user_id' => $request->user()->id]);
 
         return (new ProductResource($product))->response();
     }

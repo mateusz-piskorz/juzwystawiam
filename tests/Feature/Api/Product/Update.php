@@ -2,6 +2,7 @@
 
 use App\Models\Product;
 use App\Models\User;
+
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\putJson;
 
@@ -19,7 +20,7 @@ test("user cannot update another user's product", function () {
     expect($product->fresh()->name)->toBe('Original Name');
 });
 
-test("user can update product", function () {
+test('user can update product', function () {
     $product = Product::factory()->create();
     actingAs($product->user)
         ->putJson(route('api.products.update', $product), ['name' => 'Updated Name'])

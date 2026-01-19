@@ -34,3 +34,8 @@ coolify doesn't remove volumnes after removing presistant storage, so you need t
 - Go to terminal
 - select correct container to run command on
 - rm -rf {path to volumne e.g./bitnami/postgresql}
+
+# utils
+
+php artisan ide-helper:generate
+php artisan ide-helper:models --nowrite

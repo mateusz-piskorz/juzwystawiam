@@ -12,11 +12,11 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'         => 'nullable|string|max:255',
-            'price'        => 'nullable|decimal:0,2',
+            'name' => 'nullable|string|max:255',
+            'price' => 'nullable|decimal:0,2',
             'measure_unit' => ['nullable', Rule::enum(MeasureUnit::class)],
-            'vat_rate'     => ['nullable', Rule::enum(VatRate::class)],
-            'description'  => 'nullable|string'
+            'vat_rate' => ['nullable', Rule::enum(VatRate::class)],
+            'description' => 'nullable|string',
         ];
     }
 }
