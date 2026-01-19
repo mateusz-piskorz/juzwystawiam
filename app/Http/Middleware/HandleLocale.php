@@ -12,7 +12,7 @@ class HandleLocale
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $browserLanguageService = new BrowserLanguageService();
+        $browserLanguageService = new BrowserLanguageService;
         $langArr = $browserLanguageService->detectLanguage($request);
 
         App::setLocale($langArr['langCode']);

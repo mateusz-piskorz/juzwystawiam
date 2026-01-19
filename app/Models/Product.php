@@ -16,11 +16,11 @@ class Product extends Model
         'description',
         'price',
         'measure_unit',
-        'vat_rate'
+        'vat_rate',
     ];
 
     protected $casts = [
-        'price' => 'float'
+        'price' => 'float',
     ];
 
     public function user(): BelongsTo

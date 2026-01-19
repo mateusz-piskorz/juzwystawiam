@@ -19,7 +19,7 @@ class BrowserLanguageService
             if (preg_match('/^([a-z]+)/i', reset($browserLanguages), $matches)) {
                 $languageCode = strtolower($matches[1]);
             }
-        };
+        }
 
         return ['langCode' => $languageCode];
     }

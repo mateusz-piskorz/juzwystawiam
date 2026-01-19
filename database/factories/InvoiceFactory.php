@@ -20,18 +20,18 @@ class InvoiceFactory extends Factory
     public function definition(): array
     {
         return [
-            'type'                  => InvoiceType::NO_VAT,
-            'number'                => 'FR ' . date('d/m/Y'),
-            'issue_date'            => now(),
-            'payment_method'        => PaymentMethod::CASH,
-            'currency'              => Currency::PLN,
-            'is_already_paid'       => true,
-            'sale_date'             => now(),
-            'due_date'              => now()->addDays(10),
-            'total'                 => fake()->randomFloat(2, 0, 10000),
-            'total_vat_amount'      => fake()->randomFloat(2, 0, 10000),
+            'type' => InvoiceType::NO_VAT,
+            'number' => 'FR '.date('d/m/Y'),
+            'issue_date' => now(),
+            'payment_method' => PaymentMethod::CASH,
+            'currency' => Currency::PLN,
+            'is_already_paid' => true,
+            'sale_date' => now(),
+            'due_date' => now()->addDays(10),
+            'total' => fake()->randomFloat(2, 0, 10000),
+            'total_vat_amount' => fake()->randomFloat(2, 0, 10000),
             'total_discount_amount' => fake()->randomFloat(2, 0, 10000),
-            'grand_total'           => fake()->randomFloat(2, 0, 10000)
+            'grand_total' => fake()->randomFloat(2, 0, 10000),
         ];
     }
 }

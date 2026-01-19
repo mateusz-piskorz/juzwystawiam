@@ -19,7 +19,7 @@ class AuthenticatedSessionController
     {
         return Inertia::render('root/auth/login', [
             'canResetPassword' => Route::has('password.request'),
-            'status'           => $request->session()->get('status')
+            'status' => $request->session()->get('status'),
         ]);
     }
 

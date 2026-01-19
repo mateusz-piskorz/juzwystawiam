@@ -5,8 +5,8 @@ namespace App\Rules;
 use App\Models\Product;
 use Illuminate\Contracts\Validation\Rule;
 
-//todo: validation rules refactor
-//https://laravel.com/docs/12.x/validation#custom-validation-rules
+// todo: validation rules refactor
+// https://laravel.com/docs/12.x/validation#custom-validation-rules
 
 class ProductBelongsToUser implements Rule
 {

@@ -9,8 +9,8 @@ test('profile information can be updated', function () {
     $response = $this
         ->actingAs($user)
         ->patch('/dashboard/settings/profile', [
-            'name'  => 'Test User',
-            'email' => 'test@example.com'
+            'name' => 'Test User',
+            'email' => 'test@example.com',
         ]);
 
     $response
@@ -31,8 +31,8 @@ test('email verification status is unchanged when the email address is unchanged
     $response = $this
         ->actingAs($user)
         ->patch('/dashboard/settings/profile', [
-            'name'  => 'Test User',
-            'email' => $user->email
+            'name' => 'Test User',
+            'email' => $user->email,
         ]);
 
     $response
@@ -49,7 +49,7 @@ test('user can delete their account', function () {
     $response = $this
         ->actingAs($user)
         ->delete('/dashboard/settings/profile', [
-            'password' => 'password'
+            'password' => 'password',
         ]);
 
     $response
@@ -68,7 +68,7 @@ test('correct password must be provided to delete account', function () {
         ->actingAs($user)
         ->from('/dashboard/settings/profile')
         ->delete('/dashboard/settings/profile', [
-            'password' => 'wrong-password'
+            'password' => 'wrong-password',
         ]);
 
     $response

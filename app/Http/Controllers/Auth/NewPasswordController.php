@@ -22,7 +22,7 @@ class NewPasswordController
     {
         return Inertia::render('root/auth/reset-password', [
             'email' => $request->email,
-            'token' => $request->route('token')
+            'token' => $request->route('token'),
         ]);
     }
 
@@ -34,9 +34,9 @@ class NewPasswordController
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'token'    => 'required',
-            'email'    => 'required|email',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()]
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         // Here we will attempt to reset the user's password. If it is successful we
@@ -46,8 +46,8 @@ class NewPasswordController
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user) use ($request) {
                 $user->forceFill([
-                    'password'       => Hash::make($request->password),
-                    'remember_token' => Str::random(60)
+                    'password' => Hash::make($request->password),
+                    'remember_token' => Str::random(60),
                 ])->save();
 
                 event(new PasswordReset($user));
@@ -62,7 +62,7 @@ class NewPasswordController
         }
 
         throw ValidationException::withMessages([
-            'email' => [__($status)]
+            'email' => [__($status)],
         ]);
     }
 }

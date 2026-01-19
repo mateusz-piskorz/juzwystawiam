@@ -10,7 +10,7 @@ Artisan::command('inspire', function () {
 Artisan::command('ziggy', function () {
 
     $exitCode = Artisan::call('ziggy:generate', [
-        '--types-only' => true
+        '--types-only' => true,
     ]);
 
     if ($exitCode === 0) {
@@ -31,11 +31,11 @@ Artisan::command('ziggy', function () {
 
             unlink($source);
 
-            $this->info("resources/js/lib/types/ziggy.d.ts - generated successfully");
+            $this->info('resources/js/lib/types/ziggy.d.ts - generated successfully');
         } else {
-            $this->error("ziggy.d.ts not found after generation.");
+            $this->error('ziggy.d.ts not found after generation.');
         }
     } else {
-        $this->error("ziggy:generate command failed.");
+        $this->error('ziggy:generate command failed.');
     }
 });

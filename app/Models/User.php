@@ -16,7 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens, Billable;
+    use Billable, HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
@@ -80,5 +80,4 @@ class User extends Authenticatable
             ->where('invoice_emails.status', EmailStatus::SENT->value)
             ->count();
     }
-
 }

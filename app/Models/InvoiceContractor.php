@@ -23,7 +23,7 @@ class InvoiceContractor extends Model
         'street_name',
         'phone',
         'first_name',
-        'surname'
+        'surname',
     ];
 
     public function invoice(): BelongsTo

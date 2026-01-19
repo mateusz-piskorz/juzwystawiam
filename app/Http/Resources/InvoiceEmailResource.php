@@ -13,15 +13,14 @@ class InvoiceEmailResource extends JsonResource
 
         return [
             /** @var int */
-            'id'         => $this->id,
+            'id' => $this->id,
             /** @var int */
             'invoice_id' => $this->invoice_id,
             /** @var EmailStatus */
-            'status'     => $this->status,
-            'recipient'  => $this->recipient,
+            'status' => $this->status,
+            'recipient' => $this->recipient,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
         ];
     }
-
-};
+}

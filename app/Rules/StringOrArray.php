@@ -14,7 +14,7 @@ class StringOrArray implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!is_string($value) && !is_array($value)) {
+        if (! is_string($value) && ! is_array($value)) {
             $fail('The :attribute field must be a string or an array.');
         }
 

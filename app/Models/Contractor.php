@@ -24,7 +24,7 @@ class Contractor extends Model
         'street_name',
         'phone',
         'first_name',
-        'surname'
+        'surname',
     ];
 
     public function user(): BelongsTo

@@ -28,8 +28,8 @@ class ContractorController
     public function store(UpsertContractorRequest $request)
     {
         $validated = $request->validated();
-        $companyName = $validated['company_name'] ?? $validated['first_name'] . ' ' . $validated['surname'];
-        $contractor = Contractor::create([ ...$validated, 'company_name' => $companyName, 'user_id' => $request->user()->id]);
+        $companyName = $validated['company_name'] ?? $validated['first_name'].' '.$validated['surname'];
+        $contractor = Contractor::create([...$validated, 'company_name' => $companyName, 'user_id' => $request->user()->id]);
 
         return (new ContractorResource($contractor))->response()->setStatusCode(201);
     }
@@ -38,8 +38,8 @@ class ContractorController
     {
         Gate::authorize('update', $contractor);
         $validated = $request->validated();
-        $companyName = $validated['company_name'] ?? $validated['first_name'] . ' ' . $validated['surname'];
-        $contractor->update([ ...$validated, 'company_name' => $companyName, 'user_id' => $request->user()->id]);
+        $companyName = $validated['company_name'] ?? $validated['first_name'].' '.$validated['surname'];
+        $contractor->update([...$validated, 'company_name' => $companyName, 'user_id' => $request->user()->id]);
 
         return (new ContractorResource($contractor))->response()->setStatusCode(201);
     }
@@ -51,5 +51,4 @@ class ContractorController
 
         return response()->json(['message' => 'Contractor deleted']);
     }
-
 }

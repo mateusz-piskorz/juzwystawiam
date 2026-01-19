@@ -23,10 +23,10 @@ trait CalculatesProductTotals
         }
 
         return [
-            'total'                 => (float) $totalBeforeVat,
-            'total_vat_amount'      => (float) $totalVatAmount,
+            'total' => (float) $totalBeforeVat,
+            'total_vat_amount' => (float) $totalVatAmount,
             'total_discount_amount' => (float) $totalDiscountAmount,
-            'grand_total'           => (float) $totalWithVat
+            'grand_total' => (float) $totalWithVat,
         ];
 
     }
@@ -50,10 +50,10 @@ trait CalculatesProductTotals
         $totalWithVat = $discountedSubtotal + $vatAmount;
 
         return [
-            'total'                 => (float) $totalBeforeVat,
-            'total_vat_amount'      => (float) $totalVatAmount,
+            'total' => (float) $totalBeforeVat,
+            'total_vat_amount' => (float) $totalVatAmount,
             'total_discount_amount' => (float) $discountAmount,
-            'grand_total'           => (float) $totalWithVat
+            'grand_total' => (float) $totalWithVat,
         ];
 
     }

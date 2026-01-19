@@ -17,15 +17,12 @@ class IssueAnInvoice extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public Invoice $invoice, public InvoiceEmail $invoice_email)
-    {
-
-    }
+    public function __construct(public Invoice $invoice, public InvoiceEmail $invoice_email) {}
 
     public function failed(): void
     {
         $this->invoice_email->update([
-            'status' => EmailStatus::FAILED->value
+            'status' => EmailStatus::FAILED->value,
         ]);
 
     }
@@ -40,6 +37,7 @@ class IssueAnInvoice extends Mailable implements ShouldQueue
     public function content(): Content
     {
         [$buyer, $seller] = $this->invoice->getContractors();
+
         return new Content(
             markdown: 'mail.invoice.issue',
             with: ['seller' => $seller, 'buyer' => $buyer],
@@ -51,8 +49,8 @@ class IssueAnInvoice extends Mailable implements ShouldQueue
         $pdf = $this->invoice->generatePdf();
 
         return [
-            Attachment::fromData(fn() => $pdf->output(), 'invoice.pdf')
-                ->withMime('application/pdf')
+            Attachment::fromData(fn () => $pdf->output(), 'invoice.pdf')
+                ->withMime('application/pdf'),
         ];
     }
 }

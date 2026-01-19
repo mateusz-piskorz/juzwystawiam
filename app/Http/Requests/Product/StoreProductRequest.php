@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Product;
 
 use App\Enums\MeasureUnit;
 use App\Enums\VatRate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpsertProductRequest extends FormRequest
+class StoreProductRequest extends FormRequest
 {
-
     public function rules(): array
     {
         return [
