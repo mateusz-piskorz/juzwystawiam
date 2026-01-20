@@ -22,6 +22,5 @@ test('authenticated user can create a product', function () {
         ->assertCreated();
 
     expect($user->products)->toHaveCount(1);
-
     assertDatabaseHas('products', $data);
 });
