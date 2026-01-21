@@ -38,6 +38,11 @@ jobs:
       - name: Generate Application Key
         run: php artisan key:generate
 
+      - name: db
+        run: |
+          docker compose -f docker-compose.dev.yml up -d
+          sleep 10
+
       - name: Tests
         run: ./vendor/bin/pest
 
