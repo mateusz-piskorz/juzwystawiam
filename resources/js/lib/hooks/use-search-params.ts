@@ -27,7 +27,7 @@ export const useSearchParams = () => {
             };
 
             router.replace({
-                url: `${ziggy.location}?${buildURLParams(params)}`,
+                url: `${window.location.pathname}?${buildURLParams(params)}`,
                 props: (currentProps) => ({ ...currentProps, ziggy: { ...ziggy, query: params } }),
                 preserveState: true,
             });
@@ -39,7 +39,7 @@ export const useSearchParams = () => {
             };
 
             router.replace({
-                url: `${ziggy.location}?${buildURLParams(params)}`,
+                url: `${window.location.pathname}?${buildURLParams(params)}`,
                 props: (currentProps) => ({ ...currentProps, ziggy: { ...ziggy, query: params } }),
                 preserveState: true,
             });
