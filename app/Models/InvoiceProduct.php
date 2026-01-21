@@ -19,7 +19,7 @@ class InvoiceProduct extends Model
         'total',
         'total_vat_amount',
         'total_discount_amount',
-        'grand_total'
+        'grand_total',
     ];
 
     public function invoice(): BelongsTo

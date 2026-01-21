@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\App;
 
 trait Locale
 {
-
     protected $locale;
 
     public function __construct()
@@ -22,5 +21,4 @@ trait Locale
             $this->locale = json_decode(file_get_contents($englishFilePath), true);
         }
     }
-
 }

@@ -11,20 +11,19 @@ use Illuminate\Validation\Rules\Password;
 
 class ProfileController
 {
-
     public function updateProfile(Request $request)
     {
 
         $validated = $request->validate([
-            'name'  => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'string',
                 'lowercase',
                 'email',
                 'max:255',
-                Rule::unique(User::class)->ignore($request->user()->id)
-            ]
+                Rule::unique(User::class)->ignore($request->user()->id),
+            ],
         ]);
 
         $request->user()->update($validated);
@@ -36,11 +35,11 @@ class ProfileController
     {
         $validated = $request->validate([
             'current_password' => ['required', 'current_password'],
-            'password'         => ['required', Password::defaults(), 'confirmed']
+            'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
 
         $request->user()->update([
-            'password' => Hash::make($validated['password'])
+            'password' => Hash::make($validated['password']),
         ]);
 
         return response()->json(['success' => true]);
@@ -49,7 +48,7 @@ class ProfileController
     public function deleteAccount(Request $request)
     {
         $request->validate([
-            'password' => ['required', 'current_password']
+            'password' => ['required', 'current_password'],
         ]);
 
         $user = $request->user();
@@ -65,5 +64,4 @@ class ProfileController
 
         return response()->json(['success' => true]);
     }
-
 }

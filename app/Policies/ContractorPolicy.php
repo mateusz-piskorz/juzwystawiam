@@ -7,7 +7,6 @@ use App\Models\User;
 
 class ContractorPolicy
 {
-
     public function view(User $user, Contractor $contractor): bool
     {
         return $user->id === $contractor->user_id;

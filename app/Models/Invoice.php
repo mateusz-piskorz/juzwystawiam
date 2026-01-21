@@ -30,7 +30,7 @@ class Invoice extends Model
         'total',
         'total_vat_amount',
         'total_discount_amount',
-        'grand_total'
+        'grand_total',
     ];
 
     public function user(): BelongsTo
@@ -64,38 +64,38 @@ class Invoice extends Model
 
         $invoice_email = InvoiceEmail::create([
             'invoice_id' => $this->id,
-            'status'     => EmailStatus::PENDING->value,
-            'recipient'  => $recipient
+            'status' => EmailStatus::PENDING->value,
+            'recipient' => $recipient,
         ]);
 
-        dispatch(fn() => Mail::to($recipient)->send(new IssueAnInvoice($this, $invoice_email)))->afterResponse();
+        dispatch(fn () => Mail::to($recipient)->send(new IssueAnInvoice($this, $invoice_email)))->afterResponse();
     }
 
     public function createContractor(Contractor $contractor, string $role): void
     {
         $this->invoice_contractors()->create([
-            'contractor_id'    => $contractor->id,
-            'role'             => $role,
+            'contractor_id' => $contractor->id,
+            'role' => $role,
             'type_of_business' => $contractor->type_of_business,
-            'is_own_company'   => $contractor->is_own_company,
-            'postal_code'      => $contractor->postal_code,
-            'city'             => $contractor->city,
-            'country'          => $contractor->country,
-            'bank_account'     => $contractor->bank_account,
-            'nip'              => $contractor->nip,
-            'company_name'     => $contractor->company_name,
-            'email'            => $contractor->email,
-            'street_name'      => $contractor->street_name,
-            'phone'            => $contractor->phone,
-            'first_name'       => $contractor->first_name,
-            'surname'          => $contractor->surname
+            'is_own_company' => $contractor->is_own_company,
+            'postal_code' => $contractor->postal_code,
+            'city' => $contractor->city,
+            'country' => $contractor->country,
+            'bank_account' => $contractor->bank_account,
+            'nip' => $contractor->nip,
+            'company_name' => $contractor->company_name,
+            'email' => $contractor->email,
+            'street_name' => $contractor->street_name,
+            'phone' => $contractor->phone,
+            'first_name' => $contractor->first_name,
+            'surname' => $contractor->surname,
         ]);
     }
 
     public function generatePdf()
     {
-        $this->load(["invoice_products", "invoice_contractors"]);
-        $this['sale_date'] = date_format(date_create($this['sale_date']), "Y-m-d");
+        $this->load(['invoice_products', 'invoice_contractors']);
+        $this['sale_date'] = date_format(date_create($this['sale_date']), 'Y-m-d');
         [$buyer, $seller] = $this->getContractors();
 
         return Pdf::loadView('invoice-pdf', ['invoice' => $this, 'seller' => $seller, 'buyer' => $buyer]);
@@ -103,14 +103,13 @@ class Invoice extends Model
 
     public function getContractors()
     {
-        $this->loadMissing(["invoice_products", "invoice_contractors"]);
+        $this->loadMissing(['invoice_products', 'invoice_contractors']);
         $emptyContractor = ['company_name' => '', 'street_name' => '', 'postal_code' => '', 'bank_account' => '', 'city' => ''];
 
         return [
 
             collect($this['invoice_contractors'])->firstWhere('role', ContractorRole::BUYER) ?? $emptyContractor,
-            collect($this['invoice_contractors'])->firstWhere('role', ContractorRole::SELLER) ?? $emptyContractor
+            collect($this['invoice_contractors'])->firstWhere('role', ContractorRole::SELLER) ?? $emptyContractor,
         ];
     }
-
 }

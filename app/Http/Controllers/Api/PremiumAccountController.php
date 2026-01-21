@@ -9,20 +9,19 @@ use Stripe\Stripe;
 
 class PremiumAccountController
 {
-
     public function getAllPremiumAccountPayments(Request $request)
     {
         Stripe::setApiKey(config('cashier.secret'));
 
         $stripeId = $request->user()->stripe_id;
-        if (!$stripeId) {
+        if (! $stripeId) {
             return StripePaymentIntentResource::collection([]);
         }
 
         $allIntents = [];
         $params = [
             'customer' => $stripeId,
-            'limit'    => 100
+            'limit' => 100,
         ];
 
         do {
@@ -35,5 +34,4 @@ class PremiumAccountController
 
         return StripePaymentIntentResource::collection($allIntents);
     }
-
 }

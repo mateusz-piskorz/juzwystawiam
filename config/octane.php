@@ -35,7 +35,7 @@ return [
     |
      */
 
-    'server'             => env('OCTANE_SERVER', 'frankenphp'),
+    'server' => env('OCTANE_SERVER', 'frankenphp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -48,7 +48,7 @@ return [
     |
      */
 
-    'https'              => env('OCTANE_HTTPS', false),
+    'https' => env('OCTANE_HTTPS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -61,59 +61,59 @@ return [
     |
      */
 
-    'listeners'          => [
-        WorkerStarting::class      => [
+    'listeners' => [
+        WorkerStarting::class => [
             EnsureUploadedFilesAreValid::class,
-            EnsureUploadedFilesCanBeMoved::class
+            EnsureUploadedFilesCanBeMoved::class,
         ],
 
-        RequestReceived::class     => [
-             ...Octane::prepareApplicationForNextOperation(),
-            ...Octane::prepareApplicationForNextRequest()
+        RequestReceived::class => [
+            ...Octane::prepareApplicationForNextOperation(),
+            ...Octane::prepareApplicationForNextRequest(),
             //
         ],
 
-        RequestHandled::class      => [
+        RequestHandled::class => [
             //
         ],
 
-        RequestTerminated::class   => [
+        RequestTerminated::class => [
             // FlushUploadedFiles::class,
         ],
 
-        TaskReceived::class        => [
-             ...Octane::prepareApplicationForNextOperation()
+        TaskReceived::class => [
+            ...Octane::prepareApplicationForNextOperation(),
             //
         ],
 
-        TaskTerminated::class      => [
+        TaskTerminated::class => [
             //
         ],
 
-        TickReceived::class        => [
-             ...Octane::prepareApplicationForNextOperation()
+        TickReceived::class => [
+            ...Octane::prepareApplicationForNextOperation(),
             //
         ],
 
-        TickTerminated::class      => [
+        TickTerminated::class => [
             //
         ],
 
         OperationTerminated::class => [
             FlushOnce::class,
-            FlushTemporaryContainerInstances::class
+            FlushTemporaryContainerInstances::class,
             // DisconnectFromDatabases::class,
             // CollectGarbage::class,
         ],
 
         WorkerErrorOccurred::class => [
             ReportException::class,
-            StopWorkerIfNecessary::class
+            StopWorkerIfNecessary::class,
         ],
 
-        WorkerStopping::class      => [
-            CloseMonologHandlers::class
-        ]
+        WorkerStopping::class => [
+            CloseMonologHandlers::class,
+        ],
     ],
 
     /*
@@ -127,11 +127,11 @@ return [
     |
      */
 
-    'warm'               => [
-         ...Octane::defaultServicesToWarm()
+    'warm' => [
+        ...Octane::defaultServicesToWarm(),
     ],
 
-    'flush'              => [
+    'flush' => [
         //
     ],
 
@@ -146,11 +146,11 @@ return [
     |
      */
 
-    'tables'             => [
+    'tables' => [
         'example:1000' => [
-            'name'  => 'string:1000',
-            'votes' => 'int'
-        ]
+            'name' => 'string:1000',
+            'votes' => 'int',
+        ],
     ],
 
     /*
@@ -164,9 +164,9 @@ return [
     |
      */
 
-    'cache'              => [
-        'rows'  => 1000,
-        'bytes' => 10000
+    'cache' => [
+        'rows' => 1000,
+        'bytes' => 10000,
     ],
 
     /*
@@ -180,7 +180,7 @@ return [
     |
      */
 
-    'watch'              => [
+    'watch' => [
         'app',
         'bootstrap',
         'config/**/*.php',
@@ -189,7 +189,7 @@ return [
         'resources/**/*.php',
         'routes',
         'composer.lock',
-        '.env'
+        '.env',
     ],
 
     /*
@@ -203,7 +203,7 @@ return [
     |
      */
 
-    'garbage'            => 50,
+    'garbage' => 50,
 
     /*
     |--------------------------------------------------------------------------
@@ -216,6 +216,6 @@ return [
     |
      */
 
-    'max_execution_time' => 30
+    'max_execution_time' => 30,
 
 ];

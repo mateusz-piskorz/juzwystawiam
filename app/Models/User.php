@@ -16,18 +16,18 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens, Billable;
+    use Billable, HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
         'email',
         'password',
-        'premium_access_expires_at'
+        'premium_access_expires_at',
     ];
 
     protected $hidden = [
         'password',
-        'remember_token'
+        'remember_token',
     ];
 
     protected $appends = ['premium_days'];
@@ -35,16 +35,16 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at'         => 'datetime',
+            'email_verified_at' => 'datetime',
             'premium_access_expires_at' => 'datetime',
-            'password'                  => 'hashed'
+            'password' => 'hashed',
         ];
     }
 
     protected function premiumDays(): Attribute
     {
         return Attribute::make(
-            get: fn(mixed $value, array $attributes) => PremiumDays::daysLeft($attributes['premium_access_expires_at'] ?? null),
+            get: fn (mixed $value, array $attributes) => PremiumDays::daysLeft($attributes['premium_access_expires_at'] ?? null),
         );
     }
 
@@ -80,5 +80,4 @@ class User extends Authenticatable
             ->where('invoice_emails.status', EmailStatus::SENT->value)
             ->count();
     }
-
 }

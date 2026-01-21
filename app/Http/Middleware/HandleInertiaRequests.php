@@ -11,8 +11,8 @@ use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
-
     use Locale;
+
     /**
      * The root template that's loaded on the first page visit.
      *
@@ -44,28 +44,28 @@ class HandleInertiaRequests extends Middleware
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
         return [
-             ...parent::share($request),
-            'name'        => config('app.name'),
-            'quote'       => ['message' => trim($message), 'author' => trim($author)],
-            'auth'        => [
-                'user' => $request->user()
+            ...parent::share($request),
+            'name' => config('app.name'),
+            'quote' => ['message' => trim($message), 'author' => trim($author)],
+            'auth' => [
+                'user' => $request->user(),
                 // 'permissions' => [
                 //     'post' => [
                 //         'create' => $request->user()->can('create', Post::class),
                 //     ],
                 // ],
             ],
-            'ziggy'       => fn(): array      => [
-                 ...(new Ziggy())->toArray(),
+            'ziggy' => fn (): array => [
+                ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
-                'query'    => $request->query()
+                'query' => $request->query(),
             ],
-            'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-            'locale'      => [
+            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'locale' => [
                 'languageCode' => App::currentLocale(),
                 // todo: Consider injecting only the necessary locale data into specific pages instead of sharing all locale data globally. This can help reduce unnecessary data transfer.
-                'data'         => $this->locale
-            ]
+                'data' => $this->locale,
+            ],
         ];
     }
 }

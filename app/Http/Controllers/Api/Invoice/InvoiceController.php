@@ -35,11 +35,11 @@ class InvoiceController
         DB::transaction(function () use ($request, &$invoice) {
             $validated = $request->validated();
             $totals = $this->CalculateProductTotals($validated['invoice_products']);
-            $invoice = Invoice::create([ ...$validated, ...$totals, 'user_id' => $request->user()->id]);
+            $invoice = Invoice::create([...$validated, ...$totals, 'user_id' => $request->user()->id]);
 
             foreach ($validated['invoice_products'] as $productData) {
                 $productTotals = $this->CalculateSingleProductTotals($productData);
-                $invoice->invoice_products()->create([ ...$productData, ...$productTotals]);
+                $invoice->invoice_products()->create([...$productData, ...$productTotals]);
             }
 
             foreach ($validated['invoice_contractors'] as $contractorData) {
@@ -50,7 +50,7 @@ class InvoiceController
 
         return response()->json([
             /** @var int */
-            'id' => $invoice['id']
+            'id' => $invoice['id'],
         ], 201);
     }
 
@@ -61,12 +61,12 @@ class InvoiceController
         DB::transaction(function () use ($request, &$invoice) {
             $validated = $request->validated();
             $totals = $this->CalculateProductTotals($validated['invoice_products']);
-            $invoice->update([ ...$validated, ...$totals, 'user_id' => $request->user()->id]);
+            $invoice->update([...$validated, ...$totals, 'user_id' => $request->user()->id]);
 
             $invoice->invoice_products()->delete();
             foreach ($validated['invoice_products'] as $productData) {
                 $productTotals = $this->CalculateSingleProductTotals($productData);
-                $invoice->invoice_products()->create([ ...$productData, ...$productTotals]);
+                $invoice->invoice_products()->create([...$productData, ...$productTotals]);
             }
 
             $invoice->invoice_contractors()->delete();
@@ -78,7 +78,7 @@ class InvoiceController
 
         return response()->json([
             /** @var int */
-            'id' => $invoice['id']
+            'id' => $invoice['id'],
         ], 201);
     }
 

@@ -13,37 +13,36 @@ class InvoiceContractorResource extends JsonResource
     {
         return [
             /** @var int */
-            'id'               => $this->id,
+            'id' => $this->id,
             /** @var int */
-            'invoice_id'       => $this->invoice_id,
+            'invoice_id' => $this->invoice_id,
             /** @var int */
-            'contractor_id'    => $this->contractor_id,
+            'contractor_id' => $this->contractor_id,
             /** @var ContractorRole */
-            'role'             => $this->role,
+            'role' => $this->role,
             /** @var TypeOfBusiness */
             'type_of_business' => $this->type_of_business,
-            /** @var boolean */
-            'is_own_company'   => $this->is_own_company,
-            'postal_code'      => $this->postal_code,
-            'city'             => $this->city,
-            'country'          => $this->country,
-            'company_name'     => $this->company_name,
-            'street_name'      => $this->street_name,
+            /** @var bool */
+            'is_own_company' => $this->is_own_company,
+            'postal_code' => $this->postal_code,
+            'city' => $this->city,
+            'country' => $this->country,
+            'company_name' => $this->company_name,
+            'street_name' => $this->street_name,
             /** @var string|null */
-            'bank_account'     => $this->bank_account,
+            'bank_account' => $this->bank_account,
             /** @var string|null */
-            'nip'              => $this->nip,
+            'nip' => $this->nip,
             /** @var string|null */
-            'email'            => $this->email,
+            'email' => $this->email,
             /** @var string|null */
-            'phone'            => $this->phone,
+            'phone' => $this->phone,
             /** @var string|null */
-            'first_name'       => $this->first_name,
+            'first_name' => $this->first_name,
             /** @var string|null */
-            'surname'          => $this->surname,
-            'created_at'       => $this->created_at,
-            'updated_at'       => $this->updated_at
+            'surname' => $this->surname,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
-
-};
+}

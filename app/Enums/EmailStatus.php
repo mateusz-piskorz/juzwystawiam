@@ -2,7 +2,8 @@
 
 namespace App\Enums;
 
-enum EmailStatus: string {
+enum EmailStatus: string
+{
     case PENDING = 'PENDING';
     case SENT = 'SENT';
     case FAILED = 'FAILED';

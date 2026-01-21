@@ -19,18 +19,18 @@ class ContractorFactory extends Factory
     {
         return [
             'type_of_business' => TypeOfBusiness::OTHER_BUSINESS,
-            'is_own_company'   => fake()->boolean(),
-            'postal_code'      => fake()->postcode(),
-            'city'             => fake()->city(),
-            'country'          => fake()->country(),
-            'bank_account'     => fake()->bankAccountNumber(),
-            'nip'              => fake()->numerify('##########'),
-            'company_name'     => fake()->company(),
-            'email'            => fake()->unique()->safeEmail(),
-            'street_name'      => fake()->streetAddress(),
-            'phone'            => fake()->phoneNumber(),
-            'first_name'       => fake()->firstName(),
-            'surname'          => fake()->lastName()
+            'is_own_company' => fake()->boolean(),
+            'postal_code' => fake()->postcode(),
+            'city' => fake()->city(),
+            'country' => fake()->country(),
+            'bank_account' => fake()->bankAccountNumber(),
+            'nip' => fake()->numerify('##########'),
+            'company_name' => fake()->company(),
+            'email' => fake()->unique()->safeEmail(),
+            'street_name' => fake()->streetAddress(),
+            'phone' => fake()->phoneNumber(),
+            'first_name' => fake()->firstName(),
+            'surname' => fake()->lastName(),
         ];
     }
 }
