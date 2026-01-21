@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Contractor;
 
 use App\Enums\TypeOfBusiness;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpsertContractorRequest extends FormRequest
+class StoreContractorRequest extends FormRequest
 {
     public function rules(): array
     {

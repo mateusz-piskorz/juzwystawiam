@@ -57,7 +57,7 @@ test('filters products by measure unit and vat rate', function () {
         ->assertJsonPath('data.0.vat_rate', VatRate::CASE5);
 });
 
-test('sorts results', function () {
+test('sorts results - products', function () {
     $user = User::factory()
         ->has(Product::factory()->count(3)->sequence(
             ['price' => 100],
@@ -74,4 +74,4 @@ test('sorts results', function () {
         ->assertOk()
         ->assertJsonCount(3, 'data')
         ->assertJsonPath('data.0.price', 200);
-})->only();
+});
