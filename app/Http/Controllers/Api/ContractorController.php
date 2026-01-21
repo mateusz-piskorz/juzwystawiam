@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Contractor\StoreContractorRequest;
+use App\Http\Requests\Contractor\UpdateContractorRequest;
 use App\Http\Requests\IndexContractorRequest;
-use App\Http\Requests\UpsertContractorRequest;
 use App\Http\Resources\ContractorResource;
 use App\Models\Contractor;
 use App\Traits\AppliesQueryFilters;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 class ContractorController
 {
@@ -25,23 +27,24 @@ class ContractorController
         return ContractorResource::collection($query->paginate($limit));
     }
 
-    public function store(UpsertContractorRequest $request)
+    public function store(StoreContractorRequest $request)
     {
         $validated = $request->validated();
         $companyName = $validated['company_name'] ?? $validated['first_name'].' '.$validated['surname'];
         $contractor = Contractor::create([...$validated, 'company_name' => $companyName, 'user_id' => $request->user()->id]);
 
-        return (new ContractorResource($contractor))->response()->setStatusCode(201);
+        return (new ContractorResource($contractor))->response();
     }
 
-    public function update(UpsertContractorRequest $request, Contractor $contractor)
+    public function update(UpdateContractorRequest $request, Contractor $contractor)
     {
         Gate::authorize('update', $contractor);
-        $validated = $request->validated();
-        $companyName = $validated['company_name'] ?? $validated['first_name'].' '.$validated['surname'];
-        $contractor->update([...$validated, 'company_name' => $companyName, 'user_id' => $request->user()->id]);
+        $validator = Validator::make([...$contractor->toArray(), ...$request->validated()], $request->rules());
+        $validated = $validator->validated();
 
-        return (new ContractorResource($contractor))->response()->setStatusCode(201);
+        $contractor->update([...$validated, 'user_id' => $request->user()->id]);
+
+        return (new ContractorResource($contractor))->response();
     }
 
     public function destroy(Contractor $contractor)
