@@ -24,7 +24,7 @@ test("user cannot delete another user's product", function () {
     assertDatabaseHas($product);
 });
 
-test('user can delete their own product', function () {
+test('user can delete his own product', function () {
     $product = Product::factory()->create();
 
     actingAs($product->user)
