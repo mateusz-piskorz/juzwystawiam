@@ -26,7 +26,7 @@ export function InvoiceStatusDonutChart() {
 
     const { data } = useQuery({
         queryKey: ['invoice-status-donut-chart-data'],
-        queryFn: api['invoices.status-distribution-by-year'],
+        queryFn: api['invoices.status-yearly-distribution'],
     });
 
     const chartData = [

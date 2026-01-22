@@ -23,7 +23,7 @@ test('user can get his products', function () {
         ->assertJsonPath('data.0.name', 'product1');
 });
 
-test('filters products by name', function () {
+test('filters products by name - q param', function () {
     $user = User::factory()
         ->has(Product::factory()->count(2)->sequence(
             ['name' => 'Apple iPhone'],
