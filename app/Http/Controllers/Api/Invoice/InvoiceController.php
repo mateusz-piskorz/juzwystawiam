@@ -21,7 +21,7 @@ class InvoiceController
 
     public function index(IndexInvoiceRequest $request)
     {
-        $query = $request->user()->invoices()->with(['latest_invoice_email']);
+        $query = $request->user()->invoices()->with(['latestInvoiceEmail']);
         $validated = $request->validated();
         $limit = $validated['limit'] ?? 25;
         $query = $this->applyQueryFilters($query, $validated, 'number', ['type', 'is_already_paid']);
@@ -41,7 +41,7 @@ class InvoiceController
 
             foreach ($validated['invoice_products'] as $productData) {
                 $productTotals = $this->CalculateSingleProductTotals($productData);
-                $invoice->invoice_products()->create([...$productData, ...$productTotals]);
+                $invoice->invoiceProducts()->create([...$productData, ...$productTotals]);
             }
 
             foreach ($validated['invoice_contractors'] as $contractorData) {
@@ -69,13 +69,13 @@ class InvoiceController
 
             $invoice->update([...$validated, ...$totals, 'user_id' => $request->user()->id]);
 
-            $invoice->invoice_products()->delete();
+            $invoice->invoiceProducts()->delete();
             foreach ($invoiceProducts as $productData) {
                 $productTotals = $this->CalculateSingleProductTotals($productData);
-                $invoice->invoice_products()->create([...$productData, ...$productTotals]);
+                $invoice->invoiceProducts()->create([...$productData, ...$productTotals]);
             }
 
-            $invoice->invoice_contractors()->delete();
+            $invoice->invoiceContractors()->delete();
             $invoiceContractors = $validated['invoice_contractors'] ?? [];
             foreach ($invoiceContractors as $contractorData) {
                 $contractor = Contractor::query()->findOrFail($contractorData['contractor_id']);
@@ -104,17 +104,17 @@ class InvoiceController
                 $totals = $this->CalculateProductTotals($products);
                 $updateData = array_merge($updateData, $totals);
 
-                $invoice->invoice_products()->delete();
+                $invoice->invoiceProducts()->delete();
                 foreach ($products as $productData) {
                     $productTotals = $this->CalculateSingleProductTotals($productData);
-                    $invoice->invoice_products()->create([...$productData, ...$productTotals]);
+                    $invoice->invoiceProducts()->create([...$productData, ...$productTotals]);
                 }
             }
 
             if ($request->has('invoice_contractors')) {
                 $contractors = $validated['invoice_contractors'] ?? [];
 
-                $invoice->invoice_contractors()->delete();
+                $invoice->invoiceContractors()->delete();
                 foreach ($contractors as $contractorData) {
                     $contractor = Contractor::query()->findOrFail($contractorData['contractor_id']);
                     $invoice->createContractor($contractor, $contractorData['role']);

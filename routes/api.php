@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->name('api.')->prefix('v1')->group(function ()
         Route::put('/invoices/{invoice}', [InvoiceController::class, 'update'])->name('update');
         Route::delete('/invoices/{invoice}', [InvoiceController::class, 'destroy'])->name('destroy');
         Route::get('/invoices/charts/status-yearly-distribution', [InvoiceChartDataController::class, 'statusYearlyDistribution'])->name('status-yearly-distribution');
-        Route::get('/invoices/charts/status-monthly-distribution', [InvoiceChartDataController::class, 'statusMonthlyDistribution'])->name('`status`-monthly-distribution');
+        Route::get('/invoices/charts/status-monthly-distribution', [InvoiceChartDataController::class, 'statusMonthlyDistribution'])->name('status-monthly-distribution');
         Route::post('/invoices/{invoice}/send-email-issuing-invoice', [InvoiceEmailController::class, 'sendEmailIssuingInvoice'])->name('send-email');
     });
 

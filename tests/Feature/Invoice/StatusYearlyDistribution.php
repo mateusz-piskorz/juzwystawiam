@@ -7,54 +7,34 @@ use Carbon\Carbon;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\getJson;
 
-test('unauthenticated user cannot get his invoices', function () {
-    getJson(route('api.invoices.index'))->assertUnauthorized();
+test('unauthenticated user cannot get his yearly distribution invoices', function () {
+    getJson(route('api.invoices.status-yearly-distribution'))->assertUnauthorized();
 });
 
-it('returns the distribution of paid and unpaid invoices for this and last year', function () {
-    // 1. Freeze time to a specific date in 2026
+test('user can get his yearly distribution invoices', function () {
     Carbon::setTestNow('2026-05-20');
-
     $user = User::factory()->create();
 
-    // 2. Create Invoices for This Year (2026)
-    Invoice::factory()->count(2)->create([
-        'user_id' => $user->id,
-        'is_already_paid' => true,
-        'created_at' => now(), // 2026
-    ]);
-    Invoice::factory()->create([
-        'user_id' => $user->id,
-        'is_already_paid' => false,
-        'created_at' => now(), // 2026
-    ]);
+    // Create 2026 invoices: 2 paid, 1 unpaid
+    Invoice::factory(3)->sequence(
+        ['is_already_paid' => true],
+        ['is_already_paid' => true],
+        ['is_already_paid' => false],
+    )->create(['user_id' => $user->id, 'created_at' => now()]);
 
-    // 3. Create Invoices for Last Year (2025)
-    Invoice::factory()->count(1)->create([
-        'user_id' => $user->id,
-        'is_already_paid' => true,
-        'created_at' => now()->subYear(), // 2025
-    ]);
-    Invoice::factory()->count(3)->create([
-        'user_id' => $user->id,
-        'is_already_paid' => false,
-        'created_at' => now()->subYear(), // 2025
-    ]);
+    // Create 2025 invoices: 1 paid, 1 unpaid
+    Invoice::factory(2)->sequence(
+        ['is_already_paid' => true],
+        ['is_already_paid' => false],
+    )->create(['user_id' => $user->id, 'created_at' => now()->subYear()]);
 
-    // 4. Act & Assert
     actingAs($user)
-        ->getJson(route('invoices.status-distribution')) // Adjust route name
+        ->getJson(route('api.invoices.status-yearly-distribution'))
         ->assertOk()
-        ->assertJson([
-            'this_year' => [
-                'paid' => 2,
-                'unpaid' => 1,
-            ],
-            'prev_year' => [
-                'paid' => 1,
-                'unpaid' => 3,
-            ],
+        ->assertExactJson([
+            'this_year' => ['paid' => 2, 'unpaid' => 1],
+            'prev_year' => ['paid' => 1, 'unpaid' => 1],
         ]);
 
-    Carbon::setTestNow(); // Reset time
+    Carbon::setTestNow();
 });

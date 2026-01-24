@@ -75,13 +75,13 @@ namespace App\Models{
  * @property string|null $secret_note
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\InvoiceContractor> $invoice_contractors
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\InvoiceContractor> $invoiceContractors
  * @property-read int|null $invoice_contractors_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\InvoiceEmail> $invoice_emails
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\InvoiceEmail> $invoiceEmails
  * @property-read int|null $invoice_emails_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\InvoiceProduct> $invoice_products
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\InvoiceProduct> $invoiceProducts
  * @property-read int|null $invoice_products_count
- * @property-read \App\Models\InvoiceEmail|null $latest_invoice_email
+ * @property-read \App\Models\InvoiceEmail|null $latestInvoiceEmail
  * @property-read \App\Models\User $user
  * @method static \Database\Factories\InvoiceFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice newModelQuery()
@@ -130,6 +130,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Invoice $invoice
+ * @method static \Database\Factories\InvoiceContractorFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor query()
@@ -196,6 +197,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Invoice $invoice
+ * @method static \Database\Factories\InvoiceProductFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceProduct newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceProduct newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceProduct query()

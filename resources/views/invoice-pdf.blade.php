@@ -210,7 +210,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($invoice['invoice_products'] as $product)
+                        @foreach ($invoice['invoiceProducts'] as $product)
                             <tr>
                                 <td class="p-12 ta-left bb w-40">{{ $product['name'] }}</td>
                                 <td class="p-12 ta-center bb">{{ $product['quantity'] }}</td>
