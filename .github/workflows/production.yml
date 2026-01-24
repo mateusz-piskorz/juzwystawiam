@@ -78,7 +78,8 @@ jobs:
     runs-on: self-hosted
     env:
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      RESEND_KEY: ${{ secrets.RESEND_KEY }}
+      MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+      MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
       STRIPE_KEY: ${{ secrets.STRIPE_KEY }}
       STRIPE_SECRET: ${{ secrets.STRIPE_SECRET }}
       STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
