@@ -23,7 +23,7 @@ test("user cannot update another user's contractor", function () {
     expect($contractor->fresh()->company_name)->toBe('Original Name');
 });
 
-test('user can update their own contractor', function () {
+test('user can update his own contractor', function () {
     $contractor = Contractor::factory()->create(['type_of_business' => TypeOfBusiness::SELF_EMPLOYED]);
 
     actingAs($contractor->user)

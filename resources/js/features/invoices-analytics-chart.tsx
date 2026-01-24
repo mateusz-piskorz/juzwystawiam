@@ -25,7 +25,7 @@ export const InvoicesAnalyticsChart = ({ className, withFilters = true }: Props)
     const { data } = useQuery({
         queryKey: ['chart-data', period, product],
         queryFn: () =>
-            api['invoices.status-monthly-series'](
+            api['invoices.status-monthly-distribution'](
                 withFilters ? { queries: { period: period as any, 'product[]': product as unknown as number[] } } : undefined,
             ),
     });

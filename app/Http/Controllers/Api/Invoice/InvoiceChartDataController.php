@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class InvoiceChartDataController
 {
-    public function statusDistributionByYear(Request $request)
+    public function statusYearlyDistribution(Request $request)
     {
         $user = $request->user();
 
@@ -39,7 +39,7 @@ class InvoiceChartDataController
         return $result;
     }
 
-    public function statusMonthlySeries(Request $request)
+    public function statusMonthlyDistribution(Request $request)
     {
         $validated = $request->validate([
             'period' => 'nullable|in:this_year,prev_year',

@@ -16,8 +16,8 @@ class ProductFactory extends Factory
             'name' => fake()->word(),
             'description' => fake()->sentence(),
             'price' => fake()->randomFloat(2, 1, 1000),
-            'measure_unit' => MeasureUnit::PCS,
-            'vat_rate' => VatRate::CASE5,
+            'measure_unit' => fake()->randomElement(MeasureUnit::class),
+            'vat_rate' => fake()->randomElement(VatRate::class),
         ];
     }
 }

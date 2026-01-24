@@ -5,29 +5,23 @@ namespace Database\Factories;
 use App\Enums\Currency;
 use App\Enums\InvoiceType;
 use App\Enums\PaymentMethod;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Invoice>
- */
 class InvoiceFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            'type' => InvoiceType::NO_VAT,
+            'user_id' => User::factory(),
+            'type' => fake()->randomElement(InvoiceType::class),
             'number' => 'FR '.date('d/m/Y'),
-            'issue_date' => now(),
-            'payment_method' => PaymentMethod::CASH,
-            'currency' => Currency::PLN,
+            'issue_date' => now()->roundSecond(),
+            'payment_method' => fake()->randomElement(PaymentMethod::class),
+            'currency' => fake()->randomElement(Currency::class),
             'is_already_paid' => true,
-            'sale_date' => now(),
-            'due_date' => now()->addDays(10),
+            'sale_date' => now()->roundSecond(),
+            'due_date' => now()->addDays(10)->roundSecond(),
             'total' => fake()->randomFloat(2, 0, 10000),
             'total_vat_amount' => fake()->randomFloat(2, 0, 10000),
             'total_discount_amount' => fake()->randomFloat(2, 0, 10000),

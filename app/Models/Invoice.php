@@ -38,29 +38,29 @@ class Invoice extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function invoice_products(): HasMany
+    public function invoiceProducts(): HasMany
     {
         return $this->hasMany(InvoiceProduct::class);
     }
 
-    public function invoice_contractors(): HasMany
+    public function invoiceContractors(): HasMany
     {
         return $this->hasMany(InvoiceContractor::class);
     }
 
-    public function invoice_emails(): HasMany
+    public function invoiceEmails(): HasMany
     {
         return $this->hasMany(InvoiceEmail::class);
     }
 
-    public function latest_invoice_email()
+    public function latestInvoiceEmail()
     {
         return $this->hasOne(InvoiceEmail::class)->latestOfMany();
     }
 
     public function sendEmailIssuingInvoice(string $recipient): void
     {
-        $this->load(['invoice_products', 'invoice_contractors']);
+        $this->load(['invoiceProducts', 'invoiceContractors']);
 
         $invoice_email = InvoiceEmail::create([
             'invoice_id' => $this->id,
@@ -73,7 +73,7 @@ class Invoice extends Model
 
     public function createContractor(Contractor $contractor, string $role): void
     {
-        $this->invoice_contractors()->create([
+        $this->invoiceContractors()->create([
             'contractor_id' => $contractor->id,
             'role' => $role,
             'type_of_business' => $contractor->type_of_business,
@@ -94,7 +94,7 @@ class Invoice extends Model
 
     public function generatePdf()
     {
-        $this->load(['invoice_products', 'invoice_contractors']);
+        $this->load(['invoiceProducts', 'invoiceContractors']);
         $this['sale_date'] = date_format(date_create($this['sale_date']), 'Y-m-d');
         [$buyer, $seller] = $this->getContractors();
 
@@ -103,13 +103,13 @@ class Invoice extends Model
 
     public function getContractors()
     {
-        $this->loadMissing(['invoice_products', 'invoice_contractors']);
+        $this->loadMissing(['invoiceProducts', 'invoiceContractors']);
         $emptyContractor = ['company_name' => '', 'street_name' => '', 'postal_code' => '', 'bank_account' => '', 'city' => ''];
 
         return [
 
-            collect($this['invoice_contractors'])->firstWhere('role', ContractorRole::BUYER) ?? $emptyContractor,
-            collect($this['invoice_contractors'])->firstWhere('role', ContractorRole::SELLER) ?? $emptyContractor,
+            collect($this['invoiceContractors'])->firstWhere('role', ContractorRole::BUYER) ?? $emptyContractor,
+            collect($this['invoiceContractors'])->firstWhere('role', ContractorRole::SELLER) ?? $emptyContractor,
         ];
     }
 }

@@ -24,7 +24,7 @@ test("user cannot delete another user's contractor", function () {
     assertDatabaseHas($contractor);
 });
 
-test('user can delete their own contractor', function () {
+test('user can delete his own contractor', function () {
     $contractor = Contractor::factory()->create();
 
     actingAs($contractor->user)

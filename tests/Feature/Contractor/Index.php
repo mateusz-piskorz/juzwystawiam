@@ -22,7 +22,7 @@ test('user can get his contractors', function () {
         ->assertJsonPath('data.0.city', 'city1');
 });
 
-test('filters contractors by company_name', function () {
+test('filters contractors by company_name - q param', function () {
     $user = User::factory()
         ->has(Contractor::factory()->count(2)->sequence(
             ['company_name' => 'Facebook Meta', 'type_of_business' => TypeOfBusiness::SELF_EMPLOYED],

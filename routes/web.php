@@ -21,14 +21,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard/invoices/{invoice}', function (Invoice $invoice) {
         Gate::authorize('view', $invoice);
-        $invoice->load(['invoice_products', 'invoice_contractors', 'invoice_emails']);
+        $invoice->load(['invoiceProducts', 'invoiceContractors', 'invoiceEmails']);
 
         return Inertia::render('dashboard/invoices/[id]/page/index', ['invoice' => $invoice]);
     })->name('invoices.show');
 
     Route::get('/dashboard/invoices/{invoice}/edit', function (Invoice $invoice) {
         Gate::authorize('update', $invoice);
-        $invoice->load(['invoice_products', 'invoice_contractors']);
+        $invoice->load(['invoiceProducts', 'invoiceContractors']);
 
         return Inertia::render('dashboard/invoices/[id]/edit/page', ['invoice' => $invoice]);
     })->name('invoices.edit');

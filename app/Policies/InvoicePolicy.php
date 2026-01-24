@@ -40,10 +40,10 @@ class InvoicePolicy
             return Response::deny('You do not own this invoice.');
         }
 
-        $invoice->loadMissing(['invoice_emails']);
+        $invoice->loadMissing(['invoiceEmails']);
 
         if (
-            collect($invoice->invoice_emails)->firstWhere(function ($email) {
+            collect($invoice->invoiceEmails)->firstWhere(function ($email) {
                 return Carbon::parse($email->created_at)->gt(now()->subMinutes(2));
             })
         ) {

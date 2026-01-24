@@ -22,7 +22,7 @@ test("user cannot update another user's product", function () {
     expect($product->fresh()->name)->toBe('Original Name');
 });
 
-test('user can update their own product', function () {
+test('user can update his own product', function () {
     $product = Product::factory()->create();
 
     actingAs($product->user)
