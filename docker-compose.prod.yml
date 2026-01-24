@@ -19,10 +19,11 @@ services:
       APP_DEBUG: false
       VITE_APP_NAME: JuzWystawiam
       APP_NAME: JuzWystawiam
-      MAIL_MAILER: resend
-      MAIL_FROM_ADDRESS: invoice@juzwystawiam.pl
-      MAIL_FROM_NAME: JuzWystawiam
-      MAIL_HOST: https://www.juzwystawiam.pl
+      MAIL_FROM_ADDRESS: juzwystawiam@quickpaper.online
+      MAIL_FROM_NAME: Juz Wystawiam
+      MAIL_MAILER: smtp
+      MAIL_HOST: postal.quickpaper.online
+      MAIL_PORT: 25
       MAIL_USERNAME: ${MAIL_USERNAME}
       MAIL_PASSWORD: ${MAIL_PASSWORD}
       STRIPE_KEY: ${STRIPE_KEY}
@@ -53,10 +54,11 @@ services:
       APP_DEBUG: false
       VITE_APP_NAME: JuzWystawiam
       APP_NAME: JuzWystawiam
-      MAIL_MAILER: resend
-      MAIL_FROM_ADDRESS: invoice@juzwystawiam.pl
-      MAIL_FROM_NAME: JuzWystawiam
-      MAIL_HOST: https://www.juzwystawiam.pl
+      MAIL_FROM_ADDRESS: juzwystawiam@quickpaper.online
+      MAIL_FROM_NAME: Juz Wystawiam
+      MAIL_MAILER: smtp
+      MAIL_HOST: postal.quickpaper.online
+      MAIL_PORT: 25
       MAIL_USERNAME: ${MAIL_USERNAME}
       MAIL_PASSWORD: ${MAIL_PASSWORD}
       RESEND_KEY: ${RESEND_KEY}
