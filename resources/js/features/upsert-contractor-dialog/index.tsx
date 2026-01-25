@@ -5,9 +5,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Form } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import { COUNTRIES } from '@/lib/constants/countries';
-
 import { CreateContractorDTO, createContractorDTO } from '@/lib/constants/zod/contractor';
-import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
+import { api } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { cn } from '@/lib/utils/cn';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
@@ -31,11 +30,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
     const l = useLocale().locale;
     const locale = { ...l['dashboard/contractors'], common: l.common, enum: l.enum };
 
-    const form = useForm<CreateContractorDTO>({
-        resolver: zodResolver(createContractorDTO),
-        defaultValues,
-    });
-    const isSelfEmployed = form.watch('type_of_business') === 'SELF_EMPLOYED';
+    const form = useForm<CreateContractorDTO>({ resolver: zodResolver(createContractorDTO), defaultValues });
 
     useEffect(() => {
         form.reset(defaultValues ?? { is_own_company: false });
@@ -81,13 +76,6 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                         }}
                         className="space-y-8"
                     >
-                        <SelectField
-                            form={form}
-                            name="type_of_business"
-                            label={locale['Type of business']}
-                            selectOptions={schemas.TypeOfBusiness.options.map((val) => ({ label: locale.enum.TYPE_OF_BUSINESS[val], value: val }))}
-                        />
-
                         <ContractorTripleBox form={form} disableIsOwnCompany={disableIsOwnCompany} />
 
                         <div className="rounded border">
@@ -96,15 +84,28 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                                     form={form}
                                     name="postal_code"
                                     label={locale['Postal code']}
+                                    optionalLabel
                                     className="rounded-none rounded-ss border-none"
                                 />
                                 <Separator orientation="vertical" />
-                                <InputField form={form} name="city" label={locale.City} className="rounded-none rounded-se border-none" />
+                                <InputField
+                                    form={form}
+                                    name="city"
+                                    label={locale.City}
+                                    optionalLabel
+                                    className="rounded-none rounded-se border-none"
+                                />
                             </div>
 
                             <Separator orientation="horizontal" />
 
-                            <InputField form={form} name="street_name" label={locale['Street name']} className="rounded-none border-none" />
+                            <InputField
+                                form={form}
+                                name="street_name"
+                                label={locale['Street name']}
+                                optionalLabel
+                                className="rounded-none border-none"
+                            />
 
                             <Separator orientation="horizontal" />
 
@@ -113,6 +114,7 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                                 form={form}
                                 name="country"
                                 label={locale.Country}
+                                optionalLabel
                                 selectOptions={COUNTRIES.map((val) => ({
                                     label: val,
                                     value: val,
@@ -121,54 +123,36 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                         </div>
 
                         <div className="rounded border">
-                            {isSelfEmployed && (
-                                <>
-                                    <div className="flex h-[60px]">
-                                        <InputField
-                                            form={form}
-                                            name="first_name"
-                                            label={locale['First name']}
-                                            className="rounded-none rounded-ss rounded-se border-none"
-                                        />
-                                        <Separator orientation="vertical" />
-                                        <InputField
-                                            form={form}
-                                            name="surname"
-                                            label={locale.Surname}
-                                            className="rounded-none rounded-se border-none"
-                                        />
-                                    </div>
-                                    <Separator orientation="horizontal" />
-                                </>
-                            )}
-
                             <div className="flex h-[60px]">
                                 <InputField
                                     form={form}
                                     name="email"
-                                    label={`${locale.Email} (${locale.common.Optional})`}
+                                    label={locale.Email}
+                                    optionalLabel
                                     type="email"
                                     inputMode="email"
-                                    className={cn('rounded-none border-none', !isSelfEmployed && 'rounded-ss')}
+                                    className="rounded-none rounded-ss border-none"
                                 />
                                 <Separator orientation="vertical" />
                                 <InputField
                                     form={form}
                                     name="phone"
-                                    label={`${locale.Phone} (${locale.common.Optional})`}
+                                    label={locale.Phone}
+                                    optionalLabel
                                     type="tel"
                                     inputMode="numeric"
-                                    className={cn('rounded-none border-none', !isSelfEmployed && 'rounded-se')}
+                                    className="rounded-none rounded-se border-none"
                                 />
                             </div>
                             <Separator orientation="horizontal" />
                             <InputField
                                 form={form}
                                 name="bank_account"
-                                label={`${locale['Bank Account']} (${locale.common.Optional})`}
+                                label={locale['Bank Account']}
+                                optionalLabel
                                 type="text"
                                 inputMode="numeric"
-                                className={cn('rounded-none rounded-ee rounded-es border-none', !isSelfEmployed && 'rounded-se')}
+                                className={cn('rounded-none rounded-ee rounded-es border-none')}
                             />
                         </div>
 

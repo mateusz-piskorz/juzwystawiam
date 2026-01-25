@@ -9,7 +9,6 @@ use App\Http\Resources\ContractorResource;
 use App\Models\Contractor;
 use App\Traits\AppliesQueryFilters;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Validator;
 
 class ContractorController
 {
@@ -22,7 +21,7 @@ class ContractorController
         $validated = $request->validated();
         $limit = $validated['limit'] ?? 25;
 
-        $query = $this->applyQueryFilters($query, $validated, 'company_name', ['type_of_business', 'is_own_company']);
+        $query = $this->applyQueryFilters($query, $validated, 'company_name', ['is_own_company']);
 
         return ContractorResource::collection($query->paginate($limit));
     }
@@ -30,8 +29,7 @@ class ContractorController
     public function store(StoreContractorRequest $request)
     {
         $validated = $request->validated();
-        $companyName = $validated['company_name'] ?? $validated['first_name'].' '.$validated['surname'];
-        $contractor = Contractor::create([...$validated, 'company_name' => $companyName, 'user_id' => $request->user()->id]);
+        $contractor = Contractor::create([...$validated, 'user_id' => $request->user()->id]);
 
         return (new ContractorResource($contractor))->response();
     }
@@ -39,9 +37,7 @@ class ContractorController
     public function update(UpdateContractorRequest $request, Contractor $contractor)
     {
         Gate::authorize('update', $contractor);
-        $validator = Validator::make([...$contractor->toArray(), ...$request->validated()], $request->rules());
-        $validated = $validator->validated();
-
+        $validated = $request->validated();
         $contractor->update([...$validated, 'user_id' => $request->user()->id]);
 
         return (new ContractorResource($contractor))->response();

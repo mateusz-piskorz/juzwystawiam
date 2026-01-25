@@ -5,14 +5,13 @@ import { z } from "zod";
 
 
 const q = z.union([z.string(), z.null()]).optional();
-const type_of_business = z.union([z.string(), z.array(z.string()), z.null()]).optional();
-const sort = z.union([z.enum(["company_name", "is_own_company", "type_of_business"]), z.null()]).optional();
+const is_own_company = z.union([z.string(), z.array(z.string()), z.null()]).optional();
+const sort = z.union([z.enum(["company_name", "is_own_company"]), z.null()]).optional();
 const sort_direction = z.union([z.enum(["asc", "desc"]), z.null()]).optional();
 const limit = z.union([z.number(), z.null()]).optional();
-const TypeOfBusiness = z.enum(["PRIVATE_PERSON", "SELF_EMPLOYED", "OTHER_BUSINESS"]);
-const ContractorResource = z.object({ id: z.number().int(), user_id: z.number().int(), type_of_business: TypeOfBusiness, is_own_company: z.boolean(), postal_code: z.string(), city: z.string(), country: z.string(), company_name: z.string(), street_name: z.string(), bank_account: z.union([z.string(), z.null()]), nip: z.union([z.string(), z.null()]), email: z.union([z.string(), z.null()]), phone: z.union([z.string(), z.null()]), first_name: z.union([z.string(), z.null()]), surname: z.union([z.string(), z.null()]), created_at: z.union([z.string(), z.null()]), updated_at: z.union([z.string(), z.null()]) }).passthrough();
-const StoreContractorRequest = z.object({ type_of_business: TypeOfBusiness, is_own_company: z.boolean(), nip: z.union([z.string(), z.null()]).optional(), postal_code: z.string(), city: z.string(), country: z.string(), company_name: z.union([z.string(), z.null()]).optional(), street_name: z.string(), email: z.union([z.string(), z.null()]).optional(), phone: z.union([z.string(), z.null()]).optional(), bank_account: z.union([z.string(), z.null()]).optional(), first_name: z.union([z.string(), z.null()]).optional(), surname: z.union([z.string(), z.null()]).optional() }).passthrough();
-const UpdateContractorRequest = z.object({ type_of_business: TypeOfBusiness, is_own_company: z.union([z.boolean(), z.null()]), nip: z.union([z.string(), z.null()]), postal_code: z.union([z.string(), z.null()]), city: z.union([z.string(), z.null()]), country: z.union([z.string(), z.null()]), company_name: z.union([z.string(), z.null()]), street_name: z.union([z.string(), z.null()]), email: z.union([z.string(), z.null()]), phone: z.union([z.string(), z.null()]), bank_account: z.union([z.string(), z.null()]), first_name: z.union([z.string(), z.null()]), surname: z.union([z.string(), z.null()]) }).partial().passthrough();
+const ContractorResource = z.object({ id: z.number().int(), user_id: z.number().int(), is_own_company: z.boolean(), company_name: z.string(), nip: z.union([z.string(), z.null()]), email: z.union([z.string(), z.null()]), phone: z.union([z.string(), z.null()]), bank_account: z.union([z.string(), z.null()]), country: z.union([z.string(), z.null()]), city: z.union([z.string(), z.null()]), postal_code: z.union([z.string(), z.null()]), street_name: z.union([z.string(), z.null()]), created_at: z.union([z.string(), z.null()]), updated_at: z.union([z.string(), z.null()]) }).passthrough();
+const StoreContractorRequest = z.object({ is_own_company: z.boolean(), company_name: z.string(), nip: z.union([z.string(), z.null()]).optional(), email: z.union([z.string(), z.null()]).optional(), phone: z.union([z.string(), z.null()]).optional(), bank_account: z.union([z.string(), z.null()]).optional(), country: z.union([z.string(), z.null()]).optional(), city: z.union([z.string(), z.null()]).optional(), postal_code: z.union([z.string(), z.null()]).optional(), street_name: z.union([z.string(), z.null()]).optional() }).passthrough();
+const UpdateContractorRequest = z.object({ is_own_company: z.union([z.boolean(), z.null()]), company_name: z.union([z.string(), z.null()]), nip: z.union([z.string(), z.null()]), email: z.union([z.string(), z.null()]), phone: z.union([z.string(), z.null()]), bank_account: z.union([z.string(), z.null()]), country: z.union([z.string(), z.null()]), city: z.union([z.string(), z.null()]), postal_code: z.union([z.string(), z.null()]), street_name: z.union([z.string(), z.null()]) }).partial().passthrough();
 const sort__2 = z.union([z.enum(["number", "type", "sale_date", "total", "is_already_paid"]), z.null()]).optional();
 const InvoiceType = z.enum(["VAT", "NO_VAT"]);
 const PaymentMethod = z.enum(["BANK_TRANSFER", "CASH", "CARD", "BARTER", "CHEQUE", "COD", "OTHER", "COMPENSATION", "LETTER_OF_CREDIT", "PAYPAL", "PAYU", "PROMISSORY_NOTE", "PREPAYMENT", "INSTALLMENT_SALE", "TPAY", "PRZELEWY24", "DOTPAY"]);
@@ -36,11 +35,10 @@ const profile_update_password_Body = z.object({ current_password: z.string(), pa
 
 export const schemas = {
 	q,
-	type_of_business,
+	is_own_company,
 	sort,
 	sort_direction,
 	limit,
-	TypeOfBusiness,
 	ContractorResource,
 	StoreContractorRequest,
 	UpdateContractorRequest,
@@ -79,14 +77,9 @@ const endpoints = makeApi([
 				schema: q
 			},
 			{
-				name: "type_of_business",
-				type: "Query",
-				schema: type_of_business
-			},
-			{
 				name: "is_own_company",
 				type: "Query",
-				schema: type_of_business
+				schema: is_own_company
 			},
 			{
 				name: "sort",
@@ -235,12 +228,12 @@ const endpoints = makeApi([
 			{
 				name: "is_already_paid",
 				type: "Query",
-				schema: type_of_business
+				schema: is_own_company
 			},
 			{
 				name: "type",
 				type: "Query",
-				schema: type_of_business
+				schema: is_own_company
 			},
 			{
 				name: "sort",
@@ -494,12 +487,12 @@ const endpoints = makeApi([
 			{
 				name: "measure_unit",
 				type: "Query",
-				schema: type_of_business
+				schema: is_own_company
 			},
 			{
 				name: "vat_rate",
 				type: "Query",
-				schema: type_of_business
+				schema: is_own_company
 			},
 			{
 				name: "sort",

@@ -12,19 +12,16 @@ class Contractor extends Model
 
     protected $fillable = [
         'user_id',
-        'type_of_business',
         'is_own_company',
-        'postal_code',
-        'city',
-        'country',
-        'bank_account',
-        'nip',
         'company_name',
+        'nip',
         'email',
-        'street_name',
         'phone',
-        'first_name',
-        'surname',
+        'bank_account',
+        'country',
+        'city',
+        'postal_code',
+        'street_name',
     ];
 
     public function user(): BelongsTo

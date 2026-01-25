@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\ContractorRole;
-use App\Enums\TypeOfBusiness;
 use App\Models\Contractor;
 use App\Models\Invoice;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -16,7 +15,6 @@ class InvoiceContractorFactory extends Factory
             'invoice_id' => Invoice::factory(),
             'contractor_id' => Contractor::factory(),
             'role' => fake()->randomElement(ContractorRole::class),
-            'type_of_business' => fake()->randomElement(TypeOfBusiness::class),
             'is_own_company' => fake()->boolean(),
             'postal_code' => fake()->postcode(),
             'city' => fake()->city(),

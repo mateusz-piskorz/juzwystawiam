@@ -56,39 +56,6 @@ class InvoiceController
         ], 201);
     }
 
-    public function updateOld(UpdateInvoiceRequest $request, Invoice $invoice)
-    {
-        Gate::authorize('update', $invoice);
-
-        DB::transaction(function () use ($request, &$invoice) {
-            $validator = Validator::make([...$invoice->toArray(), ...$request->validated()], $request->rules());
-            $validated = $validator->validated();
-
-            $invoiceProducts = $validated['invoice_products'] ?? [];
-            $totals = $this->CalculateProductTotals($invoiceProducts);
-
-            $invoice->update([...$validated, ...$totals, 'user_id' => $request->user()->id]);
-
-            $invoice->invoiceProducts()->delete();
-            foreach ($invoiceProducts as $productData) {
-                $productTotals = $this->CalculateSingleProductTotals($productData);
-                $invoice->invoiceProducts()->create([...$productData, ...$productTotals]);
-            }
-
-            $invoice->invoiceContractors()->delete();
-            $invoiceContractors = $validated['invoice_contractors'] ?? [];
-            foreach ($invoiceContractors as $contractorData) {
-                $contractor = Contractor::query()->findOrFail($contractorData['contractor_id']);
-                $invoice->createContractor($contractor, $contractorData['role']);
-            }
-        });
-
-        return response()->json([
-            /** @var int */
-            'id' => $invoice->id,
-        ]);
-    }
-
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
         Gate::authorize('update', $invoice);

@@ -1,4 +1,3 @@
-import { useLocale } from '@/lib/hooks/use-locale';
 import { Contractor } from '@/lib/types/contractor';
 import { cn } from '@/lib/utils/cn';
 import { PencilLine, User } from 'lucide-react';
@@ -9,7 +8,6 @@ type Props = Contractor & {
 };
 
 export const ContractorInfo = (p: Props) => {
-    const locale = useLocale().locale.enum;
     const addressSecondLine = `${p.postal_code} ${p.city}`;
     return (
         <>
@@ -25,7 +23,7 @@ export const ContractorInfo = (p: Props) => {
                 </div>
                 <div className={cn('flex flex-col items-end justify-end', p.onEdit && 'justify-between')}>
                     {p.onEdit && <PencilLine size={20} className="text-accent-foreground cursor-pointer" onClick={p.onEdit} />}
-                    <p>{p.nip ? `NIP: ${p.nip}` : locale.TYPE_OF_BUSINESS[p.type_of_business]}</p>
+                    {p.nip && <p>NIP: ${p.nip}</p>}
                 </div>
             </div>
         </>

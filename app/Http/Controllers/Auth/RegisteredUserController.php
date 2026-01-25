@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Contractor;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -40,6 +41,8 @@ class RegisteredUserController
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        Contractor::create(['is_own_company' => true, 'email' => $request->email, 'company_name' => "$request->name's company", 'user_id' => $user->id]);
 
         event(new Registered($user));
 

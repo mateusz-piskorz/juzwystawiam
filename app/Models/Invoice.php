@@ -76,19 +76,16 @@ class Invoice extends Model
         $this->invoiceContractors()->create([
             'contractor_id' => $contractor->id,
             'role' => $role,
-            'type_of_business' => $contractor->type_of_business,
             'is_own_company' => $contractor->is_own_company,
-            'postal_code' => $contractor->postal_code,
-            'city' => $contractor->city,
-            'country' => $contractor->country,
-            'bank_account' => $contractor->bank_account,
-            'nip' => $contractor->nip,
             'company_name' => $contractor->company_name,
+            'nip' => $contractor->nip,
             'email' => $contractor->email,
-            'street_name' => $contractor->street_name,
             'phone' => $contractor->phone,
-            'first_name' => $contractor->first_name,
-            'surname' => $contractor->surname,
+            'bank_account' => $contractor->bank_account,
+            'country' => $contractor->country,
+            'city' => $contractor->city,
+            'postal_code' => $contractor->postal_code,
+            'street_name' => $contractor->street_name,
         ]);
     }
 
