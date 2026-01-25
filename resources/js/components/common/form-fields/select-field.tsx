@@ -1,5 +1,6 @@
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { Nullable } from '@/lib/types/nullable';
 import { TypedFieldPath } from '@/lib/types/typed-field-path';
 import { cn } from '@/lib/utils/cn';
@@ -14,9 +15,11 @@ type Props<T extends FieldValues> = {
     className?: React.HTMLAttributes<'div'>['className'];
     selectOptions: { label: string; value: string }[];
     label: string;
+    optionalLabel?: boolean;
 };
 
-export const SelectField = <T extends FieldValues>({ form, className, selectOptions, label, name: propsName }: Props<T>) => {
+export const SelectField = <T extends FieldValues>({ form, className, selectOptions, label, name: propsName, optionalLabel }: Props<T>) => {
+    const l = useLocale().locale.common;
     const name = propsName as string;
     const { control } = form as unknown as UseFormReturn<{ [x: string]: FieldType }>;
 
@@ -39,7 +42,7 @@ export const SelectField = <T extends FieldValues>({ form, className, selectOpti
                                 <span className="invisible" />
                                 <div className="absolute flex w-[calc(100%-40px)] flex-col gap-1">
                                     <FormLabel className={cn('text-muted-foreground w-full truncate text-left', field.value && 'text-xs')}>
-                                        {label}
+                                        {label} {optionalLabel && `(${l.Optional})`}
                                     </FormLabel>
                                     {field.value && (
                                         <span className="w-full truncate text-left">

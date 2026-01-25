@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\TypeOfBusiness;
 use App\Models\Contractor;
 use App\Models\User;
 
@@ -24,7 +23,7 @@ test("user cannot update another user's contractor", function () {
 });
 
 test('user can update his own contractor', function () {
-    $contractor = Contractor::factory()->create(['type_of_business' => TypeOfBusiness::SELF_EMPLOYED]);
+    $contractor = Contractor::factory()->create();
 
     actingAs($contractor->user)
         ->putJson(route('api.contractors.update', $contractor), ['company_name' => 'Updated Name'])

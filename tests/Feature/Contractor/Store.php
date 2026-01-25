@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\TypeOfBusiness;
 use App\Models\Contractor;
 use App\Models\User;
 
@@ -16,7 +15,7 @@ test('unauthenticated user cannot create a contractor', function () {
 
 test('authenticated user can create a contractor', function () {
     $user = User::factory()->create();
-    $data = Contractor::factory()->raw(['user_id' => $user->id, 'type_of_business' => TypeOfBusiness::SELF_EMPLOYED]);
+    $data = Contractor::factory()->raw(['user_id' => $user->id]);
 
     actingAs($user)
         ->postJson(route('api.contractors.store'), $data)

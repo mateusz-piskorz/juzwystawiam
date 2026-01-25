@@ -27,10 +27,9 @@ export const TableContractor = () => {
     const order_column = searchParams.get('order_column');
     const order_direction = searchParams.get('order_direction') as z.infer<typeof schemas.sort_direction>;
     const is_own_company = searchParams.getAll('is_own_company');
-    const type_of_business = searchParams.getAll('type_of_business');
 
     const { data, refetch } = useQuery({
-        queryKey: ['contractor-list', page, limit, q, order_column, order_direction, is_own_company, type_of_business],
+        queryKey: ['contractor-list', page, limit, q, order_column, order_direction, is_own_company],
         queryFn: () =>
             api['contractors.index']({
                 queries: {
@@ -41,7 +40,6 @@ export const TableContractor = () => {
                     sort: order_column as any,
                     sort_direction: order_direction,
                     is_own_company,
-                    type_of_business,
                 },
             }),
     });
@@ -113,11 +111,6 @@ export const TableContractor = () => {
                             { label: locale.common.true, value: 'true' },
                             { label: locale.common.false, value: 'false' },
                         ],
-                    },
-                    {
-                        filterKey: 'type_of_business',
-                        title: locale['Type of business'],
-                        options: schemas.TypeOfBusiness.options.map((val) => ({ label: locale.enum.TYPE_OF_BUSINESS[val], value: val })),
                     },
                 ]}
             />

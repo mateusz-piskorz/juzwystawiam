@@ -15,19 +15,16 @@ namespace App\Models{
 /**
  * @property int $id
  * @property int $user_id
- * @property string $type_of_business
  * @property bool $is_own_company
- * @property string $postal_code
- * @property string $city
- * @property string $country
  * @property string $company_name
- * @property string $street_name
- * @property string|null $bank_account
  * @property string|null $nip
  * @property string|null $email
  * @property string|null $phone
- * @property string|null $first_name
- * @property string|null $surname
+ * @property string|null $bank_account
+ * @property string|null $country
+ * @property string|null $city
+ * @property string|null $postal_code
+ * @property string|null $street_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $user
@@ -41,15 +38,12 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Contractor whereCountry($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Contractor whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Contractor whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Contractor whereFirstName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Contractor whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Contractor whereIsOwnCompany($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Contractor whereNip($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Contractor wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Contractor wherePostalCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Contractor whereStreetName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Contractor whereSurname($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Contractor whereTypeOfBusiness($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Contractor whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Contractor whereUserId($value)
  */
@@ -114,19 +108,16 @@ namespace App\Models{
  * @property int $invoice_id
  * @property int|null $contractor_id
  * @property string $role
- * @property string $type_of_business
  * @property bool $is_own_company
- * @property string $postal_code
- * @property string $city
- * @property string $country
  * @property string $company_name
- * @property string $street_name
- * @property string|null $bank_account
  * @property string|null $nip
  * @property string|null $email
  * @property string|null $phone
- * @property string|null $first_name
- * @property string|null $surname
+ * @property string|null $bank_account
+ * @property string|null $country
+ * @property string|null $city
+ * @property string|null $postal_code
+ * @property string|null $street_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Invoice $invoice
@@ -141,7 +132,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor whereCountry($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor whereFirstName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor whereInvoiceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor whereIsOwnCompany($value)
@@ -150,8 +140,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor wherePostalCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor whereRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor whereStreetName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor whereSurname($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor whereTypeOfBusiness($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|InvoiceContractor whereUpdatedAt($value)
  */
 	class InvoiceContractor extends \Eloquent {}

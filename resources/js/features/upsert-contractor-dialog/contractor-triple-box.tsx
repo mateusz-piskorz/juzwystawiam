@@ -12,25 +12,13 @@ type Props = {
 
 export const ContractorTripleBox = ({ form, disableIsOwnCompany }: Props) => {
     const locale = useLocale().locale['dashboard/contractors'];
-    const isPrivatePerson = form.watch('type_of_business') === 'PRIVATE_PERSON';
 
     return (
         <div className="w-full min-w-[200px] rounded border">
             <div className="flex h-[60px]">
-                <InputField
-                    form={form}
-                    name={isPrivatePerson ? 'first_name' : 'nip'}
-                    label={isPrivatePerson ? locale['First name'] : locale['Company nip']}
-                    className="rounded-none rounded-ss border-none"
-                />
-
+                <InputField form={form} name="company_name" label={locale['Company name']} className="rounded-none rounded-ss border-none" />
                 <Separator orientation="vertical" />
-                <InputField
-                    form={form}
-                    name={isPrivatePerson ? 'surname' : 'company_name'}
-                    label={isPrivatePerson ? locale.Surname : locale['Company name']}
-                    className="rounded-none rounded-se border-none"
-                />
+                <InputField form={form} name="nip" optionalLabel label={locale['Company nip']} className="rounded-none rounded-se border-none" />
             </div>
             <Separator orientation="horizontal" />
 

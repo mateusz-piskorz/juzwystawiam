@@ -47,11 +47,6 @@
             "PRZELEWY24": "Przelewy24",
             "DOTPAY": "Dotpay"
         },
-        "TYPE_OF_BUSINESS": {
-            "PRIVATE_PERSON": "Private person",
-            "SELF_EMPLOYED": "Self-employed",
-            "OTHER_BUSINESS": "Other business"
-        },
         "NAV_LIST": {
             "About": "About",
             "Services": "Services",
@@ -78,7 +73,7 @@
         "Dashboard": "Dashboard",
         "something went wrong": "something went wrong",
         "Fill in the details below to": "Fill in the details below to",
-        "Optional": "Optional",
+        "Optional": "optional",
 
         "premium-status-heading": {
             "Your premium account is": "Your premium account is",

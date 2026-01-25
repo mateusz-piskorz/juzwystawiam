@@ -1,4 +1,5 @@
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { useLocale } from '@/lib/hooks/use-locale';
 import { Nullable } from '@/lib/types/nullable';
 import { TypedFieldPath } from '@/lib/types/typed-field-path';
 import { cn } from '@/lib/utils/cn';
@@ -14,6 +15,7 @@ type Props<T extends FieldValues, IT extends InputType> = {
     form: UseFormReturn<T>;
     name: TypedFieldPath<T, IT extends 'number' ? Nullable<number> : Nullable<string>>;
     label: string;
+    optionalLabel?: boolean;
     inputMode?: InputHTMLAttributes<''>['inputMode'];
     className?: React.HTMLAttributes<'div'>['className'];
     onFocus?: () => void;
@@ -23,11 +25,14 @@ export const InputField = <T extends FieldValues, IT extends InputType>({
     onFocus,
     form,
     label,
+    optionalLabel,
     name: propsName,
     type,
     inputMode,
     className,
 }: Props<T, IT>) => {
+    const l = useLocale().locale.common;
+
     const name = propsName as string;
     const { control } = form as unknown as UseFormReturn<{ [x: string]: FieldType }>;
 
@@ -46,7 +51,7 @@ export const InputField = <T extends FieldValues, IT extends InputType>({
                     <FormLabel
                         className={cn('text-muted-foreground', 'absolute top-1/2 left-3 -translate-y-1/2', field.value && 'top-[18px] text-xs')}
                     >
-                        {label}
+                        {label} {optionalLabel && `(${l.Optional})`}
                     </FormLabel>
                     <FormControl>
                         <Input

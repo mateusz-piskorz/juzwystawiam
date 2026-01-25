@@ -32,14 +32,6 @@ export const getContractorColumns = ({
     },
     {
         meta: {
-            title: locale['Type of business'],
-        },
-        accessorKey: 'type_of_business',
-        header: ({ column }) => <DataTableColumnHeader column={column} />,
-        cell: ({ row }) => locale.enum.TYPE_OF_BUSINESS[row.original.type_of_business],
-    },
-    {
-        meta: {
             title: locale.Country,
         },
         accessorKey: 'country',
@@ -53,7 +45,11 @@ export const getContractorColumns = ({
         },
         accessorKey: 'address',
         header: ({ column }) => <DataTableColumnHeader column={column} />,
-        cell: ({ row }) => `${row.original.postal_code} ${row.original.city}`,
+        cell: ({
+            row: {
+                original: { postal_code, city },
+            },
+        }) => [postal_code, city].filter(Boolean).join(' '),
         enableSorting: false,
     },
     {

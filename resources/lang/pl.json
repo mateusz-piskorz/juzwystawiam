@@ -47,11 +47,6 @@
             "PRZELEWY24": "Przelewy24",
             "DOTPAY": "Dotpay"
         },
-        "TYPE_OF_BUSINESS": {
-            "PRIVATE_PERSON": "Osoba prywatna",
-            "SELF_EMPLOYED": "Samozatrudniony",
-            "OTHER_BUSINESS": "Inna działalność"
-        },
         "NAV_LIST": {
             "About": "O nas",
             "Services": "Usługi",
@@ -78,7 +73,7 @@
         "Dashboard": "Panel",
         "something went wrong": "coś poszło nie tak",
         "Fill in the details below to": "Wypełnij poniższe dane, aby",
-        "Optional": "Opcjonalne",
+        "Optional": "opcjonalne",
 
         "premium-status-heading": {
             "Your premium account is": "Twój konto premium jest",
