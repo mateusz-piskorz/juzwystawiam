@@ -155,7 +155,6 @@
         "Actions": "Akcje",
         "Send email": "Wyślij e-mail",
         "Create invoice": "Utwórz fakturę",
-        "Invoice type": "Typ faktury",
         "Are you sure you want to remove this Invoice": "Czy na pewno chcesz usunąć tę fakturę?",
         "This action cannot be undone. Invoice will be permanently deleted.": "Tej operacji nie można cofnąć. Faktura zostanie trwale usunięta.",
         "invoice-form": {

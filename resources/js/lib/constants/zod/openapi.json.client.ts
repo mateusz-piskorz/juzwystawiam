@@ -13,17 +13,16 @@ const ContractorResource = z.object({ id: z.number().int(), user_id: z.number().
 const StoreContractorRequest = z.object({ is_own_company: z.boolean(), company_name: z.string(), nip: z.union([z.string(), z.null()]).optional(), email: z.union([z.string(), z.null()]).optional(), phone: z.union([z.string(), z.null()]).optional(), bank_account: z.union([z.string(), z.null()]).optional(), country: z.union([z.string(), z.null()]).optional(), city: z.union([z.string(), z.null()]).optional(), postal_code: z.union([z.string(), z.null()]).optional(), street_name: z.union([z.string(), z.null()]).optional() }).passthrough();
 const UpdateContractorRequest = z.object({ is_own_company: z.union([z.boolean(), z.null()]), company_name: z.union([z.string(), z.null()]), nip: z.union([z.string(), z.null()]), email: z.union([z.string(), z.null()]), phone: z.union([z.string(), z.null()]), bank_account: z.union([z.string(), z.null()]), country: z.union([z.string(), z.null()]), city: z.union([z.string(), z.null()]), postal_code: z.union([z.string(), z.null()]), street_name: z.union([z.string(), z.null()]) }).partial().passthrough();
 const sort__2 = z.union([z.enum(["number", "type", "sale_date", "total", "is_already_paid"]), z.null()]).optional();
-const InvoiceType = z.enum(["VAT", "NO_VAT"]);
 const PaymentMethod = z.enum(["BANK_TRANSFER", "CASH", "CARD", "BARTER", "CHEQUE", "COD", "OTHER", "COMPENSATION", "LETTER_OF_CREDIT", "PAYPAL", "PAYU", "PROMISSORY_NOTE", "PREPAYMENT", "INSTALLMENT_SALE", "TPAY", "PRZELEWY24", "DOTPAY"]);
 const EmailStatus = z.enum(["PENDING", "SENT", "FAILED"]);
 const InvoiceEmailResource = z.object({ id: z.number().int(), invoice_id: z.number().int(), status: EmailStatus, recipient: z.string(), created_at: z.union([z.string(), z.null()]), updated_at: z.union([z.string(), z.null()]) }).passthrough();
-const InvoiceResourceCollection = z.object({ id: z.number().int(), user_id: z.number().int(), type: InvoiceType, number: z.string(), issue_date: z.string(), payment_method: PaymentMethod, currency: z.string(), is_already_paid: z.boolean(), sale_date: z.string(), due_date: z.string(), total: z.string(), total_vat_amount: z.string(), total_discount_amount: z.string(), grand_total: z.string(), secret_note: z.union([z.string(), z.null()]), created_at: z.string(), updated_at: z.string(), latest_invoice_email: z.union([InvoiceEmailResource, z.null()]) }).passthrough();
+const InvoiceResourceCollection = z.object({ id: z.number().int(), user_id: z.number().int(), number: z.string(), issue_date: z.string(), payment_method: PaymentMethod, currency: z.string(), is_already_paid: z.boolean(), sale_date: z.string(), due_date: z.string(), total: z.string(), total_vat_amount: z.string(), total_discount_amount: z.string(), grand_total: z.string(), secret_note: z.union([z.string(), z.null()]), created_at: z.string(), updated_at: z.string(), latest_invoice_email: z.union([InvoiceEmailResource, z.null()]) }).passthrough();
 const Currency = z.enum(["PLN", "EUR", "USD", "GBP", "SEK", "CAD", "JPY", "DKK", "CZK", "NOK", "HUF", "AUD", "UAH", "CHF", "RUB", "ZAR", "INR", "NZD", "RON", "CNY", "HRK", "BGN", "BRL", "MXN", "TRY", "SGD", "HKD", "ISK", "ILS", "CLP", "PHP", "MYR", "IDR", "KRW", "XDR", "THB"]);
 const ContractorRole = z.enum(["SELLER", "BUYER"]);
 const MeasureUnit = z.enum(["PCS", "HOUR", "SERVICE"]);
 const VatRate = z.enum(["23", "8", "0", "5"]);
-const StoreInvoiceRequest = z.object({ type: InvoiceType, number: z.string(), issue_date: z.string().datetime({ offset: true }), payment_method: PaymentMethod, currency: Currency, is_already_paid: z.boolean(), sale_date: z.string().datetime({ offset: true }), due_date: z.string().datetime({ offset: true }), secret_note: z.union([z.string(), z.null()]).optional(), invoice_contractors: z.array(z.object({ contractor_id: z.number().int(), role: ContractorRole }).passthrough()).optional(), invoice_products: z.array(z.object({ product_id: z.union([z.number(), z.null()]).optional(), name: z.string(), quantity: z.number().int(), price: z.number(), measure_unit: MeasureUnit, discount: z.union([z.number(), z.null()]).optional(), vat_rate: VatRate.optional() }).passthrough()).min(1) }).passthrough();
-const UpdateInvoiceRequest = z.object({ type: InvoiceType, number: z.union([z.string(), z.null()]), issue_date: z.union([z.string(), z.null()]), payment_method: PaymentMethod, currency: Currency, is_already_paid: z.union([z.boolean(), z.null()]), sale_date: z.union([z.string(), z.null()]), due_date: z.union([z.string(), z.null()]), secret_note: z.union([z.string(), z.null()]), invoice_contractors: z.array(z.object({ contractor_id: z.number().int(), role: ContractorRole }).passthrough()), invoice_products: z.union([z.array(z.object({ product_id: z.union([z.number(), z.null()]), name: z.union([z.string(), z.null()]), quantity: z.union([z.number(), z.null()]), price: z.union([z.number(), z.null()]), measure_unit: MeasureUnit, discount: z.union([z.number(), z.null()]), vat_rate: VatRate }).partial().passthrough()), z.null()]) }).partial().passthrough();
+const StoreInvoiceRequest = z.object({ number: z.string(), issue_date: z.string().datetime({ offset: true }), payment_method: PaymentMethod, currency: Currency, is_already_paid: z.union([z.boolean(), z.null()]).optional(), sale_date: z.string().datetime({ offset: true }), due_date: z.string().datetime({ offset: true }), secret_note: z.union([z.string(), z.null()]).optional(), invoice_contractors: z.array(z.object({ contractor_id: z.number().int(), role: ContractorRole }).passthrough()).optional(), invoice_products: z.array(z.object({ product_id: z.union([z.number(), z.null()]).optional(), name: z.string(), quantity: z.number().int(), price: z.number(), measure_unit: MeasureUnit, discount: z.union([z.number(), z.null()]).optional(), vat_rate: VatRate.optional() }).passthrough()).min(1) }).passthrough();
+const UpdateInvoiceRequest = z.object({ number: z.union([z.string(), z.null()]), issue_date: z.union([z.string(), z.null()]), payment_method: PaymentMethod, currency: Currency, is_already_paid: z.union([z.boolean(), z.null()]), sale_date: z.union([z.string(), z.null()]), due_date: z.union([z.string(), z.null()]), secret_note: z.union([z.string(), z.null()]), invoice_contractors: z.array(z.object({ contractor_id: z.number().int(), role: ContractorRole }).passthrough()), invoice_products: z.union([z.array(z.object({ product_id: z.union([z.number(), z.null()]), name: z.union([z.string(), z.null()]), quantity: z.union([z.number(), z.null()]), price: z.union([z.number(), z.null()]), measure_unit: MeasureUnit, discount: z.union([z.number(), z.null()]), vat_rate: VatRate }).partial().passthrough()), z.null()]) }).partial().passthrough();
 const period = z.union([z.enum(["this_year", "prev_year"]), z.null()]).optional();
 const StripePaymentIntentResource = z.object({ id: z.string(), amount: z.number().int(), status: z.string(), description: z.union([z.string(), z.null()]), created: z.number().int() }).passthrough();
 const sort__3 = z.union([z.enum(["price", "measure_unit", "vat_rate"]), z.null()]).optional();
@@ -43,7 +42,6 @@ export const schemas = {
 	StoreContractorRequest,
 	UpdateContractorRequest,
 	sort__2,
-	InvoiceType,
 	PaymentMethod,
 	EmailStatus,
 	InvoiceEmailResource,
@@ -227,11 +225,6 @@ const endpoints = makeApi([
 			},
 			{
 				name: "is_already_paid",
-				type: "Query",
-				schema: is_own_company
-			},
-			{
-				name: "type",
 				type: "Query",
 				schema: is_own_company
 			},

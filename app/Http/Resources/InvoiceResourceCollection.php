@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Enums\InvoiceType;
 use App\Enums\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -17,8 +16,6 @@ class InvoiceResourceCollection extends JsonResource
             'id' => $this->id,
             /** @var int */
             'user_id' => $this->user_id,
-            /** @var InvoiceType */
-            'type' => $this->type,
             'number' => $this->number,
             'issue_date' => $this->issue_date,
             /** @var PaymentMethod */

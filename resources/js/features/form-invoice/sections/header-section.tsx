@@ -1,16 +1,17 @@
 import { CalendarField } from '@/components/common/form-fields/calendar-field';
-import { InvoiceSchema } from '@/lib/constants/zod/invoice';
+import { invoiceSchema } from '@/lib/constants/zod/invoice';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { UseFormReturn } from 'react-hook-form';
+import { z } from 'zod';
 import { IssueNumberField } from '../atoms/issue-number-field';
 
-type Props<T extends InvoiceSchema> = {
-    form: UseFormReturn<T>;
+type Props = {
+    form: UseFormReturn<z.input<typeof invoiceSchema>>;
 };
 
-export const HeaderSection = <T extends InvoiceSchema>({ form: formProps }: Props<T>) => {
+export const HeaderSection = ({ form }: Props) => {
     const locale = useLocale().locale['dashboard/invoices']['invoice-form'];
-    const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
+
     const invoiceNumber = form.watch('number');
 
     return (

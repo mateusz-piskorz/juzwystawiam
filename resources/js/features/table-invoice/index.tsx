@@ -31,11 +31,10 @@ export const TableInvoice = ({
     const q = searchParams.get('q');
     const order_column = searchParams.get('order_column');
     const order_direction = searchParams.get('order_direction') as z.infer<typeof schemas.sort_direction>;
-    const type = searchParams.getAll('type');
     const is_already_paid = searchParams.getAll('is_already_paid');
 
     const { data } = useQuery({
-        queryKey: ['invoice-list', page, limit, q, order_column, order_direction, type, is_already_paid],
+        queryKey: ['invoice-list', page, limit, q, order_column, order_direction, is_already_paid],
         queryFn: () =>
             api['invoices.index']({
                 queries: withFilters
@@ -45,7 +44,6 @@ export const TableInvoice = ({
                           q,
                           sort: order_column as any,
                           sort_direction: order_direction,
-                          type,
                           is_already_paid,
                       }
                     : { limit: 20 },
@@ -75,11 +73,6 @@ export const TableInvoice = ({
                                   { label: locale.common.true, value: 'true' },
                                   { label: locale.common.false, value: 'false' },
                               ],
-                          },
-                          {
-                              filterKey: 'type',
-                              title: locale.Type,
-                              options: schemas.InvoiceType.options.map((e) => ({ label: locale.enum.INVOICE_TYPE[e], value: e })),
                           },
                       ]
                     : []

@@ -2,15 +2,16 @@ import { Button } from '@/components/ui/button';
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { InvoiceSchema } from '@/lib/constants/zod/invoice';
+import { invoiceSchema } from '@/lib/constants/zod/invoice';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { usePremium } from '@/lib/hooks/use-premium';
 import { cn } from '@/lib/utils/cn';
 import { CircleAlert } from 'lucide-react';
 import { UseFormReturn } from 'react-hook-form';
+import { z } from 'zod';
 
 type Props = {
-    form: UseFormReturn<InvoiceSchema>;
+    form: UseFormReturn<z.input<typeof invoiceSchema>>;
     className?: string;
 };
 

@@ -4,7 +4,7 @@ import { ReactCreatableSelect } from '@/components/common/react-select';
 
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { UpsertContractorDialog } from '@/features/upsert-contractor-dialog';
-import { InvoiceSchema } from '@/lib/constants/zod/invoice';
+import { invoiceSchema } from '@/lib/constants/zod/invoice';
 import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useQuery } from '@tanstack/react-query';
 import { debounce } from 'lodash';
@@ -14,16 +14,15 @@ import { z } from 'zod';
 import { CustomOption } from './custom-option';
 import { Option } from './types';
 
-type Props<T extends InvoiceSchema> = {
-    form: UseFormReturn<T>;
+type Props = {
+    form: UseFormReturn<z.input<typeof invoiceSchema>>;
     role: z.infer<typeof schemas.ContractorRole>;
     label: string;
     idx: number;
 };
 
-export const ContractorsSelectField = <T extends InvoiceSchema>({ form: formProps, role, label, idx }: Props<T>) => {
+export const ContractorsSelectField = ({ form, role, label, idx }: Props) => {
     const [menuIsOpen, setMenuIsOpen] = useState(false);
-    const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
     const name = `invoice_contractors.${idx}.contractor_id` as const;
     const { control, watch, setValue } = form;
     const selectedContractorId = watch(name);

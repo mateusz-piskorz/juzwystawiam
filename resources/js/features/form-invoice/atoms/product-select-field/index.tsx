@@ -2,7 +2,7 @@
 
 import { ReactSelect } from '@/components/common/react-select';
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
-import { InvoiceSchema } from '@/lib/constants/zod/invoice';
+import { invoiceSchema } from '@/lib/constants/zod/invoice';
 import { api } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Product } from '@/lib/types/product';
@@ -10,19 +10,19 @@ import { useQuery } from '@tanstack/react-query';
 import { debounce } from 'lodash';
 import { useCallback, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
+import { z } from 'zod';
 import { CustomOption } from './custom-option';
 import { Option } from './types';
 
-type Props<T extends InvoiceSchema> = {
-    form: UseFormReturn<T>;
+type Props = {
+    form: UseFormReturn<z.input<typeof invoiceSchema>>;
     idx: number;
 };
 
-export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, idx }: Props<T>) => {
+export const ProductSelectField = ({ form, idx }: Props) => {
     const [menuIsOpen, setMenuIsOpen] = useState(false);
     const locale = useLocale().locale['dashboard/invoices']['invoice-form'];
-    const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
-    const invoiceType = form.watch('type');
+
     const [q, setQ] = useState('');
 
     const { data, isLoading } = useQuery({
@@ -38,9 +38,7 @@ export const ProductSelectField = <T extends InvoiceSchema>({ form: formProps, i
         form.setValue(`invoice_products.${idx}.price`, p.price);
         form.setValue(`invoice_products.${idx}.quantity`, 1);
         form.setValue(`invoice_products.${idx}.measure_unit`, p.measure_unit);
-        if (invoiceType === 'VAT') {
-            form.setValue(`invoice_products.${idx}.vat_rate`, p.vat_rate);
-        }
+        form.setValue(`invoice_products.${idx}.vat_rate`, p.vat_rate);
     };
 
     const debouncedSetQ = useCallback(

@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const createContractorDTO = z.object({
     is_own_company: z.boolean(),
     company_name: z.string(),
-    nip: z.string().nullish(),
+    nip: z.string().length(10).nullish(),
     email: z.union([z.literal(''), z.string().email()]).nullish(),
     phone: z.string().nullish(),
     bank_account: z
