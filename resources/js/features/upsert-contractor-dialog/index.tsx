@@ -11,7 +11,7 @@ import { useLocale } from '@/lib/hooks/use-locale';
 import { cn } from '@/lib/utils/cn';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -29,11 +29,13 @@ type Props = {
 export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contractorId, onSuccess, disableIsOwnCompany }: Props) => {
     const l = useLocale().locale;
     const locale = { ...l['dashboard/contractors'], common: l.common, enum: l.enum };
+    const [showDetails, setShowDetails] = useState(false);
 
     const form = useForm<CreateContractorDTO>({ resolver: zodResolver(createContractorDTO), defaultValues });
 
     useEffect(() => {
         form.reset(defaultValues ?? { is_own_company: false });
+        setShowDetails(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [defaultValues, form.formState.isSubmitSuccessful]);
 
@@ -78,89 +80,101 @@ export const UpsertContractorDialog = ({ open, setOpen, defaultValues, contracto
                     >
                         <ContractorTripleBox form={form} disableIsOwnCompany={disableIsOwnCompany} />
 
-                        <div className="rounded border">
-                            <div className="flex h-[60px]">
-                                <InputField
-                                    form={form}
-                                    name="postal_code"
-                                    label={locale['Postal code']}
-                                    optionalLabel
-                                    className="rounded-none rounded-ss border-none"
-                                />
-                                <Separator orientation="vertical" />
-                                <InputField
-                                    form={form}
-                                    name="city"
-                                    label={locale.City}
-                                    optionalLabel
-                                    className="rounded-none rounded-se border-none"
-                                />
-                            </div>
+                        {showDetails && (
+                            <>
+                                <div className="rounded border">
+                                    <div className="flex h-[60px]">
+                                        <InputField
+                                            form={form}
+                                            name="postal_code"
+                                            label={locale['Postal code']}
+                                            optionalLabel
+                                            className="rounded-none rounded-ss border-none"
+                                        />
+                                        <Separator orientation="vertical" />
+                                        <InputField
+                                            form={form}
+                                            name="city"
+                                            label={locale.City}
+                                            optionalLabel
+                                            className="rounded-none rounded-se border-none"
+                                        />
+                                    </div>
 
-                            <Separator orientation="horizontal" />
+                                    <Separator orientation="horizontal" />
 
-                            <InputField
-                                form={form}
-                                name="street_name"
-                                label={locale['Street name']}
-                                optionalLabel
-                                className="rounded-none border-none"
-                            />
+                                    <InputField
+                                        form={form}
+                                        name="street_name"
+                                        label={locale['Street name']}
+                                        optionalLabel
+                                        className="rounded-none border-none"
+                                    />
 
-                            <Separator orientation="horizontal" />
+                                    <Separator orientation="horizontal" />
 
-                            <SelectField
-                                className="rounded-none rounded-ee rounded-es border-none"
-                                form={form}
-                                name="country"
-                                label={locale.Country}
-                                optionalLabel
-                                selectOptions={COUNTRIES.map((val) => ({
-                                    label: val,
-                                    value: val,
-                                }))}
-                            />
-                        </div>
+                                    <SelectField
+                                        className="rounded-none rounded-ee rounded-es border-none"
+                                        form={form}
+                                        name="country"
+                                        label={locale.Country}
+                                        optionalLabel
+                                        selectOptions={COUNTRIES.map((val) => ({
+                                            label: val,
+                                            value: val,
+                                        }))}
+                                    />
+                                </div>
 
-                        <div className="rounded border">
-                            <div className="flex h-[60px]">
-                                <InputField
-                                    form={form}
-                                    name="email"
-                                    label={locale.Email}
-                                    optionalLabel
-                                    type="email"
-                                    inputMode="email"
-                                    className="rounded-none rounded-ss border-none"
-                                />
-                                <Separator orientation="vertical" />
-                                <InputField
-                                    form={form}
-                                    name="phone"
-                                    label={locale.Phone}
-                                    optionalLabel
-                                    type="tel"
-                                    inputMode="numeric"
-                                    className="rounded-none rounded-se border-none"
-                                />
-                            </div>
-                            <Separator orientation="horizontal" />
-                            <InputField
-                                form={form}
-                                name="bank_account"
-                                label={locale['Bank Account']}
-                                optionalLabel
-                                type="text"
-                                inputMode="numeric"
-                                className={cn('rounded-none rounded-ee rounded-es border-none')}
-                            />
-                        </div>
+                                <div className="rounded border">
+                                    <div className="flex h-[60px]">
+                                        <InputField
+                                            form={form}
+                                            name="email"
+                                            label={locale.Email}
+                                            optionalLabel
+                                            type="email"
+                                            inputMode="email"
+                                            className="rounded-none rounded-ss border-none"
+                                        />
+                                        <Separator orientation="vertical" />
+                                        <InputField
+                                            form={form}
+                                            name="phone"
+                                            label={locale.Phone}
+                                            optionalLabel
+                                            type="tel"
+                                            inputMode="numeric"
+                                            className="rounded-none rounded-se border-none"
+                                        />
+                                    </div>
+                                    <Separator orientation="horizontal" />
+                                    <InputField
+                                        form={form}
+                                        name="bank_account"
+                                        label={locale['Bank Account']}
+                                        optionalLabel
+                                        type="text"
+                                        inputMode="numeric"
+                                        className={cn('rounded-none rounded-ee rounded-es border-none')}
+                                    />
+                                </div>
+                            </>
+                        )}
 
                         <div className="w-full text-right">
                             <Button type="submit">
                                 {contractorId ? locale.common.Update : locale.common.Create} {locale.Contractor}
                             </Button>
                         </div>
+
+                        {!showDetails && (
+                            <div className="-my-8 w-full text-center">
+                                <Button type="button" variant="link" onClick={() => setShowDetails(true)} className="text-muted-foreground">
+                                    {locale.common['Show Details']}
+                                </Button>
+                            </div>
+                        )}
                     </form>
                 </Form>
             </DialogContent>
