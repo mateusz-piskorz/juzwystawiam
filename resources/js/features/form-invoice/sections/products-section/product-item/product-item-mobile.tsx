@@ -2,27 +2,25 @@ import { CurrencyField } from '@/components/common/form-fields/currency-field';
 import { InputField } from '@/components/common/form-fields/input-field';
 import { SelectField } from '@/components/common/form-fields/select-field';
 import { Separator } from '@/components/ui/separator';
-import { InvoiceSchema } from '@/lib/constants/zod/invoice';
+import { invoiceSchema } from '@/lib/constants/zod/invoice';
 import { schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { UseFieldArrayRemove, UseFormReturn } from 'react-hook-form';
+import { z } from 'zod';
 import { ProductSelectField } from '../../../atoms/product-select-field';
 import { RemoveItemButton } from './remove-item-button';
 
-type Props<T extends InvoiceSchema> = {
-    form: UseFormReturn<T>;
+type Props = {
+    form: UseFormReturn<z.input<typeof invoiceSchema>>;
     idx: number;
     remove: UseFieldArrayRemove;
     fieldsLength: number;
     total: string;
 };
 
-export const ProductItemMobile = <T extends InvoiceSchema>({ form: formProps, idx, remove, fieldsLength, total }: Props<T>) => {
+export const ProductItemMobile = ({ form, idx, remove, fieldsLength, total }: Props) => {
     const l = useLocale().locale;
     const locale = { ...l['dashboard/invoices']['invoice-form'], common: l.common, enum: l.enum };
-
-    const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
-    const formType = form.watch('type');
 
     return (
         <div className="m-[1px] flex flex-col gap-4 px-4 pt-4 md:px-0">
@@ -56,15 +54,15 @@ export const ProductItemMobile = <T extends InvoiceSchema>({ form: formProps, id
                         className="rounded-none rounded-es border-none"
                     />
                     <Separator orientation="vertical" />
-                    {formType === 'VAT' && (
-                        <SelectField
-                            form={form}
-                            name={`invoice_products.${idx}.vat_rate`}
-                            label={locale.common['Vat rate']}
-                            selectOptions={schemas.VatRate.options.map((val) => ({ label: `${val}%`, value: val }))}
-                            className="rounded-none border-none"
-                        />
-                    )}
+
+                    <SelectField
+                        form={form}
+                        name={`invoice_products.${idx}.vat_rate`}
+                        label={locale.common['Vat rate']}
+                        selectOptions={schemas.VatRate.options.map((val) => ({ label: `${val}%`, value: val }))}
+                        className="rounded-none border-none"
+                    />
+
                     <Separator orientation="vertical" />
                     <InputField
                         form={form}

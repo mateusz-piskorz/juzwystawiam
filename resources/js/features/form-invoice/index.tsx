@@ -1,10 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { InvoiceSchema, invoiceSchema } from '@/lib/constants/zod/invoice';
-import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
+import { invoiceSchema } from '@/lib/constants/zod/invoice';
+import { api } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
+import { Invoice } from '@/lib/types/invoice';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from '@inertiajs/react';
@@ -19,20 +18,26 @@ import { ProductsSection } from './sections/products-section';
 import { TopSection } from './sections/top-section';
 
 type Props = {
-    defaultValues?: Partial<InvoiceSchema>;
-    invoiceId?: number;
-    type: z.infer<typeof schemas.InvoiceType>;
+    invoice?: Invoice;
 };
 
-export const FormInvoice = ({ defaultValues, invoiceId, type }: Props) => {
+export const FormInvoice = ({ invoice }: Props) => {
     const l = useLocale().locale;
     const locale = { ...l['dashboard/invoices']['invoice-form'], common: l.common, base: l['dashboard/invoices'] };
-    const form = useForm<InvoiceSchema>({
+    const form = useForm({
         resolver: zodResolver(invoiceSchema),
-        defaultValues: { ...defaultValues, issue_date: new Date(), number: `FR ${dayjs().format('DD/MM/YYYY')}` },
+        defaultValues: {
+            issue_date: new Date(),
+            number: `FR ${dayjs().format('DD/MM/YYYY')}`,
+            invoice_contractors: [{ role: 'SELLER' }, { role: 'BUYER' }],
+            invoice_products: [{ name: '', measure_unit: 'PCS', quantity: 1, price: 0 }],
+            ...invoice,
+        },
     });
 
-    async function onSubmit(body: InvoiceSchema) {
+    console.log(form.formState.errors);
+
+    async function onSubmit(body: z.output<typeof invoiceSchema>) {
         const data = {
             ...body,
             issue_date: String(body.issue_date.toISOString()),
@@ -42,13 +47,15 @@ export const FormInvoice = ({ defaultValues, invoiceId, type }: Props) => {
 
         try {
             let response;
-            if (invoiceId) {
-                response = await api['invoices.update'](data, { params: { invoice: invoiceId } });
+            if (invoice) {
+                response = await api['invoices.update'](data, { params: { invoice: invoice.id } });
             } else {
                 response = await api['invoices.store'](data);
             }
 
-            toast.success(`${locale.base.Invoice} ${invoiceId ? locale['common'].Updated : locale['common'].Created} ${locale.common.Successfully}!`);
+            toast.success(
+                `${locale.base.Invoice} ${invoice?.id ? locale['common'].Updated : locale['common'].Created} ${locale.common.Successfully}!`,
+            );
             router.visit(`/dashboard/invoices/${response.id}`);
         } catch (error: unknown) {
             const errorMessage = getErrorMessage(error);
@@ -59,10 +66,6 @@ export const FormInvoice = ({ defaultValues, invoiceId, type }: Props) => {
 
     const [total, setTotal] = useState(0);
     const { watch, getValues } = form;
-
-    useEffect(() => {
-        form.setValue('type', type);
-    }, [type]);
 
     useEffect(() => {
         const { unsubscribe } = watch((_, { name, type }) => {
@@ -101,7 +104,6 @@ export const FormInvoice = ({ defaultValues, invoiceId, type }: Props) => {
                 <HeaderSection form={form} />
                 <div className="space-y-4 border-b-[1px] py-8 sm:space-y-8">
                     <TopSection form={form} />
-
                     <ContractorsSection form={form} />
                     <ProductsSection form={form} />
                 </div>

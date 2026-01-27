@@ -37,7 +37,7 @@ const InvoicePage = () => {
 
     const seller = invoice.invoice_contractors.find((e) => e.role === 'SELLER');
     const buyer = invoice.invoice_contractors.find((e) => e.role === 'BUYER');
-    console.log(invoice);
+
     return (
         <>
             <AppLayout breadcrumbs={breadcrumbs}>

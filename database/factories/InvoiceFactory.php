@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\Currency;
-use App\Enums\InvoiceType;
 use App\Enums\PaymentMethod;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -14,7 +13,6 @@ class InvoiceFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'type' => fake()->randomElement(InvoiceType::class),
             'number' => 'FR '.date('d/m/Y'),
             'issue_date' => now()->roundSecond(),
             'payment_method' => fake()->randomElement(PaymentMethod::class),

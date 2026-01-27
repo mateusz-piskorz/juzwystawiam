@@ -4,7 +4,6 @@ namespace App\Http\Requests\Invoice;
 
 use App\Enums\ContractorRole;
 use App\Enums\Currency;
-use App\Enums\InvoiceType;
 use App\Enums\MeasureUnit;
 use App\Enums\PaymentMethod;
 use App\Enums\VatRate;
@@ -18,7 +17,6 @@ class UpdateInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => ['nullable', Rule::enum(InvoiceType::class)],
             'number' => 'nullable|string',
             'issue_date' => 'nullable|date',
             'payment_method' => ['nullable', Rule::enum(PaymentMethod::class)],
@@ -39,7 +37,7 @@ class UpdateInvoiceRequest extends FormRequest
             'invoice_products.*.measure_unit' => ['nullable', Rule::enum(MeasureUnit::class)],
             'invoice_products.*.discount' => 'nullable|integer',
 
-            'invoice_products.*.vat_rate' => ['nullable', 'exclude_unless:type,VAT,null', Rule::enum(VatRate::class)],
+            'invoice_products.*.vat_rate' => ['nullable', Rule::enum(VatRate::class)],
         ];
     }
 }

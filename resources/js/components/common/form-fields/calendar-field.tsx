@@ -9,12 +9,11 @@ import { CalendarIcon } from 'lucide-react';
 import { useState } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 
-type FieldType = Date;
+type FieldType = string | Date;
 
 type Props<T extends FieldValues> = {
     form: UseFormReturn<T>;
     name: TypedFieldPath<T, FieldType>;
-
     className?: React.HTMLAttributes<'div'>['className'];
     saleDate?: Date | undefined;
     label: string;
@@ -69,7 +68,7 @@ export const CalendarField = <T extends FieldValues>({ form, name: propsName, sa
                         <PopoverContent className="w-auto p-0" align="start">
                             <Calendar
                                 mode="single"
-                                selected={field.value}
+                                selected={new Date(field.value)}
                                 onSelect={(val) => {
                                     field.onChange(val);
                                     setOpen(false);

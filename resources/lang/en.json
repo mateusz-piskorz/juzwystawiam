@@ -156,7 +156,6 @@
         "Actions": "Actions",
         "Send email": "Send email",
         "Create invoice": "Create invoice",
-        "Invoice type": "Invoice type",
         "Are you sure you want to remove this Invoice": "Are you sure you want to remove this Invoice",
         "This action cannot be undone. Invoice will be permanently deleted.": "This action cannot be undone. Invoice will be permanently deleted.",
         "invoice-form": {

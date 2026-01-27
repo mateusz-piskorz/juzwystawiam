@@ -1,23 +1,20 @@
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { InvoiceSchema } from '@/lib/constants/zod/invoice';
+import { invoiceSchema } from '@/lib/constants/zod/invoice';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useIsMobile } from '@/lib/hooks/use-mobile';
 import { SquarePlus } from 'lucide-react';
 import React from 'react';
 import { useFieldArray, UseFormReturn } from 'react-hook-form';
+import { z } from 'zod';
 import { ProductItemDesktop } from './product-item/product-item-desktop';
 import { ProductItemMobile } from './product-item/product-item-mobile';
 
-type Props<T extends InvoiceSchema> = {
-    form: UseFormReturn<T>;
-};
-export const ProductsSection = <T extends InvoiceSchema>({ form: formProps }: Props<T>) => {
+type Props = { form: UseFormReturn<z.input<typeof invoiceSchema>> };
+
+export const ProductsSection = ({ form }: Props) => {
     const locale = useLocale().locale['dashboard/invoices']['invoice-form'];
     const isMobile = useIsMobile();
-
-    const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
-    const formType = form.watch('type');
 
     const { fields, append, remove } = useFieldArray({
         control: form.control,
@@ -69,7 +66,9 @@ export const ProductsSection = <T extends InvoiceSchema>({ form: formProps }: Pr
                                     price: 0,
                                     quantity: 1,
                                     measure_unit: 'PCS',
-                                    ...(formType === 'VAT' && { vat_rate: '23' }),
+                                    vat_rate: '23',
+                                    product_id: null,
+                                    discount: null,
                                 },
                                 { shouldFocus: false },
                             )

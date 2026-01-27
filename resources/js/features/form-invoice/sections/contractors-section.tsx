@@ -1,15 +1,13 @@
-import { InvoiceSchema } from '@/lib/constants/zod/invoice';
+import { invoiceSchema } from '@/lib/constants/zod/invoice';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { UseFormReturn } from 'react-hook-form';
+import { z } from 'zod';
 import { ContractorsSelectField } from '../atoms/contractors-select-field';
 
-type Props<T extends InvoiceSchema> = {
-    form: UseFormReturn<T>;
-};
+type Props = { form: UseFormReturn<z.input<typeof invoiceSchema>> };
 
-export const ContractorsSection = <T extends InvoiceSchema>({ form: formProps }: Props<T>) => {
+export const ContractorsSection = ({ form }: Props) => {
     const locale = useLocale().locale['dashboard/invoices'];
-    const form = formProps as unknown as UseFormReturn<InvoiceSchema>;
     return (
         <div className="z-10 flex flex-col gap-4 px-4 sm:gap-8 md:flex-row md:items-start md:px-6">
             <ContractorsSelectField idx={0} form={form} role="SELLER" label={locale.Seller} />

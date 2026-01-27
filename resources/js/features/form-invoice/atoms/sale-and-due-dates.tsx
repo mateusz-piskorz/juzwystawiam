@@ -1,13 +1,14 @@
 import { CalendarField } from '@/components/common/form-fields/calendar-field';
 import { Separator } from '@/components/ui/separator';
-import { InvoiceSchema } from '@/lib/constants/zod/invoice';
+import { invoiceSchema } from '@/lib/constants/zod/invoice';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { cn } from '@/lib/utils/cn';
 
 import { UseFormReturn } from 'react-hook-form';
+import { z } from 'zod';
 
 type Props = {
-    form: UseFormReturn<InvoiceSchema>;
+    form: UseFormReturn<z.input<typeof invoiceSchema>>;
     className?: string;
 };
 
@@ -23,7 +24,7 @@ export const SaleAndDueDates = ({ form, className }: Props) => {
                 form={form}
                 name="due_date"
                 className="rounded-none rounded-ee rounded-es border-none"
-                saleDate={saleDate}
+                saleDate={new Date(saleDate)}
                 label={locale['Due date']}
             />
         </div>

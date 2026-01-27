@@ -1,7 +1,6 @@
 <?php
 
 use App\Enums\Currency;
-use App\Enums\InvoiceType;
 use App\Enums\PaymentMethod;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,7 +16,6 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->enum('type', array_column(InvoiceType::cases(), 'value'));
             $table->string('number');
             $table->dateTimeTz('issue_date');
             $table->enum('payment_method', array_column(PaymentMethod::cases(), 'value'));

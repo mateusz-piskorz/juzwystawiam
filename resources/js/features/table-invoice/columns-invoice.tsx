@@ -26,12 +26,6 @@ export function getInvoiceColumns({ locale, displayEmailStatusColumn }: Props): 
             cell: ({ row }) => row.original.number,
         },
         {
-            accessorKey: 'type',
-            meta: { title: locale.Type },
-            header: ({ column }) => <DataTableColumnHeader column={column} />,
-            cell: ({ row }) => locale.enum.INVOICE_TYPE[row.original.type],
-        },
-        {
             accessorKey: 'sale_date',
             meta: { title: locale['Sale Date'] },
             header: ({ column }) => <DataTableColumnHeader column={column} />,

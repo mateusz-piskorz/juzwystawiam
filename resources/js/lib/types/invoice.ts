@@ -34,7 +34,6 @@ export type InvoiceProduct = {
 };
 
 export type Invoice = {
-    type: z.infer<typeof schemas.InvoiceType>;
     id: number;
     created_at: string;
     currency: z.infer<typeof schemas.Currency>;
