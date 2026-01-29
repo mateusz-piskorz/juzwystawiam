@@ -31,3 +31,17 @@ test('user can update his own contractor', function () {
 
     expect($contractor->fresh()->company_name)->toBe('Updated Name');
 });
+
+test('default seller removed if is_own_company changes to false', function () {
+    $contractor = Contractor::factory()->create(['is_own_company' => true]);
+    $user = $contractor->user;
+    $user->default_seller_id = $contractor->id;
+    $user->save();
+
+    actingAs($user)
+        ->putJson(route('api.contractors.update', $contractor), ['is_own_company' => false])
+        ->assertOk();
+
+    expect($contractor->fresh()->is_own_company)->toBe(false);
+    expect($user->fresh()->default_seller_id)->toBe(null);
+});

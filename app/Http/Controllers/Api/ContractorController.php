@@ -38,6 +38,13 @@ class ContractorController
     {
         Gate::authorize('update', $contractor);
         $validated = $request->validated();
+
+        $user = $request->user();
+
+        if (isset($validated['is_own_company']) && $validated['is_own_company'] === false && $user->default_seller_id === $contractor->id) {
+            $user->update(['default_seller_id' => null]);
+        }
+
         $contractor->update([...$validated, 'user_id' => $request->user()->id]);
 
         return (new ContractorResource($contractor))->response();
@@ -46,6 +53,7 @@ class ContractorController
     public function destroy(Contractor $contractor)
     {
         Gate::authorize('delete', $contractor);
+
         $contractor->delete();
 
         return response()->json(['message' => 'Contractor deleted']);
