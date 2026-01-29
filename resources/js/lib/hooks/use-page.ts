@@ -1,7 +1,9 @@
 import { usePage as usePageInertia } from '@inertiajs/react';
 import type { Config } from 'ziggy-js';
+import { z } from 'zod';
 import enLang from '../../../lang/en.json';
 import { LOCALE_CODE } from '../constants/enums/locale-code';
+import { schemas } from '../constants/zod/openapi.json.client';
 
 type User = {
     id: number;
@@ -12,6 +14,9 @@ type User = {
     created_at: string;
     updated_at: string;
     premium_access_expires_at: string | null;
+    default_currency: z.infer<typeof schemas.Currency>;
+    default_payment_method: z.infer<typeof schemas.PaymentMethod>;
+    default_seller_id: number | undefined;
     premium_days: number;
     [key: string]: unknown;
 };

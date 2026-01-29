@@ -3,6 +3,7 @@ import { Form } from '@/components/ui/form';
 import { invoiceSchema } from '@/lib/constants/zod/invoice';
 import { api } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
+import { usePage } from '@/lib/hooks/use-page';
 import { Invoice } from '@/lib/types/invoice';
 import { getErrorMessage } from '@/lib/utils/get-error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -22,6 +23,7 @@ type Props = {
 };
 
 export const FormInvoice = ({ invoice }: Props) => {
+    const { user } = usePage().props.auth;
     const l = useLocale().locale;
     const locale = { ...l['dashboard/invoices']['invoice-form'], common: l.common, base: l['dashboard/invoices'] };
     const form = useForm({
@@ -29,13 +31,16 @@ export const FormInvoice = ({ invoice }: Props) => {
         defaultValues: {
             issue_date: new Date(),
             number: `FR ${dayjs().format('DD/MM/YYYY')}`,
-            invoice_contractors: [{ role: 'SELLER' }, { role: 'BUYER' }],
+            invoice_contractors: [{ role: 'SELLER', contractor_id: user.default_seller_id }, { role: 'BUYER' }],
             invoice_products: [{ name: '', measure_unit: 'PCS', quantity: 1, price: 0 }],
+            payment_method: user.default_payment_method,
+            currency: user.default_currency,
+            sale_date: new Date(),
+            due_date: dayjs().add(7, 'days').toDate(),
+            is_already_paid: true,
             ...invoice,
         },
     });
-
-    console.log(form.formState.errors);
 
     async function onSubmit(body: z.output<typeof invoiceSchema>) {
         const data = {

@@ -14,6 +14,7 @@ declare module 'ziggy-js' {
     "cashier.webhook": [],
     "sanctum.csrf-cookie": [],
     "api.profile.update-profile": [],
+    "api.profile.update-defaults": [],
     "api.profile.update-password": [],
     "api.profile.delete-account": [],
     "api.invoices.index": [],
@@ -32,8 +33,8 @@ declare module 'ziggy-js' {
             "binding": "id"
         }
     ],
-    "api.invoices.status-distribution-by-year": [],
-    "api.invoices.status-monthly-series": [],
+    "api.invoices.status-yearly-distribution": [],
+    "api.invoices.status-monthly-distribution": [],
     "api.invoices.send-email": [
         {
             "name": "invoice",

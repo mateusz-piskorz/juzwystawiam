@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils/cn';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { Switch } from '../../ui/switch';
 
-type FieldType = boolean;
+type FieldType = boolean | undefined;
 
 type Props<T extends FieldValues> = {
     form: UseFormReturn<T>;

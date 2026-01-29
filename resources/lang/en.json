@@ -75,6 +75,8 @@
         "Fill in the details below to": "Fill in the details below to",
         "Optional": "optional",
         "Show Details": "Show Details",
+        "Currency": "Currency",
+        "Payment method": "Payment method",
 
         "premium-status-heading": {
             "Your premium account is": "Your premium account is",
@@ -166,8 +168,6 @@
             "Information about secret note": "Information about secret note",
             "Secret note visible only to you. This feature is for": "Secret note visible only to you. This feature is for",
             "premium users": "premium users",
-            "Payment method": "Payment method",
-            "Currency": "Currency",
             "Invoice paid": "Invoice paid",
             "Mark invoice as paid": "Mark invoice as paid",
             "Sale Date": "Sale Date",
@@ -264,6 +264,12 @@
     },
 
     "dashboard/settings": {
+        "defaults": {
+            "Default settings": "Default settings",
+            "Update your default settings, these will be pre-filled when creating invoices": "Update your default settings, these will be pre-filled when creating invoices",
+            "Save Defaults": "Save Defaults"
+        },
+
         "appearance": {
             "Language": "Language",
             "Select language": "Select language",

@@ -30,6 +30,7 @@ const ProductResource = z.object({ id: z.number().int(), user_id: z.number().int
 const StoreProductRequest = z.object({ name: z.string().max(255), price: z.number(), measure_unit: MeasureUnit, vat_rate: VatRate, description: z.union([z.string(), z.null()]).optional() }).passthrough();
 const UpdateProductRequest = z.object({ name: z.union([z.string(), z.null()]), price: z.union([z.number(), z.null()]), measure_unit: MeasureUnit, vat_rate: VatRate, description: z.union([z.string(), z.null()]) }).partial().passthrough();
 const profile_update_profile_Body = z.object({ name: z.union([z.string(), z.null()]), email: z.union([z.string(), z.null()]) }).partial().passthrough();
+const profile_update_defaults_Body = z.object({ default_seller_id: z.union([z.number(), z.null()]).optional(), default_currency: Currency, default_payment_method: PaymentMethod }).passthrough();
 const profile_update_password_Body = z.object({ current_password: z.string(), password: z.string(), password_confirmation: z.string() }).passthrough();
 
 export const schemas = {
@@ -59,6 +60,7 @@ export const schemas = {
 	StoreProductRequest,
 	UpdateProductRequest,
 	profile_update_profile_Body,
+	profile_update_defaults_Body,
 	profile_update_password_Body,
 };
 
@@ -209,6 +211,32 @@ const endpoints = makeApi([
 				status: 404,
 				description: `Not found`,
 				schema: z.object({ message: z.string() }).passthrough()
+			},
+		]
+	},
+	{
+		method: "put",
+		path: "/v1/defaults",
+		alias: "profile.update-defaults",
+		requestFormat: "json",
+		parameters: [
+			{
+				name: "body",
+				type: "Body",
+				schema: profile_update_defaults_Body
+			},
+		],
+		response: z.object({ success: z.boolean(), "": z.string().optional() }).passthrough(),
+		errors: [
+			{
+				status: 401,
+				description: `Unauthenticated`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 422,
+				description: `Validation error`,
+				schema: z.object({ message: z.string(), errors: z.record(z.array(z.string())) }).passthrough()
 			},
 		]
 	},

@@ -14,7 +14,8 @@ type Props = {
 };
 
 export const PaymentTripleBox = ({ form, className }: Props) => {
-    const locale = useLocale().locale['dashboard/invoices']['invoice-form'];
+    const l = useLocale().locale;
+    const locale = { ...l['dashboard/invoices']['invoice-form'], common: l.common };
 
     return (
         <div className={cn('w-full min-w-[200px] rounded border', className)}>
@@ -22,7 +23,7 @@ export const PaymentTripleBox = ({ form, className }: Props) => {
                 <SelectField
                     form={form}
                     name="payment_method"
-                    label={locale['Payment method']}
+                    label={locale.common['Payment method']}
                     selectOptions={schemas.PaymentMethod.options.map((val) => ({ label: val, value: val }))}
                     className="flex-2/3 rounded-none rounded-ss border-none"
                 />
@@ -32,7 +33,7 @@ export const PaymentTripleBox = ({ form, className }: Props) => {
                 <SelectField
                     form={form}
                     name="currency"
-                    label={locale.Currency}
+                    label={locale.common.Currency}
                     selectOptions={schemas.Currency.options.map((val) => ({ label: val, value: val }))}
                     className="flex-1/3 rounded-none rounded-se border-none"
                 />

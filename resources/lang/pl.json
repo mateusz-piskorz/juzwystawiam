@@ -75,6 +75,8 @@
         "Fill in the details below to": "Wypełnij poniższe dane, aby",
         "Optional": "opcjonalne",
         "Show Details": "Pokaż szczegóły",
+        "Currency": "Waluta",
+        "Invoice paid": "Faktura opłacona",
 
         "premium-status-heading": {
             "Your premium account is": "Twój konto premium jest",
@@ -166,8 +168,6 @@
             "Secret note visible only to you. This feature is for": "Tajna notatka widoczna tylko dla Ciebie. Ta funkcja jest dla",
             "premium users": "użytkowników premium",
             "Payment method": "Metoda płatności",
-            "Currency": "Waluta",
-            "Invoice paid": "Faktura opłacona",
             "Mark invoice as paid": "Oznacz fakturę jako opłaconą",
             "Sale Date": "Data sprzedaży",
             "Due date": "Termin płatności",
@@ -265,6 +265,11 @@
     },
 
     "dashboard/settings": {
+        "defaults": {
+            "Default settings": "Ustawienia domyślne",
+            "Update your default settings, these will be pre-filled when creating invoices": "Zaktualizuj ustawienia domyślne – będą one automatycznie uzupełniane podczas tworzenia faktur",
+            "Save Defaults": "Zapisz ustawienia domyślne"
+        },
         "appearance": {
             "Language": "Język",
             "Select language": "Wybierz język",

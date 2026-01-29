@@ -5,6 +5,7 @@ import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Head } from '@inertiajs/react';
 import { SectionAppearance } from './partials/section-appearance';
+import { SectionDefaults } from './partials/section-defaults';
 import { SectionDeleteUser } from './partials/section-delete-user';
 import { SectionPassword } from './partials/section-password';
 import { SectionProfileSettings } from './partials/section-profile-settings';
@@ -32,6 +33,8 @@ const SettingsPage = () => {
                 <SectionAppearance />
                 <Separator orientation="horizontal" />
                 <SectionProfileSettings />
+                <Separator orientation="horizontal" />
+                <SectionDefaults />
                 <Separator orientation="horizontal" />
                 <SectionPassword />
                 <Separator orientation="horizontal" />
