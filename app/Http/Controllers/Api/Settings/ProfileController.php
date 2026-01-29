@@ -25,8 +25,8 @@ class ProfileController
                     $query->where('user_id', $user->id);
                 }),
             ],
-            'default_currency' => ['required', Rule::enum(Currency::class)],
-            'default_payment_method' => ['required', Rule::enum(PaymentMethod::class)],
+            'default_currency' => ['nullable', Rule::enum(Currency::class)],
+            'default_payment_method' => ['nullable', Rule::enum(PaymentMethod::class)],
         ]);
 
         $user->update($validated);

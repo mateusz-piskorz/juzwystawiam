@@ -11,7 +11,7 @@ test('unauthenticated user cannot update profile', function () {
     expect($user->fresh()->name)->toBe('Original Name');
 });
 
-test('user can update their profile', function () {
+test('user can update his profile', function () {
     $user = User::factory()->create();
 
     actingAs($user)

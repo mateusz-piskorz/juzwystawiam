@@ -42,7 +42,10 @@ class RegisteredUserController
             'password' => Hash::make($request->password),
         ]);
 
-        Contractor::create(['is_own_company' => true, 'email' => $request->email, 'company_name' => "$request->name's company", 'user_id' => $user->id]);
+        $contractor = Contractor::create(['is_own_company' => true, 'email' => $request->email, 'company_name' => "$request->name's company", 'user_id' => $user->id]);
+
+        $user->default_seller_id = $contractor->id;
+        $user->save();
 
         event(new Registered($user));
 
