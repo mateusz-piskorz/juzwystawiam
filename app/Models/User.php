@@ -8,6 +8,7 @@ use App\Enums\EmailStatus;
 use App\Support\PremiumDays;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -23,6 +24,9 @@ class User extends Authenticatable
         'email',
         'password',
         'premium_access_expires_at',
+        'default_currency',
+        'default_payment_method',
+        'default_seller_id',
     ];
 
     protected $hidden = [
@@ -46,6 +50,11 @@ class User extends Authenticatable
         return Attribute::make(
             get: fn (mixed $value, array $attributes) => PremiumDays::daysLeft($attributes['premium_access_expires_at'] ?? null),
         );
+    }
+
+    public function defaultSeller(): BelongsTo
+    {
+        return $this->belongsTo(Contractor::class, 'default_seller_id');
     }
 
     public function contractors(): HasMany

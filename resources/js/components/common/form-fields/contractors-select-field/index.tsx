@@ -1,31 +1,36 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { ReactCreatableSelect } from '@/components/common/react-select';
 
 import { FormControl, FormField, FormItem } from '@/components/ui/form';
 import { UpsertContractorDialog } from '@/features/upsert-contractor-dialog';
-import { invoiceSchema } from '@/lib/constants/zod/invoice';
 import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
+import { Nullable } from '@/lib/types/nullable';
+import { TypedFieldPath } from '@/lib/types/typed-field-path';
 import { useQuery } from '@tanstack/react-query';
 import { debounce } from 'lodash';
 import { useCallback, useState } from 'react';
-import { UseFormReturn } from 'react-hook-form';
+import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { z } from 'zod';
 import { CustomOption } from './custom-option';
 import { Option } from './types';
 
-type Props = {
-    form: UseFormReturn<z.input<typeof invoiceSchema>>;
-    role: z.infer<typeof schemas.ContractorRole>;
+type FieldType = Nullable<string | number>;
+
+type Props<T extends FieldValues> = {
+    form: UseFormReturn<T>;
+    name: TypedFieldPath<T, FieldType>;
     label: string;
-    idx: number;
+    role: z.infer<typeof schemas.ContractorRole>;
 };
 
-export const ContractorsSelectField = ({ form, role, label, idx }: Props) => {
+export const ContractorsSelectField = <T extends FieldValues>({ form, name: propsName, role, label }: Props<T>) => {
     const [menuIsOpen, setMenuIsOpen] = useState(false);
-    const name = `invoice_contractors.${idx}.contractor_id` as const;
-    const { control, watch, setValue } = form;
-    const selectedContractorId = watch(name);
+    const name = propsName as string;
+    const { control, watch, setValue } = form as unknown as UseFormReturn<{ [x: string]: FieldType }>;
+    const selectedContractorId = watch(name) as unknown as any;
+
     const [q, setQ] = useState('');
 
     const [defaultValues, setDefaultValues] = useState<Partial<z.infer<typeof schemas.ContractorResource>> | undefined>(undefined);
@@ -53,7 +58,7 @@ export const ContractorsSelectField = ({ form, role, label, idx }: Props) => {
                 open={open}
                 setOpen={setOpen}
                 onSuccess={(id) => {
-                    setValue(name, id);
+                    setValue(name, id as unknown as FieldType);
                     refetch();
                 }}
                 contractorId={defaultValues?.id}

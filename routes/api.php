@@ -13,6 +13,7 @@ Route::middleware('auth:sanctum')->name('api.')->prefix('v1')->group(function ()
 
     Route::name('profile.')->group(function () {
         Route::put('/profile', [ProfileController::class, 'updateProfile'])->name('update-profile');
+        Route::put('/defaults', [ProfileController::class, 'updateDefaults'])->name('update-defaults');
         Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('update-password');
         Route::delete('/profile', [ProfileController::class, 'deleteAccount'])->name('delete-account');
     });

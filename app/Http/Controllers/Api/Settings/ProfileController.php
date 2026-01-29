@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\Settings;
 
+use App\Enums\Currency;
+use App\Enums\PaymentMethod;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +13,27 @@ use Illuminate\Validation\Rules\Password;
 
 class ProfileController
 {
+    public function updateDefaults(Request $request)
+    {
+        $user = $request->user();
+
+        $validated = $request->validate([
+            'default_seller_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('contractors', 'id')->where(function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                }),
+            ],
+            'default_currency' => ['nullable', Rule::enum(Currency::class)],
+            'default_payment_method' => ['nullable', Rule::enum(PaymentMethod::class)],
+        ]);
+
+        $user->update($validated);
+
+        return response()->json(['success' => true, $validated]);
+    }
+
     public function updateProfile(Request $request)
     {
 
