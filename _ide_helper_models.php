@@ -54,7 +54,49 @@ namespace App\Models{
 /**
  * @property int $id
  * @property int $user_id
- * @property string $type
+ * @property int|null $expense_type_id
+ * @property string|null $description
+ * @property numeric $total
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Expense newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Expense newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Expense query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Expense whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Expense whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Expense whereExpenseTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Expense whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Expense whereTotal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Expense whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Expense whereUserId($value)
+ */
+	class Expense extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property string|null $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\ExpenseTypeFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExpenseType newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExpenseType newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExpenseType query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExpenseType whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExpenseType whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExpenseType whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExpenseType whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ExpenseType whereUserId($value)
+ */
+	class ExpenseType extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @property int $id
+ * @property int $user_id
  * @property string $number
  * @property string $issue_date
  * @property string $payment_method
@@ -95,7 +137,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereTotal($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereTotalDiscountAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereTotalVatAmount($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice whereUserId($value)
  */
@@ -252,8 +293,16 @@ namespace App\Models{
  * @property string|null $pm_type
  * @property string|null $pm_last_four
  * @property string|null $trial_ends_at
+ * @property string $default_payment_method
+ * @property string $default_currency
+ * @property int|null $default_seller_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Contractor> $contractors
  * @property-read int|null $contractors_count
+ * @property-read \App\Models\Contractor|null $defaultSeller
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ExpenseType> $expenseTypes
+ * @property-read int|null $expense_types_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Expense> $expenses
+ * @property-read int|null $expenses_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Invoice> $invoices
  * @property-read int|null $invoices_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
@@ -272,6 +321,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User onGenericTrial()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDefaultCurrency($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDefaultPaymentMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDefaultSellerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)

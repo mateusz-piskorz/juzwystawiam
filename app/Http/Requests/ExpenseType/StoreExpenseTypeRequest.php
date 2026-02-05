@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Http\Requests\ExpenseType;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreExpenseTypeRequest extends FormRequest
+{
+    public function rules(): array
+    {
+        return [
+            'name' => ['required', 'string'],
+        ];
+    }
+}

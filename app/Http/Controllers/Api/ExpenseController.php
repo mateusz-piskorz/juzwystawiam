@@ -10,7 +10,7 @@ use App\Models\Contractor;
 use App\Traits\AppliesQueryFilters;
 use Illuminate\Support\Facades\Gate;
 
-class ContractorController
+class ExpenseController
 {
     use AppliesQueryFilters;
 
