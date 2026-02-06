@@ -27,17 +27,17 @@ class ExpenseTypeController
     public function store(StoreExpenseTypeRequest $request)
     {
         $validated = $request->validated();
-        $expenseType = ExpenseType::create([...$validated, 'user_id' => $request->user()->id]);
+        $expenseType = $request->user()->expenseTypes()->create($validated);
 
-        return (new ExpenseTypeResource($expenseType))->response();
+        return new ExpenseTypeResource($expenseType);
     }
 
     public function update(UpdateExpenseTypeRequest $request, ExpenseType $expenseType)
     {
         Gate::authorize('update', $expenseType);
-        $expenseType->update([...$request->validated(), 'user_id' => $request->user()->id]);
+        $expenseType->update($request->validated());
 
-        return (new ExpenseTypeResource($expenseType))->response();
+        return new ExpenseTypeResource($expenseType);
     }
 
     public function destroy(ExpenseType $expenseType)

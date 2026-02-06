@@ -9,7 +9,10 @@ class UpdateExpenseTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['nullable', 'string'],
+            'name' => [
+                'nullable',
+                'string',
+            ],
         ];
     }
 }

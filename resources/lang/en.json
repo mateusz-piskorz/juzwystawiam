@@ -90,6 +90,7 @@
             "Invoices": "Invoices",
             "Contractors": "Contractors",
             "Products": "Products",
+            "Expense Types": "Expense Types",
             "Analytics": "Analytics",
             "Premium Account": "Premium Account",
             "Settings": "Settings",
@@ -223,6 +224,20 @@
         "This action cannot be undone. Product will be permanently deleted": "This action cannot be undone. Product will be permanently deleted",
         "Product": "Product",
         "Product description": "Product description"
+    },
+
+    "dashboard/expense-types": {
+        "Expense Types": "Expense Types",
+        "Manage your expense types and see details.": "Manage your expense types and see details.",
+        "Expense Type name": "Expense Type name",
+        "Delete expense type": "Delete expense type",
+        "Edit expense type": "Edit expense type",
+        "Add new expense type": "Add new expense type",
+        "Expense Type deleted successfully": "Expense Type deleted successfully",
+        "Are you sure you want to remove this expense type": "Are you sure you want to remove this expense type",
+        "This action cannot be undone. Expense Type will be permanently deleted": "This action cannot be undone. Expense Type will be permanently deleted",
+        "Expense Type": "Expense Type",
+        "Expense Type description": "Expense Type description"
     },
 
     "dashboard/analytics": {

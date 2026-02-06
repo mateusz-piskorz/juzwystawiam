@@ -12,13 +12,19 @@ class Expense extends Model
 
     protected $fillable = [
         'user_id',
+        'expense_type_id',
+        'title',
         'description',
         'total',
-        'tag',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function expenseType(): BelongsTo
+    {
+        return $this->belongsTo(ExpenseType::class);
     }
 }

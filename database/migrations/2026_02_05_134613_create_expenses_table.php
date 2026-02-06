@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('expense_type_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('title');
             $table->string('description')->nullable();
             $table->decimal('total', 12, 2);
             $table->timestamps();

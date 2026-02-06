@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Contractor\IndexContractorRequest;
-use App\Http\Requests\Contractor\StoreContractorRequest;
-use App\Http\Requests\Contractor\UpdateContractorRequest;
-use App\Http\Resources\ContractorResource;
-use App\Models\Contractor;
+use App\Http\Requests\Expense\IndexExpenseRequest;
+use App\Http\Requests\Expense\StoreExpenseRequest;
+use App\Http\Requests\Expense\UpdateExpenseRequest;
+use App\Http\Resources\ExpenseResource;
+use App\Models\Expense;
 use App\Traits\AppliesQueryFilters;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,48 +14,38 @@ class ExpenseController
 {
     use AppliesQueryFilters;
 
-    public function index(IndexContractorRequest $request)
+    public function index(IndexExpenseRequest $request)
     {
 
-        $query = $request->user()->contractors();
+        $query = $request->user()->expenses();
         $validated = $request->validated();
         $limit = $validated['limit'] ?? 25;
+        $query = $this->applyQueryFilters($query, $validated, 'title', ['expense_type_id']);
 
-        $query = $this->applyQueryFilters($query, $validated, 'company_name', ['is_own_company']);
-
-        return ContractorResource::collection($query->paginate($limit));
+        return ExpenseResource::collection($query->paginate($limit));
     }
 
-    public function store(StoreContractorRequest $request)
+    public function store(StoreExpenseRequest $request)
     {
         $validated = $request->validated();
-        $contractor = Contractor::create([...$validated, 'user_id' => $request->user()->id]);
+        $expense = $request->user()->expenses()->create($validated);
 
-        return (new ContractorResource($contractor))->response();
+        return (new ExpenseResource($expense))->response();
     }
 
-    public function update(UpdateContractorRequest $request, Contractor $contractor)
+    public function update(UpdateExpenseRequest $request, Expense $expense)
     {
-        Gate::authorize('update', $contractor);
-        $validated = $request->validated();
+        Gate::authorize('update', $expense);
+        $expense->update($request->validated());
 
-        $user = $request->user();
-
-        if (isset($validated['is_own_company']) && $validated['is_own_company'] === false && $user->default_seller_id === $contractor->id) {
-            $user->update(['default_seller_id' => null]);
-        }
-
-        $contractor->update([...$validated, 'user_id' => $request->user()->id]);
-
-        return (new ContractorResource($contractor))->response();
+        return (new ExpenseResource($expense))->response();
     }
 
-    public function destroy(Contractor $contractor)
+    public function destroy(Expense $expense)
     {
-        Gate::authorize('delete', $contractor);
+        Gate::authorize('delete', $expense);
+        $expense->delete();
 
-        $contractor->delete();
-
-        return response()->json(['message' => 'Contractor deleted']);
+        return response()->json(['message' => 'Expense deleted']);
     }
 }

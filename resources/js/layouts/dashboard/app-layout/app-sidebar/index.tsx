@@ -31,6 +31,11 @@ export function AppSidebar() {
             icon: AirVentIcon,
         },
         {
+            title: locale['Expense Types'],
+            href: route('expense-types'),
+            icon: AirVentIcon,
+        },
+        {
             title: locale.Analytics,
             href: route('analytics'),
             icon: ChartNoAxesCombined,
