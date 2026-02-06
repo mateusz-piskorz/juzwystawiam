@@ -3,7 +3,7 @@ services:
     container_name: app_prod
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     ports:
       - '8000:8000'
     environment:
@@ -40,7 +40,7 @@ services:
     container_name: queue_worker_prod
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     environment:
       APP_URL: https://www.juzwystawiam.pl
       ASSET_URL: https://www.juzwystawiam.pl
