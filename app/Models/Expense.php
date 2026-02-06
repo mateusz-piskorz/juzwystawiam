@@ -6,23 +6,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Product extends Model
+class Expense extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'name',
+        'expense_type_id',
+        'title',
         'description',
-        'price',
-        'measure_unit',
-        'vat_rate',
+        'total',
     ];
 
-    protected $casts = ['price' => 'float'];
+    protected $casts = ['total' => 'float'];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function expenseType(): BelongsTo
+    {
+        return $this->belongsTo(ExpenseType::class);
     }
 }

@@ -55,6 +55,7 @@ export const InputField = <T extends FieldValues, IT extends InputType>({
                     </FormLabel>
                     <FormControl>
                         <Input
+                            placeholder=""
                             onFocus={onFocus}
                             {...field}
                             value={field.value || ''}

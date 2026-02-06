@@ -12,7 +12,13 @@ const limit = z.union([z.number(), z.null()]).optional();
 const ContractorResource = z.object({ id: z.number().int(), user_id: z.number().int(), is_own_company: z.boolean(), company_name: z.string(), nip: z.union([z.string(), z.null()]), email: z.union([z.string(), z.null()]), phone: z.union([z.string(), z.null()]), bank_account: z.union([z.string(), z.null()]), country: z.union([z.string(), z.null()]), city: z.union([z.string(), z.null()]), postal_code: z.union([z.string(), z.null()]), street_name: z.union([z.string(), z.null()]), created_at: z.union([z.string(), z.null()]), updated_at: z.union([z.string(), z.null()]) }).passthrough();
 const StoreContractorRequest = z.object({ is_own_company: z.boolean(), company_name: z.string(), nip: z.union([z.string(), z.null()]).optional(), email: z.union([z.string(), z.null()]).optional(), phone: z.union([z.string(), z.null()]).optional(), bank_account: z.union([z.string(), z.null()]).optional(), country: z.union([z.string(), z.null()]).optional(), city: z.union([z.string(), z.null()]).optional(), postal_code: z.union([z.string(), z.null()]).optional(), street_name: z.union([z.string(), z.null()]).optional() }).passthrough();
 const UpdateContractorRequest = z.object({ is_own_company: z.union([z.boolean(), z.null()]), company_name: z.union([z.string(), z.null()]), nip: z.union([z.string(), z.null()]), email: z.union([z.string(), z.null()]), phone: z.union([z.string(), z.null()]), bank_account: z.union([z.string(), z.null()]), country: z.union([z.string(), z.null()]), city: z.union([z.string(), z.null()]), postal_code: z.union([z.string(), z.null()]), street_name: z.union([z.string(), z.null()]) }).partial().passthrough();
-const sort__2 = z.union([z.enum(["number", "type", "sale_date", "total", "is_already_paid"]), z.null()]).optional();
+const sort__2 = z.union([z.literal("expense_type_id"), z.null()]).optional();
+const ExpenseTypeResource = z.object({ id: z.number().int(), user_id: z.number().int(), name: z.union([z.string(), z.null()]), created_at: z.union([z.string(), z.null()]), updated_at: z.union([z.string(), z.null()]) }).passthrough();
+const ExpenseResource = z.object({ id: z.number().int(), user_id: z.number().int(), expense_type_id: z.union([z.number(), z.null()]), title: z.string(), description: z.union([z.string(), z.null()]), total: z.number(), created_at: z.union([z.string(), z.null()]), updated_at: z.union([z.string(), z.null()]), expense_type: ExpenseTypeResource.optional() }).passthrough();
+const StoreExpenseRequest = z.object({ title: z.string(), total: z.number(), expense_type_id: z.union([z.number(), z.null()]).optional(), description: z.union([z.string(), z.null()]).optional() }).passthrough();
+const UpdateExpenseRequest = z.object({ title: z.union([z.string(), z.null()]), total: z.union([z.number(), z.null()]), expense_type_id: z.union([z.number(), z.null()]), description: z.union([z.string(), z.null()]) }).partial().passthrough();
+const StoreExpenseTypeRequest = z.object({ name: z.string() }).passthrough();
+const UpdateExpenseTypeRequest = z.object({ name: z.union([z.string(), z.null()]) }).partial().passthrough();
 const PaymentMethod = z.enum(["BANK_TRANSFER", "CASH", "CARD", "BARTER", "CHEQUE", "COD", "OTHER", "COMPENSATION", "LETTER_OF_CREDIT", "PAYPAL", "PAYU", "PROMISSORY_NOTE", "PREPAYMENT", "INSTALLMENT_SALE", "TPAY", "PRZELEWY24", "DOTPAY"]);
 const EmailStatus = z.enum(["PENDING", "SENT", "FAILED"]);
 const InvoiceEmailResource = z.object({ id: z.number().int(), invoice_id: z.number().int(), status: EmailStatus, recipient: z.string(), created_at: z.union([z.string(), z.null()]), updated_at: z.union([z.string(), z.null()]) }).passthrough();
@@ -30,7 +36,7 @@ const ProductResource = z.object({ id: z.number().int(), user_id: z.number().int
 const StoreProductRequest = z.object({ name: z.string().max(255), price: z.number(), measure_unit: MeasureUnit, vat_rate: VatRate, description: z.union([z.string(), z.null()]).optional() }).passthrough();
 const UpdateProductRequest = z.object({ name: z.union([z.string(), z.null()]), price: z.union([z.number(), z.null()]), measure_unit: MeasureUnit, vat_rate: VatRate, description: z.union([z.string(), z.null()]) }).partial().passthrough();
 const profile_update_profile_Body = z.object({ name: z.union([z.string(), z.null()]), email: z.union([z.string(), z.null()]) }).partial().passthrough();
-const profile_update_defaults_Body = z.object({ default_seller_id: z.union([z.number(), z.null()]).optional(), default_currency: Currency, default_payment_method: PaymentMethod }).passthrough();
+const profile_update_defaults_Body = z.object({ default_seller_id: z.union([z.number(), z.null()]), default_currency: Currency, default_payment_method: PaymentMethod }).partial().passthrough();
 const profile_update_password_Body = z.object({ current_password: z.string(), password: z.string(), password_confirmation: z.string() }).passthrough();
 
 export const schemas = {
@@ -43,6 +49,12 @@ export const schemas = {
 	StoreContractorRequest,
 	UpdateContractorRequest,
 	sort__2,
+	ExpenseTypeResource,
+	ExpenseResource,
+	StoreExpenseRequest,
+	UpdateExpenseRequest,
+	StoreExpenseTypeRequest,
+	UpdateExpenseTypeRequest,
 	PaymentMethod,
 	EmailStatus,
 	InvoiceEmailResource,
@@ -242,8 +254,8 @@ const endpoints = makeApi([
 	},
 	{
 		method: "get",
-		path: "/v1/invoices",
-		alias: "invoices.index",
+		path: "/v1/expense-types",
+		alias: "expense-types.index",
 		requestFormat: "json",
 		parameters: [
 			{
@@ -252,9 +264,143 @@ const endpoints = makeApi([
 				schema: q
 			},
 			{
-				name: "is_already_paid",
+				name: "limit",
 				type: "Query",
-				schema: is_own_company
+				schema: limit
+			},
+			{
+				name: "page",
+				type: "Query",
+				schema: limit
+			},
+		],
+		response: z.object({ data: z.array(ExpenseTypeResource), links: z.object({ first: z.union([z.string(), z.null()]), last: z.union([z.string(), z.null()]), prev: z.union([z.string(), z.null()]), next: z.union([z.string(), z.null()]) }).passthrough(), meta: z.object({ current_page: z.number().int(), from: z.union([z.number(), z.null()]), last_page: z.number().int(), links: z.array(z.object({ url: z.union([z.string(), z.null()]), label: z.string(), active: z.boolean() }).passthrough()), path: z.union([z.string(), z.null()]), per_page: z.number().int(), to: z.union([z.number(), z.null()]), total: z.number().int() }).passthrough() }).passthrough(),
+		errors: [
+			{
+				status: 401,
+				description: `Unauthenticated`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 422,
+				description: `Validation error`,
+				schema: z.object({ message: z.string(), errors: z.record(z.array(z.string())) }).passthrough()
+			},
+		]
+	},
+	{
+		method: "post",
+		path: "/v1/expense-types",
+		alias: "expense-types.store",
+		requestFormat: "json",
+		parameters: [
+			{
+				name: "body",
+				type: "Body",
+				schema: z.object({ name: z.string() }).passthrough()
+			},
+		],
+		response: ExpenseTypeResource,
+		errors: [
+			{
+				status: 401,
+				description: `Unauthenticated`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 422,
+				description: `Validation error`,
+				schema: z.object({ message: z.string(), errors: z.record(z.array(z.string())) }).passthrough()
+			},
+		]
+	},
+	{
+		method: "put",
+		path: "/v1/expense-types/:expenseType",
+		alias: "expense-types.update",
+		requestFormat: "json",
+		parameters: [
+			{
+				name: "body",
+				type: "Body",
+				schema: UpdateExpenseTypeRequest
+			},
+			{
+				name: "expenseType",
+				type: "Path",
+				schema: z.number().int()
+			},
+		],
+		response: ExpenseTypeResource,
+		errors: [
+			{
+				status: 401,
+				description: `Unauthenticated`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 403,
+				description: `Authorization error`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 404,
+				description: `Not found`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 422,
+				description: `Validation error`,
+				schema: z.object({ message: z.string(), errors: z.record(z.array(z.string())) }).passthrough()
+			},
+		]
+	},
+	{
+		method: "delete",
+		path: "/v1/expense-types/:expenseType",
+		alias: "expense-types.destroy",
+		requestFormat: "json",
+		parameters: [
+			{
+				name: "expenseType",
+				type: "Path",
+				schema: z.number().int()
+			},
+		],
+		response: z.object({ message: z.literal("Expense Type deleted") }).passthrough(),
+		errors: [
+			{
+				status: 401,
+				description: `Unauthenticated`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 403,
+				description: `Authorization error`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 404,
+				description: `Not found`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+		]
+	},
+	{
+		method: "get",
+		path: "/v1/expenses",
+		alias: "expenses.index",
+		requestFormat: "json",
+		parameters: [
+			{
+				name: "q",
+				type: "Query",
+				schema: q
+			},
+			{
+				name: "expense_type_id",
+				type: "Query",
+				schema: q
 			},
 			{
 				name: "sort",
@@ -265,6 +411,140 @@ const endpoints = makeApi([
 				name: "sort_direction",
 				type: "Query",
 				schema: sort_direction
+			},
+			{
+				name: "limit",
+				type: "Query",
+				schema: limit
+			},
+			{
+				name: "page",
+				type: "Query",
+				schema: limit
+			},
+		],
+		response: z.object({ data: z.array(ExpenseResource), links: z.object({ first: z.union([z.string(), z.null()]), last: z.union([z.string(), z.null()]), prev: z.union([z.string(), z.null()]), next: z.union([z.string(), z.null()]) }).passthrough(), meta: z.object({ current_page: z.number().int(), from: z.union([z.number(), z.null()]), last_page: z.number().int(), links: z.array(z.object({ url: z.union([z.string(), z.null()]), label: z.string(), active: z.boolean() }).passthrough()), path: z.union([z.string(), z.null()]), per_page: z.number().int(), to: z.union([z.number(), z.null()]), total: z.number().int() }).passthrough() }).passthrough(),
+		errors: [
+			{
+				status: 401,
+				description: `Unauthenticated`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 422,
+				description: `Validation error`,
+				schema: z.object({ message: z.string(), errors: z.record(z.array(z.string())) }).passthrough()
+			},
+		]
+	},
+	{
+		method: "post",
+		path: "/v1/expenses",
+		alias: "expenses.store",
+		requestFormat: "json",
+		parameters: [
+			{
+				name: "body",
+				type: "Body",
+				schema: StoreExpenseRequest
+			},
+		],
+		response: ExpenseResource,
+		errors: [
+			{
+				status: 401,
+				description: `Unauthenticated`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 422,
+				description: `Validation error`,
+				schema: z.object({ message: z.string(), errors: z.record(z.array(z.string())) }).passthrough()
+			},
+		]
+	},
+	{
+		method: "put",
+		path: "/v1/expenses/:expense",
+		alias: "expenses.update",
+		requestFormat: "json",
+		parameters: [
+			{
+				name: "body",
+				type: "Body",
+				schema: UpdateExpenseRequest
+			},
+			{
+				name: "expense",
+				type: "Path",
+				schema: z.number().int()
+			},
+		],
+		response: ExpenseResource,
+		errors: [
+			{
+				status: 401,
+				description: `Unauthenticated`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 403,
+				description: `Authorization error`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 404,
+				description: `Not found`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 422,
+				description: `Validation error`,
+				schema: z.object({ message: z.string(), errors: z.record(z.array(z.string())) }).passthrough()
+			},
+		]
+	},
+	{
+		method: "delete",
+		path: "/v1/expenses/:expense",
+		alias: "expenses.destroy",
+		requestFormat: "json",
+		parameters: [
+			{
+				name: "expense",
+				type: "Path",
+				schema: z.number().int()
+			},
+		],
+		response: z.object({ message: z.literal("Expense deleted") }).passthrough(),
+		errors: [
+			{
+				status: 401,
+				description: `Unauthenticated`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 403,
+				description: `Authorization error`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 404,
+				description: `Not found`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+		]
+	},
+	{
+		method: "get",
+		path: "/v1/invoices",
+		alias: "invoices.index",
+		requestFormat: "json",
+		parameters: [
+			{
+				name: "q",
+				type: "Query",
+				schema: q
 			},
 			{
 				name: "limit",

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\ExpenseType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class IndexInvoiceRequest extends FormRequest
+class IndexExpenseTypeRequest extends FormRequest
 {
     public function rules(): array
     {

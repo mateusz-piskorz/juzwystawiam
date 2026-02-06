@@ -72,6 +72,16 @@ class User extends Authenticatable
         return $this->hasMany(Invoice::class);
     }
 
+    public function expenses(): HasMany
+    {
+        return $this->hasMany(Expense::class);
+    }
+
+    public function expenseTypes(): HasMany
+    {
+        return $this->hasMany(ExpenseType::class);
+    }
+
     public function invoicesCreatedThisMonth(): int
     {
         return $this->invoices()

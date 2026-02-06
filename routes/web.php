@@ -56,6 +56,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard/products', fn () => Inertia::render('dashboard/products/page'))->name('products');
 
+    Route::get('/dashboard/expense-types', fn () => Inertia::render('dashboard/expense-types/page'))->name('expense-types');
+    Route::get('/dashboard/expenses', fn () => Inertia::render('dashboard/expenses/page'))->name('expenses');
+
     Route::get('/dashboard/analytics', fn () => Inertia::render('dashboard/analytics/page'))->name('analytics');
 
     Route::get('/dashboard/premium-account', fn () => Inertia::render('dashboard/premium-account/page'))->name('premium-account');

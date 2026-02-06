@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Contractor;
 
 use App\Rules\StringOrArray;
 use Illuminate\Foundation\Http\FormRequest;

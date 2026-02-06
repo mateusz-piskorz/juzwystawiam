@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Contractor\IndexContractorRequest;
 use App\Http\Requests\Contractor\StoreContractorRequest;
 use App\Http\Requests\Contractor\UpdateContractorRequest;
-use App\Http\Requests\IndexContractorRequest;
 use App\Http\Resources\ContractorResource;
 use App\Models\Contractor;
 use App\Traits\AppliesQueryFilters;

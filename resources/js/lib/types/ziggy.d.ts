@@ -42,6 +42,38 @@ declare module 'ziggy-js' {
             "binding": "id"
         }
     ],
+    "api.expense-types.index": [],
+    "api.expense-types.store": [],
+    "api.expense-types.update": [
+        {
+            "name": "expenseType",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "api.expense-types.destroy": [
+        {
+            "name": "expenseType",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "api.expenses.index": [],
+    "api.expenses.store": [],
+    "api.expenses.update": [
+        {
+            "name": "expense",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "api.expenses.destroy": [
+        {
+            "name": "expense",
+            "required": true,
+            "binding": "id"
+        }
+    ],
     "api.contractors.index": [],
     "api.contractors.store": [],
     "api.contractors.update": [
@@ -110,6 +142,8 @@ declare module 'ziggy-js' {
     "settings": [],
     "contractors": [],
     "products": [],
+    "expense-types": [],
+    "expenses": [],
     "analytics": [],
     "premium-account": [],
     "premium-account.buy": [],

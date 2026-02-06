@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\ContractorController;
+use App\Http\Controllers\Api\ExpenseController;
+use App\Http\Controllers\Api\ExpenseTypeController;
 use App\Http\Controllers\Api\Invoice\InvoiceChartDataController;
 use App\Http\Controllers\Api\Invoice\InvoiceController;
 use App\Http\Controllers\Api\Invoice\InvoiceEmailController;
@@ -26,6 +28,20 @@ Route::middleware('auth:sanctum')->name('api.')->prefix('v1')->group(function ()
         Route::get('/invoices/charts/status-yearly-distribution', [InvoiceChartDataController::class, 'statusYearlyDistribution'])->name('status-yearly-distribution');
         Route::get('/invoices/charts/status-monthly-distribution', [InvoiceChartDataController::class, 'statusMonthlyDistribution'])->name('status-monthly-distribution');
         Route::post('/invoices/{invoice}/send-email-issuing-invoice', [InvoiceEmailController::class, 'sendEmailIssuingInvoice'])->name('send-email');
+    });
+
+    Route::name('expense-types.')->group(function () {
+        Route::get('/expense-types', [ExpenseTypeController::class, 'index'])->name('index');
+        Route::post('/expense-types', [ExpenseTypeController::class, 'store'])->name('store');
+        Route::put('/expense-types/{expenseType}', [ExpenseTypeController::class, 'update'])->name('update');
+        Route::delete('/expense-types/{expenseType}', [ExpenseTypeController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::name('expenses.')->group(function () {
+        Route::get('/expenses', [ExpenseController::class, 'index'])->name('index');
+        Route::post('/expenses', [ExpenseController::class, 'store'])->name('store');
+        Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('update');
+        Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('destroy');
     });
 
     Route::name('contractors.')->group(function () {
