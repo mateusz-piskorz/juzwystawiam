@@ -17,7 +17,9 @@ jobs:
         run: cp .env.example .env
 
       - name: Start Docker Stack
-        run: docker compose up -d --wait
+        run: |
+          sleep 5
+          docker compose up -d
 
       - name: Tests
         run: docker compose exec app php artisan test
