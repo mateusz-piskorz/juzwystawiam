@@ -63,13 +63,15 @@ declare module 'ziggy-js' {
     "api.expenses.update": [
         {
             "name": "expense",
-            "required": true
+            "required": true,
+            "binding": "id"
         }
     ],
     "api.expenses.destroy": [
         {
             "name": "expense",
-            "required": true
+            "required": true,
+            "binding": "id"
         }
     ],
     "api.contractors.index": [],
@@ -141,6 +143,7 @@ declare module 'ziggy-js' {
     "contractors": [],
     "products": [],
     "expense-types": [],
+    "expenses": [],
     "analytics": [],
     "premium-account": [],
     "premium-account.buy": [],

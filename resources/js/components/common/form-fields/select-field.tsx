@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils/cn';
 
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 
-type FieldType = Nullable<string>;
+type FieldType = Nullable<string | number>;
 
 type Props<T extends FieldValues> = {
     form: UseFormReturn<T>;
@@ -36,7 +36,7 @@ export const SelectField = <T extends FieldValues>({ form, className, selectOpti
                     )}
                 >
                     {/* todo: use Select component from components/common */}
-                    <Select onValueChange={field.onChange} defaultValue={field.value ?? ''}>
+                    <Select onValueChange={field.onChange} defaultValue={field.value ? String(field.value) : ''}>
                         <FormControl>
                             <SelectTrigger className={cn('border-sidebar-ring relative h-full cursor-pointer rounded-none border-none')}>
                                 <span className="invisible" />

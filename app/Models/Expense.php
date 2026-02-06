@@ -18,6 +18,8 @@ class Expense extends Model
         'total',
     ];
 
+    protected $casts = ['total' => 'float'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -1,5 +1,6 @@
 import ConfirmDialog from '@/components/common/confirm-dialog';
 import { DataTable } from '@/components/common/data-table';
+import { UpsertExpenseTypeDialog } from '@/features/upsert-expense-type-dialog';
 import { api, schemas } from '@/lib/constants/zod/openapi.json.client';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { useSearchParams } from '@/lib/hooks/use-search-params';
@@ -8,7 +9,6 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { getExpenseTypeColumns } from './expense-type-columns';
-import { UpsertExpenseTypeDialog } from './upsert-expense-type-dialog';
 
 export const TableExpenseType = () => {
     const l = useLocale().locale;
@@ -48,15 +48,15 @@ export const TableExpenseType = () => {
 
     const columns = getExpenseTypeColumns({
         handleDeleteExpenseType: (expenseTypeId: number) => {
-            const selectedExpense = data?.data.find((e) => e.id === expenseTypeId);
-            if (!selectedExpense) return;
-            setSelectedExpenseType(selectedExpense);
+            const selectedExpenseType = data?.data.find((e) => e.id === expenseTypeId);
+            if (!selectedExpenseType) return;
+            setSelectedExpenseType(selectedExpenseType);
             setOpenConfirm(true);
         },
         handleEditExpenseType: async (expenseTypeId: number) => {
-            const selectedExpense = data?.data.find((p) => p.id === expenseTypeId);
-            if (!selectedExpense) return;
-            setSelectedExpenseType(selectedExpense);
+            const selectedExpenseType = data?.data.find((p) => p.id === expenseTypeId);
+            if (!selectedExpenseType) return;
+            setSelectedExpenseType(selectedExpenseType);
             setOpen(true);
         },
         locale,
@@ -64,7 +64,13 @@ export const TableExpenseType = () => {
 
     return (
         <>
-            <UpsertExpenseTypeDialog open={open} onSuccess={() => refetch()} setOpen={setOpen} expenseType={selectedExpenseType} />
+            <UpsertExpenseTypeDialog
+                open={open}
+                onSuccess={() => refetch()}
+                setOpen={setOpen}
+                expenseTypeId={selectedExpenseType?.id}
+                defaultValues={selectedExpenseType}
+            />
 
             <ConfirmDialog
                 open={openConfirm}

@@ -91,6 +91,7 @@
             "Contractors": "Contractors",
             "Products": "Products",
             "Expense Types": "Expense Types",
+            "Expenses": "Expenses",
             "Analytics": "Analytics",
             "Premium Account": "Premium Account",
             "Settings": "Settings",
@@ -236,8 +237,23 @@
         "Expense Type deleted successfully": "Expense Type deleted successfully",
         "Are you sure you want to remove this expense type": "Are you sure you want to remove this expense type",
         "This action cannot be undone. Expense Type will be permanently deleted": "This action cannot be undone. Expense Type will be permanently deleted",
-        "Expense Type": "Expense Type",
-        "Expense Type description": "Expense Type description"
+        "Expense Type": "Expense Type"
+    },
+
+    "dashboard/expenses": {
+        "Expenses": "Expenses",
+        "Manage your expenses and see details.": "Manage your expenses and see details.",
+        "Expense title": "Expense title",
+        "Expense description": "Expense description",
+        "Expense total": "Expense total",
+        "Expense type": "Expense type",
+        "Delete expense": "Delete expense",
+        "Edit expense": "Edit expense",
+        "Add new expense": "Add new expense",
+        "Expense deleted successfully": "Expense deleted successfully",
+        "Are you sure you want to remove this expense": "Are you sure you want to remove this expense",
+        "This action cannot be undone. Expense will be permanently deleted": "This action cannot be undone. Expense will be permanently deleted",
+        "Expense": "Expense"
     },
 
     "dashboard/analytics": {

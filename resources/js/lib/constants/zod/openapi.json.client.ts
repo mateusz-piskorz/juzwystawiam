@@ -12,7 +12,11 @@ const limit = z.union([z.number(), z.null()]).optional();
 const ContractorResource = z.object({ id: z.number().int(), user_id: z.number().int(), is_own_company: z.boolean(), company_name: z.string(), nip: z.union([z.string(), z.null()]), email: z.union([z.string(), z.null()]), phone: z.union([z.string(), z.null()]), bank_account: z.union([z.string(), z.null()]), country: z.union([z.string(), z.null()]), city: z.union([z.string(), z.null()]), postal_code: z.union([z.string(), z.null()]), street_name: z.union([z.string(), z.null()]), created_at: z.union([z.string(), z.null()]), updated_at: z.union([z.string(), z.null()]) }).passthrough();
 const StoreContractorRequest = z.object({ is_own_company: z.boolean(), company_name: z.string(), nip: z.union([z.string(), z.null()]).optional(), email: z.union([z.string(), z.null()]).optional(), phone: z.union([z.string(), z.null()]).optional(), bank_account: z.union([z.string(), z.null()]).optional(), country: z.union([z.string(), z.null()]).optional(), city: z.union([z.string(), z.null()]).optional(), postal_code: z.union([z.string(), z.null()]).optional(), street_name: z.union([z.string(), z.null()]).optional() }).passthrough();
 const UpdateContractorRequest = z.object({ is_own_company: z.union([z.boolean(), z.null()]), company_name: z.union([z.string(), z.null()]), nip: z.union([z.string(), z.null()]), email: z.union([z.string(), z.null()]), phone: z.union([z.string(), z.null()]), bank_account: z.union([z.string(), z.null()]), country: z.union([z.string(), z.null()]), city: z.union([z.string(), z.null()]), postal_code: z.union([z.string(), z.null()]), street_name: z.union([z.string(), z.null()]) }).partial().passthrough();
+const sort__2 = z.union([z.literal("expense_type_id"), z.null()]).optional();
 const ExpenseTypeResource = z.object({ id: z.number().int(), user_id: z.number().int(), name: z.union([z.string(), z.null()]), created_at: z.union([z.string(), z.null()]), updated_at: z.union([z.string(), z.null()]) }).passthrough();
+const ExpenseResource = z.object({ id: z.number().int(), user_id: z.number().int(), expense_type_id: z.union([z.number(), z.null()]), title: z.string(), description: z.union([z.string(), z.null()]), total: z.number(), created_at: z.union([z.string(), z.null()]), updated_at: z.union([z.string(), z.null()]), expense_type: ExpenseTypeResource.optional() }).passthrough();
+const StoreExpenseRequest = z.object({ title: z.string(), total: z.number(), expense_type_id: z.union([z.number(), z.null()]).optional(), description: z.union([z.string(), z.null()]).optional() }).passthrough();
+const UpdateExpenseRequest = z.object({ title: z.union([z.string(), z.null()]), total: z.union([z.number(), z.null()]), expense_type_id: z.union([z.number(), z.null()]), description: z.union([z.string(), z.null()]) }).partial().passthrough();
 const StoreExpenseTypeRequest = z.object({ name: z.string() }).passthrough();
 const UpdateExpenseTypeRequest = z.object({ name: z.union([z.string(), z.null()]) }).partial().passthrough();
 const PaymentMethod = z.enum(["BANK_TRANSFER", "CASH", "CARD", "BARTER", "CHEQUE", "COD", "OTHER", "COMPENSATION", "LETTER_OF_CREDIT", "PAYPAL", "PAYU", "PROMISSORY_NOTE", "PREPAYMENT", "INSTALLMENT_SALE", "TPAY", "PRZELEWY24", "DOTPAY"]);
@@ -27,7 +31,7 @@ const StoreInvoiceRequest = z.object({ number: z.string(), issue_date: z.string(
 const UpdateInvoiceRequest = z.object({ number: z.union([z.string(), z.null()]), issue_date: z.union([z.string(), z.null()]), payment_method: PaymentMethod, currency: Currency, is_already_paid: z.union([z.boolean(), z.null()]), sale_date: z.union([z.string(), z.null()]), due_date: z.union([z.string(), z.null()]), secret_note: z.union([z.string(), z.null()]), invoice_contractors: z.array(z.object({ contractor_id: z.number().int(), role: ContractorRole }).passthrough()), invoice_products: z.union([z.array(z.object({ product_id: z.union([z.number(), z.null()]), name: z.union([z.string(), z.null()]), quantity: z.union([z.number(), z.null()]), price: z.union([z.number(), z.null()]), measure_unit: MeasureUnit, discount: z.union([z.number(), z.null()]), vat_rate: VatRate }).partial().passthrough()), z.null()]) }).partial().passthrough();
 const period = z.union([z.enum(["this_year", "prev_year"]), z.null()]).optional();
 const StripePaymentIntentResource = z.object({ id: z.string(), amount: z.number().int(), status: z.string(), description: z.union([z.string(), z.null()]), created: z.number().int() }).passthrough();
-const sort__2 = z.union([z.enum(["price", "measure_unit", "vat_rate"]), z.null()]).optional();
+const sort__3 = z.union([z.enum(["price", "measure_unit", "vat_rate"]), z.null()]).optional();
 const ProductResource = z.object({ id: z.number().int(), user_id: z.number().int(), name: z.string(), description: z.union([z.string(), z.null()]), price: z.number(), measure_unit: MeasureUnit, vat_rate: VatRate, created_at: z.union([z.string(), z.null()]), updated_at: z.union([z.string(), z.null()]) }).passthrough();
 const StoreProductRequest = z.object({ name: z.string().max(255), price: z.number(), measure_unit: MeasureUnit, vat_rate: VatRate, description: z.union([z.string(), z.null()]).optional() }).passthrough();
 const UpdateProductRequest = z.object({ name: z.union([z.string(), z.null()]), price: z.union([z.number(), z.null()]), measure_unit: MeasureUnit, vat_rate: VatRate, description: z.union([z.string(), z.null()]) }).partial().passthrough();
@@ -44,7 +48,11 @@ export const schemas = {
 	ContractorResource,
 	StoreContractorRequest,
 	UpdateContractorRequest,
+	sort__2,
 	ExpenseTypeResource,
+	ExpenseResource,
+	StoreExpenseRequest,
+	UpdateExpenseRequest,
 	StoreExpenseTypeRequest,
 	UpdateExpenseTypeRequest,
 	PaymentMethod,
@@ -59,7 +67,7 @@ export const schemas = {
 	UpdateInvoiceRequest,
 	period,
 	StripePaymentIntentResource,
-	sort__2,
+	sort__3,
 	ProductResource,
 	StoreProductRequest,
 	UpdateProductRequest,
@@ -390,14 +398,14 @@ const endpoints = makeApi([
 				schema: q
 			},
 			{
-				name: "is_own_company",
+				name: "expense_type_id",
 				type: "Query",
-				schema: is_own_company
+				schema: q
 			},
 			{
 				name: "sort",
 				type: "Query",
-				schema: sort
+				schema: sort__2
 			},
 			{
 				name: "sort_direction",
@@ -415,7 +423,7 @@ const endpoints = makeApi([
 				schema: limit
 			},
 		],
-		response: z.object({ data: z.array(ContractorResource), links: z.object({ first: z.union([z.string(), z.null()]), last: z.union([z.string(), z.null()]), prev: z.union([z.string(), z.null()]), next: z.union([z.string(), z.null()]) }).passthrough(), meta: z.object({ current_page: z.number().int(), from: z.union([z.number(), z.null()]), last_page: z.number().int(), links: z.array(z.object({ url: z.union([z.string(), z.null()]), label: z.string(), active: z.boolean() }).passthrough()), path: z.union([z.string(), z.null()]), per_page: z.number().int(), to: z.union([z.number(), z.null()]), total: z.number().int() }).passthrough() }).passthrough(),
+		response: z.object({ data: z.array(ExpenseResource), links: z.object({ first: z.union([z.string(), z.null()]), last: z.union([z.string(), z.null()]), prev: z.union([z.string(), z.null()]), next: z.union([z.string(), z.null()]) }).passthrough(), meta: z.object({ current_page: z.number().int(), from: z.union([z.number(), z.null()]), last_page: z.number().int(), links: z.array(z.object({ url: z.union([z.string(), z.null()]), label: z.string(), active: z.boolean() }).passthrough()), path: z.union([z.string(), z.null()]), per_page: z.number().int(), to: z.union([z.number(), z.null()]), total: z.number().int() }).passthrough() }).passthrough(),
 		errors: [
 			{
 				status: 401,
@@ -438,10 +446,10 @@ const endpoints = makeApi([
 			{
 				name: "body",
 				type: "Body",
-				schema: StoreContractorRequest
+				schema: StoreExpenseRequest
 			},
 		],
-		response: ContractorResource,
+		response: ExpenseResource,
 		errors: [
 			{
 				status: 401,
@@ -464,15 +472,15 @@ const endpoints = makeApi([
 			{
 				name: "body",
 				type: "Body",
-				schema: UpdateContractorRequest
+				schema: UpdateExpenseRequest
 			},
 			{
 				name: "expense",
 				type: "Path",
-				schema: z.string()
+				schema: z.number().int()
 			},
 		],
-		response: ContractorResource,
+		response: ExpenseResource,
 		errors: [
 			{
 				status: 401,
@@ -482,6 +490,11 @@ const endpoints = makeApi([
 			{
 				status: 403,
 				description: `Authorization error`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 404,
+				description: `Not found`,
 				schema: z.object({ message: z.string() }).passthrough()
 			},
 			{
@@ -500,10 +513,10 @@ const endpoints = makeApi([
 			{
 				name: "expense",
 				type: "Path",
-				schema: z.string()
+				schema: z.number().int()
 			},
 		],
-		response: z.object({ message: z.literal("Contractor deleted") }).passthrough(),
+		response: z.object({ message: z.literal("Expense deleted") }).passthrough(),
 		errors: [
 			{
 				status: 401,
@@ -513,6 +526,11 @@ const endpoints = makeApi([
 			{
 				status: 403,
 				description: `Authorization error`,
+				schema: z.object({ message: z.string() }).passthrough()
+			},
+			{
+				status: 404,
+				description: `Not found`,
 				schema: z.object({ message: z.string() }).passthrough()
 			},
 		]
@@ -780,7 +798,7 @@ const endpoints = makeApi([
 			{
 				name: "sort",
 				type: "Query",
-				schema: sort__2
+				schema: sort__3
 			},
 			{
 				name: "sort_direction",

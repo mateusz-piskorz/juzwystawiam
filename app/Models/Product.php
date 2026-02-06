@@ -19,9 +19,7 @@ class Product extends Model
         'vat_rate',
     ];
 
-    protected $casts = [
-        'price' => 'float',
-    ];
+    protected $casts = ['price' => 'float'];
 
     public function user(): BelongsTo
     {

@@ -3,7 +3,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import { useLocale } from '@/lib/hooks/use-locale';
 import { type NavItem } from '@/lib/types';
 import { Link } from '@inertiajs/react';
-import { AirVentIcon, ChartNoAxesCombined, Crown, LayoutGrid, RadioReceiver, Users2 } from 'lucide-react';
+import { AirVentIcon, ChartNoAxesCombined, Crown, LayoutGrid, RadioReceiver, Receipt, ReceiptText, Users2 } from 'lucide-react';
 import { NavMain } from './nav-main';
 import { NavUser } from './nav-user';
 
@@ -33,7 +33,12 @@ export function AppSidebar() {
         {
             title: locale['Expense Types'],
             href: route('expense-types'),
-            icon: AirVentIcon,
+            icon: Receipt,
+        },
+        {
+            title: locale['Expenses'],
+            href: route('expenses'),
+            icon: ReceiptText,
         },
         {
             title: locale.Analytics,

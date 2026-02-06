@@ -91,6 +91,7 @@
             "Contractors": "Kontrahenci",
             "Products": "Produkty",
             "Expense Types": "Typy Wydatków",
+            "Expenses": "Wydatki",
             "Analytics": "Analizy",
             "Premium Account": "Konto Premium",
             "Settings": "Ustawienia",
@@ -237,8 +238,23 @@
         "Expense Type deleted successfully": "Rodzaj kosztu został pomyślnie usunięty",
         "Are you sure you want to remove this expense type": "Czy na pewno chcesz usunąć ten rodzaj kosztu?",
         "This action cannot be undone. Expense Type will be permanently deleted": "Tej operacji nie można cofnąć. Rodzaj kosztu zostanie trwale usunięty.",
-        "Expense Type": "Rodzaj kosztu",
-        "Expense Type description": "Opis rodzaju kosztu"
+        "Expense Type": "Rodzaj kosztu"
+    },
+
+    "dashboard/expenses": {
+        "Expenses": "Wydatki",
+        "Manage your expenses and see details.": "Zarządzaj swoimi wydatkami i przeglądaj szczegóły.",
+        "Expense title": "Tytuł wydatku",
+        "Expense description": "Opis wydatku",
+        "Expense total": "Suma wydatku",
+        "Expense type": "Typ wydatku",
+        "Delete expense": "Usuń wydatek",
+        "Edit expense": "Edytuj wydatek",
+        "Add new expense": "Dodaj nowy wydatek",
+        "Expense deleted successfully": "Wydatek został pomyślnie usunięty",
+        "Are you sure you want to remove this expense": "Czy na pewno chcesz usunąć ten wydatek?",
+        "This action cannot be undone. Expense will be permanently deleted": "Tej operacji nie można cofnąć. Wydatek zostanie trwale usunięty.",
+        "Expense": "Wydatek"
     },
 
     "dashboard/analytics": {

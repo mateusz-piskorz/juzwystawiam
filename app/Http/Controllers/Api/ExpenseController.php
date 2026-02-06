@@ -17,7 +17,7 @@ class ExpenseController
     public function index(IndexExpenseRequest $request)
     {
 
-        $query = $request->user()->expenses();
+        $query = $request->user()->expenses()->with(['expenseType']);
         $validated = $request->validated();
         $limit = $validated['limit'] ?? 25;
         $query = $this->applyQueryFilters($query, $validated, 'title', ['expense_type_id']);
