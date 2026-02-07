@@ -10,11 +10,8 @@ services:
       APP_URL: https://www.juzwystawiam.pl
       ASSET_URL: https://www.juzwystawiam.pl
       DB_CONNECTION: pgsql
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_DATABASE: db_prod
-      DB_USERNAME: db_prod_user
-      DB_PASSWORD: ${DB_PASSWORD}
+      DB_SCHEMA: prod_juzwystawiam
+      DB_URL: ${DB_URL}
       APP_ENV: production
       APP_DEBUG: false
       VITE_APP_NAME: JuzWystawiam
@@ -29,8 +26,6 @@ services:
       STRIPE_KEY: ${STRIPE_KEY}
       STRIPE_SECRET: ${STRIPE_SECRET}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
-    networks:
-      - app_prod
     volumes:
       - type: bind
         source: /var/www/html/prod/storage
@@ -45,11 +40,8 @@ services:
       APP_URL: https://www.juzwystawiam.pl
       ASSET_URL: https://www.juzwystawiam.pl
       DB_CONNECTION: pgsql
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_DATABASE: db_prod
-      DB_USERNAME: db_prod_user
-      DB_PASSWORD: ${DB_PASSWORD}
+      DB_SCHEMA: prod_juzwystawiam
+      DB_URL: ${DB_URL}
       APP_ENV: production
       APP_DEBUG: false
       VITE_APP_NAME: JuzWystawiam
@@ -68,23 +60,3 @@ services:
     command: >
       sh -c "php artisan queue:work --sleep=3 --tries=3 --timeout=60"
     restart: unless-stopped
-    networks:
-      - app_prod
-
-  db:
-    image: postgres:17.6
-    container_name: db_prod
-    volumes:
-      - db_data_prod:/postgresql
-    environment:
-      POSTGRES_DB: db_prod
-      POSTGRES_USER: db_prod_user
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    networks:
-      - app_prod
-
-volumes:
-  db_data_prod:
-
-networks:
-  app_prod:

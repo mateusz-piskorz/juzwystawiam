@@ -55,7 +55,7 @@ jobs:
     environment: stg
     runs-on: self-hosted
     env:
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_URL: ${{ secrets.DB_URL }}
       MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
       MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
       STRIPE_KEY: ${{ secrets.STRIPE_KEY }}
@@ -79,9 +79,6 @@ jobs:
       - name: Remove dangling images
         run: |
           docker images -f "dangling=true" -q | xargs -r docker rmi
-
-      - name: db
-        run: docker compose -f docker-compose.stg.yml up -d db
 
       - name: app
         run: |

@@ -10,11 +10,8 @@ services:
       APP_URL: https://staging.juzwystawiam.pl
       ASSET_URL: https://staging.juzwystawiam.pl
       DB_CONNECTION: pgsql
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_DATABASE: db_stg
-      DB_USERNAME: db_stg_user
-      DB_PASSWORD: ${DB_PASSWORD}
+      DB_SCHEMA: staging_juzwystawiam
+      DB_URL: ${DB_URL}
       APP_ENV: production
       APP_DEBUG: false
       VITE_APP_NAME: JuzWystawiam
@@ -29,8 +26,6 @@ services:
       STRIPE_KEY: ${STRIPE_KEY}
       STRIPE_SECRET: ${STRIPE_SECRET}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
-    networks:
-      - app_stg
     volumes:
       - type: bind
         source: /var/www/html/stg/storage
@@ -45,11 +40,8 @@ services:
       APP_URL: https://staging.juzwystawiam.pl
       ASSET_URL: https://staging.juzwystawiam.pl
       DB_CONNECTION: pgsql
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_DATABASE: db_stg
-      DB_USERNAME: db_stg_user
-      DB_PASSWORD: ${DB_PASSWORD}
+      DB_SCHEMA: staging_juzwystawiam
+      DB_URL: ${DB_URL}
       APP_ENV: production
       APP_DEBUG: false
       VITE_APP_NAME: JuzWystawiam
@@ -67,23 +59,6 @@ services:
     command: >
       sh -c "php artisan queue:work --sleep=3 --tries=3 --timeout=60"
     restart: unless-stopped
-    networks:
-      - app_stg
-
-  db:
-    image: postgres:17.6
-    container_name: db_stg
-    volumes:
-      - db_data_stg:/postgresql
-    environment:
-      POSTGRES_DB: db_stg
-      POSTGRES_USER: db_stg_user
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    networks:
-      - app_stg
-
-volumes:
-  db_data_stg:
 
 networks:
   app_stg:
