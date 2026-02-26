@@ -4,7 +4,6 @@ https://www.juzwystawiam.pl/
 
 ```shell
 cp .env.example .env
-php artisan key:generate
 ```
 
 add MAIL_USERNAME, MAIL_PASSWORD
