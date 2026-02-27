@@ -5,6 +5,7 @@ import { TableInvoice } from '@/features/table-invoice';
 import { AppLayout } from '@/layouts/dashboard/app-layout';
 import { useLocale } from '@/lib/hooks/use-locale';
 import { Head } from '@inertiajs/react';
+import { RecentInvoices } from './partials/recent-invoices';
 
 const InvoiceListPage = () => {
     const l = useLocale().locale;
@@ -24,7 +25,9 @@ const InvoiceListPage = () => {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={locale.common.Invoices} />
             <div className="p-4 md:px-8">
-                <DashboardHeading title={locale.common.Invoices} description={locale['Manage your invoices and see details.']} />
+                <DashboardHeading title={locale['Latest Invoices']} />
+                <RecentInvoices />
+                <DashboardHeading className="mt-4" title={locale.common.Invoices} description={locale['Manage your invoices and see details.']} />
                 <TableInvoice />
             </div>
         </AppLayout>
