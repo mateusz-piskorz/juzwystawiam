@@ -19,6 +19,7 @@ const StoreExpenseRequest = z.object({ title: z.string(), total: z.number(), exp
 const UpdateExpenseRequest = z.object({ title: z.union([z.string(), z.null()]), total: z.union([z.number(), z.null()]), expense_type_id: z.union([z.number(), z.null()]), description: z.union([z.string(), z.null()]) }).partial().passthrough();
 const StoreExpenseTypeRequest = z.object({ name: z.string() }).passthrough();
 const UpdateExpenseTypeRequest = z.object({ name: z.union([z.string(), z.null()]) }).partial().passthrough();
+const sort__3 = z.union([z.enum(["is_already_paid", "total", "sale_date", "number", "created_at"]), z.null()]).optional();
 const PaymentMethod = z.enum(["BANK_TRANSFER", "CASH", "CARD", "BARTER", "CHEQUE", "COD", "OTHER", "COMPENSATION", "LETTER_OF_CREDIT", "PAYPAL", "PAYU", "PROMISSORY_NOTE", "PREPAYMENT", "INSTALLMENT_SALE", "TPAY", "PRZELEWY24", "DOTPAY"]);
 const EmailStatus = z.enum(["PENDING", "SENT", "FAILED"]);
 const InvoiceEmailResource = z.object({ id: z.number().int(), invoice_id: z.number().int(), status: EmailStatus, recipient: z.string(), created_at: z.union([z.string(), z.null()]), updated_at: z.union([z.string(), z.null()]) }).passthrough();
@@ -31,7 +32,7 @@ const StoreInvoiceRequest = z.object({ number: z.string(), issue_date: z.string(
 const UpdateInvoiceRequest = z.object({ number: z.union([z.string(), z.null()]), issue_date: z.union([z.string(), z.null()]), payment_method: PaymentMethod, currency: Currency, is_already_paid: z.union([z.boolean(), z.null()]), sale_date: z.union([z.string(), z.null()]), due_date: z.union([z.string(), z.null()]), secret_note: z.union([z.string(), z.null()]), invoice_contractors: z.array(z.object({ contractor_id: z.number().int(), role: ContractorRole }).passthrough()), invoice_products: z.union([z.array(z.object({ product_id: z.union([z.number(), z.null()]), name: z.union([z.string(), z.null()]), quantity: z.union([z.number(), z.null()]), price: z.union([z.number(), z.null()]), measure_unit: MeasureUnit, discount: z.union([z.number(), z.null()]), vat_rate: VatRate }).partial().passthrough()), z.null()]) }).partial().passthrough();
 const period = z.union([z.enum(["this_year", "prev_year"]), z.null()]).optional();
 const StripePaymentIntentResource = z.object({ id: z.string(), amount: z.number().int(), status: z.string(), description: z.union([z.string(), z.null()]), created: z.number().int() }).passthrough();
-const sort__3 = z.union([z.enum(["price", "measure_unit", "vat_rate"]), z.null()]).optional();
+const sort__4 = z.union([z.enum(["price", "measure_unit", "vat_rate"]), z.null()]).optional();
 const ProductResource = z.object({ id: z.number().int(), user_id: z.number().int(), name: z.string(), description: z.union([z.string(), z.null()]), price: z.number(), measure_unit: MeasureUnit, vat_rate: VatRate, created_at: z.union([z.string(), z.null()]), updated_at: z.union([z.string(), z.null()]) }).passthrough();
 const StoreProductRequest = z.object({ name: z.string().max(255), price: z.number(), measure_unit: MeasureUnit, vat_rate: VatRate, description: z.union([z.string(), z.null()]).optional() }).passthrough();
 const UpdateProductRequest = z.object({ name: z.union([z.string(), z.null()]), price: z.union([z.number(), z.null()]), measure_unit: MeasureUnit, vat_rate: VatRate, description: z.union([z.string(), z.null()]) }).partial().passthrough();
@@ -55,6 +56,7 @@ export const schemas = {
 	UpdateExpenseRequest,
 	StoreExpenseTypeRequest,
 	UpdateExpenseTypeRequest,
+	sort__3,
 	PaymentMethod,
 	EmailStatus,
 	InvoiceEmailResource,
@@ -67,7 +69,7 @@ export const schemas = {
 	UpdateInvoiceRequest,
 	period,
 	StripePaymentIntentResource,
-	sort__3,
+	sort__4,
 	ProductResource,
 	StoreProductRequest,
 	UpdateProductRequest,
@@ -547,6 +549,26 @@ const endpoints = makeApi([
 				schema: q
 			},
 			{
+				name: "type",
+				type: "Query",
+				schema: is_own_company
+			},
+			{
+				name: "is_already_paid",
+				type: "Query",
+				schema: is_own_company
+			},
+			{
+				name: "sort",
+				type: "Query",
+				schema: sort__3
+			},
+			{
+				name: "sort_direction",
+				type: "Query",
+				schema: sort_direction
+			},
+			{
 				name: "limit",
 				type: "Query",
 				schema: limit
@@ -798,7 +820,7 @@ const endpoints = makeApi([
 			{
 				name: "sort",
 				type: "Query",
-				schema: sort__3
+				schema: sort__4
 			},
 			{
 				name: "sort_direction",

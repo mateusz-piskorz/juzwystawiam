@@ -30,6 +30,8 @@ docker compose exec app php artisan test
 ```shell
 docker compose exec app php artisan ide-helper:generate
 docker compose exec app php artisan ide-helper:models --nowrite
+docker compose exec app npm run zod:generate
+docker compose exec app npm run ziggy
 ```
 
 ```shell

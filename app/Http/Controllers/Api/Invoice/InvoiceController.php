@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Invoice;
 
-use App\Http\Requests\IndexInvoiceRequest;
+use App\Http\Requests\Invoice\IndexInvoiceRequest;
 use App\Http\Requests\Invoice\StoreInvoiceRequest;
 use App\Http\Requests\Invoice\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceResourceCollection;
