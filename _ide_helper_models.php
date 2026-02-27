@@ -57,7 +57,7 @@ namespace App\Models{
  * @property int|null $expense_type_id
  * @property string $title
  * @property string|null $description
- * @property numeric $total
+ * @property float $total
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\ExpenseType|null $expenseType

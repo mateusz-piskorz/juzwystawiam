@@ -1,59 +1,35 @@
 services:
   db:
-    image: postgres:17.6
-    container_name: db
-    volumes:
-      - db_data_dev:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: '${DB_DATABASE}'
-      POSTGRES_USER: '${DB_USERNAME}'
-      POSTGRES_PASSWORD: '${DB_PASSWORD}'
+    image: postgres:17.8-alpine
+    env_file: [.env]
+    ports: ['5432:5432']
+    volumes: ['db_data_dev:/var/lib/postgresql/data']
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U ${DB_USERNAME:-sail} -d ${DB_DATABASE:-laravel}']
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-sail} -d ${POSTGRES_DB:-laravel}']
       interval: 5s
-      timeout: 5s
-      retries: 5
-    ports:
-      - '5432:5432'
 
   setup:
     build: .
-    volumes:
-      - ./:/app
-    entrypoint: ['/bin/sh', '-c']
-    command:
-      - |
-        composer install
-        npm install
-        npm run build
-        php artisan migrate
+    volumes: ['./:/app']
+    command: /bin/sh -c "composer install && npm install && npm run build && php artisan migrate"
     depends_on:
-      db:
-        condition: service_healthy
+      db: { condition: service_healthy }
 
   queue_worker:
     build: .
-    container_name: queue_worker
-    volumes:
-      - ./:/app
-    depends_on:
-      setup:
-        condition: service_completed_successfully
+    volumes: ['./:/app']
     command: ['php', 'artisan', 'queue:work', '--verbose', '--tries=3']
     restart: unless-stopped
+    depends_on:
+      setup: { condition: service_completed_successfully }
 
   app:
     build: .
-    container_name: app
-    ports:
-      - '8000:8000'
-      - '5173:5173'
-    volumes:
-      - ./:/app
-    depends_on:
-      setup:
-        condition: service_completed_successfully
+    ports: ['8000:8000', '5173:5173']
+    volumes: ['./:/app']
     command: ['/bin/sh', '-c', 'npm run dev & php artisan octane:start --host=0.0.0.0 --max-requests=1']
+    depends_on:
+      setup: { condition: service_completed_successfully }
 
 volumes:
   db_data_dev:
