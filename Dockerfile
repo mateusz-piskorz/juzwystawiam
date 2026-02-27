@@ -1,6 +1,6 @@
 FROM dunglas/frankenphp:1-php8.4
 
-COPY --from=node:24-alpine /usr/local /usr/local
+COPY --from=node:24.8.0-slim /usr/local /usr/local
 
 RUN apt-get update && apt-get install -y \
     unzip \

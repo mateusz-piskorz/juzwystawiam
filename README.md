@@ -1,36 +1,37 @@
-https://www.juzwystawiam.pl/
+live: [www.juzwystawiam.pl](https://www.juzwystawiam.pl/)
 
-# Usage
+## Prerequisites
+
+- Container runtime (Docker Desktop, Orbstack, Colima, etc.)
+- Full Disk Access granted to your container runtime
+
+## Getting Started
 
 ```shell
 cp .env.example .env
 ```
 
-add MAIL_USERNAME, MAIL_PASSWORD
+(optional) update **MAIL_USERNAME** and **MAIL_PASSWORD** variables in your .env file
 
 ```shell
 docker compose up -d
 ```
 
-app is at http://localhost:8000/
+The application will be available at http://localhost:8000/
 
-# Tests
+Api documentation is available at http://localhost:8000/docs/api#/
+
+## Utilities
 
 ```shell
 docker compose exec app php artisan test
 ```
 
-# Api
-
-api documentation is available at http://localhost:8000/docs/api#/
-
-# stripe events locally
-
-stripe listen --forward-to http://127.0.0.1:8000/stripe/webhook
-
-# utils
+```shell
+docker compose exec app php artisan ide-helper:generate
+docker compose exec app php artisan ide-helper:models --nowrite
+```
 
 ```shell
-php artisan ide-helper:generate
-php artisan ide-helper:models --nowrite
+stripe listen --forward-to http://127.0.0.1:8000/stripe/webhook
 ```

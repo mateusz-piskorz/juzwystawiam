@@ -18,13 +18,14 @@ services:
 
   setup:
     build: .
+    user: root
+    working_dir: /app
     volumes:
       - ./:/app
     entrypoint: ['/bin/sh', '-c']
     command:
       - |
         composer install
-        php artisan key:generate
         npm install
         npm run build
         php artisan migrate
